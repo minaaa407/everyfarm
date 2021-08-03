@@ -1,4 +1,4 @@
-package com.kosmo.everyfarm;
+package com.kosmo.everyfarm.commons;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -33,7 +33,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "index";
 	}
 	
 }
