@@ -80,3 +80,8 @@
         equalTo: ""
     });
 })(jQuery);
+
+
+function div_show() {
+	  document.getElementById("test_div").style.display = "block";
+	 }

@@ -49,10 +49,16 @@
                                     <label for="email" class="required">Email</label>
                                     <input type="text" name="email" id="email" />
                                 </div>
-                                <div class="form-input">
-                                    <label for="phone_number" class="required">인증번호</label>
-                                    <input type="text" name="phone_number" id="phone_number"onclick="_hide(); />
+                                
+                               <div class="form-submit">
+                               	<input type="submit" value="인증번호 전송" class="submit" id="submit" name="submit" onclick="div_show();"/>
+                               </div>
+
+                                 <div class="form-input" id="test_div">
+                                    <label for="company" class="required">인증번호 입력</label>
+                                    <input type="text" name="company" id="company" />
                                 </div>
+                                
                             </div>
                             <div class="form-group">
                                 <div class="form-select">
