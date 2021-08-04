@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.kosmo.everyfarm">
+	<logger name="kr.co.everyfarm">
 		<level value="info" />
 	</logger>
 	

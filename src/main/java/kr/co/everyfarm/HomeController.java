@@ -1,4 +1,4 @@
-package com.kosmo.everyfarm;
+package kr.co.everyfarm;
 
 import java.text.DateFormat;
 import java.util.Date;

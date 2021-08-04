@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="form-input">
                                     <label for="phone_number" class="required">인증번호</label>
-                                    <input type="text" name="phone_number" id="phone_number"onclick="_hide(); />
+                                    <input type="text" name="phone_number" id="phone_number"onclick="_hide();" />
                                 </div>
                             </div>
                             <div class="form-group">
