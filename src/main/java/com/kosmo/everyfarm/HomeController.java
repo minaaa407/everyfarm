@@ -33,7 +33,15 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "index";
 	}
 	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String test() {
+	return "loginForm";
+	}
+	@RequestMapping(value = "/sign", method = RequestMethod.GET)
+	public String test2() {
+	return "signUp";
+	}
 }
