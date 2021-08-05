@@ -68,10 +68,9 @@
 					<li class="nav-item active"><a href="index.jsp"
 						class="nav-link">Home</a></li>
 					<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-					<li class="nav-item"><a href="services.html" class="nav-link">농장
-							등록</a></li>
+					<li class="nav-item"><a href="services.html" class="nav-link">농장등록</a></li>
 					<li class="nav-item"><a href="gallery.html" class="nav-link">REVIEW</a></li>
-					<li class="nav-item"><a href="blog.html" class="nav-link">Q&A</a></li>
+					<li class="nav-item"><a href="views/product/QnAList.jsp" class="nav-link">Q&A</a></li>
 					<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
 				</ul>
 			</div>
