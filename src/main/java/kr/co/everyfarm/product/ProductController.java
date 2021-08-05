@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class QnAController {
+public class ProductController {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
@@ -20,5 +21,18 @@ public class QnAController {
 		List<QnABean> list = dao.list();
 		model.addAttribute("QnAList", list);
 		return "product/QnAList";
+	}
+	
+	@RequestMapping(value = "/PaymentInfo")
+	public String getPaymentInfo(Model model) {
+		PaymentDao dao = sqlSessionTemplate.getMapper(PaymentDao.class);
+		List<PaymentBean> list = dao.list();
+		model.addAttribute("PaymentInfo", list);
+		return "product/payment";
+	}
+	
+	@RequestMapping(value = "/BpaymentInfo", method = RequestMethod.GET)
+	public String test() {
+		return "product/bpayment";
 	}
 }
