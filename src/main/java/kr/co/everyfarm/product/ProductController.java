@@ -40,4 +40,19 @@ public class ProductController {
 	public String test1() {
 		return "product/payment";
 	}
+	
+	@RequestMapping(value = "/complete", method = RequestMethod.GET)
+	public String test2() {
+		return "product/complete";
+	}
+	
+	@RequestMapping(value = "/magShoppingList", method = RequestMethod.GET)
+	public String test3() {
+		return "product/magShoppingList";
+	}
+	
+	@RequestMapping(value = "/magShoppingListDetail", method = RequestMethod.GET)
+	public String test4() {
+		return "product/magShoppingListDetail";
+	}
 }

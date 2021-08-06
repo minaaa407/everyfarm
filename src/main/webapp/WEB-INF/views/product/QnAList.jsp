@@ -31,7 +31,7 @@
 <body>
 <div class="container">
 			<div class="row">
-			<a  class="list-group-item list-group-item-action group">
+			<a class="list-group-item list-group-item-action group">
 			<div class="row">
 			<div class="col">
 			<div class="row TextCenter">

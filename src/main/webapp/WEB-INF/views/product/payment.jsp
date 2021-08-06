@@ -20,7 +20,7 @@
 					<span>&gt;</span>
 					<span style="font-weight:bold">주문서</span>
 					<span>&gt;</span>
-					<span>주문 완료</span>
+					<span>결제 완료</span>
 				</div>
 			</div>
 				
@@ -140,7 +140,7 @@
                        <p>휴대전화</p>
                        
                         <div class="col">
-                                <button type="submit">827,410원 결제하기</button>
+                                <button type="submit" href="WEB-INF/views/product/complete.jsp">827,410원 결제하기</button>
                         </div>
                         </form>
 			</div>

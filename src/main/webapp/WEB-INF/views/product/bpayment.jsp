@@ -19,7 +19,7 @@
 					<span>&gt;</span>
 					<span style="font-weight:bold">주문서</span>
 					<span>&gt;</span>
-					<span>주문 완료</span>
+					<span>결제 완료</span>
 				</div>
 			</div>
 							
@@ -115,9 +115,9 @@
 					<h2>상품정보</h2>
 					<thead>
 						<tr>
-							<th scope="col">상품정보</th>
-							<th scope="col">땅크기</th>
-							<th scope="col">씨앗</th>
+							<th scope="col"></th>
+							<th scope="col-lg-3">상품정보</th>
+							<th scope="col"></th>
 							<th scope="col">상품금액</th>
 							<th scope="col">인건비</th>
 							<th scope="col">배송비</th>
