@@ -117,6 +117,7 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
+
 		<!-- DB연동 -->
 		<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
 		<dependency>
@@ -130,13 +131,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
-		</dependency>
-
-		<!-- Aspectjweaver 추가 -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.8.8</version>
 		</dependency>
 
 		<!-- DBCP -->
