@@ -5,86 +5,75 @@
 <head>
 <meta charset="UTF-8">
 <title>결제 : EveryFarm</title>
-<meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/organi/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/organi/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="resources/organi/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="resources/organi/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/organi/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/organi/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/organi/css/style.css" type="text/css">
 </head>
 <body>
-<div class="article-title">
-				<h2 class="title-page"><span>결제</span></h2>
-				<div class="page-sorting">
-					<a href="/product/basket"><span>장바구니</span></a>
+<div class="container">	
+	<div clss="row">
+	<div clss="col-xs-3">
+	<div>
+				<h2><span>결제</span></h2>
+				<hr>
+				<div>
+					<a href="/product/basket"><span style="color:black;">장바구니</span></a>
 					<span>&gt;</span>
-					<span class="current-page">주문서</span>
+					<span style="font-weight:bold">주문서</span>
 					<span>&gt;</span>
 					<span>주문 완료</span>
 				</div>
 			</div>
-			<div>
-    <div>
-        <div>
-            <h3><span>구매자</span></h3>
-        </div>
-    </div>
-			
-<div class="checkout__form">
-                <h4>결제</h4>
-                
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
+							
+						<form>	
+							<div>
+                				<hr>
+                                <div class="col-xs-1">
+                                    <div>
                                         <p>이름<span>*</span></p>
                                         <input type="text">
                                     </div>
                                 </div>
                             </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
+                                <div class="col-xs-2">
+                                    <div>
                                         <p>비밀번호<span>*</span></p>
                                         <input type="text">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
+                                <div class="col-xs-2">
+                                    <div>
                                         <p>전화번호<span>*</span></p>
-                                        <input type="text">
-                                        <div style="display: none;">
-                        <select name="rmobile1">
-                            <option value="">선택하세요</option>
-                            <option value="010" >010</option>
-                            <option value="011" >011</option>
-                            <option value="016" >016</option>
-                            <option value="017" >017</option>
-                            <option value="018" >018</option>
-                            <option value="019" >019</option>
-                        </select>
+					                        <select>
+					                            <option value="">선택하세요</option>
+					                            <option value="010" >010</option>
+					                            <option value="011" >011</option>
+					                            <option value="016" >016</option>
+					                            <option value="017" >017</option>
+					                            <option value="018" >018</option>
+					                            <option value="019" >019</option>
+					                        </select>
+					                        - <input type="text" name="omobile2" value="" size="3" maxlength="4"/> -
+					                        <input type="text" name="omobile3" value="" size="3" maxlength="4"/>
+                                        <div>
                     </div>
                                     </div>
                                 </div>
-                            <div class="checkout__input">
+                            <div class="col-lg-4">
+                            <div>
                                 <p>주소<span>*</span></p>
+                                <input type="text" name="address" value="" size="40">
+                                <a href="">주소찾기</a>
                             </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
+                            <br>
+                                <input type="text" name="address1" value="" size="40">
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <div>
                                         <p>이메일<span>*</span></p>
-                                        <input type="text">
-                                        <div>
-                    <input type="text" name="email1" value="" maxlength="30" onkeyup="removeEmoji($(this));" />@
-                    <input type="text" name="email_etc" value="" style="display:none;" maxlength="20" onkeyup="removeEmoji($(this));" />
-                    <select name="email2" onChange="inputDomain('email2','email_etc');">
+                                        <input type="text">@
+                    <input type="text" name="email" value="" maxlength="30"/>
+                    <input type="text" name="email1" value="" style="display:none;" maxlength="20"/>
+                    <select name="email2" onChange="inputDomain('email2','email1');">
                         <option value="etc" >직접 입력</option>
                         <option value="naver.com" >naver.com</option>
                         <option value="paran.com"  >paran.com</option>
@@ -93,11 +82,13 @@
                         <option value="nate.com" >nate.com</option>
                     </select>
         		</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        		</div>
+                             </div>
+                             
+                     <br>
+                     <br>           
     			<div>
+    			배송 메모<br><br>
                     <select>
                         <option value="">배송 시 요청사항을 선택해주세요</option>
                         <option value="부재 시 경비실에 맡겨주세요">부재 시 경비실에 맡겨주세요</option>
@@ -108,34 +99,53 @@
                         <option value="etc">직접 입력</option>
                     </select>
         		</div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="checkout__order">
-                                <h4>결제 머니</h4>
-                                <div class="checkout__order__products">상품<span>합계</span></div>
-                                <ul>
-                                    <li>땅 5평<span>300000</span></li>
-                                    <li>씨앗<span>50000</span></li>
-                                </ul>
-                                <div class="checkout__order__subtotal">인건비 <span>500000</span></div>
-                                <div class="checkout__order__subtotal">배송비 <span>3000</span></div>
-                                <div class="checkout__order__total"> <span>853000</span></div>
-                            </div>
-                                <button type="submit" class="site-btn">결제하기</button>
+        		<br>
+        		<hr>
+        		<table>
+					<colgroup>
+						<col>
+						<col width="50px">
+<!--					<col width="100px">-->
+						<col width="80px">
+						<col width="80px">
+						<col width="70px" class="charge ">
+						<col width="69px" class="charge ">
+						<col width="100px" class="charge ">
+					</colgroup>
+					<h2>상품정보</h2>
+					<thead>
+						<tr>
+							<th scope="col">상품정보</th>
+							<th scope="col">땅크기</th>
+							<th scope="col">씨앗</th>
+							<th scope="col">상품금액</th>
+							<th scope="col">인건비</th>
+							<th scope="col">배송비</th>
+							<th scope="col">주문금액</th>
+						</tr>
+						<tr>
+							<th scope="col">이미지</th>
+							<th scope="col">5평</th>
+							<th scope="col">고구마  감자</th>
+							<th scope="col">300,000원</th>
+							<th scope="col">500,000원</th>
+							<th scope="col">3,000원</th>
+							<th scope="col">853,000원</th>
+						</tr>
+					</thead>
+				</table>
+				<hr>
+                        <h3>결제 정보</h3>
+                       <p>신용카드</p>
+                       <p>카카오페이</p>
+                       <p>네이버페이</p>
+                       <p>휴대전화</p>
+                        <div class="col">
+                                <button type="submit">853,000원 결제하기</button>
                         </div>
-                        </div>
-        		
-        		
-    </div>
-							<span>상품번호</span>
-							<span>상품명</span>
-							<span>상품이미지</span>
-							<span>땅 크기</span>
-							<span>땅 가격</span>
-							<span>씨앗수량</span>
-							<span>씨앗가격</span>
-							<span>인건비</span>
-							<span>배송비</span>
-							<script src="js/jquery-3.3.1.min.js"></script>
-    
+                        </form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

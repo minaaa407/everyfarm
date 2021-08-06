@@ -35,4 +35,9 @@ public class ProductController {
 	public String test() {
 		return "product/bpayment";
 	}
+
+	@RequestMapping(value = "/PaymentInfo", method = RequestMethod.GET)
+	public String test1() {
+		return "product/payment";
+	}
 }
