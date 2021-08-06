@@ -67,7 +67,7 @@
                             	<td>${re.rev_Cont}</td>
                             	 <td>${re.rev_Rate}</td>
                             	<td>${re.rev_Readcount}</td>
-                            	<td>${re.rev_Date}</td>
+                            	<td>${re.rev_Cont}</td>
                             </c:forEach>
                             </tr>
                             <%

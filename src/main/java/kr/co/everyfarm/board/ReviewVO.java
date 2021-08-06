@@ -5,21 +5,15 @@ import java.util.Date;
 public class ReviewVO {
 	
   private int rev_No;
-  
   private String rev_Id;
-  
   private String rev_Title;
-  
   private String rev_Cont;
-  
   private String rev_Image;
-  
   private int rev_Readcount;
-  
   private Date rev_Date;
-  
   private Float rev_Rate;
-
+  
+  
 public int getRev_No() {
 	return rev_No;
 }
