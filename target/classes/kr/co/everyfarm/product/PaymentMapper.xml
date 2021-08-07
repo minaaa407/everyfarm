@@ -4,10 +4,18 @@
 						
 <mapper namespace="kr.co.everyfarm.product.PaymentDao">
 
-   <select id ="list" resultType="kr.co.everyfarm.product.PaymentBean">
+   <!-- <select id ="list" resultType="kr.co.everyfarm.product.PaymentBean">
+    <![CDATA[  
+    SELECT SELECT m_name, m_tel, m_address FROM member;
+   ]]>
+  </select> -->
+  
+  <select id ="list1" resultType="kr.co.everyfarm.product.ProductBean">
     <![CDATA[
-    SELECT * FROM payment;
+    SELECT p_image, p_land, p_sub, p_landprice, p_seedprice, p_manpay, p_delivery FROM product where p_no=#{p_no};
    ]]>
   </select>
+  
+
   
 </mapper>

@@ -8,6 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.co.everyfarm.user.MemberBean;
+import kr.co.everyfarm.user.UserDAO;
 
 @Controller
 public class ProductController {
@@ -17,6 +21,7 @@ public class ProductController {
 	
 	@RequestMapping(value = "/QnAList")
 	public String getQnAList(Model model) {
+		System.out.println("컨트롤러");
 		QnADao dao = sqlSessionTemplate.getMapper(QnADao.class);
 		List<QnABean> list = dao.list();
 		model.addAttribute("QnAList", list);
@@ -26,8 +31,11 @@ public class ProductController {
 	@RequestMapping(value = "/PaymentInfo")
 	public String getPaymentInfo(Model model) {
 		PaymentDao dao = sqlSessionTemplate.getMapper(PaymentDao.class);
-		List<PaymentBean> list = dao.list();
-		model.addAttribute("PaymentInfo", list);
+		UserDAO userdao = sqlSessionTemplate.getMapper(UserDAO.class);
+		ProductBean list1 = dao.list1("1");
+		MemberBean list2 = userdao.userInfo("dune");
+		model.addAttribute("ProductList", list1);
+		model.addAttribute("MemberList", list2);
 		return "product/payment";
 	}
 	

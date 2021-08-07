@@ -23,14 +23,16 @@
 					<span>결제 완료</span>
 				</div>
 			</div>
+					<% System.out.println("1"); %>
 				
+					<% System.out.println("2"); %>
 						<form>	
 							<div>
                 				<hr>
                                 <div class="col-xs-1">
                                     <div>
                                         <p>이름<span>*</span></p>
-                                        <input type="text" name="name" value="권형준">
+                                        <input type="text" name="name" value="${MemberList.M_Tel }">
                                     </div> 
                                 </div>
                             </div>
@@ -46,8 +48,9 @@
 					                            <option value="018" >018</option>
 					                            <option value="019" >019</option>
 					                        </select>
-					                        - <input type="text" name="tel" value="3116" size="3" maxlength="4" onkeyup="removeEmoji($(this));" /> -
-					                        <input type="text" name="tel1" value="4086" size="3" maxlength="4" onkeyup="removeEmoji($(this));" />
+					                        <input type="text" name="tel" value="${MemberList.M_Tel }" size="3" maxlength="4" />
+<!-- 					                        - <input type="text" name="tel" value="3116" size="3" maxlength="4" onkeyup="removeEmoji($(this));" /> -
+					                        <input type="text" name="tel1" value="4086" size="3" maxlength="4" onkeyup="removeEmoji($(this));" /> -->
                                         <div>
                     </div>
                                     </div>
@@ -55,9 +58,10 @@
                             <div class="col-lg-4">
                             <div>
                                 <p>주소<span>*</span></p>
-                                <input type="text" name="address" value="경기도 안양시 만안구 안양로 383-22" size="40">
+                                <input type="text" name="address" value="${MemberList.M_SubAddr }, ${MemberList.M_MainAddr }, ${MemberList.M_DetailAddr }" size="40">
                                 <a href="">주소찾기</a>
                             </div>
+                            
                             <br>
                                 <input type="text" name="address1" value="1층" size="40">
                             </div>
@@ -107,6 +111,7 @@
 						<col width="69px" class="charge ">
 						<col width="100px" class="charge ">
 					</colgroup>
+					
 					<h2>상품정보</h2>
 					<thead>
 						<tr>
@@ -120,14 +125,14 @@
 							<th scope="col">주문금액</th>
 						</tr>
 						<tr>
-							<th scope="col">이미지</th>
-							<th scope="col">5평</th>
-							<th scope="col">고구마  감자</th>
-							<th scope="col">300,000원</th>
-							<th scope="col">500,000원</th>
-							<th scope="col">3,000원</th>
+							<th scope="col">${ProductList.p_Image }</th>
+							<th scope="col">${ProductList.p_Land }</th>
+							<th scope="col">${ProductList.p_Sub }</th>
+							<th scope="col">${ProductList.p_Landprice } + ${ProductList.p_Seedprice }</th>
+							<th scope="col">${ProductList.p_Manpay }</th>
+							<th scope="col">${ProductList.p_Delivery }</th>
 							<th scope="col">&#8681; 3%</th>
-							<th scope="col">827,410원</th>
+							<th scope="col">${ProductList.p_Landprice } + ${ProductList.p_Seedprice } + ${ProductList.p_Manpay } + ${ProductList.p_Delivery }</th>
 						</tr>
 					</thead>
 				</table>
@@ -140,9 +145,10 @@
                        <p>휴대전화</p>
                        
                         <div class="col">
-                                <button type="submit" href="WEB-INF/views/product/complete.jsp">827,410원 결제하기</button>
+                                <button type="submit" href="WEB-INF/views/product/complete.jsp">${ProductList.p_Landprice } + ${ProductList.p_Seedprice } + ${ProductList.p_Manpay } + ${ProductList.p_Delivery }원 결제하기</button>
                         </div>
                         </form>
+                        
 			</div>
 		</div>
 	</div>
