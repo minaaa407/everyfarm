@@ -115,22 +115,22 @@
 					<h2>상품정보</h2>
 					<thead>
 						<tr>
-							<th scope="col"></th>
-							<th scope="col-lg-3">상품정보</th>
-							<th scope="col"></th>
+							<th scope="col">상품정보</th>
+							<th scope="col">땅크기</th>
+							<th scope="col">씨앗</th>
 							<th scope="col">상품금액</th>
 							<th scope="col">인건비</th>
 							<th scope="col">배송비</th>
 							<th scope="col">주문금액</th>
 						</tr>
 						<tr>
-							<th scope="col">이미지</th>
-							<th scope="col">5평</th>
-							<th scope="col">고구마  감자</th>
-							<th scope="col">300,000원</th>
-							<th scope="col">500,000원</th>
-							<th scope="col">3,000원</th>
-							<th scope="col">853,000원</th>
+							<th scope="col">${Product.p_Image }</th>
+							<th scope="col">${Product.p_Land }</th>
+							<th scope="col">${Product.p_Sub }</th>
+							<th scope="col">${Product.p_Landprice + Product.p_Seedprice }원</th>
+							<th scope="col">${Product.p_Manpay }원</th>
+							<th scope="col">${Product.p_Delivery }원</th>
+							<th scope="col">${Product.p_Landprice + Product.p_Seedprice + Product.p_Manpay + Product.p_Delivery }원</th>
 						</tr>
 					</thead>
 				</table>
@@ -141,7 +141,7 @@
                        <p>네이버페이</p>
                        <p>휴대전화</p>
                         <div class="col">
-                                <button type="submit">853,000원 결제하기</button>
+                                <button type="submit">${Product.p_Landprice + Product.p_Seedprice + Product.p_Manpay + Product.p_Delivery }원 결제하기</button>
                         </div>
                         </form>
 			</div>

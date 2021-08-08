@@ -1,4 +1,4 @@
-package kr.co.everyfarm.product;
+package kr.co.everyfarm.payment;
 
 public class PaymentBean {
 	
@@ -9,6 +9,7 @@ public class PaymentBean {
 	private int pay_seedcount;
 	private int pay_Totalprice;
 	private int pay_Admin;
+	private int pay_Deliver;
 	
 	public String getPay_Id() {
 		return pay_Id;
@@ -52,13 +53,18 @@ public class PaymentBean {
 	public void setPay_Admin(int pay_Admin) {
 		this.pay_Admin = pay_Admin;
 	}
+	public int getPay_Deliver() {
+		return pay_Deliver;
+	}
+	public void setPay_Deliver(int pay_Deliver) {
+		this.pay_Deliver = pay_Deliver;
+	}
 	
 	@Override
 	public String toString() {
 		return "PaymentBean [pay_Id=" + pay_Id + ", pay_Method=" + pay_Method + ", pay_No=" + pay_No + ", pay_Orderno="
 				+ pay_Orderno + ", pay_seedcount=" + pay_seedcount + ", pay_Totalprice=" + pay_Totalprice
-				+ ", pay_Admin=" + pay_Admin + "]";
+				+ ", pay_Admin=" + pay_Admin + ", pay_Deliver=" + pay_Deliver + "]";
 	}
-	
 	
 }

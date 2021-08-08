@@ -4,7 +4,7 @@
 
 <mapper namespace="kr.co.everyfarm.product.QnADao">
 
-   <select id ="list" resultType="kr.co.everyfarm.product.QnABean">
+   <select id ="list" resultType="kr.co.everyfarm.qna.QnABean">
     <![CDATA[
     SELECT * FROM qna;
    ]]>

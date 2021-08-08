@@ -1,4 +1,4 @@
-package kr.co.everyfarm.product;
+package kr.co.everyfarm.payment;
 
 public class BpaymentBean {
 

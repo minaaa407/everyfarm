@@ -1,4 +1,6 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,34 +25,24 @@
 					<span>결제 완료</span>
 				</div>
 			</div>
-					<% System.out.println("1"); %>
-				
-					<% System.out.println("2"); %>
-						<form>	
+					
+						<form action="">	
 							<div>
                 				<hr>
                                 <div class="col-xs-1">
                                     <div>
                                         <p>이름<span>*</span></p>
-                                        <input type="text" name="name" value="${MemberList.M_Tel }">
+                                        <input type="text" name="name" value="${Member.m_Name }">
                                     </div> 
                                 </div>
                             </div>
                                 <div class="col-xs-2">
                                     <div>
                                         <p>전화번호<span>*</span></p>
-					                        <select>
-					                            <option value="">선택하세요</option>
-					                            <option value="010" >010</option>
-					                            <option value="011" >011</option>
-					                            <option value="016" >016</option>
-					                            <option value="017" >017</option>
-					                            <option value="018" >018</option>
-					                            <option value="019" >019</option>
-					                        </select>
-					                        <input type="text" name="tel" value="${MemberList.M_Tel }" size="3" maxlength="4" />
-<!-- 					                        - <input type="text" name="tel" value="3116" size="3" maxlength="4" onkeyup="removeEmoji($(this));" /> -
-					                        <input type="text" name="tel1" value="4086" size="3" maxlength="4" onkeyup="removeEmoji($(this));" /> -->
+					                        
+					                        <input type="text" name="tel" value="${fn:substring(Member.m_Tel,0,3) }" size="3" maxlength="4" />
+				                        	- <input type="text" name="tel" value="${fn:substring(Member.m_Tel,3,7) }" size="3" maxlength="4" /> -
+					                        <input type="text" name="tel1" value="${fn:substring(Member.m_Tel,7,11) }" size="3" maxlength="4" />
                                         <div>
                     </div>
                                     </div>
@@ -58,31 +50,14 @@
                             <div class="col-lg-4">
                             <div>
                                 <p>주소<span>*</span></p>
-                                <input type="text" name="address" value="${MemberList.M_SubAddr }, ${MemberList.M_MainAddr }, ${MemberList.M_DetailAddr }" size="40">
+                                <input type="text" name="address" value="${Member.m_Addr }" size="40">
                                 <a href="">주소찾기</a>
                             </div>
                             
                             <br>
                                 <input type="text" name="address1" value="1층" size="40">
                             </div>
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <div>
-                                        <p>이메일<span>*</span></p>
-                                        <input type="text" value="hj2hj9">@
-                    <input type="text" name="email" value="nate.com" maxlength="30" />
-                    <input type="text" name="email1" value="" style="display:none;" maxlength="20" />
-                    <select name="email2" onChange="inputDomain('email2','email1');">
-                        <option value="etc" >직접 입력</option>
-                        <option value="naver.com" >naver.com</option>
-                        <option value="paran.com"  >paran.com</option>
-                        <option value="hanmail.net"  >hanmail.net</option>
-                        <option value="hotmail.com" >hotmail.com</option>
-                        <option value="nate.com" >nate.com</option>
-                    </select>
-        		</div>
-        		</div>
-                             </div>
+                            
                              
                      <br>
                      <br>           
@@ -125,14 +100,14 @@
 							<th scope="col">주문금액</th>
 						</tr>
 						<tr>
-							<th scope="col">${ProductList.p_Image }</th>
-							<th scope="col">${ProductList.p_Land }</th>
-							<th scope="col">${ProductList.p_Sub }</th>
-							<th scope="col">${ProductList.p_Landprice } + ${ProductList.p_Seedprice }</th>
-							<th scope="col">${ProductList.p_Manpay }</th>
-							<th scope="col">${ProductList.p_Delivery }</th>
+							<th scope="col">${Product.p_Image }</th>
+							<th scope="col">${Product.p_Land }</th>
+							<th scope="col">${Product.p_Sub }</th>
+							<th scope="col">${Product.p_Landprice + Product.p_Seedprice }원</th>
+							<th scope="col">${Product.p_Manpay }원</th>
+							<th scope="col">${Product.p_Delivery }원</th>
 							<th scope="col">&#8681; 3%</th>
-							<th scope="col">${ProductList.p_Landprice } + ${ProductList.p_Seedprice } + ${ProductList.p_Manpay } + ${ProductList.p_Delivery }</th>
+							<th scope="col"><fmt:parseNumber value="${(Product.p_Landprice + Product.p_Seedprice + Product.p_Manpay + Product.p_Delivery)*0.97 }" integerOnly="true" />원</th>
 						</tr>
 					</thead>
 				</table>
@@ -145,7 +120,7 @@
                        <p>휴대전화</p>
                        
                         <div class="col">
-                                <button type="submit" href="WEB-INF/views/product/complete.jsp">${ProductList.p_Landprice } + ${ProductList.p_Seedprice } + ${ProductList.p_Manpay } + ${ProductList.p_Delivery }원 결제하기</button>
+                                <button type="submit" onclick="window.location = 'WEB-INF/views/product/complete.jsp'"><fmt:parseNumber value="${(Product.p_Landprice + Product.p_Seedprice + Product.p_Manpay + Product.p_Delivery)*0.97 }" integerOnly="true" />원 결제하기</button>
                         </div>
                         </form>
                         

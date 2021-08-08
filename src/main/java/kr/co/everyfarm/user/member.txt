@@ -1,0 +1,12 @@
+create table member(
+m_Id VARCHAR(100) Primary key,
+m_Name VARCHAR(100) not null,
+m_pw VARCHAR(100) not null,
+m_subaddr VARCHAR(100) not null,
+m_mainaddr VARCHAR(100) not null,
+m_detailaddr VARCHAR(100) not null,
+m_Tel VARCHAR(20) not null,
+m_Birth VARCHAR(20) not null,
+m_Date DATE default now(),
+m_Profile VARCHAR(100)
+)DEFAULT CHARACTER SET = UTF8;	
