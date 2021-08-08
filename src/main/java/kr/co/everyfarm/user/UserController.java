@@ -39,6 +39,7 @@ public class UserController {
 		if (member != null) {
 			session.setAttribute("member", member);
 			return "redirect:home/home";
+
 		} else {
 			return "redirect:/login";
 		}
