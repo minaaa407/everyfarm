@@ -16,6 +16,11 @@ public class UserController {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home() {
+		return "home/home";
+	}
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		System.out.println("login:: get");
@@ -25,15 +30,16 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(MemberVO memberVO, FarmerVO farmerVO, HttpServletRequest request) {
 		System.out.println("login:: post");
-		
+
 		HttpSession session = request.getSession();
 
-		UserDAO memberDAO = sqlSessionTemplate.getMapper(UserDAO.class);
-		MemberVO member = memberDAO.mlogin(memberVO);
-	
+		UserDAO userDAO = sqlSessionTemplate.getMapper(UserDAO.class);
+		MemberVO member = userDAO.mlogin(memberVO);
+
 		if (member != null) {
 			session.setAttribute("member", member);
-			return "redirect:/";
+			return "redirect:home/home";
+
 		} else {
 			return "redirect:/login";
 		}
@@ -41,18 +47,34 @@ public class UserController {
 
 	@RequestMapping(value = "/sign", method = RequestMethod.GET)
 	public String sign() {
+		System.out.println("sign:: get");
 		return "user/signUp";
 	}
 
 	@RequestMapping(value = "/sign", method = RequestMethod.POST)
 	public String sign(MemberVO memberVO) {
+		System.out.println("sign:: post");
+
+		UserDAO userDAO = sqlSessionTemplate.getMapper(UserDAO.class);
+		userDAO.mjoin(memberVO);
+
+		return "home/home";
+	}
+
+	@RequestMapping(value = "/CheckId", method = RequestMethod.GET)
+	public String CheckId() {
 		return "user/signUp";
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "/";
+		return "home/home";
+	}
+
+	@RequestMapping("/myInfo")
+	public String myInfo() {
+		return "user/myPage";
 	}
 
 }
