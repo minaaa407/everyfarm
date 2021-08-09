@@ -2,7 +2,7 @@ package kr.co.everyfarm.product;
 
 import java.sql.Date;
 
-public class Product {
+public class ProductBean {
 	
 	private String p_Id;
 	private int p_No;

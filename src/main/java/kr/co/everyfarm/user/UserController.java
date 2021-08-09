@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserController {
@@ -28,13 +27,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(MemberVO memberVO, FarmerVO farmerVO, HttpServletRequest request) {
+	public String login(MemberBean memberBean, FarmerBean farmerBean, HttpServletRequest request) {
 		System.out.println("login:: post");
 
 		HttpSession session = request.getSession();
 
 		UserDAO userDAO = sqlSessionTemplate.getMapper(UserDAO.class);
-		MemberVO member = userDAO.mlogin(memberVO);
+		MemberBean member = userDAO.mlogin(memberBean);
 
 		if (member != null) {
 			session.setAttribute("member", member);
@@ -52,11 +51,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/sign", method = RequestMethod.POST)
-	public String sign(MemberVO memberVO) {
+	public String sign(MemberBean memberBean) {
 		System.out.println("sign:: post");
 
 		UserDAO userDAO = sqlSessionTemplate.getMapper(UserDAO.class);
-		userDAO.mjoin(memberVO);
+		userDAO.mjoin(memberBean);
 
 		return "home/home";
 	}

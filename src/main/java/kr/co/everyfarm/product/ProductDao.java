@@ -4,19 +4,19 @@ import java.util.List;
 
 public interface ProductDao {
 	
-	public List<Product> list();
-	public List<Product> listpageing(PageBeen pagebeen);
-	public List<Product> listserachpageing(PageBeen pagebeen);
-	public List<Product> listserachpageingcount(PageBeen pagebeen);
+	public List<ProductBean> list();
+	public List<ProductBean> listpageing(PageBeen pagebeen);
+	public List<ProductBean> listserachpageing(PageBeen pagebeen);
+	public List<ProductBean> listserachpageingcount(PageBeen pagebeen);
 	
 	public int listcount();
-	public Product info(int productno);
-	public Product onelist(int p_No);
-	public int insert(Product product);
-	public int update(Product product);
+	public ProductBean info(int productno);
+	public ProductBean onelist(int p_No);
+	public int insert(ProductBean product);
+	public int update(ProductBean product);
 	public int delete(int productno);
 
 	
 	
-	public Product productinfo(String p_No);
+	public ProductBean productinfo(String p_No);
 }

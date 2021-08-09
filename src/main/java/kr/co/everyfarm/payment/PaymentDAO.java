@@ -2,7 +2,7 @@ package kr.co.everyfarm.payment;
 
 import java.util.List;
 
-import kr.co.everyfarm.product.Product;
+import kr.co.everyfarm.product.ProductBean;
 
 public interface PaymentDAO {
 	public List<PaymentBean> list();
@@ -11,5 +11,5 @@ public interface PaymentDAO {
 	public int delete(int pay_Orderno);
 	
 	
-	public Product getinfo(String p_id);
+	public ProductBean getinfo(String p_id);
 }

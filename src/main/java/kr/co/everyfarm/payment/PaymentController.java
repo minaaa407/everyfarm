@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import kr.co.everyfarm.product.Product;
+import kr.co.everyfarm.product.ProductBean;
 import kr.co.everyfarm.product.ProductDao;
-import kr.co.everyfarm.user.MemberVO;
+import kr.co.everyfarm.user.MemberBean;
 import kr.co.everyfarm.user.UserDAO;
 
 @Controller
@@ -26,8 +26,8 @@ public class PaymentController {
 		ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
 		
 		System.out.println("gkgkgk");
-		MemberVO getinfo1 = userdao.userInfo("mina@naver.com");
-		Product getinfo2 = productdao.productinfo("1");
+		MemberBean getinfo1 = userdao.userInfo("mina@naver.com");
+		ProductBean getinfo2 = productdao.productinfo("1");
 		System.out.println(getinfo1.toString());
 		System.out.println(getinfo2.toString());
 		
@@ -39,7 +39,7 @@ public class PaymentController {
 	@RequestMapping(value = "/BpaymentInfo", method = RequestMethod.GET)
 	public String getBpaymentInfo(Model model) {
 		ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
-		Product getinfo2 = productdao.productinfo("1");
+		ProductBean getinfo2 = productdao.productinfo("1");
 		model.addAttribute("Product", getinfo2);
 		return "product/bpayment";
 	}
