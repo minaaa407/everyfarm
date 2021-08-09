@@ -4,7 +4,7 @@ import java.util.List;
 
 import kr.co.everyfarm.product.Product;
 
-public interface PaymentDao {
+public interface PaymentDAO {
 	public List<PaymentBean> list();
 	public int insert(PaymentBean pay);
 	public int update(PaymentBean pay);
