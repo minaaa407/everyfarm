@@ -7,17 +7,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDAO {
 	
-	public List<MemberVO> mlist();
+	public List<MemberBean> mlist();
 
-	public List<MemberVO> flist();
+	public List<MemberBean> flist();
 	
-	public MemberVO mjoin(MemberVO memberVO);
+	public MemberBean mjoin(MemberBean MemberBean);
 	
-	public MemberVO fjoin(FarmerVO farmerVO);
+	public MemberBean fjoin(FarmerBean farmerVO);
 	
-	public MemberVO mlogin(MemberVO memberVO);
+	public MemberBean mlogin(MemberBean MemberBean);
 
-	public MemberVO flogin(FarmerVO farmerVO);
+	public MemberBean flogin(FarmerBean farmerVO);
 	
 	
 	
@@ -26,6 +26,6 @@ public interface UserDAO {
 	
 	
 	// 결제페이지 이용
-	public MemberVO userInfo(String userID);
+	public MemberBean userInfo(String userID);
 
 }

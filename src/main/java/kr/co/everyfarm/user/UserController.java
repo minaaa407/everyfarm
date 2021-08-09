@@ -28,13 +28,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(MemberVO memberVO, FarmerVO farmerVO, HttpServletRequest request) {
+	public String login(MemberBean memberVO, FarmerBean farmerBean, HttpServletRequest request) {
 		System.out.println("login:: post");
 
 		HttpSession session = request.getSession();
 
 		UserDAO userDAO = sqlSessionTemplate.getMapper(UserDAO.class);
-		MemberVO member = userDAO.mlogin(memberVO);
+		MemberBean member = userDAO.mlogin(memberVO);
 
 		if (member != null) {
 			session.setAttribute("member", member);
@@ -52,7 +52,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/sign", method = RequestMethod.POST)
-	public String sign(MemberVO memberVO) {
+	public String sign(MemberBean memberVO) {
 		System.out.println("sign:: post");
 
 		UserDAO userDAO = sqlSessionTemplate.getMapper(UserDAO.class);

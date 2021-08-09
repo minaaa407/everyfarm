@@ -2,7 +2,7 @@ package kr.co.everyfarm.user;
 
 import java.util.Date;
 
-public class FarmerVO {
+public class FarmerBean {
 
 	private String f_Id;
 	private String f_Name;

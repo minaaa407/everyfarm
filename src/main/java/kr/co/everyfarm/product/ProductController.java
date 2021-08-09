@@ -24,7 +24,7 @@ public class ProductController {
 	//public String testsession(Model model,@RequestParam("id") String id,@RequestParam("name") String name,HttpSession session) {
 		//session.setAttribute("id", id);
 		//session.setAttribute("name", name);
-		System.out.println(pagebeen.getSelectpage() + "selectpageƒ”Àº???");
+		System.out.println(pagebeen.getSelectpage() + "selectpageï¿½ï¿½ï¿½ï¿½???");
 		model.addAttribute("pagebeen",pagebeen);
 		return "sessiontest";
 	}
@@ -33,14 +33,14 @@ public class ProductController {
 	@RequestMapping(value="/testlist")
 	public String getProducttest(Model model) {
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		List<Product> list = dao.list();
+		List<ProductBean> list = dao.list();
 		model.addAttribute("productlist",list);
 		return "product/test1";
 	}
 	@RequestMapping(value="/productlist2")
 	public String getProducttest2(Model model) {
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		List<Product> list = dao.list();
+		List<ProductBean> list = dao.list();
 		model.addAttribute("productlist",list);
 		return "product/productlist2";
 	}
@@ -48,7 +48,7 @@ public class ProductController {
 	@RequestMapping(value="/productlist")
 	public String getProducttest3(Model model, @ModelAttribute ("pagebeen") PageBeen pagebeen) {
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		List<Product> productlist = dao.list();
+		List<ProductBean> productlist = dao.list();
 		int selecttotalindex = productlist.size();
 		pagebeen.setTableindex(selecttotalindex);
 		productlist = dao.listpageing(pagebeen);
@@ -62,16 +62,16 @@ public class ProductController {
 	@RequestMapping(value="/adminproductlist")
 	public String getAdminProductList(Model model) {
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		List<Product> list = dao.list();
+		List<ProductBean> list = dao.list();
 		model.addAttribute("productlist",list);
 		return "product/productadminlist";
 	}
-	//¾Æ·¡ Å×½ºÆ® Áß....
+	//ï¿½Æ·ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½....
 	@RequestMapping(value="/adminproductlist2")
 	public String getAdminProductList2(Model model, @ModelAttribute ("pagebeen") PageBeen pagebeen) {
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		List<Product> productlist = dao.listserachpageingcount(pagebeen);
-		System.out.println(productlist.size() + "Ãâ·Â °¹¼ö");
+		List<ProductBean> productlist = dao.listserachpageingcount(pagebeen);
+		System.out.println(productlist.size() + "ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		int selecttotalindex = productlist.size();
 		pagebeen.setTableindex(selecttotalindex);
 		productlist = dao.listserachpageing(pagebeen);
@@ -95,18 +95,18 @@ public class ProductController {
 	
 	
 	@RequestMapping(value="/productupdateform")
-	public String getProductupdateform(Model model,@RequestParam("no") String no, @ModelAttribute ("product") Product product) {
+	public String getProductupdateform(Model model,@RequestParam("no") String no, @ModelAttribute ("product") ProductBean product) {
 		int p_No = Integer.parseInt(no);
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		Product productonelist = dao.onelist(p_No);
+		ProductBean productonelist = dao.onelist(p_No);
 		model.addAttribute("productonelist",productonelist);
 		model.addAttribute("product", product);
-		System.out.println("¿©±â´Â µ¿ÀÛµÇ´Â°¡?");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÛµÇ´Â°ï¿½?");
 		return "product/productupdateform";
 	}
 	
 	@RequestMapping(value="/productdetail")
-	public String getProductupdate(Model model, @ModelAttribute ("product") Product product) {
+	public String getProductupdate(Model model, @ModelAttribute ("product") ProductBean product) {
 	
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 		int a = dao.update(product);
@@ -116,7 +116,7 @@ public class ProductController {
 
 	
 	@RequestMapping(value="/productinsertform")
-	public String getinsertform(Model model, @ModelAttribute ("product") Product product) {
+	public String getinsertform(Model model, @ModelAttribute ("product") ProductBean product) {
 		
 		model.addAttribute("product", product);
 		
@@ -124,12 +124,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/productinsert")
-	public String getinsert(Model model, @ModelAttribute ("product") Product product) {
+	public String getinsert(Model model, @ModelAttribute ("product") ProductBean product) {
 		String aaa = product.getP_Id();
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 		System.out.println("tlfgod???");
 		int productinsert = dao.insert(product);
-		System.out.println(aaa + "Ãâ·ÂÈ®ÀÎ");
+		System.out.println(aaa + "ï¿½ï¿½ï¿½È®ï¿½ï¿½");
 		System.out.println(productinsert);
 		return "redirect:/productlist";
 	}
@@ -165,7 +165,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/ProductRegisterform")
-	public String getRegisterform(Model model, @ModelAttribute ("product") Product product) {
+	public String getRegisterform(Model model, @ModelAttribute ("product") ProductBean product) {
 		
 		model.addAttribute("product", product);
 		
@@ -176,9 +176,9 @@ public class ProductController {
 	
 	//@RequestMapping("/mb/empInfo")
 	//public String productinsert(Model model, @RequestParam int empno) {
-	//	System.out.println("µ¿ÀÛµÈ°Å¾ß?");
+	//	System.out.println("ï¿½ï¿½ï¿½ÛµÈ°Å¾ï¿½?");
 //		EmpDAO dao = sqlSessionTemplate.getMapper(EmpDAO.class);
-//		System.out.println(empno+"¹øÈ£ ¹¹¿©?");
+//		System.out.println(empno+"ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½?");
 //		Emp emp = dao.info(empno);
 //		model.addAttribute("empInfo", emp);
 //		return "mb/empInfo";
