@@ -2,7 +2,7 @@ package kr.co.everyfarm.qna;
 
 import java.util.List;
 
-public interface QnADao {
+public interface QnADAO {
 	public List<QnABean> list();
 	public int insert(QnABean qna);
 	public int update(QnABean qna);

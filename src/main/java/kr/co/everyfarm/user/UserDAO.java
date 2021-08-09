@@ -9,14 +9,23 @@ public interface UserDAO {
 	
 	public List<MemberVO> mlist();
 
-	public List<FarmerVO> flist();
+	public List<MemberVO> flist();
 	
-	public void mjoin(MemberVO memberVO);
+	public MemberVO mjoin(MemberVO memberVO);
 	
-	public void fjoin(FarmerVO farmerVO);
+	public MemberVO fjoin(FarmerVO farmerVO);
 	
 	public MemberVO mlogin(MemberVO memberVO);
 
-	public FarmerVO flogin(FarmerVO farmerVO);
+	public MemberVO flogin(FarmerVO farmerVO);
+	
+	
+	
+	
+	
+	
+	
+	// 결제페이지 이용
+	public MemberVO userInfo(String userID);
 
 }
