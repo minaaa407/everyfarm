@@ -7,16 +7,30 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDAO {
 	
-	public List<MemberVO> mlist();
+	public List<MemberBean> mlist();
 
-	public List<FarmerVO> flist();
+	public List<FarmerBean> flist();
 	
-	public void mjoin(MemberVO memberVO);
+	public void mjoin(MemberBean memberBean);
 	
-	public void fjoin(FarmerVO farmerVO);
+	public void fjoin(FarmerBean farmerBean);
 	
-	public MemberVO mlogin(MemberVO memberVO);
+	public MemberBean mlogin(MemberBean memberBean);
 
-	public FarmerVO flogin(FarmerVO farmerVO);
+	public FarmerBean flogin(FarmerBean farmerBean);
+	
+	public void mail(MemberBean memberBean);
+	
+	public int checkId(MemberBean memberBean);
+	
+	public MemberBean findId(MemberBean memberBean);
 
+	public MemberBean findPw(MemberBean memberBean);
+	
+	public void upPw(MemberBean memberBean);
+	
+	public void mUpdate(MemberBean memberbean);
+	
+	public void mDelete(MemberBean memberbean);
+	
 }
