@@ -32,12 +32,6 @@ public class BasketController {
 		return "payment/basket";
 	}
 	
-	@RequestMapping(value="/testsession")
-	public String testsession(Model model,@RequestParam("id") String id,@RequestParam("name") String name,HttpSession session) {
-	    session.setAttribute("id", id);
-	    session.setAttribute("name", name);
-	    return "sessiontest";
-	}
 	
 	
 }
