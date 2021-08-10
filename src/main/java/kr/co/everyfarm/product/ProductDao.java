@@ -16,4 +16,14 @@ public interface ProductDao {
 	public int update(ProductBean product);
 	public int delete(int productno);
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public ProductBean productinfo(String p_No);
 }
