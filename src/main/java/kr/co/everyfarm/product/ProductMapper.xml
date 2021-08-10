@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.everyfarm.product.ProductDao">
+	<select id="list" resultType="kr.co.everyfarm.product.ProductBean">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Land,p_Landprice,p_Landavailable,p_Manpay,p_Date, p_Accept from product	
+	</select>
+	
+	<select id="listserachpageingcount" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Land,p_Landprice,p_Landavailable,p_Manpay,p_Date, p_Accept from product
+		  where (${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) order by ${orderby} ${ascdesc};		
+	</select>
+	
+	<select id="listserachpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Land,p_Landprice,p_Landavailable,p_Manpay,p_Date, p_Accept from product
+		  where (${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) order by ${orderby} ${ascdesc} limit #{limit}  offset #{offset};		
+	</select>
+	
+
+	<insert id="insert" parameterType="kr.co.everyfarm.product.ProductBean">
+		insert into product(p_Id,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,
+		p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,p_Imgdetail4,p_Land,p_Landprice,p_Manpay,p_Accept)
+		 values (#{p_Id},#{p_Title},#{p_Content},#{p_Img},#{p_Subimg1},#{p_Subimg2},
+		 #{p_Subimg3},#{p_Subimg4},#{p_Imgdetail1},#{p_Imgdetail2},#{p_Imgdetail3},#{p_Imgdetail4},#{p_Land},#{p_Landprice},#{p_Manpay},#{p_Accept})
+	</insert>
+	
+		<select id="onelist" resultType="kr.co.everyfarm.product.ProductBean" parameterType="int">
+		select  p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Land,p_Landprice,p_Landavailable,p_Manpay,p_Date, p_Accept from product where p_no = #{p_No}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="listcount" resultType="int">
+		select count(*) from product		
+	</select>
+	
+	<select id="listpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_id,p_no,p_title,p_content,p_Mainimage,p_Subimage,p_imagedetail,p_land,p_landprice,p_main,p_sub,p_seedprice,p_manpay,p_delivery,p_date,p_accept, p_seedcount from product limit #{limit}  offset #{offset};		
+	</select>
+	
+	
+
+	
+
+	
+	<select id="info" resultType="kr.co.everyfarm.product.ProductBean">
+		select* from emp2 where empno = #{empno}		
+	</select>
+	
+	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
+
+		update product set p_Id=#{p_Id}, p_Title=#{p_Title},
+		p_Content= #{p_Content},p_Image= #{p_Image},
+		p_Imagedetail= #{p_Imagedetail},p_Land= #{p_Land},
+		p_Landprice= #{p_Landprice},p_Main= #{p_Main},
+		p_Sub=#{p_Sub},p_Seedprice=#{p_Seedprice},
+		p_Manpay=#{p_Manpay},p_Delivery=#{p_Delivery},
+		p_Accept=#{p_Accept} where p_no = #{p_No}	
+	</update>
+	
+	<delete id="delete">
+		delete from emp2 where empno=#{empno}	
+	</delete>
+
+
+</mapper>

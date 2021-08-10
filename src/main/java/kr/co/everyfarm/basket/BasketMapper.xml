@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.everyfarm.basket.BasketDAO">
+
+	<select id="listAll" parameterType="kr.co.everyfarm.user.MemberBean" resultType="kr.co.everyfarm.basket.BasketBean">
+		select product.p_no, basket.b_Land, product.p_Img, product.p_Title, product.p_Manpay, product.p_Landprice, product.p_Landavailable, basket.b_seed, basket.b_Totalprice 
+		from basket, product where basket.b_Id=#{M_Id} and basket.b_pno=product.p_no 
+	</select>
+
+	<select id="pnoList" parameterType="kr.co.everyfarm.user.MemberBean" resultType="String">
+		select b_Pno from basket where b_Id=#{M_Id} 
+	</select>
+	
+<!-- 	<select id="pnoList" parameterType="kr.co.everyfarm.user.MemberVO, " resultType="String">
+		select b_Seedcount from basket where b_Id=#{M_Id} and b_Pno=#{}
+	</select> -->
+
+	<!-- <insert id="insert" parameterType="org.sp.mybatis.Emp">
+		insert into emp2 (empno, ename, deptno, job, sal)
+		values (#{empno}, #{ename}, #{deptno},	#{job}, #{sal})
+	</insert>
+
+	<select id="info" resultType="org.sp.mybatis.Emp">
+		select * from emp2 
+		where empno=#{empno}
+	</select>
+
+	<update id="update" parameterType="org.sp.mybatis.Emp">
+		update emp2 set	deptno=#{deptno}, sal=#{sal}
+		where empno=#{empno}
+	</update>
+
+	<delete id="delete">
+		delete from emp2 where empno=#{empno}
+	</delete> -->
+	
+	
+</mapper>

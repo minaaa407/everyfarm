@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.everyfarm.product.ProductqnaDAO">
+	<select id="list" resultType="kr.co.everyfarm.product.Productqna">
+		select c_seq,c_id,c_no,c_content,c_date,c_mainno,c_subno,c_secret from productqna		
+	</select>
+	
+	<insert id="insert" parameterType="kr.co.everyfarm.product.ProductBean">
+	insert into productqna(c_Id,c_No,c_Content,c_Mainno,c_Subno,c_Secret)
+	 values (#{c_Id},#{c_No},#{c_Content},#{c_Mainno},#{c_Subno},#{c_Secret})
+	</insert>
+	
+	<select id="info" resultType="kr.co.everyfarm.product.ProductBean">
+		select* from emp2 where empno = #{empno}		
+	</select>
+	
+	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
+		update emp2 set deptno=#{deptno}, sal=#{sal} where empno=#{empno}
+	</update>
+	
+	<delete id="delete">
+		delete from emp2 where empno=#{empno}	
+	</delete>
+
+
+</mapper>
