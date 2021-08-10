@@ -53,19 +53,19 @@
 								</div>
 							</form>
 						</div>
-<%-- 						<div>
+						<div>
 							<c:choose>
 								<c:when test="${empty member}">
 									<li><a href="/login">로그인</a></li>
 									<li><a href="/sign">회원가입</a></li>
 								</c:when>
-								<c:when test="${not empty member}" >
-									<li>${member.M_Name}님환영합니다.</li>
+								<c:when test="${not empty member}">
+									<li>${member.m_Name}님환영합니다.</li>
 									<li><a href="/mypage">내 정보</a></li>
-									<li><a href="/">로그아웃</a></li>
+									<li><a href="/logout">로그아웃</a></li>
 								</c:when>
 							</c:choose>
-						</div> --%>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -88,7 +88,7 @@
 						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
 						<li class="nav-item"><a href="services.html" class="nav-link">농장
 								등록</a></li>
-						<li class="nav-item"><a href="gallery.html" class="nav-link">REVIEW</a></li>
+						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
 						<li class="nav-item"><a href="blog.html" class="nav-link">Q&A</a></li>
 						<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
 					</ul>

@@ -9,23 +9,28 @@ public interface UserDAO {
 	
 	public List<MemberBean> mlist();
 
-	public List<MemberBean> flist();
+	public List<FarmerBean> flist();
 	
-	public MemberBean mjoin(MemberBean memberBean);
+	public void mjoin(MemberBean memberBean);
 	
-	public MemberBean fjoin(FarmerBean farmerBean);
+	public void fjoin(FarmerBean farmerBean);
 	
 	public MemberBean mlogin(MemberBean memberBean);
 
-	public MemberBean flogin(FarmerBean farmerBean);
+	public FarmerBean flogin(FarmerBean farmerBean);
 	
+	public void mail(MemberBean memberBean);
 	
+	public int checkId(MemberBean memberBean);
 	
-	
-	
-	
-	
-	// 결제페이지 이용
-	public MemberBean userInfo(String userID);
+	public MemberBean findId(MemberBean memberBean);
 
+	public MemberBean findPw(MemberBean memberBean);
+	
+	public void upPw(MemberBean memberBean);
+	
+	public void mUpdate(MemberBean memberbean);
+	
+	public void mDelete(MemberBean memberbean);
+	
 }

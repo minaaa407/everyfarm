@@ -5,17 +5,17 @@
 	<select id="list" resultType="kr.co.everyfarm.product.Productqna">
 		select c_seq,c_id,c_no,c_content,c_date,c_mainno,c_subno,c_secret from productqna		
 	</select>
-	 
-	<insert id="insert" parameterType="kr.co.everyfarm.product.Product">
+	
+	<insert id="insert" parameterType="kr.co.everyfarm.product.ProductBean">
 	insert into productqna(c_Id,c_No,c_Content,c_Mainno,c_Subno,c_Secret)
 	 values (#{c_Id},#{c_No},#{c_Content},#{c_Mainno},#{c_Subno},#{c_Secret})
 	</insert>
 	
-	<select id="info" resultType="kr.co.everyfarm.product.Product">
+	<select id="info" resultType="kr.co.everyfarm.product.ProductBean">
 		select* from emp2 where empno = #{empno}		
 	</select>
 	
-	<update id="update" parameterType ="kr.co.everyfarm.product.Product">
+	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
 		update emp2 set deptno=#{deptno}, sal=#{sal} where empno=#{empno}
 	</update>
 	

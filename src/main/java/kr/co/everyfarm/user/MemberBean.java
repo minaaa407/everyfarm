@@ -2,17 +2,30 @@ package kr.co.everyfarm.user;
 
 import java.util.Date;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class MemberBean {
 
+	@NotEmpty(message = "필수 입력 항목입니다.")
+	@Size(min = 13, max = 20, message = "13~20자로 입력하세요.")
 	private String m_Id;
+	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String m_Name;
+	@NotEmpty(message = "필수 입력 항목입니다.")
+	@Size(min = 8, max = 16, message = "8~16자로 입력하세요.")
 	private String m_Pw;
+	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String m_Addr;
+	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String m_Tel;
+	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String m_Birth;
+	@NotEmpty(message = "필수 입력 항목입니다.")
 	private Date m_Date;
 	private String m_Profile;
-
+	
 	public String getM_Id() {
 		return m_Id;
 	}
@@ -61,11 +74,10 @@ public class MemberBean {
 	public void setM_Profile(String m_Profile) {
 		this.m_Profile = m_Profile;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "MemberVO [m_Id=" + m_Id + ", m_Name=" + m_Name + ", m_Pw=" + m_Pw + ", m_Addr=" + m_Addr + ", m_Tel="
 				+ m_Tel + ", m_Birth=" + m_Birth + ", m_Date=" + m_Date + ", m_Profile=" + m_Profile + "]";
 	}
-
 }
