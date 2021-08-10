@@ -4,10 +4,6 @@ import java.util.List;
 
 public interface ProductDao {
 	
-	public List<ProductBean> list();
-	public List<ProductBean> listpageing(PageBeen pagebeen);
-	public List<ProductBean> listserachpageing(PageBeen pagebeen);
-	public List<ProductBean> listserachpageingcount(PageBeen pagebeen);
 	
 	public int listcount();
 	public ProductBean info(int ProductBeanno);

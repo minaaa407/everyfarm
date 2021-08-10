@@ -8,19 +8,21 @@ public class ProductBean {
 	private int p_No;
 	private String p_Title;
 	private String p_Content;
-	private String p_Image;
-	private String p_Imagedetail;
+	private String p_Img;
+	private String p_Subimg1;
+	private String p_Subimg2;
+	private String p_Subimg3;
+	private String p_Subimg4;
+	private String p_Imgdetail1;
+	private String p_Imgdetail2;
+	private String p_Imgdetail3;
+	private String p_Imgdetail4;
 	private int p_Land;
 	private int p_Landprice;
-	private String p_Main;
-	private String p_Sub;
-	private String p_Seedprice;
-	private String p_Seedcount;
+	private int p_Landavailable;
 	private int p_Manpay;
-	private int p_Delivery;
 	private Date p_Date;
 	private String p_Accept;
-	
 	public String getP_Id() {
 		return p_Id;
 	}
@@ -45,17 +47,59 @@ public class ProductBean {
 	public void setP_Content(String p_Content) {
 		this.p_Content = p_Content;
 	}
-	public String getP_Image() {
-		return p_Image;
+	public String getP_Img() {
+		return p_Img;
 	}
-	public void setP_Image(String p_Image) {
-		this.p_Image = p_Image;
+	public void setP_Img(String p_Img) {
+		this.p_Img = p_Img;
 	}
-	public String getP_Imagedetail() {
-		return p_Imagedetail;
+	public String getP_Subimg1() {
+		return p_Subimg1;
 	}
-	public void setP_Imagedetail(String p_Imagedetail) {
-		this.p_Imagedetail = p_Imagedetail;
+	public void setP_Subimg1(String p_Subimg1) {
+		this.p_Subimg1 = p_Subimg1;
+	}
+	public String getP_Subimg2() {
+		return p_Subimg2;
+	}
+	public void setP_Subimg2(String p_Subimg2) {
+		this.p_Subimg2 = p_Subimg2;
+	}
+	public String getP_Subimg3() {
+		return p_Subimg3;
+	}
+	public void setP_Subimg3(String p_Subimg3) {
+		this.p_Subimg3 = p_Subimg3;
+	}
+	public String getP_Subimg4() {
+		return p_Subimg4;
+	}
+	public void setP_Subimg4(String p_Subimg4) {
+		this.p_Subimg4 = p_Subimg4;
+	}
+	public String getP_Imgdetail1() {
+		return p_Imgdetail1;
+	}
+	public void setP_Imgdetail1(String p_Imgdetail1) {
+		this.p_Imgdetail1 = p_Imgdetail1;
+	}
+	public String getP_Imgdetail2() {
+		return p_Imgdetail2;
+	}
+	public void setP_Imgdetail2(String p_Imgdetail2) {
+		this.p_Imgdetail2 = p_Imgdetail2;
+	}
+	public String getP_Imgdetail3() {
+		return p_Imgdetail3;
+	}
+	public void setP_Imgdetail3(String p_Imgdetail3) {
+		this.p_Imgdetail3 = p_Imgdetail3;
+	}
+	public String getP_Imgdetail4() {
+		return p_Imgdetail4;
+	}
+	public void setP_Imgdetail4(String p_Imgdetail4) {
+		this.p_Imgdetail4 = p_Imgdetail4;
 	}
 	public int getP_Land() {
 		return p_Land;
@@ -69,42 +113,17 @@ public class ProductBean {
 	public void setP_Landprice(int p_Landprice) {
 		this.p_Landprice = p_Landprice;
 	}
-	public String getP_Main() {
-		return p_Main;
+	public int getP_Landavailable() {
+		return p_Landavailable;
 	}
-	public void setP_Main(String p_Main) {
-		this.p_Main = p_Main;
-	}
-	public String getP_Sub() {
-		return p_Sub;
-	}
-	public void setP_Sub(String p_Sub) {
-		this.p_Sub = p_Sub;
-	}
-	
-	public String getP_Seedprice() {
-		return p_Seedprice;
-	}
-	public void setP_Seedprice(String p_Seedprice) {
-		this.p_Seedprice = p_Seedprice;
-	}
-	public String getP_Seedcount() {
-		return p_Seedcount;
-	}
-	public void setP_Seedcount(String p_Seedcount) {
-		this.p_Seedcount = p_Seedcount;
+	public void setP_Landavailable(int p_Landavailable) {
+		this.p_Landavailable = p_Landavailable;
 	}
 	public int getP_Manpay() {
 		return p_Manpay;
 	}
 	public void setP_Manpay(int p_Manpay) {
 		this.p_Manpay = p_Manpay;
-	}
-	public int getP_Delivery() {
-		return p_Delivery;
-	}
-	public void setP_Delivery(int p_Delivery) {
-		this.p_Delivery = p_Delivery;
 	}
 	public Date getP_Date() {
 		return p_Date;
@@ -120,16 +139,13 @@ public class ProductBean {
 	}
 	@Override
 	public String toString() {
-		return "Product [p_Id=" + p_Id + ", p_No=" + p_No + ", p_Title=" + p_Title + ", p_Content=" + p_Content
-				+ ", p_Image=" + p_Image + ", p_Imagedetail=" + p_Imagedetail + ", p_Land=" + p_Land + ", p_Landprice="
-				+ p_Landprice + ", p_Main=" + p_Main + ", p_Sub=" + p_Sub + ", p_Seedprice=" + p_Seedprice
-				+ ", p_Manpay=" + p_Manpay + ", p_Delivery=" + p_Delivery + ", p_Date=" + p_Date + ", p_Accept="
-				+ p_Accept + "]";
+		return "ProductBean [p_Id=" + p_Id + ", p_No=" + p_No + ", p_Title=" + p_Title + ", p_Content=" + p_Content
+				+ ", p_Img=" + p_Img + ", p_Subimg1=" + p_Subimg1 + ", p_Subimg2=" + p_Subimg2 + ", p_Subimg3="
+				+ p_Subimg3 + ", p_Subimg4=" + p_Subimg4 + ", p_Imgdetail1=" + p_Imgdetail1 + ", p_Imgdetail2="
+				+ p_Imgdetail2 + ", p_Imgdetail3=" + p_Imgdetail3 + ", p_Imgdetail4=" + p_Imgdetail4 + ", p_Land="
+				+ p_Land + ", p_Landprice=" + p_Landprice + ", p_Landavailable=" + p_Landavailable + ", p_Manpay="
+				+ p_Manpay + ", p_Date=" + p_Date + ", p_Accept=" + p_Accept + "]";
 	}
-
 	
-
-	
-	
-	
+		
 }

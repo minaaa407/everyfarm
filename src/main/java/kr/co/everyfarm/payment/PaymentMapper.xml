@@ -4,7 +4,12 @@
 						
 <mapper namespace="kr.co.everyfarm.payment.PaymentDAO">
 
-
+<insert id="insert" parameterType="kr.co.everyfarm.payment.PaymentBean">
+		<![CDATA[
+		insert into payment (pay_no, pay_id, pay_seedcount, pay_totalprice, pay_method, pay_deliver) 
+		values (#{pay_no}, #{pay_id}, #{pay_seedcount}, #{pay_totalprice}, #{pay_method}, #{pay_deliver});
+		]]>
+	</insert>
   
   
   
