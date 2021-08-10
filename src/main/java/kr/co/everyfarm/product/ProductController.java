@@ -3,7 +3,7 @@ package kr.co.everyfarm.product;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,12 @@ public class ProductController {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	
 	@RequestMapping(value="/testsession")
 	public String testsession(Model model,@ModelAttribute ("pagebeen") PageBeen pagebeen) {
 	//public String testsession(Model model,@RequestParam("id") String id,@RequestParam("name") String name,HttpSession session) {
 		//session.setAttribute("id", id);
 		//session.setAttribute("name", name);
-		System.out.println(pagebeen.getSelectpage() + "selectpage����???");
+		System.out.println(pagebeen.getSelectpage() + "selectpage깞은???");
 		model.addAttribute("pagebeen",pagebeen);
 		return "sessiontest";
 	}
@@ -46,32 +45,43 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/productlist")
-	public String getProducttest3(Model model, @ModelAttribute ("pagebeen") PageBeen pagebeen) {
+	public String getProductlist(Model model, @ModelAttribute ("pagebeen") PageBeen pagebeen) {
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		List<ProductBean> productlist = dao.list();
+		
+		List<ProductBean> productlist = dao.listserachpageingcount(pagebeen);
 		int selecttotalindex = productlist.size();
 		pagebeen.setTableindex(selecttotalindex);
-		productlist = dao.listpageing(pagebeen);
+		productlist = dao.listserachpageing(pagebeen);
+
 		model.addAttribute("pagebeen",pagebeen);
 		model.addAttribute("productlist",productlist);
 		return "product/productList";
 	}
 	
+	@RequestMapping(value="/productdetail")
+	public String getProductlist(Model model, @RequestParam("productno") String productno) {
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		int p_No = Integer.parseInt(productno);
+		ProductBean oneproduct = dao.onelist(p_No);
+		
+		model.addAttribute("oneproduct",oneproduct);
+		return "product/productdetail";
+	}
 	
 	
 	@RequestMapping(value="/adminproductlist")
-	public String getAdminProductList(Model model) {
+	public String getAdminProductList333(Model model) {
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 		List<ProductBean> list = dao.list();
 		model.addAttribute("productlist",list);
 		return "product/productadminlist";
 	}
-	//�Ʒ� �׽�Ʈ ��....
+	//아래 테스트 중....
 	@RequestMapping(value="/adminproductlist2")
 	public String getAdminProductList2(Model model, @ModelAttribute ("pagebeen") PageBeen pagebeen) {
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 		List<ProductBean> productlist = dao.listserachpageingcount(pagebeen);
-		System.out.println(productlist.size() + "��� ����");
+		System.out.println(productlist.size() + "출력 갯수");
 		int selecttotalindex = productlist.size();
 		pagebeen.setTableindex(selecttotalindex);
 		productlist = dao.listserachpageing(pagebeen);
@@ -95,41 +105,41 @@ public class ProductController {
 	
 	
 	@RequestMapping(value="/productupdateform")
-	public String getProductupdateform(Model model,@RequestParam("no") String no, @ModelAttribute ("product") ProductBean product) {
+	public String getProductupdateform(Model model,@RequestParam("no") String no, @ModelAttribute ("productbean") ProductBean productbean) {
 		int p_No = Integer.parseInt(no);
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 		ProductBean productonelist = dao.onelist(p_No);
 		model.addAttribute("productonelist",productonelist);
-		model.addAttribute("product", product);
-		System.out.println("����� ���۵Ǵ°�?");
+		model.addAttribute("productbean", productbean);
+		System.out.println("여기는 동작되는가?");
 		return "product/productupdateform";
 	}
 	
-	@RequestMapping(value="/productdetail")
-	public String getProductupdate(Model model, @ModelAttribute ("product") ProductBean product) {
+	@RequestMapping(value="/productupdate")
+	public String getProductupdate(Model model, @ModelAttribute ("productbean") ProductBean productbean) {
 	
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		int a = dao.update(product);
-		return "redirect:/productdetail";
+		int a = dao.update(productbean);
+		return "redirect:/productlist";
 	}
 	
 
 	
 	@RequestMapping(value="/productinsertform")
-	public String getinsertform(Model model, @ModelAttribute ("product") ProductBean product) {
+	public String getinsertform(Model model, @ModelAttribute ("productbean") ProductBean productbean) {
 		
-		model.addAttribute("product", product);
+		model.addAttribute("productbean", productbean);
 		
 		return "product/productinsertform";
 	}
 	
 	@RequestMapping(value="/productinsert")
-	public String getinsert(Model model, @ModelAttribute ("product") ProductBean product) {
-		String aaa = product.getP_Id();
+	public String getinsert(Model model, @ModelAttribute ("productbean") ProductBean productbean) {
+		String aaa = productbean.getP_Id();
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 		System.out.println("tlfgod???");
-		int productinsert = dao.insert(product);
-		System.out.println(aaa + "���Ȯ��");
+		int productinsert = dao.insert(productbean);
+		System.out.println(aaa + "출력확인");
 		System.out.println(productinsert);
 		return "redirect:/productlist";
 	}
@@ -155,30 +165,53 @@ public class ProductController {
 		return "product/productqnainsertform";
 	}
 	
-	@RequestMapping(value="/productqnainsert")
-	public String getinsertqna(Model model, @ModelAttribute ("productqna") Productqna productqna) {
 	
+	
+	//김주혁
+	
+	
+	@RequestMapping(value = "/productqnainsert")
+	public String getinsertqna(Model model, @ModelAttribute("productqna") Productqna productqna) {
+
 		ProductqnaDAO dao = sqlSessionTemplate.getMapper(ProductqnaDAO.class);
 		int productinsert = dao.insert(productqna);
 		System.out.println(productinsert);
 		return "redirect:/productqnalist";
 	}
-	
-	@RequestMapping(value="/ProductRegisterform")
-	public String getRegisterform(Model model, @ModelAttribute ("product") ProductBean product) {
-		
-		model.addAttribute("product", product);
-		
+
+	@RequestMapping(value = "/ProductRegisterform")
+	public String getRegisterform(Model model, @ModelAttribute("product") ProductBean productbean) {
+		model.addAttribute("product", productbean);
 		return "product/ProductRegisterform";
 	}
+
+	@RequestMapping(value = "/ProductRegister")
+	public String getreginsert(Model model, @ModelAttribute("product") ProductBean productbean) {
+		System.out.println(productbean);
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		int productinsert = dao.insert(productbean);
+		System.out.println(productinsert);
+		return "redirect:/productadminlistform";
+	}
 	
+	@RequestMapping(value = "/productadminlistform")
+	public String getAdminlistform(Model model) {
+		return "redirect:/adminproductlistform";
+	}
+	@RequestMapping(value = "/adminproductlistform")
+	public String getAdminProductList(Model model) {
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		List<ProductBean> list = dao.list();
+		model.addAttribute("productlist", list);
+		return "product/productadminlistform";
+	}
 	
 	
 	//@RequestMapping("/mb/empInfo")
 	//public String productinsert(Model model, @RequestParam int empno) {
-	//	System.out.println("���۵Ȱž�?");
+	//	System.out.println("동작된거야?");
 //		EmpDAO dao = sqlSessionTemplate.getMapper(EmpDAO.class);
-//		System.out.println(empno+"��ȣ ����?");
+//		System.out.println(empno+"번호 뭐여?");
 //		Emp emp = dao.info(empno);
 //		model.addAttribute("empInfo", emp);
 //		return "mb/empInfo";

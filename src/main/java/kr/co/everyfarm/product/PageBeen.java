@@ -14,6 +14,10 @@ public class PageBeen {
 	boolean post;//이후 유무
 	String where;
 	String wherecolumn;
+	String where2;
+	String wherecolumn2;
+	String orderby;
+	String ascdesc;
 	
 	public int getSelectpage() {
 		return selectpage;
@@ -78,13 +82,17 @@ public class PageBeen {
 	public PageBeen() {
 		this.pagestart = 1;
 		this.selectpage = 1;
-		this.limit = 3;
+		this.limit = 9;
 		this.offset = 0;
 		this.pagingnumber = 5;
 		this.pro = false;
 		this.post = false;
 		this.where = "p_Id";
 		this.wherecolumn = "%%";
+		this.where2 = "p_Id";
+		this.wherecolumn2 = "%%";
+		this.orderby = "p_No";
+		this.ascdesc = "ASC";
 	}
 	
 	
@@ -173,9 +181,41 @@ public class PageBeen {
 	public void setPagingnumber(int pagingnumber) {
 		this.pagingnumber = pagingnumber;
 	}
+	public String getWhere2() {
+		return where2;
+	}
+	public void setWhere2(String where2) {
+		this.where2 = where2;
+	}
+	public String getWherecolumn2() {
+		return wherecolumn2;
+	}
+	public void setWherecolumn2(String wherecolumn2) {
+		this.wherecolumn2 = wherecolumn2;
+	}
+	public String getOrderby() {
+		return orderby;
+	}
+	public void setOrderby(String orderby) {
+		this.orderby = orderby;
+	}
+	public String getAscdesc() {
+		return ascdesc;
+	}
+	public void setAscdesc(String ascdesc) {
+		this.ascdesc = ascdesc;
+	}
+	@Override
+	public String toString() {
+		return "PageBeen [pagestart=" + pagestart + ", pageend=" + pageend + ", endnumber=" + endnumber
+				+ ", selectpage=" + selectpage + ", limit=" + limit + ", offset=" + offset + ", tableindex="
+				+ tableindex + ", pagingnumber=" + pagingnumber + ", pro=" + pro + ", post=" + post + ", where=" + where
+				+ ", wherecolumn=" + wherecolumn + ", where2=" + where2 + ", wherecolumn2=" + wherecolumn2
+				+ ", orderby=" + orderby + ", ascdesc=" + ascdesc + "]";
+	}
 	
-	
-	
+
+
 	
 	
 	
