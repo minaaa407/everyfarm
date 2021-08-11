@@ -87,9 +87,10 @@
 	
 		<select id ="productinfo" resultType="kr.co.everyfarm.product.ProductBean">
 		    <![CDATA[
-		    SELECT p_no, p_img, p_title, p_landprice, p_manpay FROM product where p_no=#{p_no};
+		    SELECT p_id, p_no, p_img, p_title, p_landprice, p_manpay FROM product where p_no=#{p_no};
 		   ]]>
 		  </select>
+		  
 		  
 	<!-- 듄 payment에 이용 -->
 

@@ -18,6 +18,36 @@ public class BpaymentBean {
 	private int bpay_Totalprice;
 	private Date bpay_Date;
 	
+	private String p_Id;
+	private int p_No;
+	private String p_Title;
+	private String p_Img;
+	
+	
+	public String getP_Id() {
+		return p_Id;
+	}
+	public void setP_Id(String p_Id) {
+		this.p_Id = p_Id;
+	}
+	public int getP_No() {
+		return p_No;
+	}
+	public void setP_No(int p_No) {
+		this.p_No = p_No;
+	}
+	public String getP_Title() {
+		return p_Title;
+	}
+	public void setP_Title(String p_Title) {
+		this.p_Title = p_Title;
+	}
+	public String getP_Img() {
+		return p_Img;
+	}
+	public void setP_Img(String p_Img) {
+		this.p_Img = p_Img;
+	}
 	public String getBpay_Name() {
 		return bpay_Name;
 	}
@@ -103,7 +133,8 @@ public class BpaymentBean {
 				+ ", bpay_Address=" + bpay_Address + ", bpay_Method=" + bpay_Method + ", bpay_Deliverymemo="
 				+ bpay_Deliverymemo + ", bpay_Seed=" + bpay_Seed + ", bpay_Tel=" + bpay_Tel + ", bpay_Orderno="
 				+ bpay_Orderno + ", bpay_No=" + bpay_No + ", bpay_Land=" + bpay_Land + ", bpay_Totalprice="
-				+ bpay_Totalprice + ", bpay_Date=" + bpay_Date + "]";
+				+ bpay_Totalprice + ", bpay_Date=" + bpay_Date + ", p_Id=" + p_Id + ", p_No=" + p_No + ", p_Title="
+				+ p_Title + ", p_Img=" + p_Img + "]";
 	}
 	
 }

@@ -27,13 +27,14 @@
 				</div>
 			</div>
 					
-						<form:form action="/payment/complete" method="post" id="pay_data" modelAttribute = "pay_data">
+						<form:form commandName="payment" action="/complete" method="post" id="pay_data">
+						<input type="hidden" name="pay_Id" value="${Member.m_Id }">
 							<div>
                 				<hr>
                                 <div class="col-xs-1">
                                     <div>
                                         <p>이름<span>*</span></p>
-                                        <input type="text" id="m_name" name="name" value="${Member.m_Name }">
+                                        <input type="text" name="m_Name" value="${Member.m_Name }"/>
                                     </div> 
                                 </div>
                             </div>
@@ -41,9 +42,9 @@
                                     <div>
                                         <p>전화번호<span>*</span></p>
 					                        
-					                        <input type="text" id="m_tel" name="tel" value="${fn:substring(Member.m_Tel,0,3) }" size="3" maxlength="3" />
-				                        	- <input type="text" id="m_tel1" name="tel1" value="${fn:substring(Member.m_Tel,3,7) }" size="3" maxlength="4" /> -
-					                        <input type="text" id="m_tel2" name="tel2" value="${fn:substring(Member.m_Tel,7,11) }" size="3" maxlength="4" />
+					                        <input name="tel" value="${fn:substring(Member.m_Tel,0,3) }" size="3" maxlength="3" />
+				                        	- <input name="tel1" value="${fn:substring(Member.m_Tel,3,7) }" size="3" maxlength="4" /> -
+					                        <input name="tel2" value="${fn:substring(Member.m_Tel,7,11) }" size="3" maxlength="4" />
                                         <div>
                     </div>
                                     </div>
@@ -51,37 +52,37 @@
                             <div class="col-lg-4">
                             <div>
                                 <p>주소<span>*</span></p>
-                                <input type="text" id="m_address" name="address" value="${Member.m_Addr }" size="40">
+                                <input name="addr" value="${Member.m_Addr }" size="40"/>
                                 <a href="">주소찾기</a>
                             </div>
                             
                             <br>
-                                <input type="text" id="m_address1" name="address1" value="1층" size="40">
+                                <input name="addr1" value="1층" size="40"/>
                             </div>
                             
-                             <script>
+                        <script>
                      
                      $(function(){	
                     		$(document).ready(function(){
                     			$('select[name=memo]').change(function() {
-                    				if($(this).val()=="1"){
-                    					$('#delivermemo').val("");
+                    				if($(this).val()=='1'){
+                    					$('#deliverymemo').val('');
                     				} else {
-                    					$('#delivermemo').val($(this).val());
-                    					$("#delivermemo").attr("readonly", true);
+                    					$('#deliverymemo').val($(this).val());
+                    					$('#deliverymemo').attr('readonly', true);
                     					
                     				}
                     			});
                     		});
                     	});
                      
-                     </script>  
+                     </script>
                      <br>
                      <br>
                      
     			<div>
     			배송 메모<br><br>
-    				<input class="" type="text" id="delivermemo" size=40 />
+    				<input type="text" class="" name="pay_Deliverymemo" id="deliverymemo" size=40 />
                     <select id="memo" name="memo">
                         <option value="1">배송 시 요청사항을 선택해주세요</option>
                         <option value="부재 시 경비실에 맡겨주세요" >부재 시 경비실에 맡겨주세요</option>
@@ -138,27 +139,28 @@
 							<th scope="col">총금액</th>
 						</tr>
 						<tr>
-							<th scope="col"><input id="p_img" name="image" value="${Product.p_Img }" disabled="disabled"></th>
-							<th scope="col"><input id="p_title" name="title" value="${Product.p_Title}" disabled="disabled"></th>
-							<th scope="col"><input id="p_no" name="image" value="${Product.p_No }" disabled="disabled"></th>
-							<th scope="col"><input id="p_land" name="land" value="${ land }" disabled="disabled"></th>
-							<th scope="col"><input id="p_seed" name="seed" value="${ seed }" disabled="disabled"></th>
-							<th scope="col"><input id="p_landprice" name="landprice" value="${ land * Product.p_Landprice }" disabled="disabled">원</th>
-							<th scope="col"><input id="p_manpay" name="manpay" value="${ land * Product.p_Manpay }" disabled="disabled">원</th>
-							<th scope="col"><input id="p_delivery" name="delivery" value="3000" disabled="disabled">원</th>
-							<th scope="col"><input id="p_price" name="price" value="${ price }" disabled="disabled">원</th>
+							<th scope="col"><input name="image" value="${Product.p_Img }" readonly /></th>
+							<th scope="col"><input name="title" value="${Product.p_Title}" readonly /></th>
+							<th scope="col"><input name="pay_No" value="${Product.p_No }" readonly/></th>
+							<th scope="col"><input type="text" name="pay_Land" value="${land}" readonly/></th>
+							<th scope="col"><input type="text" name="pay_Seed" value="${seed}" readonly/></th>
+							<th scope="col"><input name="landprice" value="${ land * Product.p_Landprice }" readonly/>원</th>
+							<th scope="col"><input name="manpay" value="${ land * Product.p_Manpay }" readonly/>원</th>
+							<th scope="col"><input name="pay_Delivery" value="3000" readonly/>원</th>
+							<th scope="col"><input name="price" value="${ price }" readonly/>원</th>
 							<th scope="col">&#8681; 3%</th>
-							<th scope="col"><input id="p_totalprice" name="totalprice" value="${ totalprice }" disabled="disabled" />원</th>
+							<th scope="col"><input name="pay_Totalprice" value="${ totalprice }" readonly />원</th>
 						</tr>
 					</thead>
 				</table>
 				<hr>
                         
                         <h3>결제 정보</h3>
-                       <p>신용카드</p>
-                       <p>카카오페이</p>
-                       <p>네이버페이</p>
-                       <p>휴대전화</p>
+                       <input type="radio" name="pay_Method" value="신용카드"/>신용카드
+                       <input type="radio" name="pay_Method" value="카카오페이"/>카카오페이
+                       <input type="radio" name="pay_Method" value="네이버페이"/>네이버페이
+                       <input type="radio" name="pay_Method" value="계좌이체"/>계좌이체
+                       
                        
                        	
                         <div class="col">

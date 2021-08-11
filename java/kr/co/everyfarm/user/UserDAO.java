@@ -43,5 +43,4 @@ public interface UserDAO {
 	
 	
 	public MemberBean userInfo(String userID);
-	
 }
