@@ -23,7 +23,7 @@ public class PaymentController {
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	
-	
+	 
 	@RequestMapping(value ="/PaymentInfo")
 	public String getPaymentInfo(Model model) {
 		UserDAO userdao = sqlSessionTemplate.getMapper(UserDAO.class);
@@ -31,7 +31,7 @@ public class PaymentController {
 		PaymentBean paymentbean = new PaymentBean();
 		System.out.println("gkgkgk");
 		MemberBean getinfo1 = userdao.userInfo("mina@naver.com");
-		ProductBean getinfo2 = productdao.productinfo(1);
+		ProductBean getinfo2 = productdao.productinfo(1);    // 장바구니에서받아올때 productdao.productinfo(memBasket); // 장바구니와 바로결제 if문으로 
 		System.out.println(getinfo1.toString());
 		System.out.println(getinfo2.toString());
 		
@@ -46,7 +46,10 @@ public class PaymentController {
 	public String payInsert(Model model, @ModelAttribute("payment") PaymentBean payment) {
 		System.out.println(payment.toString());
 		PaymentDAO paydao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		// ProductDao prodao = sqlSessionTemplate.getMapper(ProductDao.class);
 		int payinsert = paydao.insert(payment);
+		// int proupdate = prodao.update(payment);   프로덕트 어베일러블 -평수 시키기
+		
 		// model.addAttribute("pay", payinsert);
 		System.out.println(payinsert + "페이인서트");
 		return "redirect:/complete";
@@ -61,7 +64,7 @@ public class PaymentController {
 	@RequestMapping(value = "/BpaymentInfo", method = RequestMethod.GET)
 	public String getBpaymentInfo(Model model) {
 		ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
-		ProductBean getinfo2 = productdao.productinfo(1);
+		ProductBean getinfo2 = productdao.productinfo(1);    // 비회원 장바구니에서받아올때 productdao.productinfo(nomemBasket); // 장바구니와 바로결제 if문으로 
 		model.addAttribute("Product", getinfo2);
 		return "payment/bpayment";
 	}

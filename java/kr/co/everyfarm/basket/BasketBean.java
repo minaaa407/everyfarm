@@ -1,5 +1,7 @@
 package kr.co.everyfarm.basket;
 
+import java.util.List;
+
 public class BasketBean {
 
 	private int b_No;
@@ -15,6 +17,18 @@ public class BasketBean {
 	
 	private String b_Seed;
 	private int b_Totalprice;
+	
+	
+	private List<BasketBean> basketbeanList;
+	
+	
+	
+	public List<BasketBean> getBasketbeanList() {
+		return basketbeanList;
+	}
+	public void setBasketbeanList(List<BasketBean> basketbeanList) {
+		this.basketbeanList = basketbeanList;
+	}
 	public int getB_No() {
 		return b_No;
 	}
