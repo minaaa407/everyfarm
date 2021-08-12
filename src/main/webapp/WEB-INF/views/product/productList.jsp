@@ -98,6 +98,13 @@ function orderby(id){
 	
 }
 
+function limitChange(){
+	
+	var limit = document.getElementById('productlist').value ;
+	document.getElementById('limit').value = limit;
+	document.myHiddenForm.submit();
+}
+
 //(function() { 
 
 	//var psub = document.getElementById("psub1");
@@ -133,6 +140,7 @@ window.onload = function(){
 				psub.options[i].selected = "";
 			}
 		}
+		
 		
 	}
 
@@ -200,6 +208,36 @@ window.onload = function(){
                                     	<a id = "orderbyhighlandprice" style="cursor:pointer" onclick="orderby(this.id)">낮은땅가격 </a>
                                     	<a id = "orderbylowlandprice" style="cursor:pointer" onclick="orderby(this.id)">높은땅가격 </a>
                                 </div>
+                               
+                                <select id ="productlist" name="productlist" class="productlist" onChange="limitChange()">
+                                			<c:if test="${pagebeen.limit eq '3'}">
+												<option value="3" selected>3</option>
+												<option value="6">6</option>
+												<option value="9" >9</option>
+												<option value="12">12</option>
+											</c:if>	 
+											<c:if test="${pagebeen.limit eq '6'}">
+												<option value="3" selected>3</option>
+												<option value="6">6</option>
+												<option value="9" >9</option>
+												<option value="12">12</option>
+											</c:if>	 
+											<c:if test="${pagebeen.limit eq '9'}">
+												<option value="3">3</option>
+												<option value="6">6</option>
+												<option value="9" selected>9</option>
+												<option value="12">12</option>
+											</c:if>	 
+											
+											<c:if test="${pagebeen.limit eq '12'}">
+												<option value="3">3</option>
+												<option value="6">6</option>
+												<option value="9">9</option>
+												<option value="12" selected>12</option>
+											</c:if>	 
+											
+					
+							    </select>
      				</div>
                     <div class="row">
                     	<c:forEach var="p" items="${productlist }">

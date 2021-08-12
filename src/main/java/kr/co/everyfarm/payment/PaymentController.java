@@ -4,10 +4,12 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.everyfarm.basket.BasketBean;
 import kr.co.everyfarm.product.ProductBean;
 import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.user.MemberBean;
@@ -22,10 +24,10 @@ public class PaymentController {
 	
 	
 	@RequestMapping(value ="/PaymentInfo")
-	public String getPaymentInfo(Model model) {
+	public String getPaymentInfo(Model model, @ModelAttribute ("memBasketModel") BasketBean basketbean) {
 		UserDAO userdao = sqlSessionTemplate.getMapper(UserDAO.class);
 		ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
-		
+		String id = basketbean.getBasketbeanList().get(0).getB_Id();
 		System.out.println("gkgkgk");
 		MemberBean getinfo1 = userdao.userInfo("mina@naver.com");
 		ProductBean getinfo2 = productdao.productinfo("1");
