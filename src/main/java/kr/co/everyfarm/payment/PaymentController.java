@@ -60,6 +60,7 @@ public class PaymentController {
 		ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
 		ProductBean getinfo2 = productdao.productinfo("1");
 		model.addAttribute("Product", getinfo2);
+		System.out.println("TEST");
 		return "payment/bpayment";
 	}
 
