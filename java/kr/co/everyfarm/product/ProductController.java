@@ -3,7 +3,8 @@ package kr.co.everyfarm.product;
 
 import java.util.List;
 
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,81 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.everyfarm.basket.BasketBean;
+
 @Controller
 public class ProductController {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	
+	
+	@RequestMapping(value="/productlist")
+	public String getProductlist(Model model, @ModelAttribute ("pagebeen") PageBeen pagebeen) {
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		
+		List<ProductBean> productlist = dao.listserachpageingcount(pagebeen);
+		int selecttotalindex = productlist.size();
+		pagebeen.setTableindex(selecttotalindex);
+		productlist = dao.listserachpageing(pagebeen);
+
+		model.addAttribute("pagebeen",pagebeen);
+		model.addAttribute("productlist",productlist);
+		return "product/productList";
+	}
+	
+	@RequestMapping(value="/productdetail")
+	public String getProductlist(Model model, @RequestParam("productno") String productno
+			,@ModelAttribute ("basketbean") BasketBean basketbean) {
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		int p_No = Integer.parseInt(productno);
+		ProductBean oneproduct = dao.onelist(p_No);
+		model.addAttribute("basketbean",basketbean);
+		model.addAttribute("oneproduct",oneproduct);
+		return "product/productdetail";
+	}
+	
+	
+	
+	@RequestMapping(value="/productbasketchoice")
+	public String getProductbasketchoice(Model model, @ModelAttribute ("basketbean") BasketBean basketbean, HttpServletRequest request) {
+		String id = basketbean.getBasketbeanList().get(0).getB_Id();
+		String seed = basketbean.getBasketbeanList().get(0).getB_Seed();
+		System.out.println(seed + "동작 씨앗");
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		for(int i=0; i < basketbean.getBasketbeanList().size() ; i++) {
+			if(basketbean.getBasketbeanList().get(i).getB_Land() != 0) {
+				System.out.println(basketbean.getBasketbeanList().get(i).getB_Seed() + "씨앗 왜? 예가 왜?");
+				dao.insertbasket(basketbean.getBasketbeanList().get(i));
+				System.out.println("동작?");
+			}
+		}
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("basketbean2", basketbean);
+		model.addAttribute("basketbean",basketbean);
+		return "/product/test1";
+	}
+
+	
+	
+	/*
+	
+	@RequestMapping(value="/productbasketchoice")
+	public String getProductbasketchoice(Model model, @ModelAttribute ("basketbean") BasketBean basketbean) {
+		String id = basketbean.getBasketbeanList().get(0).getB_Id();
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		for(int i=0; i < basketbean.getBasketbeanList().size() ; i++) {
+			if(basketbean.getBasketbeanList().get(i).getB_Land() != 0) {
+				dao.insertbasket(basketbean.getBasketbeanList().get(i));
+				System.out.println("동작?");
+			}
+		}
+		model.addAttribute("basketbean",basketbean);
+		return "/product/test1";
+	}
+	*/
+	//위 사용 중...박정빈	
+	
 	
 	@RequestMapping(value="/testsession")
 	public String testsession(Model model,@ModelAttribute ("pagebeen") PageBeen pagebeen) {
@@ -44,29 +116,7 @@ public class ProductController {
 		return "product/productlist2";
 	}
 	
-	@RequestMapping(value="/productlist")
-	public String getProductlist(Model model, @ModelAttribute ("pagebeen") PageBeen pagebeen) {
-		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		
-		List<ProductBean> productlist = dao.listserachpageingcount(pagebeen);
-		int selecttotalindex = productlist.size();
-		pagebeen.setTableindex(selecttotalindex);
-		productlist = dao.listserachpageing(pagebeen);
-
-		model.addAttribute("pagebeen",pagebeen);
-		model.addAttribute("productlist",productlist);
-		return "product/productList";
-	}
 	
-	@RequestMapping(value="/productdetail")
-	public String getProductlist(Model model, @RequestParam("productno") String productno) {
-		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		int p_No = Integer.parseInt(productno);
-		ProductBean oneproduct = dao.onelist(p_No);
-		
-		model.addAttribute("oneproduct",oneproduct);
-		return "product/productdetail";
-	}
 	
 	
 	@RequestMapping(value="/adminproductlist")
@@ -194,13 +244,11 @@ public class ProductController {
 		return "redirect:/productadminlistform";
 	}
 	
+
 	@RequestMapping(value = "/productadminlistform")
-	public String getAdminlistform(Model model) {
-		return "redirect:/adminproductlistform";
-	}
-	@RequestMapping(value = "/adminproductlistform")
 	public String getAdminProductList(Model model) {
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		
 		List<ProductBean> list = dao.list();
 		model.addAttribute("productlist", list);
 		return "product/productadminlistform";

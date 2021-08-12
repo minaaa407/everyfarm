@@ -2,6 +2,8 @@ package kr.co.everyfarm.product;
 
 import java.util.List;
 
+import kr.co.everyfarm.basket.BasketBean;
+
 public interface ProductDao {
 	
 	public List<ProductBean> list();
@@ -15,7 +17,7 @@ public interface ProductDao {
 	public int insert(ProductBean product);
 	public int update(ProductBean product);
 	public int delete(int productno);
-
+	public int insertbasket(BasketBean basket);
 	
 	
 	
@@ -25,5 +27,5 @@ public interface ProductDao {
 	
 	
 	
-	public ProductBean productinfo(String p_No);
+	public ProductBean productinfo(int p_No);
 }
