@@ -4,8 +4,13 @@ import java.util.List;
 
 public interface ReviewDAO  {
 	
-	public List<ReviewVO> list();
-	public int insert(ReviewVO vo);
+	 List<ReviewBean> list();
+	 public int insert(ReviewBean reviewBean);
 	
+	
+	 ReviewBean revDetail(ReviewBean reviewBean);
+	 void ReadCount(ReviewBean reviewBean);
+	 int revUpdate(ReviewBean reviewBean);
+	 int revDelete(ReviewBean reviewBean);
 
 }

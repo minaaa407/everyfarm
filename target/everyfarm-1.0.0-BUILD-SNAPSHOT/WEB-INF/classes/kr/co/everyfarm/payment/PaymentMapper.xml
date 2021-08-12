@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+						
+<mapper namespace="kr.co.everyfarm.payment.PaymentDAO">
+
+<insert id="insert" parameterType="kr.co.everyfarm.payment.PaymentBean">
+		<![CDATA[
+		insert into payment (pay_no, pay_id, pay_seedcount, pay_totalprice, pay_method, pay_deliver) 
+		values (#{pay_no}, #{pay_id}, #{pay_seedcount}, #{pay_totalprice}, #{pay_method}, #{pay_deliver});
+		]]>
+	</insert>
+  
+  
+  
+
+  
+</mapper>

@@ -2,10 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 
 <head>
+
+
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
     <meta name="keywords" content="Ogani, unica, creative, html">
@@ -17,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-   
+    <!-- 
     <link rel="stylesheet" href="resources/review/reviewList/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="resources/review/reviewList/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="resources/review/reviewList/css/elegant-icons.css" type="text/css">
@@ -26,6 +29,15 @@
     <link rel="stylesheet" href="resources/review/reviewList/ss/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="resources/review/reviewList/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="resources/review/reviewList/css/style.css" type="text/css">
+    -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="resources/review/reviewList/css/animate.css">
+    <link rel="stylesheet" href="resources/review/reviewList/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="resources/review/reviewList/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="resources/review/reviewList/css/magnific-popup.css">
+    <link rel="stylesheet" href="resources/review/reviewList/css/flaticon.css">
+    <link rel="stylesheet" href="resources/review/reviewList/css/style.css">
+	<link rel="stylesheet" href="resources/review/style.css">
 
    
 </head>
@@ -39,66 +51,78 @@
     
 
     <!-- Shoping Cart Section Begin -->
-    <section class="shoping-cart spad">
+    <section class="ftco-section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping__cart__table">
-                        <table style=" border: 1px solid #444444;">
-                            <thead>
-                                <tr>
-                                    <th>번호</th>
-                                    <th></th> <!-- 이미지 -->
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>내용</th>
-                                    <th></th> <!-- 별점 -->
-                                    <th>조회수</th>
-                                    <th>등록일</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+            <div class="row flex-direction:row-reverse justify-content-center">
+                <div class="col-md-3 d-flex ftco-animate">
+                    <div class="blog-entry justify-content-end">
+                     <div class="text">
                            <c:choose>
                            		<c:when test="${empty revList}">
-                           			<tr><td colspan="8" align="center">게시글이 없습니다.</td></tr>
+                           			<div><p  align="center">게시글이 없습니다</p></div>
                            		</c:when>
                            		<c:when test="${!empty revList}">
-                            		<c:forEach var="re" items="${revList}">
-                            		 <tr>
-                            			<td>${re.rev_No}</td>
-                            			<td><a href="#">${re.rev_Image}</a></td> <!-- 상세보기  -->
-                            			<td><a href="#">${re.rev_Title}</a></td><!-- 상세보기  -->
+                   				 <c:forEach var="re" items="${revList}">
+                   				 <a href="" class="block-20 img" style="background-image: url('resources/review/reviewList/img/test.jpg')"></a>
+                           		 <div class="meta mb-3">
+                            			<div><fmt:formatDate pattern ="yyyy/MM/dd" value="${re.rev_Date}" /></div>
+                            			<div>${re.rev_Id}</div>
+                            			<div><a class="meta-chat"><span class="fa fa-eye"></span>&nbsp;${re.rev_Readcount}</a></div>
+                            			<h3 class="heading"><a href="/reviewDetail?rev_No=${re.rev_No}">${re.rev_Title}</a></h3>
+                            			   	<fieldset class="rating">											
+                            				<c:if test="${re.rev_Rate eq 0.5}">
+   												 <label class="half" for="starhalf" ></label>
+                            				</c:if>
+                            				<c:if test="${re.rev_Rate eq 1}">
+   												 <label class = "full" for="star1" ></label>
+                            				</c:if>
+                            				<c:if test="${re.rev_Rate eq 1.5}">
+   												 <label class="half" for="star1half" ></label>
+                            				</c:if>
+                            				<c:if test="${re.rev_Rate eq 2}">
+   												 <label class = "full" for="star2" ></label>
+                            				</c:if>
+                            				<c:if test="${re.rev_Rate eq 2.5}">
+   												 <label class = "half" for="star2half" ></label>
+                            				</c:if>
+                            				<c:if test="${re.rev_Rate eq 3}">
+   												 <label class = "full" for="star3" ></label>
+                            				</c:if>
+                            				<c:if test="${re.rev_Rate eq 3.5}">
+   												 <label class="half"  for="star3half" ></label>
+                            				</c:if>
+                            				<c:if test="${re.rev_Rate eq 4}">
+   												 <label class = "full" for="star4" ></label>
+                            				</c:if>
+                            				<c:if test="${re.rev_Rate eq 4.5}">
+   												 <label class="half"  for="star4half" ></label>
+                            				</c:if>
+                            				<c:if test="${re.rev_Rate eq 5}">
+   												 <label class = "full" for="star5"  ></label>
+                            				</c:if>
+                            				</fieldset>
+                            			<!-- 
+                            			<td><a href="/reviewDetail?rev_Cont=${re.rev_Cont}">${re.rev_Image}</a></td> 
+                            			<td><a href="/reviewDetail?rev_Title=${re.rev_Title}">${re.rev_Title}</a></td>
                             			<td>${re.rev_Id}</td>
-                            			<td>${re.rev_Cont}</td>
+                            			<td><a href="/reviewDetail?rev_Cont=${re.rev_Cont}">${re.rev_Cont}</a></td>
                             	 		<td>${re.rev_Rate}</td>
                             			<td>${re.rev_Readcount}</td>
-                            			<td>${re.rev_Date}</td>
-                            		</tr>
-                            		</c:forEach>
-                            	</c:when>
-                           </c:choose>
-		 
-		 
-                            </tbody>
-                        </table>
-                        <button type="button" id="revWrite" class="btn btn-outline-success" onclick="location.href='/reviewWrite'">글쓰기 </button>
+                            			-->
+                            	 </div>
+		 						
+                          </c:forEach>
+                          </c:when>
+                        </c:choose>
+                      <button type="button" id="revWrite" class="btn btn-outline-success" onclick="location.href='/reviewWrite'">글쓰기 </button>
                     </div>
                 </div>
               </div>
             </div>
+           </div>
     </section>
-<!-- 	<script type="text/javascript">
-	('#revWrite').click(function() {
-		var sesCheck = session.getAttribute("member");
-		if(sesCheck == null){
-			alert("로그인 후 이용 가능합니다.");
-		}else{
-			
-		}
-	});
-	</script> -->
 
-    <!-- Js Plugins -->
+    <!-- Js Plugins 
     <script src="resources/review/reviewList/js/jquery-3.3.1.min.js"></script>
     <script src="resources/review/reviewList/js/bootstrap.min.js"></script>
     <script src="resources/review/reviewList/js/jquery.nice-select.min.js"></script>
@@ -107,6 +131,26 @@
     <script src="resources/review/reviewList/js/mixitup.min.js"></script>
     <script src="resources/review/reviewList/js/owl.carousel.min.js"></script>
     <script src="resources/review/reviewList/js/main.js"></script>
+    -->
+  <script src="resources/review/reviewList/js/jquery.min.js"></script>
+  <script src="resources/review/reviewList/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="resources/review/reviewList/js/popper.min.js"></script>
+  <script src="resources/review/reviewList/js/bootstrap.min.js"></script>
+  <script src="resources/review/reviewList/js/jquery.easing.1.3.js"></script>
+  <script src="resources/review/reviewList/js/jquery.waypoints.min.js"></script>
+  <script src="resources/review/reviewList/js/jquery.stellar.min.js"></script>
+  <script src="resources/review/reviewList/js/owl.carousel.min.js"></script>
+  <script src="resources/review/reviewList/js/jquery.magnific-popup.min.js"></script>
+  <script src="resources/review/reviewList/js/jquery.animateNumber.min.js"></script>
+  <script src="resources/review/reviewList/js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="resources/review/reviewList/js/google-map.js"></script>
+  <script src="resources/review/reviewList/js/main.js"></script>
+    <script type="text/javascript">
+    
+    </script>
+     
+     
 
 
 </body>

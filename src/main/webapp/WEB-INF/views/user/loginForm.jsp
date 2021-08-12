@@ -7,13 +7,15 @@
 <head>
 <link rel="stylesheet" href="resources/index/css/test.css">
 <meta charset="UTF-8">
+<meta name="google-signin-client_id"
+	content="677450549591-uug8q1h3bnd5pk3huf8e8mobv9kr40cb.apps.googleusercontent.com">
 <title>LOGIN</title>
 </head>
 <body>
 	<div class="Main-container">
 		<div class="col-md-6 container-login">
 			<div class="wrap-login">
-				<form class="login-form" action="/login" method="post">
+				<form class="login-form" action="login" method="post">
 					<span class="login-form-title">EVERY FARM</span>
 
 					<div class="wrap-input">
@@ -32,24 +34,28 @@
 					</div>
 					<div class="login-form-btn-container">
 						<button type="submit" class="login-form-btn">Login</button>
-						<br> <br> <br> <a href="javascript:void(0)"
-							onclick="kakaoLogin();"> <img
-							src=/resources/img/kakaologin.png title="카카오로그인" alt="카카오톡으로 로그인">
-						</a> <a href="javascript:void(0)" onclick="kakaoLogout();"> <span>카카오
+						<br> <br> <br>
+						<!-- kakao -->
+						<a href="https://kauth.kakao.com/oauth/authorize?client_id=498888e1cfaa9f3669cf117f84502ba4&redirect_uri=http://localhost:8090/kakao_login&response_type=code"><img src="/resources/img/kakaologin.png" width="75%" style="display: block;margin-left: auto;margin-right: auto;"></a>
+						<a href="javascript:void(0)" onclick="kakaoLogout();"> <span>카카오
 								로그아웃</span>
 						</a>
-						<button class="btn btn-primary" id="googleLoginBtn">구글 로그인</button>
+						<!-- google -->
+						<div id="google_login" class="g-signin2" onclick="init();">
+							<i class="fa fa-google-plus fa-fw"></i>
+						</div>
+						<a href="#" onclick="signOut();">Sign out</a>
 					</div>
 
 					<div class="text-center p-t-1">
 						<select name="authority">
 							<option value="ROLE_USER">member</option>
 							<option value="ROLE_ADMIN">farmer</option>
-						</select> <a href="#" class="txt2">아이디 찾기</a> <span class="txt1-1">/</span>
+						</select> <a href="/findId" class="txt2">아이디 찾기</a> <span class="txt1-1">/</span>
 						<a href="/findPw" class="txt2">비밀번호 찾기</a>
 					</div>
 					<div class="text-center p-t-2">
-						<a href="#" class="txt2">계정이 없으신가요?<i
+						<a href="/sign" class="txt2">계정이 없으신가요?<i
 							class="fa fa-long-arrow-right " aria-hidden="true"></i></a>
 					</div>
 				</form>
@@ -57,14 +63,10 @@
 		</div>
 	</div>
 
-	<!-- 카카오 스크립트 -->
+	<!-- 소셜로그인 스크립트 -->
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 	<script>
-		/* 		$(function() {
-		 if ("${id}" != null && "${id}" != "") {
-		 $('#M_Id').val("${id}");
-		 }
-		 }); */
 		Kakao.init('18b909a01a9f7b33f53573a4d3341f16'); //발급받은 키 중 javascript키를 사용해준다.
 		console.log(Kakao.isInitialized()); // sdk초기화여부판단
 		//카카오로그인
@@ -74,7 +76,39 @@
 					Kakao.API.request({
 						url : '/v2/user/me',
 						success : function(response) {
-							console.log(response)
+							console.log("response::" + response)
+							console.log("nickname::" +response.properties.nickname);
+							if(response.properties.nickname == null){
+								alert("없는 회원");
+								location.href = '/sign';
+							}else{
+								$.ajax({
+									type : 'POST',
+									url : '/login',
+									data : data,
+									dataType : 'json',
+									success : function(data){
+										console.log(data)
+										if(data.JavaData == "YES"){
+											alert("로그인되었습니다.");
+											location.href = '/home'
+										}else if(data.JavaData == "register"){
+											$("#kakaoEmail").val(response.kakao_account.email);
+											$("#kakaoId").val(response.id);
+											$("#kakaoForm").submit();
+										}else{
+											alert("로그인에 실패했습니다");
+										}
+										
+									},
+									error: function(xhr, status, error){
+										alert("로그인에 실패했습니다."+error);
+									}
+								});
+
+							}
+							
+							
 						},
 						fail : function(error) {
 							console.log(error)
@@ -86,7 +120,7 @@
 				},
 			})
 		}
-		//카카오로그아웃  
+			//카카오로그아웃  
 		function kakaoLogout() {
 			if (Kakao.Auth.getAccessToken()) {
 				Kakao.API.request({
@@ -102,16 +136,66 @@
 			}
 		}
 		
+		//구글 로그인
+		// google signin API
+		var googleUser = {};
+		function init() {
+			 gapi.load('auth2', function() {
+			  console.log("init()시작");
+			  auth2 = gapi.auth2.init({
+			        client_id: '677450549591-uug8q1h3bnd5pk3huf8e8mobv9kr40cb.apps.googleusercontent.com',
+			        cookiepolicy: 'single_host_origin',
+			      });
+			      attachSignin(document.getElementById('google_login'));
+			 });
+		}
 		
-		const onClickGoogleLogin = function(e) {
-	    	//구글서버로 인증코드 발급 요청
-	 		window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?
-			client_id=본인클라이언트ID&
-			redirect_uri=http://localhost:8080/score/User/google/auth(위에서 추가한 URL)&
-			response_type=code&
-			scope=email%20profile%20openid&
-			access_type=offline");
-	 	}
+		//google signin API2
+		function attachSignin(element) {
+			var mId = {
+					m_Id : $("#m_Id").val()
+				}
+			var mPw = {
+					m_Pw : $("#m_Pw").val()
+				}
+
+
+		    auth2.attachClickHandler(element, {},
+		        function(googleUser) {
+		    	var profile = googleUser.getBasicProfile();
+		    	var id_token = googleUser.getAuthResponse().id_token;
+			  	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+			  	  console.log('ID토큰: ' + id_token);
+			  	  console.log('Name: ' + profile.getName());
+			  	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+					$(function() {
+						$.ajax({
+						    url: '/google_login',
+						    type: 'post',
+						    data: {
+								"m_Id" : mId,
+								"m_Pw" : mPw,
+						        "username": profile.getName(),
+								"email": profile.getEmail()
+							    },
+						    success: function (data) {
+						            alert("구글아이디로 로그인 되었습니다");
+						            location.href="/home";
+						        }
+						});
+					})
+		        }, function(error) {
+		          alert(JSON.stringify(error, undefined, 2));
+		        });
+		    console.log("구글API 끝");
+		  }
+		//구글 로그아웃
+		function signOut() {
+			var auth2 = gapi.auth2.getAuthInstance();
+			auth2.signOut().then(function() {
+				console.log('User signed out.');
+			});
+		}
 	</script>
 </body>
 </html>

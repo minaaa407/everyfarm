@@ -102,33 +102,8 @@
 
 	<select id="findPw" resultType="kr.co.everyfarm.user.MemberBean">
 		select * from member where
-		m_id=#{m_Id} and m_name=#{m_Name} and m_Tel=#{m_Tel}
+		m_id=#{m_Id} and m_name=#{m_Name} and m_tel=#{m_Tel}
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	<!-- 결제 페이지 이용 -->
 	

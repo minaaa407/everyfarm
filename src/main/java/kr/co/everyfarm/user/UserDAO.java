@@ -19,6 +19,8 @@ public interface UserDAO {
 
 	public FarmerBean flogin(FarmerBean farmerBean);
 	
+	public MemberBean klogin(MemberBean memberBean);
+	
 	public void mail(MemberBean memberBean);
 	
 	public int checkId(MemberBean memberBean);
@@ -31,17 +33,16 @@ public interface UserDAO {
 	
 	public void mUpdate(MemberBean memberbean);
 	
-	public void mDelete(MemberBean memberbean);
+	public void mDelete(MemberBean memberbean); 
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*
+	 * public MemberBean loginMemberByGoogle(MemberBean memberBean);
+	 * 
+	 * public void joinMemberByGoogle(MemberBean memberBean);
+	 */
 	
 	public MemberBean userInfo(String userID);
+
+	public MemberBean mInfo(MemberBean memberBean);
 	
 }
