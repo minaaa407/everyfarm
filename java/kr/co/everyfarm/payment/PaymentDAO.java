@@ -8,7 +8,8 @@ public interface PaymentDAO {
 	public List<PaymentBean> paylist();
 	public List<BpaymentBean> bpaylist();
 	
-	public int insert(PaymentBean payment);
+	public int payinsert(PaymentBean payment);
+	public int bpayinsert(BpaymentBean bpayment);
 	public int update(PaymentBean payment);
 	
 	public int paydelete(int Orderno);

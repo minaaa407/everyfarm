@@ -27,5 +27,4 @@ public interface ProductDao {
 	
 	
 	
-	public ProductBean productinfo(int p_No);
 }
