@@ -89,8 +89,8 @@
 						<li class="nav-item"><a href="services.html" class="nav-link">농장
 								등록</a></li>
 						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="blog.html" class="nav-link">Q&A</a></li>
-						<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
+						<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
 					</ul>
 				</div>
 			</div>

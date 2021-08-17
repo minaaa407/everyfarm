@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
@@ -40,7 +39,7 @@ public class UserController {
 	
 	@Autowired
 	private KakaoAPI kakao;
-
+	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home() {
 		return "home/home";
@@ -75,64 +74,24 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value = "/kakao_login", method = RequestMethod.GET)
+	@RequestMapping(value = "/kakaoLogin", method = RequestMethod.GET)
 	@ResponseBody
-	public String klogin(MemberBean memberBean, Model model, HttpServletRequest request, @RequestParam("code") String code) {
+	public String klogin(MemberBean memberBean,HttpSession session, HttpServletRequest request, @RequestParam("code") String code) {
 		System.out.println("kakaologin:: get");
-		
-		HttpSession session = request.getSession();
-		model.addAttribute("memberBean", memberBean);
-		UserDAO userDAO = sqlSessionTemplate.getMapper(UserDAO.class);
+		System.out.println("code :::" + code);
 		
 		String access_Token = kakao.getAccessToken(code);
-		HashMap<String, Object> kakaoInfo = kakao.getUserInfo(access_Token);
+		HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
+		System.out.println("login Controller:::" + userInfo);
 		
-		if(kakaoInfo.get("email") != null) {
-			session.setAttribute("loginPI", "kakao");
-			session.setAttribute("m_Id", kakaoInfo.get("email"));
-			session.setAttribute("m_Name", kakaoInfo.get("nickname"));
+		if(userInfo.get("m_Id") != null) {
+			session.setAttribute("m_Id", userInfo.get("m_Id"));
 			session.setAttribute("access_Token", access_Token);
-		}
-
-		MemberBean member = userDAO.mlogin(memberBean);
-
-		if (member != null) {
-			session.setAttribute("member", member);
 			return "redirect:/home";
-		} else {
+		}else{
 			return "redirect:/sign";
 		}
 	}
-
-	/*
-	 * @RequestMapping(value = "/google_login", method = RequestMethod.POST)
-	 * 
-	 * @ResponseBody public String loginMemberByGoogle(MemberBean memberBean,
-	 * FarmerBean farmerBean, HttpServletRequest request, HttpSession session,
-	 * RedirectAttributes rttr) {
-	 * 
-	 * UserDAO userDAO = sqlSessionTemplate.getMapper(UserDAO.class); MemberBean mem
-	 * = userDAO.loginMemberByGoogle(memberBean); String mvo_ajaxid =
-	 * memberBean.getM_Id();
-	 * 
-	 * if (mem == null) { // 아이디가 DB에 존재하지 않는 경우 // 구글 회원가입
-	 * userDAO.joinMemberByGoogle(memberBean);
-	 * 
-	 * // 구글 로그인 mem = userDAO.loginMemberByGoogle(memberBean);
-	 * session.setAttribute("m_Id", mem.getM_Id()); rttr.addFlashAttribute("mbean",
-	 * mem); }
-	 * 
-	 * if (mvo_ajaxid.equals(mem.getM_Id())) { // 아이디가 DB에 존재하는 경우 // 구글 로그인
-	 * userDAO.loginMemberByGoogle(memberBean); session.setAttribute("m_Id",
-	 * mem.getM_Id()); rttr.addFlashAttribute("mbean", mem); } else {// 아이디가 DB에
-	 * 존재하지 않는 경우 // 구글 회원가입 userDAO.joinMemberByGoogle(memberBean);
-	 * 
-	 * // 구글 로그인 mem = userDAO.loginMemberByGoogle(memberBean);
-	 * session.setAttribute("m_Id", mem.getM_Id()); rttr.addFlashAttribute("mbean",
-	 * mem); }
-	 * 
-	 * return "redirect:/home"; }
-	 */
 
 	@RequestMapping(value = "/sign", method = RequestMethod.GET)
 	public String sign(Model model) {
@@ -333,6 +292,9 @@ public class UserController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
+		kakao.kakaoLogout((String)session.getAttribute("access_Token"));
+	    session.removeAttribute("access_Token");
+	    session.removeAttribute("userId");
 		session.invalidate();
 		return "home/home";
 	}
@@ -365,6 +327,11 @@ public class UserController {
 
 		session.invalidate();
 		return "redirect:/home";
+	}
+	
+	@RequestMapping(value = "/contact")
+	public String contact() {
+		return "board/contact";
 	}
 
 }

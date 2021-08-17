@@ -13,7 +13,7 @@
 	<div class="Main-container">
 		<div class="col-md-6 container-login">
 			<div class="wrap-login">
-				<form class="login-form" action="login" method="post">
+				<form class="login-form" action="adLogin" method="post">
 					<span class="login-form-title">EVERY FARM</span>
 
 					<div class="wrap-input">
@@ -32,6 +32,7 @@
 					</div>
 					<div class="login-form-btn-container">
 						<button type="submit" class="login-form-btn">Login</button>
+						</a>
 					</div>
 					<div class="login-form-btn-container">
 						<a

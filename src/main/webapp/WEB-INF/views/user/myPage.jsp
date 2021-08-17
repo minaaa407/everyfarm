@@ -23,6 +23,20 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
 	rel="stylesheet">
 
+<link rel='stylesheet'
+	href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css'>
+<link rel='stylesheet'
+	href='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.4/css/tether.min.css'>
+
+
+<!-- 사이드 추가-->
+<link rel="stylesheet" href="resources/user/css/sidebar-menu.css">
+<script src="resources/user/js/sidebar-menu.js"></script>
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<!-- 사이드 추가-->
+
+
+<!-- Modal -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet"
@@ -36,69 +50,11 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<!--  다음 주소 -->
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- Modal -->
 
+
+<link rel="stylesheet" href="resources/user/css/mypage.css">
 <style type="text/css">
-#proFile {
-	margin-top: 35%;
-}
-
-#profileImg {
-	width: 100%;
-}
-
-#myInfo label.error {
-	color: red;
-}
-
-body {
-	background: rgb(29, 185, 81)
-}
-
-.form-control:focus {
-	box-shadow: none;
-	border-color: #BA68C8
-}
-
-.profile-button {
-	color: rgb(135, 247, 145);
-	background: rgb(255, 255, 255);
-	box-shadow: none;
-	border:;
-	border-color: rgb(135, 247, 145);
-}
-
-.profile-button:hover {
-	background: rgb(29, 185, 81)
-}
-
-.profile-button:focus {
-	background: #682773;
-	box-shadow: none
-}
-
-.profile-button:active {
-	background: #682773;
-	box-shadow: none
-}
-
-.back:hover {
-	color: #682773;
-	cursor: pointer
-}
-
-.labels {
-	font-size: 11px
-}
-
-.add-experience:hover {
-	background: #BA68C8;
-	color: #fff;
-	cursor: pointer;
-	border: solid 1px #BA68C8
-}
-
 <!--
 탈퇴 Modal -->body {
 	font-family: 'Varela Round', sans-serif;
@@ -207,168 +163,196 @@ body {
 	display: inline-block;
 }
 <!--
-탈퇴
-
-
- 
-
-
-Modal
-
-
- 
-
-
--->
+탈퇴Modal--
+>
 </style>
 
 </head>
 <body>
-
-	<div class="container rounded bg-white mt-5 mb-5">
-		<div class="row">
-			<div class="col-md-3 border-right">
-				<div id="proFile"
-					class="d-flex flex-column align-items-center text-center p-3 py-5">
-					<img id="profileImg" class="rounded-circle md-5"
-						src="https://og-data.s3.amazonaws.com/media/artworks/half/A0880/A0880-0016.jpg">
-					<span class="font-weight-bold">${member.m_Name}</span><span
-						class="text-black-50">${member.m_Id}</span><span> </span>
-				</div>
-			</div>
-			<div class="col-md-5 border-right">
-				<form method="POST" id="myInfo">
-					<div class="p-3 py-5">
-						<div
-							class="d-flex justify-content-between align-items-center mb-3">
-							<h4 class="text-right">내 정보</h4>
+	<div class="container">
+		<div class="view-account">
+			<section class="module">
+				<div class="module-inner">
+					<div class="side-bar">
+						<div class="user-info">
+							<img class="img-profile img-circle img-responsive center-block"
+								src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+							<ul class="meta list list-unstyled">
+								<li class="name">${member.m_Name}</li>
+								<li class="email">${member.m_Id}</li>
+							</ul>
 						</div>
-						<div class="row mt-2">
-							<div class="col-md-12">
-								<label class="labels">아 이 디</label><input type="text" id="txtId"
-									class="form-control" name="m_Id" value="${member.m_Id}"
-									readonly>
-							</div>
-						</div>
-						<div class="row mt-3">
-
-							<div class="col-md-12">
-								<label class="labels">현재 비밀번호</label><input type="password"
-									class="form-control" placeholder="" value="${member.m_Pw}"
-									readonly>
-							</div>
-							<div class="form-group has-feedback">
-								<div class="col-md-12">
-									<label class="labels">변경할 비밀번호</label><input type="password"
-										name="m_Pw" id="m_Pw" class="form-control" value="" required>
+						<section>
+							<div class="nav btn-group dropright sidebar-menu">
+								<button type="button" class="btn btn-secondary dropdown-toggle"
+									data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="false">
+									<span class="fa fa-clock-o"> </span> 활동내역활동내역
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="#">내가 쓴 게시물</a> <a
+										class="dropdown-item" href="#">My Q&A</a> <a
+										class="dropdown-item" href="#">내가</a>
 								</div>
-								<span id="pwdRegErr" class="invalid-feedback help-block">8글자
-									이상 입력하세요.</span> <span
-									class="glyphicon glyphicon-ok form-control-feedback"></span>
 							</div>
-
-
-							<div class="form-group has-feedback">
-								<div class="col-md-12">
-									<label class="labels">비밀번호 확인</label><input type="password"
-										id="txtPasswordConfirm" name="txtPasswordConfirm"
-										class="form-control" value="" required>
+							<ul class="nav sidebar-menu">
+								<li class="active"><a href="#"><span class="fa fa-user"></span>
+										내 정보</a></li>
+								<li><a href="#"><span class="fa fa-cog"></span>
+										Settings</a></li>
+								<li><a href="#"><span class="fa fa-credit-card"></span>
+										결제 내역</a></li>
+								<li class="nav-item open">
+								<li><a href="#"><span class="fa fa-clock-o"> </span>
+										활동내역</a></li>
+							</ul>
+						</section>
+					</div>
+					<div class="content-panel">
+						<h2 class="title">내 정보</h2>
+						<form class="form-horizontal" method="post" id="myInfo">
+							<fieldset class="fieldset">
+								<h3 class="fieldset-title">상세정보</h3>
+								<div class="form-group avatar">
+									<figure class="figure col-md-2 col-sm-3 col-xs-12">
+										<img class="img-rounded img-responsive"
+											src="https://bootdey.com/img/Content/avatar/avatar1.png"
+											alt="">
+									</figure>
+									<div class="form-inline col-md-10 col-sm-9 col-xs-12">
+										<input type="file" class="file-uploader pull-left">
+										<button type="submit"
+											class="btn btn-sm btn-default-alt pull-left">Update
+											Image</button>
+									</div>
 								</div>
-								<span class="glyphicon glyphicon-ok form-control-feedback"></span>
-							</div>
+								<div class="form-group">
+									<label class="col-md-2 col-sm-3 col-xs-12 control-label">이
+										름 </label>
+									<div class="col-md-10 col-sm-9 col-xs-12">
+										<input type="text" name="m_Name" class="form-control"
+											value="${member.m_Name}">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-2 col-sm-3 col-xs-12 control-label">
+										아이디</label>
+									<div class="col-md-10 col-sm-9 col-xs-12">
+										<input type="text" id="txtId" class="form-control" name="m_Id"
+											value="${member.m_Id}" readonly>
+									</div>
+								</div>
+
+								<div class="form-group has-feedback">
+									<label class="col-md-2 col-sm-3 col-xs-12 control-label">
+										변경할 비밀번호</label>
+									<div class="col-md-10 col-sm-9 col-xs-12">
+										<input type="password" name="m_Pw" id="m_Pw"
+											class="form-control" value="" required>
+									</div>
+									<span id="pwdRegErr" class="invalid-feedback help-block">8글자
+										이상 입력하세요.</span> <span
+										class="glyphicon glyphicon-ok form-control-feedback"></span>
+								</div>
+
+								<div class="form-group has-feedback">
+									<label class="col-md-2 col-sm-3 col-xs-12 control-label">비밀번호
+										확인 </label>
+									<div class="col-md-10 col-sm-9 col-xs-12">
+										<input type="password" id="txtPasswordConfirm"
+											name="txtPasswordConfirm" class="form-control" value=""
+											required>
+									</div>
+									<span class="glyphicon glyphicon-ok form-control-feedback"></span>
+								</div>
+							</fieldset>
+							<fieldset class="fieldset">
+								<h3 class="fieldset-title">Contact Info</h3>
+								<div class="form-group">
+									<label class="col-md-2  col-sm-3 col-xs-12 control-label">현재
+										주소</label>
+									<div class="col-md-10 col-sm-9 col-xs-12">
+										<input type="text" class="form-control"
+											value="${member.m_Addr}" readonly>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
+									<div class="col-md-10 col-sm-9 col-xs-12">
+										<input class="form-control" placeholder="우편번호" id="Addr1"
+											name="Addr1" type="text" readonly="readonly"> <input
+											type="button" onclick="execPostCode();" value="우편번호 찾기">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
+									<div class="col-md-10 col-sm-9 col-xs-12">
+										<input class="form-control" placeholder="도로명 주소" id="Addr2"
+											name="Addr2" type="text" readonly="readonly" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
+									<div class="col-md-10 col-sm-9 col-xs-12">
+										<input class="form-control" placeholder="상세주소" id="Addr3"
+											name="Addr3" type="text" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
+									<div class="col-md-10 col-sm-9 col-xs-12">
+										<input class="form-control" placeholder="참고항목" id="Addr4"
+											name="Addr4" type="text" />
+									</div>
+								</div>
+							</fieldset>
+							<hr>
 							<div class="form-group">
-								<div class="col-md-12">
-									<label class="labels">전화번호</label><input type="text"
-										name="m_Tel" class="form-control" placeholder=""
-										value="${member.m_Tel}">
+								<div
+									class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+									<button class="btn btn-style-1 btn-primary" type="submit"
+										formaction="/myInfoUpdate">내 정보 수정</button>
+								</div>
+								<div class="text-center">
+									<!-- Button  (Modal) -->
+									<a href="#myModal" class="trigger-btn" id="DeleteBtn"
+										data-toggle="modal">계정 탈퇴</a>
 								</div>
 							</div>
-
-							<div class="form-group">
-								<div class="col-md-12">
-									<label class="labels">주소</label><input type="text"
-										name="m_Addr" class="form-control" placeholder=""
-										value="${member.m_Addr}">
-									<button type="button" class="btn btn-default"
-										onclick="execPostCode();">
-										<i class="fa fa-search"></i> 우편번호 찾기
-									</button>
-								</div>
-							</div>
-						</div>
-						<div class="row mt-3">
-							<div class="col-md-6">
-								<label class="labels">생일</label><input type="text"
-									class="form-control" placeholder="" value="${member.m_Birth}"
-									readonly>
-							</div>
-							<div class="col-md-6">
-								<label class="labels">가입날짜</label><input class="form-control"
-									value="<fmt:formatDate pattern ="yyyy/MM/dd" value="${member.m_Date}" />"
-									readonly />
-							</div>
-						</div>
-						<div class="mt-5 text-center">
-							<button class="btn btn-primary profile-button" type="submit"
-								formaction="/myInfoUpdate">내 정보 수정</button>
-						</div>
-						<div class="text-center">
-							<!-- Button  (Modal) -->
-							<a href="#myModal" class="trigger-btn" id="DeleteBtn"
-								data-toggle="modal">계정 탈퇴</a>
-						</div>
-				</form>
-
-				<!-- Modal 내용 -->
-				<div id="myModal" class="modal fade">
-					<div class="modal-dialog modal-confirm">
-						<div class="modal-content">
-							<div class="modal-header flex-column">
-								<div class="icon-box">
-									<i class="material-icons">&#xE5CD;</i>
-								</div>
-								<h4 class="modal-title w-100">정말 탈퇴하시겠습니까?</h4>
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">&times;</button>
-							</div>
-							<div class="modal-body">
-								<p>거래 내역이 있는 회원님의 경우 거래증명을 위해 &nbsp;&nbsp;&nbsp;수집된 개인정보를
-									6개월간 보관 후 파기합니다.</p>
-							</div>
-							<div class="modal-footer justify-content-center">
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">취 소</button>
-								<button href="/myInfoDelete?m_Id=${member.m_Id}" type="submit"
-									class="btn btn-danger" formaction="/myInfoDelete">탈 퇴</button>
-							</div>
-						</div>
+						</form>
 					</div>
 				</div>
-			</div>
+			</section>
 		</div>
-		<div class="col-md-4">
-			<div class="p-3 py-5">
-				<div
-					class="d-flex justify-content-between align-items-center experience">
-					<span>내가 쓴 게시글</span>
+	</div>
+
+	<!-- Modal 내용 -->
+	<div id="myModal" class="modal fade">
+		<div class="modal-dialog modal-confirm">
+			<div class="modal-content">
+				<div class="modal-header flex-column">
+					<div class="icon-box">
+						<i class="material-icons">&#xE5CD;</i>
+					</div>
+					<h4 class="modal-title w-100">정말 탈퇴하시겠습니까?</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
 				</div>
-				<br>
-				<table class="table table-bordered">
-					<tr>
-						<th scope="row">제목</th>
-						<th scope="row">내용(N글자에서 자를것)</th>
-						<th scope="row">작성날짜</th>
-					</tr>
-					<tr>
-						<td>좋아</td>
-						<td>이거는너무~~....</td>
-						<td>2021-08-08</td>
-						<!-- 리스트 아직. -->
-					</tr>
-				</table>
+				<div class="modal-body">
+					<p>거래 내역이 있는 회원님의 경우 거래증명을 위해 &nbsp;&nbsp;&nbsp;수집된 개인정보를 6개월간
+						보관 후 파기합니다.</p>
+				</div>
+				<div class="modal-footer justify-content-center">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">취 소</button>
+					<button href="/myInfoDelete?m_Id=${member.m_Id}" type="submit"
+						class="btn btn-danger" formaction="/myInfoDelete">탈 퇴</button>
+				</div>
 			</div>
 		</div>
 	</div>
+
 </body>
 
 <script type="text/javascript"
@@ -376,6 +360,7 @@ Modal
 <script src="http://code.jquery.com/jquery-1.3.2.min.js"></script>
 <script
 	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
+
 <script type="text/javascript">
 	$('#DeleteBtn').click(function() {
 		$('#m_Pw').attr('disabled', 'disabled');
@@ -469,6 +454,9 @@ Modal
 
 					}); //end ready()
 </script>
+<!-- daum 도로명주소 찾기 api -->
+<script
+	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	function execPostCode() {
 		new daum.Postcode({
