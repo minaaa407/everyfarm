@@ -15,6 +15,7 @@ public class BasketBean {
 	private String p_Manpay;
 	private String p_Landprice;
 	private int p_Landavailable;
+	private String p_Accept;
 	
 	private String b_Seed;
 	private int b_Totalprice;
@@ -81,6 +82,12 @@ public class BasketBean {
 	public void setP_Landavailable(int p_Landavailable) {
 		this.p_Landavailable = p_Landavailable;
 	}
+	public String getP_Accept() {
+		return p_Accept;
+	}
+	public void setP_Accept(String p_Accept) {
+		this.p_Accept = p_Accept;
+	}
 	public String getB_Seed() {
 		return b_Seed;
 	}
@@ -97,8 +104,8 @@ public class BasketBean {
 	public String toString() {
 		return "BasketBean [b_No=" + b_No + ", b_Id=" + b_Id + ", b_Pno=" + b_Pno + ", b_Land=" + b_Land + ", p_Img="
 				+ p_Img + ", p_Title=" + p_Title + ", p_Manpay=" + p_Manpay + ", p_Landprice=" + p_Landprice
-				+ ", p_Landavailable=" + p_Landavailable + ", b_Seed=" + b_Seed + ", b_Totalprice=" + b_Totalprice
-				+ "]";
+				+ ", p_Landavailable=" + p_Landavailable + ", p_Accept=" + p_Accept + ", b_Seed=" + b_Seed
+				+ ", b_Totalprice=" + b_Totalprice + ", basketbeanList=" + basketbeanList + "]";
 	}
 	
 

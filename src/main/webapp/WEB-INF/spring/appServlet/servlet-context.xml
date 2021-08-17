@@ -63,7 +63,12 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
-
+	
+<beans:bean id="multipartResolver"
+      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      <beans:property name="maxUploadSize" value="100000" />
+   </beans:bean>
+   
 	<!-- Validator 추가 -->
 	<beans:bean
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" id="validator" />

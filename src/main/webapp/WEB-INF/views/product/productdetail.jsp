@@ -2,7 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page import="kr.co.everyfarm.product.ProductBean"%>
+<%@page import="kr.co.everyfarm.user.MemberBean"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,6 +42,7 @@
 
 
 
+
 <script>
 function selectimg(name){
 
@@ -47,45 +50,167 @@ function selectimg(name){
 	
 }
 
+function basket(){
+	
+	document.getElementById('myHiddenForm').action="/productbasketchoice";
+	document.myHiddenForm.submit();
+}
+
+function payment(){
+	document.getElementById('myHiddenForm').action="/PaymentInfo";
+	document.myHiddenForm.submit();
+}
+
+
+function listChange(){
+	document.getElementById('productamout').value="1";
+}
+
 function selectproduct(){
+	
+	
+	<%	String id ="";
+		MemberBean member = (MemberBean)session.getAttribute("member");
+		if(member==null){
+			id ="";
+		}else{
+			id = member.getM_Id();
+		}
+		
+		System.out.println(id);
+		
+	
+	%>  
+	
+	var uid = "<%=id%>";
+	
+	
 	var amout = document.getElementById('productamout').value;
-	var product = document.getElementById('productlist').value;
+	
+	if(amout > 0){ //0이상 선택시 
+	
+		var product = document.getElementById('productlist').value;
+		
+		var productbasket = document.getElementById('productbasket');
+		var rowid = "product"+product;
+		var pnum = "pnum"+product;
+		var total = "total"+product;
+		//var productlistname = document.getElementsbyName("productname");
+		
+		//alert(productlistname[0]);
+		//alert(0);
+		//var plusUl = document.createElement('ul');
+	    // 추가할 plusUl 엘리먼트 안의 내용을 정해줍니다. ( 꼭 정해야 하는건 아닙니다. )
+	   // plusUl.innerHTML =  "<oi>세엣</oi>";   
+	    // appendChild 로 이전에 정의한 plusUl 변수의 내용을 실제 추가합니다.
+	   // document.getElementById('productbasket').appendChild(plusUl);
+	    
+	    if(!(document.getElementById(rowid))){ // 중복 씨앗 없을 때
+	    	
+	    	var cartlist = document.getElementById('cartlist');		
+			var totalproduct = 0;
+	    	for (var i = 2; i < cartlist.rows.length; i++) {
+	    	      var userName = cartlist.rows[i].cells[2].innerText;
+	    	      
+	    	      totalproduct = parseInt(totalproduct) + parseInt(userName);
+	    	}
+	    				totalproduct = parseInt(totalproduct) + parseInt(amout)
+						
 
-	var productbasket = document.getElementById('productbasket');
-	//alert(0);
-	
-	
-	//var plusUl = document.createElement('ul');
-    // 추가할 plusUl 엘리먼트 안의 내용을 정해줍니다. ( 꼭 정해야 하는건 아닙니다. )
-   // plusUl.innerHTML =  "<oi>세엣</oi>";   
-    // appendChild 로 이전에 정의한 plusUl 변수의 내용을 실제 추가합니다.
-   // document.getElementById('productbasket').appendChild(plusUl);
-    
-
-    const table = document.getElementById('cartlist');
-    
-    const newRow = table.insertRow();
-    
-    // 새 행(Row)에 Cell 추가
-    const newCell1 = newRow.insertCell(0);
-    const newCell2 = newRow.insertCell(1);
-    const newCell3 = newRow.insertCell(2);
-    const newCell4 = newRow.insertCell(3);
-    newCell1.innerText = product;
-    newCell2.innerText = ${oneproduct.p_Landprice };
-    newCell3.innerText = amout;
-    newCell4.innerText = (${oneproduct.p_Landprice} * amout);
-   
-	
-	
+				   		if(totalproduct < ${oneproduct.p_Landavailable  }){
+				   			
+				   		
+					    const table = document.getElementById('cartlist');
+					    const totalRowCnt = table.rows.length;
+					    const newRow = table.insertRow();
+					    newRow.id = rowid;
+					    // 새 행(Row)에 Cell 추가
+					    const newCell1 = newRow.insertCell(0);//씨앗
+					    const newCell2 = newRow.insertCell(1);//한개 가격
+					    const newCell3 = newRow.insertCell(2);//땅 갯수
+					    const newCell4 = newRow.insertCell(3);//총 가격
+					    newCell4.id=total;
+					    newCell1.innerText = product;
+					  
+					    newCell2.innerText = ${oneproduct.p_Landprice };
+					    newCell3.innerHTML ='<input name = ' + product + ' type="button" onclick="count1(this.name)" value="-"/>'
+					    +'&nbsp&nbsp&nbsp'+'<span id ="'+ pnum+'">' + amout+'</span> &nbsp&nbsp&nbsp'+'<input name = "'+product +'"type="button" onclick="count2(this.name)" value="+"/>';
+					    //newCell3.innerText = amout;
+					    newCell4.innerText = (${oneproduct.p_Landprice} * amout);
+						var b_Pno = ("b_Pno" + product);
+						var b_Id = ("b_Id" + product);
+						var b_Land = ("b_Land" + product);
+						var b_Totalprice = ("b_Totalprice" + product);
+					    //document.getElementById('b_Pno').value = "farmers";
+						//document.getElementById('b_Id').value= "farmers";
+						document.getElementById(b_Id).value= uid;
+						document.getElementById(b_Land).value= amout;
+						document.getElementById(b_Totalprice).value= (${oneproduct.p_Landprice} * amout);
+				   		}
+				   		else{
+				   			alert("남은 땅 수량보다 값이 큽니다. 수량을 조절해주세요.")
+				   		}
+						
+	    }else{
+	    	alert("동일 제품이 존재합니다. 수량을 조절해주십시요.")
+	    }
+	    
+	}else{
+		alert("0 이상 수량을 입력해주세요.")
+	}
 	
 }
+
+function count1(name)  {
+	   
+	  var total = "total"+name;
+	  
+	  name = "pnum"+name;
+	  const resultElement = document.getElementById(name);
+	  let number = resultElement.innerText;
+	
+	    number = parseInt(number) - 1;
+	  if(number>0){
+		  resultElement.innerText = number;
+		  document.getElementById(total).innerText = (number) * (${oneproduct.p_Landprice});
+	  }
+}
+
+function count2(name)  {
+	   
+	  var total = "total"+name;
+	  
+	  name = "pnum"+name;
+	  const resultElement = document.getElementById(name);
+	  let number = resultElement.innerText;
+	
+	    number = parseInt(number) + 1;
+	  if(number>0){
+		  resultElement.innerText = number;
+		  document.getElementById(total).innerText = (number) * (${oneproduct.p_Landprice});
+	  }
+}
+
+function check(){
+	alert(1);
+	document.getElementById("myhiddenform");
+	document.getElementById("myhiddenform").submit();
+	alert(2);
+	document.myhiddenform.submit();
+	
+}
+
 
 </script>
 
 
 </head>
 <body>
+
+<!-- 씨앗 초기화 등 초기 설정. -->
+<c:set var = "seedlist" value="감자,고구마,콩,배추,상추,수박,오이,토마토,호박,고추,마늘,파,양파,무,당근" />
+
+
 
 	<div class="container pt-5 pb-4">
 		<div class="row justify-content-between">
@@ -184,36 +309,31 @@ function selectproduct(){
                             <i class="fa fa-star-half-o"></i>
                             <span>(18 reviews)</span>
                         </div>
-                   		
+                   		<div><h6>남은 평 : ${oneproduct.p_Landavailable} 평</h6></div>
                         <div><h4>1평 :<fmt:formatNumber value="${oneproduct.p_Landprice }" pattern="#,###" /> 원</h4></div>
+                        
+                        
+                       
                         <hr>
                         <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
                             vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
                             quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
                        	<div>
-                       
-		                         <select id ="productlist" name="productlist" class="productlist">
-							         <option value="감자">감자</option>
-							         <option value="고구마">고구마</option>
-							         <option value="콩">콩</option>
-							         <option value="배추">양배추</option>
-							         <option value="상추">상추</option>
-							         <option value="수박">수박</option>
-							         <option value="오이">오이</option>
-							         <option value="토마토">토마토</option>
-							         <option value="호박">호박</option>
-							         <option value="고추">고추</option>
-							         <option value="마늘">마늘</option>
-							         <option value="파">파</option>
-							         <option value="양파">양파</option>
-							         <option value="무">무</option>
-							         <option value="당근">당근</option>
+                       			
+                       			 <select id ="productlist" name="productlist" class="productlist" onChange="listChange()">
+										<c:forTokens var="seed" items="${seedlist}" delims="," varStatus="num">
+
+											<option value="${seed}">${seed}</option><br/>
+
+										</c:forTokens>
 							      </select>
+                       	
+                     
                         	</div>
                       
 								<form>
 										<input type=button value="-" onClick="javascript:this.form.amount.value--;">
-										<input type=text id="productamout" name=amount value=0>
+										<input type=text id="productamout" name=amount value=1>
 										<input type=button value="+" onClick="javascript:this.form.amount.value++;">
 										<input type=button value="선택" onClick="selectproduct()">
 								</form>
@@ -225,15 +345,15 @@ function selectproduct(){
 								
 								
 								<div class="col-lg-12">
-						                    <div class="shoping__cart__table">
-						                        <table id= "cartlist">
+						                    <div class="table1">
+						                        <table id= "cartlist" >
 						                            <thead>
 						                                <tr>
-						                                    <th class="shoping__product">Products</th>
-						                                    <th>Price</th>
-						                                    <th>Quantity</th>
-						                                    <th>Total</th>
-						                                    <th></th>
+						                                    <th width=200class="shoping__product">Products</th>
+						                                    <th width=100>Price</th>
+						                                    <th width=300>Quantity</th>
+						                                    <th width=200>Total</th>
+						                                    <th width=200></th>
 						                                </tr>
 						                            </thead>
 						                            <tbody>
@@ -259,25 +379,31 @@ function selectproduct(){
 						               </div>
 								</div>
 								
-								
-								
-								
-								
-                        <a href="#" class="primary-btn">ADD TO CARD</a>
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
-                        <ul>
-                            <li><b>Availability</b> <span>In Stock</span></li>
-                            <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                            <li><b>Weight</b> <span>0.5 kg</span></li>
-                            <li><b>Share on</b>
-                                <div class="share">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                </div>
-                            </li>
-                        </ul>
+					
+						<form:form commandName="basketbean" id="myHiddenForm" name ="myHiddenForm"  action="/productbasketchoice" method="post">
+								<c:forTokens var="seed" items="${seedlist}" delims="," varStatus="num">
+									<input type="hidden" id = "b_Id${seed}" name="basketbeanList[${num.index}].b_Id" value="${mid}">
+									<input type="hidden" id = "b_Pno${seed}" name="basketbeanList[${num.index}].b_Pno" value="${oneproduct.p_No}">
+									<input type="hidden" id = "b_Land${seed}" name="basketbeanList[${num.index}].b_Land" value="0">
+									<input type="hidden" id = "b_Seed${seed}" name="basketbeanList[${num.index}].b_Seed" value="${seed}">
+									<input type="hidden" id = "b_Totalprice${seed}" name="basketbeanList[${num.index}].b_Totalprice" value="0">
+									
+									<input type="hidden" id = "p_Img${seed}" name="basketbeanList[${num.index}].p_Img" value="${oneproduct.p_Img}">
+									<input type="hidden" id = "p_Title${seed}" name="basketbeanList[${num.index}].p_Title" value="${oneproduct.p_Title}">
+									<input type="hidden" id = "p_Manpay${seed}" name="basketbeanList[${num.index}].p_Manpay" value="${oneproduct.p_Manpay}">
+									<input type="hidden" id = "p_Landprice${seed}" name="basketbeanList[${num.index}].p_Landprice" value="${oneproduct.p_Landprice}">
+									<input type="hidden" id = "p_Landavailable${seed}" name="basketbeanList[${num.index}].p_Landavailable" value="${oneproduct.p_Landavailable}">
+								</c:forTokens>
+							
+						</form:form>
+						
+		
+					<input type="button" onClick="basket()" value="장바구니" />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                    <input type="button" onClick="payment()" value="결제"/>
+					<!-- 
+                    <input type="button" onClick="document.myHiddenForm.submit()" value="장바구니"/>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                    <input type="button" onClick="document.myHiddenForm2.submit()" value="결제"/>
+                     -->
                     </div>
                 </div>
                 
@@ -301,25 +427,29 @@ function selectproduct(){
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="product__details__tab__desc">
-                                    <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
-                                        suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                                        vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
-                                        accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
-                                        pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
-                                        elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
-                                        et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
-                                        vel, ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-                                        <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                        Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed
-                                        porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum
-                                        sed sit amet dui. Proin eget tortor risus.</p>
+                                    <h6>이미지 파일 저장</h6>
+                                    
+										<c:if test="${not empty oneproduct.p_Imgdetail1}">
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
+                                    		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
+										</c:if>
+										
+										<c:if test="${not empty oneproduct.p_Imgdetail2}">
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
+                                    		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
+										</c:if>	
+										
+										<c:if test="${not empty oneproduct.p_Imgdetail3}">
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
+                                    		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
+										</c:if>	
+										
+										<c:if test="${not empty oneproduct.p_Imgdetail4}">
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
+                                    		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
+										</c:if>
+
+                                    
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
@@ -388,15 +518,6 @@ function selectproduct(){
                                        onclick="paging(${pagebeen.pageend +1})">다음 </a>
                                  </c:if>
   								</div>
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-                              
-                                
-                                
                                 
                             </div>
                         </div>
@@ -408,6 +529,9 @@ function selectproduct(){
         </div>
     </section>
 	
+		
+
+
 
 
 

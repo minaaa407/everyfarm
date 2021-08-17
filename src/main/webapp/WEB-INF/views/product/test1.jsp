@@ -119,23 +119,17 @@
 		</div>
 		<div class = "productlist">
 		<div class ="row">
-		<c:forEach var="p" varStatus="ps" items="${productlist }" >
-			<div class ="col-lg-4">
-					  	<img id='${p.p_No}' src="/resources/1/test1.png" class="test1" 
-				 width="150" height="auto" alt="Image ${p.p_No}"><br>
-				 <a href="/productupdateform?no=${p.p_No}">${p.p_No}</a> ${p.p_Title}
-				  <!--   ${p.p_Id}${p.p_Title} ${p.p_Content} ${p.p_Image} ${p.p_Imagedetail} ${p.p_Land}
-				  ${p.p_Landprice} ${p.p_Main} ${p.p_Sub} ${p.p_Seedprice} ${p.p_Manpay} ${p.p_Delivery} ${p.p_Accept}
-			
-				  -->
-				<c:if test="${ps.count % 3==0 }">
-					<br>
-				</c:if>
+		<c:forEach var="p" varStatus="ps" items="${memBasketModel.getBasketbeanList() }" >
+			<div class ="col-lg-4">${p.b_Seed} ${p.b_Land} ${p.b_Totalprice} ${p.p_Img} ${p.p_Manpay } ${p.p_Title } ${p.p_Landprice }<br/>
+				
 			</div>
 				</c:forEach>
 				
 		</div>
 		</div>
+		
+		
+		
 	</div>
 
 

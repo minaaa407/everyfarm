@@ -1,6 +1,7 @@
 package kr.co.everyfarm.payment;
 
 import java.util.Date;
+import java.util.List;
 
 public class PaymentBean {
 	
@@ -8,6 +9,7 @@ public class PaymentBean {
 	private String pay_Method;
 	private String pay_Seed;
 	private String pay_Deliverymemo;
+	private String pay_Address;
 	private int pay_Land;
 	private int pay_No;
 	private int pay_Orderno;
@@ -21,6 +23,16 @@ public class PaymentBean {
 	
 	private String m_Name;
 	
+	private List<PaymentBean> paymentbeanList;
+	
+	
+	
+	public List<PaymentBean> getPaymentbeanList() {
+		return paymentbeanList;
+	}
+	public void setPaymentbeanList(List<PaymentBean> paymentbeanList) {
+		this.paymentbeanList = paymentbeanList;
+	}
 	public String getP_Id() {
 		return p_Id;
 	}
@@ -105,14 +117,19 @@ public class PaymentBean {
 	public void setPay_Date(Date pay_Date) {
 		this.pay_Date = pay_Date;
 	}
+	public String getPay_Address() {
+		return pay_Address;
+	}
+	public void setPay_Address(String pay_Address) {
+		this.pay_Address = pay_Address;
+	}
 	
 	@Override
 	public String toString() {
 		return "PaymentBean [pay_Id=" + pay_Id + ", pay_Method=" + pay_Method + ", pay_Seed=" + pay_Seed
-				+ ", pay_Deliverymemo=" + pay_Deliverymemo + ", pay_Land=" + pay_Land + ", pay_No=" + pay_No
-				+ ", pay_Orderno=" + pay_Orderno + ", pay_Totalprice=" + pay_Totalprice + ", pay_Date=" + pay_Date
-				+ ", p_Id=" + p_Id + ", p_No=" + p_No + ", p_Title=" + p_Title + ", p_Img=" + p_Img + ", m_Name="
-				+ m_Name + "]";
+				+ ", pay_Deliverymemo=" + pay_Deliverymemo + ", pay_Address=" + pay_Address + ", pay_Land=" + pay_Land
+				+ ", pay_No=" + pay_No + ", pay_Orderno=" + pay_Orderno + ", pay_Totalprice=" + pay_Totalprice
+				+ ", pay_Date=" + pay_Date + ", p_Id=" + p_Id + ", p_No=" + p_No + ", p_Title=" + p_Title + ", p_Img="
+				+ p_Img + ", m_Name=" + m_Name + ", paymentbeanList=" + paymentbeanList + "]";
 	}
-	
 }
