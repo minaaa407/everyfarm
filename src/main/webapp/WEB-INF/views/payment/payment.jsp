@@ -218,7 +218,7 @@
 					</div>
 					<br>
 				<hr>
-                        
+                       
                         <h3>결제 정보</h3>
                        <input type="radio" name="pay_Method" value="신용카드"/>신용카드
                        <input type="radio" name="pay_Method" value="카카오페이"/>카카오페이
