@@ -18,12 +18,26 @@
 		]]>
 </select>
 
+<!-- <select id="selectavailable" resultType="kr.co.everyfarm.product.ProductBean">
+		<![CDATA[
+		select p_Landavailable from product 
+		]]>
+</select> -->
+
+
 <insert id="payinsert" parameterType="kr.co.everyfarm.payment.PaymentBean">
 		<![CDATA[
 		insert into payment(pay_no,pay_id,pay_land,pay_seed,pay_totalprice,pay_method,pay_deliverymemo,pay_address) 
 		values(#{pay_No},#{pay_Id},#{pay_Land},#{pay_Seed},#{pay_Totalprice},#{pay_Method},#{pay_Deliverymemo},#{pay_Address})
 		]]>
 	</insert>
+<!-- <update id="paylandupdate" parameterType="kr.co.everyfarm.product.ProductBean" >
+		<![CDATA
+		[
+		update product set p_landavailable=#{p_Landavailable} where p_no=#{pay_No}
+		]]>
+</update> -->
+
 
 <insert id="bpayinsert" parameterType="kr.co.everyfarm.payment.BpaymentBean">
 		<![CDATA[
@@ -32,6 +46,7 @@
 		]]>
 	</insert>
 	
+
 <delete id="paydelete" parameterType="int">
 		<![CDATA[
 		delete from payment where pay_OrderNo=#{pay_Orderno}

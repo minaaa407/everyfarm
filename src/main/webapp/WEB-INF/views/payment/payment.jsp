@@ -110,8 +110,8 @@
 				</div>
 			</div>
 					
-						<form:form commandName="payment" action="/complete" method="post" id="pay_data" name="pay_data">
-						
+						<form:form commandName="payment" action="/paycomplete" method="post" id="pay_data" name="pay_data">
+							<input type="hidden" name="pay_Id" id="" value="${Member.m_Id}" />
 							<div>
                 				<hr>
                                 <div class="col-xs-1">
@@ -188,13 +188,13 @@
 							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}" size="5" readonly/></th>
 							<th scope="col"><input name="landprice" value="${ p.b_Land * p.p_Landprice }" size="5" readonly/>원</th>
 							<th scope="col"><input name="manpay" value="${ p.b_Land * p.p_Manpay }" size="5" readonly/>원</th>
-							<th scope="col">= <input name="price" value="${ price }" size="5" readonly/>원</th>
+							<th scope="col">= <input name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }" size="5" readonly/>원</th>
 								<c:set var= "total_price" value="${total_price + price}"/>
+								<c:set var= "landtotal" value="${landtotal + p.b_Land}"/>
 						</tr>
 						</c:forEach>
 					</thead>
 				</table>
-				<br>
 								<c:set var= "total_price1" value="${total_price}"/>
 							<fmt:parseNumber  var="total_price2" value="${ (total_price1 + delivery) * 0.97 }" integerOnly="true"/>
 					
@@ -211,7 +211,7 @@
 							    <span class="col-mb-3"><input name="price" value="${ total_price }" size="5" readonly/>원</span>
 								<span class="col-mb-3"><input name="delivery" value="3000" size="5" readonly/>원</span>
 								<span class="col-mb-3">&nbsp;&nbsp;&#8681; 3%</span>
-								<span class="col-mb-3">&nbsp;&nbsp;&nbsp;<input name="pay_Totalprice" value="${ total_price2 }" size="5" readonly />원</span>
+								<span class="col-mb-3">&nbsp;&nbsp;&nbsp;<input name="payTotalprice" value="${ total_price2 }" size="5" readonly />원</span>
 							</div>
 							</div>
 						</div>

@@ -132,7 +132,7 @@
 				</div>
 			</div>
 							
-						<form:form commandName="bpayment" action="/complete" method="post" id="bpay_data" name="bpay_data">
+						<form:form commandName="bpayment" action="/bpaycomplete" method="post" id="bpay_data" name="bpay_data">
 						
 							<div>
                 				<hr>
@@ -235,7 +235,7 @@
 							<th scope="col"><input name="bpaymentbeanList[${ps.index}].bpay_Seed" value="${p.b_Seed}" size="5" readonly/></th>
 							<th scope="col"><input name="landprice" value="${ p.b_Land * p.p_Landprice }" size="5" readonly/>원</th>
 							<th scope="col"><input name="manpay" value="${ p.b_Land * p.p_Manpay }" size="5" readonly/>원</th>
-							<th scope="col">= <input name="price" value="${ price }" size="5" readonly/>원</th>
+							<th scope="col">= <input name="bpay_Totalprice" value="${ price }" size="5" readonly/>원</th>
 								<c:set var= "total_price" value="${total_price + price}"/>
 						</tr>
 						</c:forEach>
@@ -258,7 +258,7 @@
 							    <span class="col-mb-3"><input name="price" value="${ total_price }" size="5" readonly/>원</span>
 								<span class="col-mb-3"><input name="delivery" value="3000" size="5" readonly/>원</span>
 								<span class="col-mb-3">&nbsp;&nbsp;&#8681; 3%</span>
-								<span class="col-mb-3">&nbsp;&nbsp;&nbsp;<input name="bpay_Totalprice" value="${ total_price2 }" size="5" readonly />원</span>
+								<span class="col-mb-3">&nbsp;&nbsp;&nbsp;<input name="bpayTotalprice" value="${ total_price2 }" size="5" readonly />원</span>
 							</div>
 							</div>
 						</div>
