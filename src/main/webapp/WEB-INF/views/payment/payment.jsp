@@ -176,7 +176,7 @@
 							<th scope="col">인건비</th>
 							<th scope="col">주문금액</th>
 						</tr>
-						
+						 
 						<c:set var="total_price" value="0" />
 						<c:set var="delivery" value="3000" />
 						<c:forEach var="p" varStatus="ps" items="${memBasketModel.getBasketbeanList() }" >
