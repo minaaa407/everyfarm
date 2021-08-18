@@ -26,5 +26,4 @@ public class UserPw {
 			throw new RuntimeException();
 		}
 	}
-
 }

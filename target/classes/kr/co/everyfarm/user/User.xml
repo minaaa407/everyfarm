@@ -9,26 +9,16 @@
 		select * from member
 	</select>
 
-	<select id="flist" resultType="kr.co.everyfarm.user.FarmerBean">
-		select * from farmer
-	</select>
-
-	<insert id="mjoin"
-		parameterType="kr.co.everyfarm.user.MemberBean">
+	<insert id="mjoin" parameterType="kr.co.everyfarm.user.MemberBean">
 		insert into member (m_id, m_name, m_pw, m_Addr, m_tel,
 		m_birth, m_profile)
 		Values (#{m_Id}, #{m_Name}, #{m_Pw}, #{m_Addr},
 		#{m_Tel}, #{m_Birth}, #{m_Profile})
 	</insert>
 
-	<insert id="fjoin"
-		parameterType="kr.co.everyfarm.user.FarmerBean">
-		insert into farmer (f_id,
-		f_name, f_pw, f_Addr, f_tel,
-		f_birth,
-		f_profile, f_auth)
-		Values (#{f_Id}, #{f_Name}, #{f_Pw},
-		#{f_Addr}, #{f_Tel}, #{f_Birth}, #{f_Profile}, #{f_Auth})
+	<insert id="kakaoJoin">
+	    insert into member(m_id, m_name, m_pw, m_Addr, m_tel, m_birth, m_Profile)
+	    values (#{m_Id}, #{m_Name}, "카카오", "카카오", "카카오", "카카오", #{m_Profile})
 	</insert>
 
 	<select id="mlogin" resultType="kr.co.everyfarm.user.MemberBean">
@@ -36,19 +26,9 @@
 		#{m_Id} and m_pw = #{m_Pw}
 	</select>
 
-	<select id="flogin" resultType="kr.co.everyfarm.user.FarmerBean">
-		select * from farmer where f_id =
-		#{f_Id} and f_pw = #{f_Pw}
-	</select>
-
 	<select id="mInfo" resultType="kr.co.everyfarm.user.MemberBean">
 		select * from member where
 		m_id=#{m_Id}
-	</select>
-
-	<select id="fInfo" resultType="kr.co.everyfarm.user.FarmerBean">
-		select * from member where
-		f_id=#{f_Id}
 	</select>
 
 	<update id="mUpdate">
@@ -59,18 +39,6 @@
 		where m_id=#{m_Id}
 	</update>
 
-	<update id="fUpdate">
-		update farmer set
-		f_Pw=#{f_Pw},
-		f_Name=#{f_Name},
-		f_Addr=#{f_Addr},
-		f_tel=#{f_Tel},
-		f_birth=#{f_Birth},
-		f_profile=#{f_Profile},
-		f_auth=#{f_Auth},
-		where f_id=#{f_Id}
-	</update>
-
 	<update id="mDelete">
 		UPDATE member SET
 		m_Id = sysdate(),
@@ -78,13 +46,10 @@
 		m_Name = '탈퇴한 회원입니다',
 		m_Addr = '탈퇴한 회원입니다',
 		m_tel = '탈퇴한 회원입니다',
-		m_Birth = '탈퇴한 회원입니다',
+		m_Birth
+		= '탈퇴한 회원입니다',
 		m_Date = sysdate() WHERE m_id=#{m_Id}
 	</update>
-
-	<delete id="fDelete">
-		delete from farmer where f_id=#{f_Id}
-	</delete>
 
 	<select id="checkId" resultType="int">
 		select count(*) from member
@@ -102,42 +67,18 @@
 
 	<select id="findPw" resultType="kr.co.everyfarm.user.MemberBean">
 		select * from member where
-		m_id=#{m_Id} and m_name=#{m_Name} and m_Tel=#{m_Tel}
+		m_id=#{m_Id} and m_name=#{m_Name} and m_tel=#{m_Tel}
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	<!-- 결제 페이지 이용 -->
-	
-	<select id ="userInfo" resultType="kr.co.everyfarm.user.MemberBean">
+
+	<select id="userInfo"
+		resultType="kr.co.everyfarm.user.MemberBean">
 	    <![CDATA[
-	    SELECT m_id, m_name, m_tel, m_addr FROM member where m_id = #{m_Id};
+	    SELECT m_name, m_tel, m_addr FROM member where m_id = #{m_Id};
 	   ]]>
-	  </select>
-	  
-	  <!-- 결제 페이지 이용 -->
+	</select>
+
+	<!-- 결제 페이지 이용 -->
 
 </mapper>
