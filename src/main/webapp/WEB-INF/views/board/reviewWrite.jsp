@@ -32,23 +32,23 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <h2 class="text-center">게시글 쓰기</h2>
-        <form action="reviewInsert" method="post" enctype="multipart/form-data">
+        <form action="/reviewInsert" method="post">
 
 
           <table class="table table-striped">
             <tr>
                 <td>작성자</td>
-                <td><input type="text"  class="form-control" name="rev_Id"></td>
+                <td><input type="text" value="${member.m_Name}"  class="form-control" name="rev_Id" readonly></td>
             </tr>
             <tr>
                 <td>제목</td>
-                <td><input type="text" id="title" name="rev_Title" value=""  class="form-control" ></td>
+                <td><input type="text" id="title" name="rev_Title"   class="form-control" ></td>
             </tr>
             <tr>
-                <td>별점??</td>
+                <td>별점</td>
                 <td> 
 <fieldset class="rating">
-    <input type="radio" id="star5" name="rev_Rate" value="5" /><label class = "full" for="star5" ></label>
+    <input type="radio" id="star5" name="rev_Rate" value="5" readonly="readonly"/><label class = "full" for="star5" ></label>
     <input type="radio" id="star4half" name="rev_Rate" value="4.5" /><label class="half" for="star4half" ></label>
     <input type="radio" id="star4" name="rev_Rate" value="4" /><label class = "full" for="star4" ></label>
     <input type="radio" id="star3half" name="rev_Rate" value="3.5" /><label class="half" for="star3half" ></label>
@@ -83,7 +83,6 @@
     </div>
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
