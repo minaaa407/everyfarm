@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.co.everyfarm.user.UserDAO">
+<mapper namespace="kr.co.everyfarm.user.MemberDAO">
 
 	<select id="mlist" resultType="kr.co.everyfarm.user.MemberBean">
 		select * from member
