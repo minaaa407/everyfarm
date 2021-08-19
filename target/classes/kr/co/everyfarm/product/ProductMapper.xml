@@ -39,16 +39,6 @@
 	</insert>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<select id="listcount" resultType="int">
 		select count(*) from product		
 	</select>
@@ -57,13 +47,9 @@
 		select p_id,p_no,p_title,p_content,p_Mainimage,p_Subimage,p_imagedetail,p_land,p_landprice,p_main,p_sub,p_seedprice,p_manpay,p_delivery,p_date,p_accept, p_seedcount from product limit #{limit}  offset #{offset};		
 	</select>
 	
-	
 
-	
-
-	
 	<select id="info" resultType="kr.co.everyfarm.product.ProductBean">
-		select* from emp2 where empno = #{empno}		
+		select* from product where p_No = #{p_No}		
 	</select>
 	
 	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
@@ -90,6 +76,15 @@
 
 
 
+<!-- 듄 payment에 이용 --> 
+	
+		<select id ="productinfo" resultType="kr.co.everyfarm.product.ProductBean">
+		    <![CDATA[
+		    SELECT p_no, p_img, p_title, p_landprice, p_manpay FROM product where p_no=#{p_no};
+		   ]]>
+		  </select>
+		  
+	<!-- 듄 payment에 이용 -->
 
 
 

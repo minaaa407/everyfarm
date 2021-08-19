@@ -39,9 +39,16 @@
 
     <link rel="stylesheet" href="resources/product/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="resources/product/css/slicknav.min.css" type="text/css">
+	<link rel="stylesheet" href="resources/product/css/dd.css" type="text/css"/>	
 
 
 
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script>
 function selectimg(name){
@@ -57,7 +64,7 @@ function basket(){
 }
 
 function payment(){
-	document.getElementById('myHiddenForm').action="/PaymentInfo";
+	document.getElementById('myHiddenForm').action="/productpayment";
 	document.myHiddenForm.submit();
 }
 
@@ -78,9 +85,9 @@ function selectproduct(){
 		}
 		
 		System.out.println(id);
-		
-	
 	%>  
+	var product = $('#productname').text();
+
 	
 	var uid = "<%=id%>";
 	
@@ -89,7 +96,7 @@ function selectproduct(){
 	
 	if(amout > 0){ //0이상 선택시 
 	
-		var product = document.getElementById('productlist').value;
+		
 		
 		var productbasket = document.getElementById('productbasket');
 		var rowid = "product"+product;
@@ -117,9 +124,8 @@ function selectproduct(){
 	    				totalproduct = parseInt(totalproduct) + parseInt(amout)
 						
 
-				   		if(totalproduct < ${oneproduct.p_Landavailable  }){
-				   			
-				   		
+				   		if(totalproduct < ${oneproduct.p_Landavailable}){
+		   		
 					    const table = document.getElementById('cartlist');
 					    const totalRowCnt = table.rows.length;
 					    const newRow = table.insertRow();
@@ -129,6 +135,7 @@ function selectproduct(){
 					    const newCell2 = newRow.insertCell(1);//한개 가격
 					    const newCell3 = newRow.insertCell(2);//땅 갯수
 					    const newCell4 = newRow.insertCell(3);//총 가격
+					    const newCell5 = newRow.insertCell(4);//삭제버튼
 					    newCell4.id=total;
 					    newCell1.innerText = product;
 					  
@@ -137,6 +144,7 @@ function selectproduct(){
 					    +'&nbsp&nbsp&nbsp'+'<span id ="'+ pnum+'">' + amout+'</span> &nbsp&nbsp&nbsp'+'<input name = "'+product +'"type="button" onclick="count2(this.name)" value="+"/>';
 					    //newCell3.innerText = amout;
 					    newCell4.innerText = (${oneproduct.p_Landprice} * amout);
+					    newCell5.innerHTML = '<input name = ' + product + ' type="button" onclick="deleteRow(this,this.name)" value="삭제"/>'
 						var b_Pno = ("b_Pno" + product);
 						var b_Id = ("b_Id" + product);
 						var b_Land = ("b_Land" + product);
@@ -164,20 +172,26 @@ function selectproduct(){
 function count1(name)  {
 	   
 	  var total = "total"+name;
-	  
 	  name = "pnum"+name;
 	  const resultElement = document.getElementById(name);
 	  let number = resultElement.innerText;
+	  var b_Land = ("b_Land" + name);
+	  var b_Totalprice = ("b_Totalprice" + name);
 	
-	    number = parseInt(number) - 1;
+	  number = parseInt(number) - 1;
 	  if(number>0){
 		  resultElement.innerText = number;
 		  document.getElementById(total).innerText = (number) * (${oneproduct.p_Landprice});
+		 
+		  document.getElementById(b_Land).value= number;
+		  document.getElementById(b_Totalprice).value = (number) * (${oneproduct.p_Landprice});
 	  }
+	  
 }
 
 function count2(name)  {
-	   
+	  var b_Land = ("b_Land" + name);
+	  var b_Totalprice = ("b_Totalprice" + name);
 	  var total = "total"+name;
 	  
 	  name = "pnum"+name;
@@ -188,8 +202,23 @@ function count2(name)  {
 	  if(number>0){
 		  resultElement.innerText = number;
 		  document.getElementById(total).innerText = (number) * (${oneproduct.p_Landprice});
+		  document.getElementById(b_Land).value= number;
+		  document.getElementById(b_Totalprice).value = (number) * (${oneproduct.p_Landprice});
 	  }
 }
+
+function deleteRow(btndel,name){
+	var b_Land = ("b_Land" + name);
+	var b_Totalprice = ("b_Totalprice" + name);
+    if (typeof(btndel) == "object") {
+        $(btndel).closest("tr").remove();
+        document.getElementById(b_Land).value= 0;
+		document.getElementById(b_Totalprice).value = 0;
+    } else {
+        return false;
+    }
+}
+ 
 
 function check(){
 	alert(1);
@@ -202,7 +231,84 @@ function check(){
 
 
 </script>
+<style>
+.product__details__pic__item--large{
+	width: 540px;
+	height: 400px;
+}
 
+@media(max-width:1528px){
+
+.product__details__pic__item--large{
+	width: 340px;
+	height: 300px;
+}
+
+}
+
+</style>
+
+
+<!-- select 선택 문 -->
+
+
+	
+	<style>
+	.select  a {display:block; border:1px solid #ccc; padding:0 8px;}
+	.select  a:after,
+	.select  ul > li:first-child:after {display:block; float:right;}
+	.select  a:after {content:'▼';}
+	.select  ul {position:absolute; width:100%; top:0px; background:#fff; display:none; }
+	.select  ul > li {cursor:pointer; padding:0 8px; border:1px solid #ccc;}
+	.select  ul > li:first-child:after {content:'▲';}
+
+	
+	ul{
+	   list-style:none;
+	   padding-left:0px;
+	}
+
+
+	</style>
+	
+	<script>
+
+	
+	$(document).ready(function () {
+		  $("div.select > a").click(function () {
+			  $(this).next("ul").toggle();
+			  $(this).parent("div.select").css("overflow","auto");
+			  $(this).parent("div.select").css("height","400px");
+			  $(this).parent("div.select").css("position","absolute");
+			  $(this).parent("div.select").css("z-index","999");
+			  $("#area").css("display","block");
+			    return false;
+			   
+		  });
+		  
+		  $("div.select > ul > li").click(function() {
+			  $(this).parent().hide().parent("div.select").children("a").children("img").attr("src",$(this).children("img").attr("src"));
+			  $(this).parent().hide().parent("div.select").children("a").children("span").text($(this).text());
+			  $(this).parent().hide().parent("div.select").css("overflow","");
+			  $(this).parent().hide().parent("div.select").css("height","");
+			  $(this).parent().hide().parent("div.select").css("position","relative");
+			  $(this).parent().hide().parent("div.select").css("z-index","9");
+			  $("#area").css("display","none");
+			 // alert( $(this).children("img").attr("src")   );
+			    //$(this).parent().hide().parent("div.select").children("a").text($(this).text());
+			    //$("#my_image").attr("src","second.jpg");
+			    //$(this).prependTo($(this).parent());
+			    //overflow: auto; height: 400px;
+		});
+		  
+		 
+		    
+	});
+		
+
+	
+
+	</script>
 
 </head>
 <body>
@@ -263,6 +369,8 @@ function check(){
 <!-- 여기서부터 내용 -->
 
   <!-- Product Details Section Begin -->
+  	<br>
+  	<br>
     <section class="product-details spad">
         <div class="container">
             <div class="row">
@@ -311,23 +419,39 @@ function check(){
                         </div>
                    		<div><h6>남은 평 : ${oneproduct.p_Landavailable} 평</h6></div>
                         <div><h4>1평 :<fmt:formatNumber value="${oneproduct.p_Landprice }" pattern="#,###" /> 원</h4></div>
-                        
-                        
-                       
+                   
                         <hr>
-                        <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
-                            vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
-                            quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
+                        <p>${oneproduct.p_Content}</p>
                        	<div>
-                       			
-                       			 <select id ="productlist" name="productlist" class="productlist" onChange="listChange()">
-										<c:forTokens var="seed" items="${seedlist}" delims="," varStatus="num">
-
-											<option value="${seed}">${seed}</option><br/>
-
-										</c:forTokens>
-							      </select>
                        	
+                       		<!-- 상품 리스트 선택 -->
+									<div class="select" style= "position:relative; line-height:35px; width: 400px">
+									    <a href="#" id="aaa" onClick="test()">
+									    <img height= "50px" width="50px" src="/resources/product/img/감자.png"><span id="productname">감자</span></a>
+									    
+									   	
+										    <ul>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/감자.png"/>감자</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/고구마.png"/>고구마</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/콩.png"/>콩</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/배추.png"/>배추</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/상추.png"/>상추</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/수박.png"/>수박</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/오이.png"/>오이</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/토마토.png"/>토마토</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/호박.png"/>호박</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/고추.png"/>고추</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/마늘.png"/>마늘</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/파.png"/>파</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/양파.png"/>양파</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/무.png"/>무</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/당근.png"/>당근</li>
+										    </ul>
+									 	
+									</div>
+                       			
+                       			 
+                       				
                      
                         	</div>
                       
@@ -341,10 +465,12 @@ function check(){
 								
 								
 								</ol>
+									
+									
+									<div id="area" class="col-lg-12" style="height:52px; display : none"></div>
 								
 								
-								
-								<div class="col-lg-12">
+								<div class="col-lg-12" id ="cartlisttable">
 						                    <div class="table1">
 						                        <table id= "cartlist" >
 						                            <thead>
@@ -354,6 +480,7 @@ function check(){
 						                                    <th width=300>Quantity</th>
 						                                    <th width=200>Total</th>
 						                                    <th width=200></th>
+						                                    <th width=100></th>
 						                                </tr>
 						                            </thead>
 						                            <tbody>
@@ -371,6 +498,9 @@ function check(){
 						                                      
 						                                    </td>
 						                                    <td>
+						                                      
+						                                    </td>
+						                                     <td>
 						                                      
 						                                    </td>
 						                                </tr>
@@ -426,7 +556,7 @@ function check(){
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <div class="product__details__tab__desc">
+                                <div class="product__details__tab__desc" style="">
                                     <h6>이미지 파일 저장</h6>
                                     
 										<c:if test="${not empty oneproduct.p_Imgdetail1}">
@@ -685,7 +815,7 @@ function check(){
     <script src="resources/product/js/mixitup.min.js"></script>
     <script src="resources/product/js/owl.carousel.min.js"></script>
     <script src="resources/product/js/main.js"></script>
-	
+	<script src="resources/product/js/jquery.dd.min.js"></script>
 	
 	
 

@@ -4,6 +4,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +12,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
-
 .top {
 	text-align: center;
 }
@@ -25,8 +24,8 @@
 table {
 	width: 100%;
 	border-collapse: collapse;
-	text-align: center;
 	line-height: 1.5;
+	text-align: center;
 }
 
 thead th {
@@ -34,48 +33,37 @@ thead th {
 	padding-bottom: 15px;
 	font-weight: bold;
 	vertical-align: top;
-	color: black;
-	border-bottom: 3px solid black;
-	background: #dcdcdc;
+	color: #369;
+	border-bottom: 3px solid #036;
+	background: #f3f6f7;
 }
 
 tbody td {
-	width: 350px;
 	padding: 10px;
 	font-size: 0.9em;
-	vertical-align: center;
 	border-bottom: 1px solid #ccc;
 }
 
-tbody tr #num {
-	width: 80px;
+table #tableseq{
+	text-align: center;
+	width: 100px;
 }
 
-tbody tr #title {
-	width: 420px;
+table #tablecontent {
 	text-align: left;
 }
 
-tbody tr #name {
-	width: 100px;
-}
 
-tbody tr #date {
-	width: 100px;
-}
-
-tbody tr #readc {
-	width: 80px;
-}
 #pageList {
 	margin: auto;
 	width: 50%;
 	text-align: center;
 }
 
-#rezButton{text-align: right;}
 
-#regSearch{text-align: center;}
+
+
+
 
 </style>
 
@@ -91,14 +79,14 @@ function search(){
 	var select = document.getElementById('productselect').value;
 	
 	var text = document.getElementById('selectText').value;
-	if(select == "p_Id"){
-		text = "%" + text + "%";
-	}else{
+	if(select == "c_No"){
 		text = text;
+	}else{
+		text = "%" + text + "%";
 	}
 	document.getElementById('where').value = select;
 	document.getElementById('wherecolumn').value= text;
-	
+	var aaa = document.getElementById('where').value;
 	document.myHiddenForm.submit();
 }
 
@@ -109,40 +97,22 @@ function search(){
 </head>
 
 <body>
-	<h2>상품 리스트</h2><br>
-	<div id="rezButton">
-		<button type="button" class="btn btn-dark" >승인전</button>
-		<button type="button" class="btn btn-dark" >승인후</button>
-		<button type="button" class="btn btn-dark" >전체보기</button>
-	</div><br>
-	
 	<div class="table">
+	<h2>상품 리스트</h2>
 		<table>
 			<thead>
 				<tr>
 					<th class="one"></th>
-					<th class="two">상품번호</th>
-					<th>아이디</th>
-					<th>메인이미지</th>
-					<th>제목</th>
-					<th>토지 사이즈</th>
-					<th>등록날짜</th>
-					<th>상품등록</th>
+					<th class="two">내용</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="p" items="${productlist}">
+				<c:forEach var="c" items="${productqnalist}">
 					<tr>
-						<td class="content"><input type="checkbox" name="check"
-							value="${p.p_No}" form="myhiddenform"></td>
-						<td class="content"><a href="proregdetailform?p_No=${p.p_No}">${p.p_No}</a></td>
-						<td class="content">${p.p_Id}</td>
-						<td class="content">${p.p_Img}</td>
-						<td class="content">${p.p_Title}</td>
-						<td class="content">${p.p_Land}</td>
-						<td class="content">${p.p_Date}</td>
-						<td><input class="buttonmenuadmin" type="button" value="${p.p_Accept}"></td>
+						<td id = "tableseq" class="content"><a href="proregdetailform?p_No=${c.c_Seq}">${c.c_Seq}</a></td>
+						<td id = "tablecontent" class="content"><span style=font-size:24px;>${c.c_Content}</span><br/>
+						<span style=font-size:12px;>상품 번호 : ${c.c_No} 아이디 : ${c.c_Id} 등록 날짜 : ${c.c_Date} 비밀글 : ${c.c_Secret}</span></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -160,11 +130,12 @@ function search(){
 										   <a id = "page${i}" style="cursor:pointer" onclick="paging(${i })">${i }</a>  
 										</c:forEach>    
 								    	<c:if test="${pagebeen.post eq 'true'}">
-									    <a id = "page${pagebeen.pageend +1}" style="cursor:pointer"onclick="paging(${pagebeen.pageend +1})">다음 </a>
+									    <a id = "page${pagebeen.pageend +1}" style="cursor:pointer" onclick="paging(${pagebeen.pageend +1})">다음 </a>
 									</c:if>
 			                    </div>
 			                    <!-- form 해당 부분 scrip 이벤트 통해서 자동 전송 처리 -->
-			                    <form:form commandName="pagebeen" name = "myHiddenForm" action="/productadminlistform" method="post">
+			                    <form:form commandName="pagebeen" name = "myHiddenForm" action="/productqnaadminlist" method="post">
+			                    
 										<input type="hidden" id = "selectpage" name="selectpage" value="1">
 										<input type="hidden" id = "pagestart" name="pagestart" value="${pagebeen.pagestart}">
 										<input type="hidden" id = "pageend" name="pageend" value="${pagebeen.pageend}">
@@ -177,17 +148,49 @@ function search(){
 										<input type="hidden" id = "post" name="post" value="${pagebeen.post}">
 										<input type="hidden" id = "where" name="where" value="${pagebeen.where}">
 										<input type="hidden" id = "wherecolumn" name="wherecolumn" value="${pagebeen.wherecolumn}">
+										<input type="hidden" id = "where" name="where2" value="${pagebeen.where2}">
+										<input type="hidden" id = "wherecolumn" name="wherecolumn2" value="${pagebeen.wherecolumn2}">
+										<input type="hidden" id = "orderby" name="orderby" value="${pagebeen.orderby}">
+										<input type="hidden" id = "ascdesc" name="ascdesc" value="${pagebeen.ascdesc}">
 			
 								</form:form>
-	<br/>
-			<div id="regSearch">
+								<br/>
 			<select name="productselect" id="productselect">
-    			<option value="p_No">상품번호</option>
-    			<option value="p_Id">아이디</option>
-    			<option value="p_Land">토지 사이즈</option>
+				<c:choose>
+				    <c:when test="${pagebeen.where eq 'c_Id'}">
+				       		<option value="c_Id" selected>아이디</option>
+    						<option value="c_No">상품번호</option>
+    						<option value="c_Content">내용</option>
+				    </c:when>
+				    <c:when test="${pagebeen.where eq 'c_No'}">
+				       		<option value="c_Id" >아이디</option>
+    						<option value="c_No" selected>상품번호</option>
+    						<option value="c_Content">내용</option>
+				    </c:when>
+				    <c:when test="${pagebeen.where eq 'c_Content'}">
+				       		<option value="c_Id" >아이디</option>
+    						<option value="c_No">상품번호</option>
+    						<option value="c_Content" selected>내용</option>
+				    </c:when>
+				</c:choose>		
 			</select>
-			<input type="text" name="selectText" id="selectText">
+			
+			
+			<c:choose>
+			    <c:when test="${pagebeen.wherecolumn eq '%%'}">
+			       <input type="text" name="selectText" id="selectText">
+			    </c:when>
+			    <c:otherwise>
+			       <input type="text" name="selectText" id="selectText" value="${fn:replace(pagebeen.wherecolumn,'%','')}">
+			    </c:otherwise>
+			</c:choose>
+
+			
 			<input type="button" value="검색" onclick="search()">
-			</div>
+	
+	
+	
+	
+	
 </body>
 </html>
