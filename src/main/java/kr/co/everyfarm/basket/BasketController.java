@@ -105,12 +105,15 @@ public class BasketController {
 	public String basketUpdate(@RequestParam int bno, @RequestParam int land, @RequestParam int price, 
 			@RequestParam int[] checkindex, BasketBean basket, Model model, HttpServletRequest request, RedirectAttributes redirectuse) {
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
+		System.out.println(price);
 		BasketDAO dao = sqlSessionTemplate.getMapper(BasketDAO.class);
 		String id = member.getM_Id();
 		basket.setB_Id(id);
 		basket.setB_No(bno);
 		basket.setB_Land(land);
+		System.out.println("1");
 		basket.setB_Totalprice(price);
+		System.out.println("2");
 		int update = dao.update(basket);
 		String referer = request.getHeader("Referer");
 		redirectuse.addFlashAttribute("checkindex", checkindex);

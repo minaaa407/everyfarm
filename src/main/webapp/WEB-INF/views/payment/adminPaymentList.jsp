@@ -46,37 +46,6 @@
 						</c:forEach>
 						</tbody>
 				</table>
- 				 <table>
-					<thead>
-						<tr>
-							<th scope="col">주문자명&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">주문번호 &nbsp;&nbsp;&nbsp;</th>
-							<th scope="col">농장주ID&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">상품이미지&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">상품번호&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">상품명&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">금액&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">결제날짜&nbsp;&nbsp;&nbsp; </th>
-						</tr>
-						</thead>
-						<tbody>
-						<c:forEach var="bpay" items="${bpaymentlist}">
-							<fmt:formatDate var="bpay_Date" value="${bpay.bpay_Date }" pattern="yyyy-MM-dd"/>
-							<fmt:formatDate var="bpay_order" value="${bpay.bpay_Date }" pattern="yyyyMMddkkmmss"/>
-						<tr>
-							<th scope="col">${bpay.bpay_Name }&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">B${bpay_order}${bpay.bpay_Orderno}&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">${bpay.p_Id }&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">${bpay.p_Img }&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">${bpay.p_No }&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">${bpay.p_Title }&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">${bpay.bpay_Totalprice }&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col"><c:out value="${bpay_Date }"/>&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col"><button type="button" onclick="location.href='/adminBpayListDelete/${bpay.bpay_Orderno }'">삭제</button>&nbsp;</th>
-							<th scope="col"><button type="button" onclick="location.href='/adminBpaymentListDetail/${bpay.bpay_Orderno}'">상세</button></th>
-						</tr>
-						</c:forEach>
-						</tbody>
-				</table>
+ 			
 </body>
 </html>

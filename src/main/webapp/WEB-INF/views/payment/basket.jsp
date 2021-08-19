@@ -277,11 +277,14 @@
 			checktrue = false;
 		} else {
 			eachtotalvar = $('#'+clicked_id).val() * $('#p_Landprice'+onlynumber).val() * $('#p_Manpay'+onlynumber).val();
+			alert("1");
 			document.getElementById("b_Totalprice"+onlynumber).value = eachtotalvar;
 		}
 		var bno = $('#'+onlynumber).val() * 1;
 		var land = $('#land'+onlynumber).val() * 1;
+		alert("2");
 		var price = $('#b_Totalprice'+onlynumber).val() * 1;
+		alert(price);
 		window.location.href = "http://localhost:8090/basketUpdate?bno="+bno+"&land="+land+"&price="+price+"&checkindex="+index_i_arr;
 	} 
     
