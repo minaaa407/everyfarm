@@ -11,6 +11,7 @@ public class ProductqnaBean {
 	private int c_Mainno;
 	private int c_Subno;
 	private String c_Secret;
+	
 	public int getC_Seq() {
 		return c_Seq;
 	}
