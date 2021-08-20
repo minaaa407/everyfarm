@@ -13,13 +13,17 @@ public interface MemberDAO {
 
 	public void kakaoJoin(MemberBean memberBean);
 	
+	public void naverJoin(MemberBean memberBean);
+	
 	public MemberBean mlogin(MemberBean memberBean);
 
 	public MemberBean klogin(MemberBean memberBean);
 	
-	public void mail(MemberBean memberBean);
+	public void mail(EmailBean emailBean);
+
+	public void mailNumber(int mailNum);
 	
-	public int checkId(MemberBean memberBean);
+	public int checkId(String m_Id);
 	
 	public MemberBean findId(MemberBean memberBean);
 

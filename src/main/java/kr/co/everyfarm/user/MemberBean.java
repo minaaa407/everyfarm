@@ -2,7 +2,6 @@ package kr.co.everyfarm.user;
 
 import java.util.Date;
 
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;

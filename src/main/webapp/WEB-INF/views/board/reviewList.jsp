@@ -57,6 +57,7 @@
 				<div class="col-md-3 d-flex ftco-animate">
 					<div class="blog-entry justify-content-end">
 						<div class="text">
+							
 							<c:choose>
 								<c:when test="${empty revList}">
 									<div>
@@ -71,7 +72,7 @@
 											<div>
 												<fmt:formatDate pattern="yyyy/MM/dd" value="${re.rev_Date}" />
 											</div>
-											<div>${re.rev_Id}</div>
+											<div>${re.rev_Name}</div>
 											<div>
 												<a class="meta-chat"><span class="fa fa-eye"></span>&nbsp;${re.rev_Readcount}</a>
 											</div>
@@ -110,14 +111,6 @@
 													<label class="full" for="star5"></label>
 												</c:if>
 											</fieldset>
-											<!-- 
-                            			<td><a href="/reviewDetail?rev_Cont=${re.rev_Cont}">${re.rev_Image}</a></td> 
-                            			<td><a href="/reviewDetail?rev_Title=${re.rev_Title}">${re.rev_Title}</a></td>
-                            			<td>${re.rev_Id}</td>
-                            			<td><a href="/reviewDetail?rev_Cont=${re.rev_Cont}">${re.rev_Cont}</a></td>
-                            	 		<td>${re.rev_Rate}</td>
-                            			<td>${re.rev_Readcount}</td>
-                            			-->
 										</div>
 
 									</c:forEach>
@@ -164,7 +157,7 @@
 	<script type="text/javascript">
 		
 	</script>
-<%-- 	
+	<%-- 	
 	<%@include file ="/WEB-INF/views/home/header.jsp" %>
 	<%@include file ="/WEB-INF/views/home/footer.jsp" %> --%>
 </body>

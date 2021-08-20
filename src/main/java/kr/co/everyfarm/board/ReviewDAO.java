@@ -5,6 +5,7 @@ import java.util.List;
 public interface ReviewDAO  {
 	
 	 List<ReviewBean> list();
+	 List<ReviewBean> mylist();
 	 public int insert(ReviewBean reviewBean);
 	
 	

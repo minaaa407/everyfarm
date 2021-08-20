@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.google.gson.Gson;
 
 @Controller
 public class UserController {
@@ -44,9 +47,8 @@ public class UserController {
 	@Autowired
 	private KakaoAPI kakao;
 
-	/*
-	 * @Autowired private NaverLoginBO naverBO;
-	 */
+	@Autowired
+	private NaverLoginBO naverLoginBO;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home() {
@@ -64,14 +66,14 @@ public class UserController {
 		System.out.println("login:: post");
 
 		HttpSession session = request.getSession();
-		MemberDAO userDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
+		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
 
 		System.out.println("첫번째:" + memberBean.getM_Pw());
 		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
 		memberBean.setM_Pw(encryPassword);
 		System.out.println("두번째:" + memberBean.getM_Pw());
 
-		MemberBean member = userDAO.mlogin(memberBean);
+		MemberBean member = memberDAO.mlogin(memberBean);
 
 		if (member != null) {
 			session.setAttribute("member", member);
@@ -81,53 +83,89 @@ public class UserController {
 		}
 	}
 
-	/*
-	 * private String apiResult = null;
-	 * 
-	 * @RequestMapping(value = "/naverLogin", method = RequestMethod.GET)
-	 * 
-	 * @ResponseBody public String naverLogin(HttpSession session) {
-	 * System.out.println("naverLogin"); String reqUrl =
-	 * naverBO.getAuthorizationUrl(session);
-	 * 
-	 * return reqUrl; }
-	 * 
-	 * @RequestMapping(value = "/callback", method = { RequestMethod.GET,
-	 * RequestMethod.POST }) public String callback(Model model, @RequestParam
-	 * String code, @RequestParam String state, HttpSession session) throws
-	 * IOException, ParseException {
-	 * 
-	 * System.out.println("callback");
-	 * 
-	 * MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
-	 * OAuth2AccessToken oauthToken; oauthToken = naverBO.getAccessToken(session,
-	 * code, state);
-	 * 
-	 * if(oauthToken != null) { apiResult = naverBO.getUserProfile(session,
-	 * oauthToken);
-	 * 
-	 * }
-	 * 
-	 * return "user/callback"; }
-	 */
+	private String apiResult = null;
+
+//	@RequestMapping(value = "/naverLogin", method = RequestMethod.GET)
+//	@ResponseBody
+//	public String naverLogin(HttpSession session, Model model) {
+//		System.out.println("naverLogin");
+//		String naverAuthUrl = naverBO.getAuthorizationUrl(session);
+//		model.addAttribute("url", naverAuthUrl);
+//
+//		return "/naverLogin";
+//	}
+
+	@SuppressWarnings("unlikely-arg-type")
+	@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
+	public String callback(Model model, HttpSession session, String m_Id, HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ParseException {
+
+		System.out.println("callback");
+
+		JSONParser parser = new JSONParser();
+
+		session = request.getSession();
+		String code = request.getParameter("code");
+		String state = request.getParameter("state");
+
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBO.getAccessToken(session, code, state);
+
+		if (oauthToken != null) {
+			apiResult = naverLoginBO.getUserProfile(session, oauthToken);
+
+			Object obj = parser.parse(apiResult);
+			JSONObject jsonObj = (JSONObject) obj;
+
+			JSONObject response_obj = (JSONObject) jsonObj.get("response");
+
+			String Id = (String) response_obj.get("email");
+			String Name = (String) response_obj.get("name");
+			String Tel = (String) response_obj.get("mobile");
+
+			if (Id.equals(dao.checkId(m_Id))) {
+				session.setAttribute("loginPI", "naver");
+				session.setAttribute("m_Id", Id);
+				session.setAttribute("m_Name", Name);
+				session.setAttribute("m_Tel", Tel);
+
+				model.addAttribute("result", apiResult);
+
+				return "redirect:/home";
+			} else {
+				return "redirect:/naverJoin";
+			}
+		} else {
+			return "/loginForm";
+		}
+	}
+
+	@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping(value = "/kakaoLogin", method = RequestMethod.GET)
 	public String klogin(MemberBean memberBean, HttpSession session, HttpServletRequest request,
 			@RequestParam("code") String code) {
 		System.out.println("kakaologin:: get");
 
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+
 		String access_Token = kakao.getAccessToken(code);
 		HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
 
 		if (userInfo.get("email") != null) {
+			if ("email".equals(dao.checkId(memberBean.getM_Id()))) {
 
-			session.setAttribute("loginPI", "kakao");
-			session.setAttribute("m_Id", userInfo.get("email"));
-			session.setAttribute("m_Name", userInfo.get("nickname"));
-			session.setAttribute("access_Token", access_Token);
+				session.setAttribute("loginPI", "kakao");
+				session.setAttribute("m_Id", userInfo.get("email"));
+				session.setAttribute("m_Name", userInfo.get("nickname"));
+				session.setAttribute("access_Token", access_Token);
 
-			return "redirect:/home";
+				return "redirect:/home";
+			} else {
+				return "redirect:/kakaoJoin";
+			}
 		} else {
-			return "redirect:/kakaoJoin";
+			return "/loginForm";
 		}
 	}
 
@@ -148,8 +186,8 @@ public class UserController {
 		memberBean.setM_Pw(encryPassword);
 		System.out.println("두번째:" + memberBean.getM_Pw());
 
-		MemberDAO userDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
-		userDAO.mjoin(memberBean);
+		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
+		memberDAO.mjoin(memberBean);
 
 		if (bindingResult.hasErrors()) {
 			return "user/signUp";
@@ -158,42 +196,68 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/kakaoJoin", method = RequestMethod.GET)
-	public String kakaoJoin(Model model) {
-		model.addAttribute("memberBean", new MemberBean());
-		return "user/kakaoSignUp";
+	public String kakaoJoin(MemberBean memberBean, Model model, HttpSession session) {
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+
+		memberBean.setM_Id((String) session.getAttribute("m_Id"));
+		memberBean.setM_Name((String) session.getAttribute("m_Name"));
+
+		model.addAttribute(memberBean);
+
+		dao.kakaoJoin(memberBean);
+
+		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/kakaoJoin", method = RequestMethod.POST)
-	public String kakaoJoin(@Valid MemberBean memberBean, BindingResult bindingResult, HttpServletRequest request) {
+//	@RequestMapping(value = "/kakaoJoin", method = RequestMethod.POST)
+//	public String kakaoJoin(@Valid MemberBean memberBean, BindingResult bindingResult, HttpServletRequest request) {
+//
+//		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+//		memberBean.setM_Id((String) session.getAttribute("m_Id"));
+//		memberBean.setM_Name((String) session.getAttribute("m_Name"));
+//
+//		memberBean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
+//				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
+//
+//		System.out.println("첫번째:" + memberBean.getM_Pw());
+//		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
+//		memberBean.setM_Pw(encryPassword);
+//		System.out.println("두번째:" + memberBean.getM_Pw());
+//
+//		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
+//		memberDAO.mjoin(memberBean);
+//
+//		if (bindingResult.hasErrors()) {
+//			return "user/kakaoSignUp";
+//		}
+//		return "home/home";
+//	}
 
-		/*
-		 * MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
-		 * memberBean.setM_Id((String) session.getAttribute("m_Id"));
-		 * memberBean.setM_Name((String) session.getAttribute("m_Name"));
-		 */
+	@RequestMapping(value = "/naverJoin", method = RequestMethod.GET)
+	public String naverJoin(MemberBean memberBean, Model model, HttpSession session) {
 
-		memberBean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
-				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
 
-		System.out.println("첫번째:" + memberBean.getM_Pw());
-		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
-		memberBean.setM_Pw(encryPassword);
-		System.out.println("두번째:" + memberBean.getM_Pw());
+		String id = (String) session.getAttribute("m_Id");
+		memberBean.setM_Id(id);
+		memberBean.setM_Name((String) session.getAttribute("m_Name"));
+		memberBean.setM_Tel((String) session.getAttribute("m_Tel"));
 
-		MemberDAO userDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
-		userDAO.mjoin(memberBean);
+		model.addAttribute(memberBean);
 
-		if (bindingResult.hasErrors()) {
-			return "user/kakaoSignUp";
-		}
-		return "home/home";
+		dao.naverJoin(memberBean);
+
+		return "redirect:/";
+
 	}
 
 	@RequestMapping(value = "/checkMail", method = RequestMethod.POST, produces = "application/json;")
 	@ResponseBody
-	public Map<String, Object> checkMail(MemberBean memberBean, HttpServletRequest request) {
+	public Map<String, Object> checkMail(MemberBean memberBean, HttpServletRequest request, EmailBean emailBean) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
+
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
 
 		Properties prop = System.getProperties();
 		prop.put("mail.smtp.starttls.enable", "true");
@@ -222,6 +286,10 @@ public class UserController {
 
 			Transport.send(msg);
 
+			dao.mailNumber(mailNum);
+
+			System.out.println("email::::" + emailBean);
+
 			map.put("error", true);
 
 		} catch (AddressException ae) {
@@ -238,12 +306,28 @@ public class UserController {
 		return map;
 	}
 
+	@RequestMapping(value = "/mailNum", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> mail(EmailBean emailBean, HttpServletRequest request) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		return map;
+	}
+
+	@RequestMapping(value = "/mailNumCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String mailNumCheck(EmailBean emailBean, HttpServletRequest request) {
+
+		return "";
+	}
+
 	@RequestMapping(value = "/checkId", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkId(MemberBean memberBean) {
 
 		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
-		int result = dao.checkId(memberBean);
+		int result = dao.checkId(memberBean.getM_Id());
 
 		if (result != 0) {
 			return "fail"; // 중복 아이디가 존재
@@ -378,6 +462,9 @@ public class UserController {
 
 		memberbean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
 				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
+
+		String encryPassword = UserPw.encrypt(memberbean.getM_Pw());
+		memberbean.setM_Pw(encryPassword);
 
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		memDao.mUpdate(memberbean);

@@ -8,8 +8,7 @@
 <html lang="kr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi =medium-dpi">
 
 <title>Checkout example for Bootstrap</title>
 
@@ -27,7 +26,6 @@
 <!-- 사이드 추가-->
 <link rel="stylesheet" href="resources/user/css/sidebar-menu.css">
 <script src="resources/user/js/sidebar-menu.js"></script>
-<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 <!-- 사이드 추가-->
 
 
@@ -184,22 +182,21 @@
 							<div class="nav-side-menu">
 								<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse"
 									data-target="#menu-content"></i>
-								<div class="menu-list">
+								<div class=" menu-list">
 									<ul id="menu-content" class="menu-content collapse out">
 										<li class="active"><a href="#"> <i class="fa fa-user"></i>
 												내 정보
 										</a></li>
 										<li data-toggle="collapse" data-target="#products"><a
 											href="#" onclick="return false;"><i class="fa fa-clock-o">
-											</i> 활동 내역 <span class="arrow"></span></a></li>
+											</i> 내가 쓴 게시글 <span class="arrow"></span></a></li>
 										<ul class="sub-menu collapse" id="products">
-											<li><a href="#">나의 질문</a></li>
-											<li><a href="#">내가 쓴 게시글</a></li>
-											<li><a href="#">내가 쓴 댓글</a></li>
+											<li><a  onclick="location.href='/myQnA?m_Id=${member.m_Id}'" type="submit" >QnA</a></li>
+											<li><a  onclick="location.href='/myReview?m_Id=${member.m_Id}'" type="submit" >리뷰게시판</a></li>
 											<li><a href="#">추가할공간</a></li>
 											<li><a href="#">추가할공간</a></li>
 										</ul>
-										<li><a href="#"> <i class="fa fa-credit-card"></i> 결제
+										<li><a href="/myPayList?m_Id=${member.m_Id}"> <i class="fa fa-credit-card"></i> 결제
 												내역
 										</a></li>
 									</ul>
@@ -353,13 +350,12 @@
 				<div class="modal-footer justify-content-center">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">취 소</button>
-					<button href="/myInfoDelete?m_Id=${member.m_Id}" type="submit"
+						<button onclick="location.href='/myInfoDelete?m_Id=${member.m_Id}'"  type="submit"
 						class="btn btn-danger" formaction="/myInfoDelete">탈 퇴</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </body>
 
 <script type="text/javascript"
