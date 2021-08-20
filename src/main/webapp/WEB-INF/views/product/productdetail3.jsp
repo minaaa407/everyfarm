@@ -36,6 +36,7 @@
     <!-- Css Styles -->
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="resources/product/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="resources/product/css/slicknav.min.css" type="text/css">
 	<link rel="stylesheet" href="resources/product/css/dd.css" type="text/css"/>	
@@ -50,43 +51,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script>
-
-function productaccept(accept) {
-	
-			var bean = {
-				"p_No" : ${oneproduct.p_No},
-				"p_Accept" : accept
-			}
-				$.ajax({
-				type : "post", //요청 메소드 방식
-				url : "/productaccept",
-				data : bean,
-				success : function(result) {//성공시 동작하는 파트
-					
-					var resultaccept = result;
-					var resultext="";
-					var resultdiv = document.getElementById("productaccept");
-					
-					if(result =='N'){
-						resultext += "승인처리상태 <input type='button' name='Y' value='미승인처리' onClick='productaccept(this.name)'/>"
-					}else{
-						resultext += "미승인처리상태 <input type='button' name='N' value='승인처리' onClick='productaccept(this.name)'/>"
-					}
-				
-					resultdiv.innerHTML = resultext;
-					
-					},
-					error : function(a, b, c) {
-						//통신 실패시 발생하는 함수(콜백)
-						alert("a:" + a + "b:" + b + "c:" + c);
-					}
-				});
-		
-
-}
-
-
-
 function selectimg(name){
 
 	document.getElementById('selectimg').src=name;
@@ -132,7 +96,7 @@ function selectproduct(){
 	
 	if(amout > 0){ //0이상 선택시 
 	
-		$('#cartlisttable').css("display","block");
+		
 		
 		var productbasket = document.getElementById('productbasket');
 		var rowid = "product"+product;
@@ -177,7 +141,7 @@ function selectproduct(){
 					  
 					    newCell2.innerText = ${oneproduct.p_Landprice };
 					    newCell3.innerHTML ='<input name = ' + product + ' type="button" onclick="count1(this.name)" value="-"/>'
-					    +'&nbsp&nbsp&nbsp'+'<span value="'+amout+'"name="productprice" id ="'+ pnum+'">' + amout+'</span> &nbsp&nbsp&nbsp'+'<input name = "'+product +'"type="button" onclick="count2(this.name)" value="+"/>';
+					    +'&nbsp&nbsp&nbsp'+'<span id ="'+ pnum+'">' + amout+'</span> &nbsp&nbsp&nbsp'+'<input name = "'+product +'"type="button" onclick="count2(this.name)" value="+"/>';
 					    //newCell3.innerText = amout;
 					    newCell4.innerText = (${oneproduct.p_Landprice} * amout);
 					    newCell5.innerHTML = '<input name = ' + product + ' type="button" onclick="deleteRow(this,this.name)" value="삭제"/>'
@@ -190,19 +154,7 @@ function selectproduct(){
 						document.getElementById(b_Id).value= uid;
 						document.getElementById(b_Land).value= amout;
 						document.getElementById(b_Totalprice).value= (${oneproduct.p_Landprice} * amout);
-						//전체 수량 처리하기.
-							var a1 = 0;
-							var a2;
-							var size = document.getElementsByName("productprice").length;
-							
-								for(var i = 0; i < size; i++){				
-									a2 = document.getElementsByName("productprice")[i].innerText;
-									a1 = parseInt(a2) + parseInt(a1);
-								}
-								document.getElementById("totalmanpay").innerText = "인건비"+(${oneproduct.p_Manpay} * a1);
-								document.getElementById("total").innerText = "총 가격 "+((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
 				   		}
-	    				
 				   		else{
 				   			alert("남은 땅 수량보다 값이 큽니다. 수량을 조절해주세요.")
 				   		}
@@ -241,18 +193,18 @@ function count2(name)  {
 	  var b_Land = ("b_Land" + name);
 	  var b_Totalprice = ("b_Totalprice" + name);
 	  var total = "total"+name;
+	  
 	  name = "pnum"+name;
 	  const resultElement = document.getElementById(name);
 	  let number = resultElement.innerText;
-	  number = parseInt(number) + 1;
-	  
+	
+	    number = parseInt(number) + 1;
 	  if(number>0){
 		  resultElement.innerText = number;
 		  document.getElementById(total).innerText = (number) * (${oneproduct.p_Landprice});
 		  document.getElementById(b_Land).value= number;
 		  document.getElementById(b_Totalprice).value = (number) * (${oneproduct.p_Landprice});
 	  }
-	  
 }
 
 function deleteRow(btndel,name){
@@ -262,53 +214,37 @@ function deleteRow(btndel,name){
         $(btndel).closest("tr").remove();
         document.getElementById(b_Land).value= 0;
 		document.getElementById(b_Totalprice).value = 0;
-		const table = document.getElementById('cartlist');
-	    const totalRowCnt = table.rows.length;
-	    var a1 = 0;
-		var a2;
-		var size = document.getElementsByName("productprice").length;
-			
-		if(totalRowCnt<=2){
-			$('#cartlisttable').css("display","none");
-			document.getElementById("totalmanpay").innerText = "";
-			document.getElementById("total").innerText = "";
-		}else{
-			for(var i = 0; i < size; i++){				
-				a2 = document.getElementsByName("productprice")[i].innerText;
-				a1 = parseInt(a2) + parseInt(a1);
-			}
-			document.getElementById("totalmanpay").innerText = "인건비"+(${oneproduct.p_Manpay} * a1);
-			document.getElementById("total").innerText = "총 가격 "+((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
-		}
-		
     } else {
         return false;
     }
 }
+ 
 
 function check(){
+	alert(1);
 	document.getElementById("myhiddenform");
 	document.getElementById("myhiddenform").submit();
+	alert(2);
 	document.myhiddenform.submit();
 	
 }
 
 
-
 </script>
 <style>
+.product__details__pic__item--large{
+	width: 540px;
+	height: 400px;
+}
 
-	.product__details__pic__item--large{
-		position: relative; top:0; left: 0;
-		width: 100%;
-		height: 340px;
-	}
-	
-	.product__details__tab__desc{
-		position: relative; top:0; left: 0;
-		width: 100%;
-		height: auto;
-	}
+@media(max-width:1528px){
+
+.product__details__pic__item--large{
+	width: 340px;
+	height: 300px;
+}
+
+}
 
 </style>
 
@@ -318,17 +254,21 @@ function check(){
 
 	
 	<style>
-		.select  a {display:block; border:1px solid #ccc; padding:0 8px;}
-		.select  a:after,
-		.select  ul > li:first-child:after {display:block; float:right;}
-		.select  a:after {content:'▼';}
-		.select  ul {position:absolute; width:100%; top:0px; background:#fff; display:none; }
-		.select  ul > li {cursor:pointer; padding:0 8px; border:1px solid #ccc;}
-		.select  ul > li:first-child:after {content:'▲';}
-		ul{
-		   list-style:none;
-		   padding-left:0px;
-		}
+	.select  a {display:block; border:1px solid #ccc; padding:0 8px;}
+	.select  a:after,
+	.select  ul > li:first-child:after {display:block; float:right;}
+	.select  a:after {content:'▼';}
+	.select  ul {position:absolute; width:100%; top:0px; background:#fff; display:none; }
+	.select  ul > li {cursor:pointer; padding:0 8px; border:1px solid #ccc;}
+	.select  ul > li:first-child:after {content:'▲';}
+
+	
+	ul{
+	   list-style:none;
+	   padding-left:0px;
+	}
+
+
 	</style>
 	
 	<script>
@@ -343,6 +283,7 @@ function check(){
 			  $(this).parent("div.select").css("z-index","999");
 			  $("#area").css("display","block");
 			    return false;
+			   
 		  });
 		  
 		  $("div.select > ul > li").click(function() {
@@ -353,19 +294,28 @@ function check(){
 			  $(this).parent().hide().parent("div.select").css("position","relative");
 			  $(this).parent().hide().parent("div.select").css("z-index","9");
 			  $("#area").css("display","none");
-			    // alert( $(this).children("img").attr("src")   );
+			 // alert( $(this).children("img").attr("src")   );
 			    //$(this).parent().hide().parent("div.select").children("a").text($(this).text());
 			    //$("#my_image").attr("src","second.jpg");
 			    //$(this).prependTo($(this).parent());
 			    //overflow: auto; height: 400px;
 		});
+		  
+		 
 		    
 	});
+		
+
+	
 
 	</script>
 
 </head>
 <body>
+
+<!-- 씨앗 초기화 등 초기 설정. -->
+<c:set var = "seedlist" value="감자,고구마,콩,배추,상추,수박,오이,토마토,호박,고추,마늘,파,양파,무,당근" />
+
 
 
 	<div class="container pt-5 pb-4">
@@ -390,7 +340,6 @@ function check(){
 			</div>
 		</div>
 	</div>
-	
 	<nav
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		id="ftco-navbar">
@@ -422,30 +371,10 @@ function check(){
   <!-- Product Details Section Begin -->
   	<br>
   	<br>
-  	
-  	<!-- 씨앗 초기화 등 초기 설정. -->
-	<c:set var = "seedlist" value="감자,고구마,콩,배추,상추,수박,오이,토마토,호박,고추,마늘,파,양파,무,당근" />
-  	
     <section class="product-details spad">
         <div class="container">
             <div class="row">
-            	<!--승인 여부 해당 파트 관리자만 보이게 만들어야됨. 차후 수정 예정.-->
-            	<div align="right" class="col-lg-12" id="productupdate">
-            	 <input type="button" value="수정" onclick="p"/>
-            	</div>
-            	<div align="right" class="col-lg-12" id="productaccept">
-	            	<c:choose>
-						<c:when test="${oneproduct.p_Accept eq 'Y'}">
-							승인처리상태 <input name='N' type="button" value="미승인처리" onclick="productaccept('N')"/>
-						</c:when>
-						<c:otherwise>
-						미승인처리상태  <input name='Y' type="button" value="승인처리" onclick="productaccept('Y')"/>
-						
-						</c:otherwise>
-					</c:choose>
-				</div>            
-            
-                <div class="col-lg-6 col-md-6" id="maindiv">
+                <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large" id="selectimg"
@@ -489,18 +418,17 @@ function check(){
                             <span>(18 reviews)</span>
                         </div>
                    		<div><h6>남은 평 : ${oneproduct.p_Landavailable} 평</h6></div>
-                        <div><h4>1평 작물가 :<fmt:formatNumber value="${oneproduct.p_Landprice }" pattern="#,###" /> 원</h4></div>
-                        <div><h4>1평 노동비 :<fmt:formatNumber value="${oneproduct.p_Manpay }" pattern="#,###" /> 원</h4></div>
+                        <div><h4>1평 :<fmt:formatNumber value="${oneproduct.p_Landprice }" pattern="#,###" /> 원</h4></div>
+                   
                         <hr>
                         <p>${oneproduct.p_Content}</p>
-                       	
                        	<div>
                        	
                        		<!-- 상품 리스트 선택 -->
-                       		
-									<div class="select" style= "position:relative; line-height:35px; width: 330px">
+									<div class="select" style= "position:relative; line-height:35px; width: 400px">
 									    <a href="#" id="aaa" onClick="test()">
 									    <img height= "50px" width="50px" src="/resources/product/img/감자.png"><span id="productname">감자</span></a>
+									    
 									   	
 										    <ul>
 										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/감자.png"/>감자</li>
@@ -521,11 +449,15 @@ function check(){
 										    </ul>
 									 	
 									</div>
-                        </div>   
-                      			<br>
+                       			
+                       			 
+                       				
+                     
+                        	</div>
+                      
 								<form>
 										<input type=button value="-" onClick="javascript:this.form.amount.value--;">
-										<input type=text id="productamout" name=amount value=1 size=10 maxlength=8>
+										<input type=text id="productamout" name=amount value=1>
 										<input type=button value="+" onClick="javascript:this.form.amount.value++;">
 										<input type=button value="선택" onClick="selectproduct()">
 								</form>
@@ -535,29 +467,32 @@ function check(){
 								</ol>
 									
 									
-								<div id="area" class="col-lg-12" style="height:52px; display : none"></div>
+									<div id="area" class="col-lg-12" style="height:52px; display : none"></div>
 								
 								
-								<div class="col-lg-12" id ="cartlisttable" style="display : none;">
+								<div class="col-lg-12" id ="cartlisttable">
 						                    <div class="table1">
-						                        <table style="width:100%;" id= "cartlist"  >
+						                        <table id= "cartlist" >
 						                            <thead>
 						                                <tr>
-						                                    <th class="shoping__product">Products</th>
-						                                    <th >Price</th>
-						                                    <th >Quantity</th>
-						                                    <th >Total</th>
-						                                    <th ></th>
-						                                    <th ></th>
+						                                    <th width=200class="shoping__product">Products</th>
+						                                    <th width=100>Price</th>
+						                                    <th width=300>Quantity</th>
+						                                    <th width=200>Total</th>
+						                                    <th width=200></th>
+						                                    <th width=100></th>
 						                                </tr>
 						                            </thead>
 						                            <tbody>
 						                                <tr>
 						                                    <td>
+						             
 						                                    </td>
 						                                    <td>
+						                                       
 						                                    </td>
 						                                    <td>
+	
 						                                    </td>
 						                                    <td>
 						                                      
@@ -573,8 +508,6 @@ function check(){
 						                        </table>
 						               </div>
 								</div>
-								<div style="text-align:right; font-size: 24px;" id="totalmanpay"></div>
-								<div style="text-align:right; font-size: 24px;" id="total"></div>
 								
 					
 						<form:form commandName="basketbean" id="myHiddenForm" name ="myHiddenForm"  action="/productbasketchoice" method="post">
@@ -584,6 +517,7 @@ function check(){
 									<input type="hidden" id = "b_Land${seed}" name="basketbeanList[${num.index}].b_Land" value="0">
 									<input type="hidden" id = "b_Seed${seed}" name="basketbeanList[${num.index}].b_Seed" value="${seed}">
 									<input type="hidden" id = "b_Totalprice${seed}" name="basketbeanList[${num.index}].b_Totalprice" value="0">
+									
 									<input type="hidden" id = "p_Img${seed}" name="basketbeanList[${num.index}].p_Img" value="${oneproduct.p_Img}">
 									<input type="hidden" id = "p_Title${seed}" name="basketbeanList[${num.index}].p_Title" value="${oneproduct.p_Title}">
 									<input type="hidden" id = "p_Manpay${seed}" name="basketbeanList[${num.index}].p_Manpay" value="${oneproduct.p_Manpay}">
@@ -594,8 +528,8 @@ function check(){
 						</form:form>
 						
 		
-					<input style="width:100pt;"type="button" onClick="basket()" value="장바구니" />&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input style="width:100pt;" type="button" onClick="payment()" value="결제"/>
+					<input type="button" onClick="basket()" value="장바구니" />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                    <input type="button" onClick="payment()" value="결제"/>
 					<!-- 
                     <input type="button" onClick="document.myHiddenForm.submit()" value="장바구니"/>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
                     <input type="button" onClick="document.myHiddenForm2.submit()" value="결제"/>
@@ -622,25 +556,26 @@ function check(){
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <div class="product__details__tab__desc" style="text-align : center;">
+                                <div class="product__details__tab__desc" style="">
+                                    <h6>이미지 파일 저장</h6>
                                     
 										<c:if test="${not empty oneproduct.p_Imgdetail1}">
-											<img style="max-width: 100%;" src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
                                     		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
 										</c:if>
 										
 										<c:if test="${not empty oneproduct.p_Imgdetail2}">
-											<img style="max-width: 100%;" src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail2}" 
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
                                     		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
 										</c:if>	
 										
 										<c:if test="${not empty oneproduct.p_Imgdetail3}">
-											<img style="max-width: 100%;" src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail3}" 
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
                                     		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
 										</c:if>	
 										
 										<c:if test="${not empty oneproduct.p_Imgdetail4}">
-											<img style="max-width: 100%;" src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail4}" 
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
                                     		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
 										</c:if>
 

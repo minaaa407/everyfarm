@@ -10,7 +10,7 @@
 	<select id="listserachpageingcount" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
 		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
 		p_Imgdetail4,p_Land,p_Landprice,p_Landavailable,p_Manpay,p_Date, p_Accept from product
-		  where (${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) order by ${orderby} ${ascdesc};		
+		  where (${where} like #{wherecolumn}) and (${where2}like #{wherecolumn2}) order by ${orderby} ${ascdesc};		
 	</select>
 	
 	<select id="listserachpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
