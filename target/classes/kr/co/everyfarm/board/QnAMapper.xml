@@ -85,9 +85,6 @@
 		q_No=#{no}
 	</delete>
 
-	<select resultType="kr.co.everyfarm.board.QnABean"
-		parameterType="kr.co.everyfarm.user.MemberBean" id="mylist">select * from qna
-		where q_Id=#{m_Id} order by q_no desc </select>
 
 	<!-- q_Img, #{q_Img}, -->
 </mapper>
