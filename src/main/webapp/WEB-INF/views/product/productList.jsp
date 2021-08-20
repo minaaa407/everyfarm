@@ -98,6 +98,13 @@ function orderby(id){
 	
 }
 
+function limitChange(){
+	
+	var limit = document.getElementById('productlist').value ;
+	document.getElementById('limit').value = limit;
+	document.myHiddenForm.submit();
+}
+
 //(function() { 
 
 	//var psub = document.getElementById("psub1");
@@ -134,12 +141,72 @@ window.onload = function(){
 			}
 		}
 		
+		
 	}
 
 
 
 
 </script>
+
+
+<script type="text/javascript">
+		function testbutton(number) {
+			
+			var limitnumber = document.getElementById("limit").value;
+			var bean = {
+				"selectpage" : number,
+				"limit" : limitnumber
+			}
+
+			$.ajax({
+				type : "post", //요청 메소드 방식
+				url : "/testlist2",
+				data : bean,
+				dataType : 'json', //서버가 요청 URL을 통해서 응답하는 내용의 타입
+				success : function(result) {//성공시 동작하는 파트
+
+					var page = result.pagebeen;
+					var list123 = result.productlist;
+					var abcd = document.getElementById("productlist1");
+					var pagesystem = document.getElementById("pagesystem");
+					var a = "";	//상품 리스트 처리파트 영역.
+					for(var i =0; i < list123.length; i++){
+						a += "<div class='col-lg-4 col-md-6 col-sm-6'> <img id='product";
+				        a += list123[i].p_No + " 'src='/resources/upload/product/"+ list123[i].p_No + "/"+list123[i].p_Img+"' class='test1' width='250' height='auto' alt='Image " + list123[i].p_No+"'><br> <a href='/productdetail?productno=";
+				        a += list123[i].p_No+"'>"+list123[i].p_No+"</a> "+list123[i].p_Title + list123[i].p_Landprice + list123[i].p_Manpay + "</div>";
+				        
+					}
+					abcd.innerHTML = a;
+					
+					var b="";
+					if(page.pro == true){//페이징 처리 부분
+						b += "<a id = '"+page.pagestart+"-1 ' style='cursor:pointer' onclick= 'testbutton("+page.pagestart+" -1 )' >이전 </a>";
+					}
+					var i = page.pagestart;
+					for(i; i < page.pageend+1; i++){
+						b += "<a id = 'page"+i+"' style='cursor:pointer' onclick= 'testbutton("+i+")' >"+i+"</a>";;
+					}
+					if(page.post == true){
+						b += "<a id = '"+page.pageend+"+1 ' style='cursor:pointer' onclick= 'testbutton("+page.pageend+" +1 )' >다음 </a>";
+					}
+					
+					pagesystem.innerHTML = b;
+					
+					
+			
+
+		
+					
+				},
+				error : function(a, b, c) {
+					//통신 실패시 발생하는 함수(콜백)
+					alert("a:" + a + "b:" + b + "c:" + c);
+				}
+			});
+		}
+		
+		</script>
 	
 	    <!-- Product Section -->
 	<div class="container pt-5 pb-4">
@@ -200,31 +267,60 @@ window.onload = function(){
                                     	<a id = "orderbyhighlandprice" style="cursor:pointer" onclick="orderby(this.id)">낮은땅가격 </a>
                                     	<a id = "orderbylowlandprice" style="cursor:pointer" onclick="orderby(this.id)">높은땅가격 </a>
                                 </div>
+                               
+                                <select id ="productlist" name="productlist" class="productlist" onChange="limitChange()">
+                                			<c:if test="${pagebeen.limit eq '3'}">
+												<option value="3" selected>3</option>
+												<option value="6">6</option>
+												<option value="9" >9</option>
+												<option value="12">12</option>
+											</c:if>	 
+											<c:if test="${pagebeen.limit eq '6'}">
+												<option value="3" selected>3</option>
+												<option value="6">6</option>
+												<option value="9" >9</option>
+												<option value="12">12</option>
+											</c:if>	 
+											<c:if test="${pagebeen.limit eq '9'}">
+												<option value="3">3</option>
+												<option value="6">6</option>
+												<option value="9" selected>9</option>
+												<option value="12">12</option>
+											</c:if>	 
+											
+											<c:if test="${pagebeen.limit eq '12'}">
+												<option value="3">3</option>
+												<option value="6">6</option>
+												<option value="9">9</option>
+												<option value="12" selected>12</option>
+											</c:if>	 
+											
+					
+							    </select>
      				</div>
-                    <div class="row">
+                    <div class="row" id="productlist1">
                     	<c:forEach var="p" items="${productlist }">
 	                        <div class="col-lg-4 col-md-6 col-sm-6">
 	                        	<img id='product${p.p_No}' src="/resources/upload/product/${p.p_No}/${p.p_Img}" class="test1" 
 									 width="250" height="auto" alt="Image ${p.p_No}"><br>
 									 <a href="/productdetail?productno=${p.p_No}">${p.p_No}</a> ${p.p_Title} ${p.p_Landprice} ${p.p_Manpay}
-									  <!--   ${p_Id},${p_Title},${p_Content},${p_Img},${p_Subimg1},${p_Subimg2},
-									  ${p_Subimg3},${p_Subimg4},${p_Imgdetail},${p_Land},${p_Landprice},${p_Manpay},${p_Accept}
-									  -->
+									 
 	                        </div>
                        </c:forEach> 
                     </div>
-                    <div class="product__pagination">
+                    <div class="product__pagination" id="pagesystem">
                     
 	                	<c:if test="${pagebeen.pro eq 'true' }">
-						    <a id = "page${pagebeen.pagestart -1}" style="cursor:pointer" onclick="paging(${pagebeen.pagestart -1})">이전 </a>
+						    <a id = "page${pagebeen.pagestart -1}" style="cursor:pointer" onclick="testbutton(${pagebeen.pagestart -1})">이전 </a>
 						</c:if>	  
 
 						<c:forEach var="i" begin="${pagebeen.pagestart}" end="${pagebeen.pageend}" step="1">
-							   <a id = "page${i}" style="cursor:pointer" onclick="paging(${i })">${i }</a>  
+							   <a id = "page${i}" style="cursor:pointer" onclick="testbutton(${i })">${i }</a>  
 							</c:forEach>    
 					    	<c:if test="${pagebeen.post eq 'true'}">
-						    <a id = "page${pagebeen.pageend +1}" style="cursor:pointer" onclick="paging(${pagebeen.pageend +1})">다음 </a>
+						    <a id = "page${pagebeen.pageend +1}" style="cursor:pointer" onclick="testbutton(${pagebeen.pageend +1})">다음 </a>
 						</c:if>
+						
                     </div>
                     <!-- form 해당 부분 scrip 이벤트 통해서 자동 전송 처리 -->
                     <form:form commandName="pagebeen" name = "myHiddenForm" action="/productlist" method="post">
@@ -246,10 +342,10 @@ window.onload = function(){
 							<input type="hidden" id = "ascdesc" name="ascdesc" value="${pagebeen.ascdesc}">
 					</form:form>
 
-                    
+                    	
                 </div>
-         
-    </section>
+         		<input type="button" onClick="testbutton()"/>    
+         		</section>
     <!-- Product Section End -->
 	
 	
@@ -356,6 +452,11 @@ window.onload = function(){
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		
+		
 	</footer>
 
 

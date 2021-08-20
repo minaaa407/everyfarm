@@ -1,18 +1,41 @@
-package kr.co.everyfarm.user;
+package kr.co.everyfarm.farmer;
 
 import java.util.Date;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class FarmerBean {
 
+	@NotEmpty(message = "필수 입력 항목입니다.")
+	@Email(message = "이메일  형식에 맞지 않습니다.")
 	private String f_Id;
+	
+	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String f_Name;
+	
+	@NotEmpty(message = "필수 입력 항목입니다.")
+	@Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*\\W)(?=\\S+$).{8,20}", message = "비밀번호는 영문 소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8자 ~ 20자의 비밀번호여야 합니다.")
 	private String f_Pw;
+
+	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String f_Addr;
+	
+	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String f_Tel;
+	
+	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String f_Birth;
+
 	private Float f_Rate;
+	
 	private Date f_Date;
+	
 	private String f_Profile;
+	
+	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String f_Auth;
 	
 	public String getF_Id() {

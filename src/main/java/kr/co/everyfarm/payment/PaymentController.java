@@ -22,7 +22,7 @@ import com.siot.IamportRestClient.response.Payment;
 import kr.co.everyfarm.basket.BasketBean;
 import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.user.MemberBean;
-import kr.co.everyfarm.user.UserDAO;
+import kr.co.everyfarm.user.MemberDAO;
 
 @Controller
 public class PaymentController {
@@ -50,7 +50,7 @@ public class PaymentController {
 	      
 		System.out.println(basketbean.getBasketbeanList().get(0).getB_Seed() + "작물"); //
 		
-		UserDAO userdao = sqlSessionTemplate.getMapper(UserDAO.class);
+		MemberDAO userdao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		PaymentBean paymentbean = new PaymentBean();
 		String id = basketbean.getBasketbeanList().get(0).getB_Id();  
 		MemberBean getinfo1 = userdao.userInfo(id);

@@ -1,7 +1,11 @@
 package kr.co.everyfarm.product;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,7 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.everyfarm.basket.BasketBean;
 import kr.co.everyfarm.user.MemberBean;
@@ -21,10 +28,6 @@ import kr.co.everyfarm.user.MemberBean;
 public class ProductController {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-	
-	
-	
-	
 	
 	//아래 박정빈
 	
@@ -95,23 +98,97 @@ public class ProductController {
 	
 	
 	
-//	@RequestMapping(value="/productpayment")
-//	public String getproductpayment(Model model, @ModelAttribute ("basketbean") BasketBean basketbean) {
-//		List<BasketBean> list = basketbean.getBasketbeanList();
-//		int j = list.size();
-//	      for(int i =0; i<j; i++) {
-//	         if(list.get(i).getB_Land()<=0) {
-//	            list.remove(i);
-//	            j--;
-//	            i--;
-//	         }
-//	      }
-//	      basketbean.setBasketbeanList(list);
-//		model.addAttribute("memBasketModel",basketbean);
-//		return "/payment/payment";
-//		
-//	}
+	@RequestMapping(value="/productpayment")
+	public String getproductpayment(Model model, @ModelAttribute ("basketbean") BasketBean basketbean) {
+		List<BasketBean> list = basketbean.getBasketbeanList();
+		
+		int j = list.size();
+		for(int i =0; i<j; i++) {
+			if(list.get(i).getB_Land()<=0) {
+				list.remove(i);
+				j--;
+				i--;
+			}
+		}
+		basketbean.setBasketbeanList(list);
 	
+		model.addAttribute("memBasketModel",basketbean);
+		return "/product/test1";
+		
+	}
+	//테스트 해당 아래 사항 죽음
+	
+	@RequestMapping(value="/productlist2")
+	public String getProductlist2(Model model, @ModelAttribute ("pagebeen") PageBeen pagebeen) {
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		
+		
+		List<ProductBean> productlist = dao.listserachpageingcount(pagebeen);
+		int selecttotalindex = productlist.size();
+		pagebeen.setTableindex(selecttotalindex);
+		productlist = dao.listserachpageing(pagebeen);
+
+		
+		model.addAttribute("pagebeen",pagebeen);
+		model.addAttribute("productlist",productlist);
+		return "product/productList2";
+	}
+	
+	@RequestMapping(value="/testlist2")
+	@ResponseBody
+	public Map<String, Object> gettestlist2(Model model, PageBeen pagebeen) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		
+		
+		List<ProductBean> productlist = dao.listserachpageingcount(pagebeen);
+		int selecttotalindex = productlist.size();
+		pagebeen.setTableindex(selecttotalindex);
+		productlist = dao.listserachpageing(pagebeen);
+		
+		map.put("productlist", productlist);
+		map.put("pagebeen", pagebeen);
+		
+		
+		
+		return map;
+	
+	}
+	
+	//테스트 해당 아래 사항 죽임.
+	
+	
+	
+	
+	//관리자 덧글 불러오기.
+	@RequestMapping(value="/productqnaadminlist")
+	public String getadmintProductpnalist(Model model, @ModelAttribute ("pagebeen") PageBeen pagebeen) {
+		ProductqnaDAO dao = sqlSessionTemplate.getMapper(ProductqnaDAO.class);
+		//where 조건 집어 넣기.
+		if(!( pagebeen.getWhere().contains("c_") )){
+			pagebeen.setWhere("c_Id");
+			pagebeen.setWhere2("c_Id");
+			pagebeen.setOrderby("c_Seq");
+			pagebeen.setLimit(10);
+		}
+		
+		
+		int count = dao.listserachcount();
+		pagebeen.setTableindex(count);
+		List<ProductqnaBean> productqnalist = dao.listserachpageing(pagebeen);
+		
+		
+		System.out.println(pagebeen.getWhere() + "where 값은???");
+		System.out.println(pagebeen.getWherecolumn() + " wherecolumn 값은?");
+		System.out.println(pagebeen.getWhere2() + "where2 값은???");
+		System.out.println(pagebeen.getWherecolumn2() + " wherecolumn2 값은?");
+		
+		model.addAttribute("productqnalist",productqnalist);
+		model.addAttribute("pagebeen",pagebeen);
+		
+		return "product/productqnaadminlist";
+	}
 	
 	
 
@@ -211,58 +288,127 @@ public class ProductController {
 	
 	
 	
-	//김주혁
-	
-	
-	@RequestMapping(value = "/productqnainsert")
-	public String getinsertqna(Model model, @ModelAttribute("productqna") ProductqnaBean productqna) {
+	// 김주혁
 
-		ProductqnaDAO dao = sqlSessionTemplate.getMapper(ProductqnaDAO.class);
-		int productinsert = dao.insert(productqna);
-		System.out.println(productinsert);
-		return "redirect:/productqnalist";
-	}
+		@RequestMapping(value = "/productqnainsert")
+		public String getinsertqna(Model model, @ModelAttribute("productqna") ProductqnaBean productqna) {
 
-	@RequestMapping(value = "/ProductRegisterform")
-	public String getRegisterform(Model model, @ModelAttribute("product") ProductBean productbean) {
-		model.addAttribute("product", productbean);
-		return "product/ProductRegisterform";
-	}
+			ProductqnaDAO dao = sqlSessionTemplate.getMapper(ProductqnaDAO.class);
+			int productinsert = dao.insert(productqna);
+			System.out.println(productinsert);
+			return "redirect:/productqnalist";
+		}
 
-	@RequestMapping(value = "/ProductRegister")
-	public String getreginsert(Model model, @ModelAttribute("product") ProductBean productbean) {
-		System.out.println(productbean);
-		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-		int productinsert = dao.insert(productbean);
-		System.out.println(productinsert);
-		return "redirect:/productadminlistform";
-	}
-	
-	   @RequestMapping(value = "/productadminlistform")
-	   public String getAdminProductList(Model model, @ModelAttribute("pagebeen") PageBeen pagebeen) {
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		@RequestMapping(value = "/proRegisterForm")
+		public String getRegisterform(Model model, @ModelAttribute("product") ProductBean productbean) {
+			model.addAttribute("product", productbean);
+			return "product/proRegisterForm";
+		}
 
-	      /// List<ProductBean> list = dao.list();
-	      int limit = 10;
-	      pagebeen.setLimit(limit);
-	      List<ProductBean> list = dao.listserachpageingcount(pagebeen);
-	      int selecttotalindex = list.size();
-	      pagebeen.setTableindex(selecttotalindex);
-	      list = dao.listserachpageing(pagebeen);
+		@RequestMapping(value = "/proLandListForm")
+		public String getLandListform(Model model, @ModelAttribute("product") ProductBean productbean) {
+			model.addAttribute("product", productbean);
+			return "product/proLandListForm";
+		}
 
-	      model.addAttribute("productlist", list);
+		@RequestMapping(value = "/ProductRegister", method = RequestMethod.POST) // 농장등록 여기서 동작함.
+		public String getreginsert(Model model, @ModelAttribute("product") ProductBean productbean,
+				@RequestParam(value = "p_Img1", required = false) MultipartFile mRequest,
+				@RequestParam(value = "p_Subimg12", required = false) MultipartFile mRequest2,
+				@RequestParam(value = "p_Subimg22", required = false) MultipartFile mRequest3,
+				@RequestParam(value = "p_Subimg32", required = false) MultipartFile mRequest4,
+				@RequestParam(value = "p_Subimg42", required = false) MultipartFile mRequest5,
+				@RequestParam(value = "p_Imgdetail12", required = false) MultipartFile mRequest6,
+				@RequestParam(value = "p_Imgdetail22", required = false) MultipartFile mRequest7,
+				@RequestParam(value = "p_Imgdetail32", required = false) MultipartFile mRequest8,
+				@RequestParam(value = "p_Imgdetail42", required = false) MultipartFile mRequest9) {
+			MultipartFile[] ab = { mRequest, mRequest2, mRequest3, mRequest4, mRequest5, mRequest6, mRequest7, mRequest8,
+					mRequest9 };
+			
+			productbean.setP_Accept("N");
+			ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);//dao
+			int pnomax = dao.listmaxpno();
+			String path = "D:\\final\\.metadata\\.plugins\\org.eclipse.wst.server.core\\"
+							+ "tmp0\\wtpwebapps\\everyfarm\\resources\\upload\\product\\"+pnomax + "\\";
+			
+			//String pathSet = request.getSession().getServletContext().getResourcePaths("/");
+			
+			//path = "resources"+File.separator+"upload"+File.separator+"product"+File.separator + pnomax + File.separator;
 
-	      return "product/productadminlistform";
-	   }                      
+			File Folder = new File(path);
+			if (!Folder.exists()) {
+				try{
+				    Folder.mkdir(); //폴더 생성합니다.
+				    System.out.println("폴더가 생성되었습니다.");
+			        } 
+			        catch(Exception e){
+				    e.getStackTrace();
+				}        
+		         }else {
+				System.out.println("이미 폴더가 생성되어 있습니다.");
+			}
+			
+			
+			String safeFile;
+			String originFileName;
+			long fileSize;
+			productbean.setP_Img(mRequest.getOriginalFilename());
+			productbean.setP_Subimg1(mRequest2.getOriginalFilename());
+			productbean.setP_Subimg2(mRequest3.getOriginalFilename());
+			productbean.setP_Subimg3(mRequest4.getOriginalFilename());
+			productbean.setP_Subimg4(mRequest5.getOriginalFilename());
+			productbean.setP_Imgdetail1(mRequest6.getOriginalFilename());
+			productbean.setP_Imgdetail2(mRequest7.getOriginalFilename());
+			productbean.setP_Imgdetail3(mRequest8.getOriginalFilename());
+			productbean.setP_Imgdetail4(mRequest9.getOriginalFilename());
+			for (int i = 0; i < ab.length; i++) {
+				originFileName = ab[i].getOriginalFilename(); // 원본 파일 명
+				fileSize = ab[i].getSize(); // 파일 사이즈
+				safeFile = path + originFileName;
+				try {
+					//ab[i].transferTo(new File(safeFile));
+					if(fileSize > 100) {
+						ab[i].transferTo(new File(safeFile));
+					}
+					
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			dao.insert(productbean);
+			return "redirect:/proAdminListForm";
+		}
 
-	   @RequestMapping("/proregdetailform")
-	   public String getRegDetail(Model model, @RequestParam int p_No) {
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-	      ProductBean productinfo = dao.info(p_No);
-	      model.addAttribute("productinfo", p_No);
-	      return "product/proregdetailform";
-	   }
-	
-	
-	
+		@RequestMapping(value = "/proAdminListForm")
+		public String getAdminProductList(Model model, @ModelAttribute("pagebeen") PageBeen pagebeen) {
+			ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+
+			/// List<ProductBean> list = dao.list();
+			int limit = 10;
+			pagebeen.setLimit(limit);
+			List<ProductBean> list = dao.listserachpageingcount(pagebeen);
+			int selecttotalindex = list.size();
+			pagebeen.setTableindex(selecttotalindex);
+			list = dao.listserachpageing(pagebeen);
+
+			model.addAttribute("productlist", list);
+
+			return "product/proAdminListForm";
+		}
+
+		@RequestMapping("/proRegDetailForm")
+		public String getRegDetail(Model model, @RequestParam int p_No) {
+			System.out.println(p_No);
+			ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+			ProductBean productinfo = dao.info(p_No);
+			System.out.println(productinfo.toString());
+			model.addAttribute("productinfo", productinfo);
+			return "product/proRegDetailForm";
+
+		}
 }

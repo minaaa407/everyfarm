@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@page import="kr.co.everyfarm.product.ProductBean"%>
+<%@page import="kr.co.everyfarm.user.MemberBean"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,20 +39,284 @@
 
     <link rel="stylesheet" href="resources/product/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="resources/product/css/slicknav.min.css" type="text/css">
-
-    
-    <style>
-    
-    
+	<link rel="stylesheet" href="resources/product/css/dd.css" type="text/css"/>	
 
 
 
 
-    </style>
 
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+function selectimg(name){
+
+	document.getElementById('selectimg').src=name;
+	
+}
+
+function basket(){
+	
+	document.getElementById('myHiddenForm').action="/productbasketchoice";
+	document.myHiddenForm.submit();
+}
+
+function payment(){
+	document.getElementById('myHiddenForm').action="/productpayment";
+	document.myHiddenForm.submit();
+}
+
+
+function listChange(){
+	document.getElementById('productamout').value="1";
+}
+
+function selectproduct(){
+	
+	
+	<%	String id ="";
+		MemberBean member = (MemberBean)session.getAttribute("member");
+		if(member==null){
+			id ="";
+		}else{
+			id = member.getM_Id();
+		}
+		
+		System.out.println(id);
+	%>  
+	var product = $('#productname').text();
+
+	
+	var uid = "<%=id%>";
+	
+	
+	var amout = document.getElementById('productamout').value;
+	
+	if(amout > 0){ //0이상 선택시 
+	
+		
+		
+		var productbasket = document.getElementById('productbasket');
+		var rowid = "product"+product;
+		var pnum = "pnum"+product;
+		var total = "total"+product;
+		//var productlistname = document.getElementsbyName("productname");
+		
+		//alert(productlistname[0]);
+		//alert(0);
+		//var plusUl = document.createElement('ul');
+	    // 추가할 plusUl 엘리먼트 안의 내용을 정해줍니다. ( 꼭 정해야 하는건 아닙니다. )
+	   // plusUl.innerHTML =  "<oi>세엣</oi>";   
+	    // appendChild 로 이전에 정의한 plusUl 변수의 내용을 실제 추가합니다.
+	   // document.getElementById('productbasket').appendChild(plusUl);
+	    
+	    if(!(document.getElementById(rowid))){ // 중복 씨앗 없을 때
+	    	
+	    	var cartlist = document.getElementById('cartlist');		
+			var totalproduct = 0;
+	    	for (var i = 2; i < cartlist.rows.length; i++) {
+	    	      var userName = cartlist.rows[i].cells[2].innerText;
+	    	      
+	    	      totalproduct = parseInt(totalproduct) + parseInt(userName);
+	    	}
+	    				totalproduct = parseInt(totalproduct) + parseInt(amout)
+						
+
+				   		if(totalproduct < ${oneproduct.p_Landavailable}){
+		   		
+					    const table = document.getElementById('cartlist');
+					    const totalRowCnt = table.rows.length;
+					    const newRow = table.insertRow();
+					    newRow.id = rowid;
+					    // 새 행(Row)에 Cell 추가
+					    const newCell1 = newRow.insertCell(0);//씨앗
+					    const newCell2 = newRow.insertCell(1);//한개 가격
+					    const newCell3 = newRow.insertCell(2);//땅 갯수
+					    const newCell4 = newRow.insertCell(3);//총 가격
+					    const newCell5 = newRow.insertCell(4);//삭제버튼
+					    newCell4.id=total;
+					    newCell1.innerText = product;
+					  
+					    newCell2.innerText = ${oneproduct.p_Landprice };
+					    newCell3.innerHTML ='<input name = ' + product + ' type="button" onclick="count1(this.name)" value="-"/>'
+					    +'&nbsp&nbsp&nbsp'+'<span id ="'+ pnum+'">' + amout+'</span> &nbsp&nbsp&nbsp'+'<input name = "'+product +'"type="button" onclick="count2(this.name)" value="+"/>';
+					    //newCell3.innerText = amout;
+					    newCell4.innerText = (${oneproduct.p_Landprice} * amout);
+					    newCell5.innerHTML = '<input name = ' + product + ' type="button" onclick="deleteRow(this,this.name)" value="삭제"/>'
+						var b_Pno = ("b_Pno" + product);
+						var b_Id = ("b_Id" + product);
+						var b_Land = ("b_Land" + product);
+						var b_Totalprice = ("b_Totalprice" + product);
+					    //document.getElementById('b_Pno').value = "farmers";
+						//document.getElementById('b_Id').value= "farmers";
+						document.getElementById(b_Id).value= uid;
+						document.getElementById(b_Land).value= amout;
+						document.getElementById(b_Totalprice).value= (${oneproduct.p_Landprice} * amout);
+				   		}
+				   		else{
+				   			alert("남은 땅 수량보다 값이 큽니다. 수량을 조절해주세요.")
+				   		}
+						
+	    }else{
+	    	alert("동일 제품이 존재합니다. 수량을 조절해주십시요.")
+	    }
+	    
+	}else{
+		alert("0 이상 수량을 입력해주세요.")
+	}
+	
+}
+
+function count1(name)  {
+	   
+	  var total = "total"+name;
+	  name = "pnum"+name;
+	  const resultElement = document.getElementById(name);
+	  let number = resultElement.innerText;
+	  var b_Land = ("b_Land" + name);
+	  var b_Totalprice = ("b_Totalprice" + name);
+	
+	  number = parseInt(number) - 1;
+	  if(number>0){
+		  resultElement.innerText = number;
+		  document.getElementById(total).innerText = (number) * (${oneproduct.p_Landprice});
+		 
+		  document.getElementById(b_Land).value= number;
+		  document.getElementById(b_Totalprice).value = (number) * (${oneproduct.p_Landprice});
+	  }
+	  
+}
+
+function count2(name)  {
+	  var b_Land = ("b_Land" + name);
+	  var b_Totalprice = ("b_Totalprice" + name);
+	  var total = "total"+name;
+	  
+	  name = "pnum"+name;
+	  const resultElement = document.getElementById(name);
+	  let number = resultElement.innerText;
+	
+	    number = parseInt(number) + 1;
+	  if(number>0){
+		  resultElement.innerText = number;
+		  document.getElementById(total).innerText = (number) * (${oneproduct.p_Landprice});
+		  document.getElementById(b_Land).value= number;
+		  document.getElementById(b_Totalprice).value = (number) * (${oneproduct.p_Landprice});
+	  }
+}
+
+function deleteRow(btndel,name){
+	var b_Land = ("b_Land" + name);
+	var b_Totalprice = ("b_Totalprice" + name);
+    if (typeof(btndel) == "object") {
+        $(btndel).closest("tr").remove();
+        document.getElementById(b_Land).value= 0;
+		document.getElementById(b_Totalprice).value = 0;
+    } else {
+        return false;
+    }
+}
+ 
+
+function check(){
+	alert(1);
+	document.getElementById("myhiddenform");
+	document.getElementById("myhiddenform").submit();
+	alert(2);
+	document.myhiddenform.submit();
+	
+}
+
+
+</script>
+<style>
+.product__details__pic__item--large{
+	width: 540px;
+	height: 400px;
+}
+
+@media(max-width:1528px){
+
+.product__details__pic__item--large{
+	width: 340px;
+	height: 300px;
+}
+
+}
+
+</style>
+
+
+<!-- select 선택 문 -->
+
+
+	
+	<style>
+	.select  a {display:block; border:1px solid #ccc; padding:0 8px;}
+	.select  a:after,
+	.select  ul > li:first-child:after {display:block; float:right;}
+	.select  a:after {content:'▼';}
+	.select  ul {position:absolute; width:100%; top:0px; background:#fff; display:none; }
+	.select  ul > li {cursor:pointer; padding:0 8px; border:1px solid #ccc;}
+	.select  ul > li:first-child:after {content:'▲';}
+
+	
+	ul{
+	   list-style:none;
+	   padding-left:0px;
+	}
+
+
+	</style>
+	
+	<script>
+
+	
+	$(document).ready(function () {
+		  $("div.select > a").click(function () {
+			  $(this).next("ul").toggle();
+			  $(this).parent("div.select").css("overflow","auto");
+			  $(this).parent("div.select").css("height","400px");
+			  $(this).parent("div.select").css("position","absolute");
+			  $(this).parent("div.select").css("z-index","999");
+			  $("#area").css("display","block");
+			    return false;
+			   
+		  });
+		  
+		  $("div.select > ul > li").click(function() {
+			  $(this).parent().hide().parent("div.select").children("a").children("img").attr("src",$(this).children("img").attr("src"));
+			  $(this).parent().hide().parent("div.select").children("a").children("span").text($(this).text());
+			  $(this).parent().hide().parent("div.select").css("overflow","");
+			  $(this).parent().hide().parent("div.select").css("height","");
+			  $(this).parent().hide().parent("div.select").css("position","relative");
+			  $(this).parent().hide().parent("div.select").css("z-index","9");
+			  $("#area").css("display","none");
+			 // alert( $(this).children("img").attr("src")   );
+			    //$(this).parent().hide().parent("div.select").children("a").text($(this).text());
+			    //$("#my_image").attr("src","second.jpg");
+			    //$(this).prependTo($(this).parent());
+			    //overflow: auto; height: 400px;
+		});
+		  
+		 
+		    
+	});
+		
+
+	
+
+	</script>
 
 </head>
 <body>
+
+<!-- 씨앗 초기화 등 초기 설정. -->
+<c:set var = "seedlist" value="감자,고구마,콩,배추,상추,수박,오이,토마토,호박,고추,마늘,파,양파,무,당근" />
+
+
 
 	<div class="container pt-5 pb-4">
 		<div class="row justify-content-between">
@@ -101,33 +369,46 @@
 <!-- 여기서부터 내용 -->
 
   <!-- Product Details Section Begin -->
+  	<br>
+  	<br>
     <section class="product-details spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large"
+                            <img class="product__details__pic__item--large" id="selectimg"
                                 src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}" alt="">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
                             <img data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
-                                src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}" alt="">
+                                src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}" alt=""
+                                name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
+                                style="cursor:pointer" onclick="selectimg(this.name)">
                             <img data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
-                                 src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}" alt="">
+                                 src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}" alt=""
+                                 name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
+                                 style="cursor:pointer" onclick="selectimg(this.name)">
                             <img data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
-                                src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}" alt="">
+                                src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}" alt=""
+                                name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
+                                style="cursor:pointer" onclick="selectimg(this.name)">
                             <img data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
-                                src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}" alt="">
+                                src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}" alt=""
+                                name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
+                                style="cursor:pointer" onclick="selectimg(this.name)">
 							<img data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
-                                 src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}" alt="">
+                                 src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}" alt=""
+                                 name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
+                                 style="cursor:pointer" onclick="selectimg(this.name)">
                         </div>
                     </div>
                 </div>
              
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
-                        <h3>Vetgetable’s Package</h3>
+                        <h2>${oneproduct.p_Title}</h2>
+                        <hr>
                         <div class="product__details__rating">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -136,32 +417,123 @@
                             <i class="fa fa-star-half-o"></i>
                             <span>(18 reviews)</span>
                         </div>
-                        <div class="product__details__price">$50.00</div>
-                        <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
-                            vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
-                            quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
-                        <div class="product__details__quantity">
-                            <div class="quantity">
-                                <div class="pro-qty">
-                                    <input type="text" value="1">
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#" class="primary-btn">ADD TO CARD</a>
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
-                        <ul>
-                            <li><b>Availability</b> <span>In Stock</span></li>
-                            <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                            <li><b>Weight</b> <span>0.5 kg</span></li>
-                            <li><b>Share on</b>
-                                <div class="share">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                </div>
-                            </li>
-                        </ul>
+                   		<div><h6>남은 평 : ${oneproduct.p_Landavailable} 평</h6></div>
+                        <div><h4>1평 :<fmt:formatNumber value="${oneproduct.p_Landprice }" pattern="#,###" /> 원</h4></div>
+                   
+                        <hr>
+                        <p>${oneproduct.p_Content}</p>
+                       	<div>
+                       	
+                       		<!-- 상품 리스트 선택 -->
+									<div class="select" style= "position:relative; line-height:35px; width: 400px">
+									    <a href="#" id="aaa" onClick="test()">
+									    <img height= "50px" width="50px" src="/resources/product/img/감자.png"><span id="productname">감자</span></a>
+									    
+									   	
+										    <ul>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/감자.png"/>감자</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/고구마.png"/>고구마</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/콩.png"/>콩</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/배추.png"/>배추</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/상추.png"/>상추</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/수박.png"/>수박</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/오이.png"/>오이</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/토마토.png"/>토마토</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/호박.png"/>호박</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/고추.png"/>고추</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/마늘.png"/>마늘</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/파.png"/>파</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/양파.png"/>양파</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/무.png"/>무</li>
+										        <li onClick="listChange()"><img height= "50px" width="50px" src="/resources/product/img/당근.png"/>당근</li>
+										    </ul>
+									 	
+									</div>
+                       			
+                       			 
+                       				
+                     
+                        	</div>
+                      
+								<form>
+										<input type=button value="-" onClick="javascript:this.form.amount.value--;">
+										<input type=text id="productamout" name=amount value=1>
+										<input type=button value="+" onClick="javascript:this.form.amount.value++;">
+										<input type=button value="선택" onClick="selectproduct()">
+								</form>
+								<ol id="productbasket">
+								
+								
+								</ol>
+									
+									
+									<div id="area" class="col-lg-12" style="height:52px; display : none"></div>
+								
+								
+								<div class="col-lg-12" id ="cartlisttable">
+						                    <div class="table1">
+						                        <table id= "cartlist" >
+						                            <thead>
+						                                <tr>
+						                                    <th width=200class="shoping__product">Products</th>
+						                                    <th width=100>Price</th>
+						                                    <th width=300>Quantity</th>
+						                                    <th width=200>Total</th>
+						                                    <th width=200></th>
+						                                    <th width=100></th>
+						                                </tr>
+						                            </thead>
+						                            <tbody>
+						                                <tr>
+						                                    <td>
+						             
+						                                    </td>
+						                                    <td>
+						                                       
+						                                    </td>
+						                                    <td>
+	
+						                                    </td>
+						                                    <td>
+						                                      
+						                                    </td>
+						                                    <td>
+						                                      
+						                                    </td>
+						                                     <td>
+						                                      
+						                                    </td>
+						                                </tr>
+						                            </tbody>
+						                        </table>
+						               </div>
+								</div>
+								
+					
+						<form:form commandName="basketbean" id="myHiddenForm" name ="myHiddenForm"  action="/productbasketchoice" method="post">
+								<c:forTokens var="seed" items="${seedlist}" delims="," varStatus="num">
+									<input type="hidden" id = "b_Id${seed}" name="basketbeanList[${num.index}].b_Id" value="${mid}">
+									<input type="hidden" id = "b_Pno${seed}" name="basketbeanList[${num.index}].b_Pno" value="${oneproduct.p_No}">
+									<input type="hidden" id = "b_Land${seed}" name="basketbeanList[${num.index}].b_Land" value="0">
+									<input type="hidden" id = "b_Seed${seed}" name="basketbeanList[${num.index}].b_Seed" value="${seed}">
+									<input type="hidden" id = "b_Totalprice${seed}" name="basketbeanList[${num.index}].b_Totalprice" value="0">
+									
+									<input type="hidden" id = "p_Img${seed}" name="basketbeanList[${num.index}].p_Img" value="${oneproduct.p_Img}">
+									<input type="hidden" id = "p_Title${seed}" name="basketbeanList[${num.index}].p_Title" value="${oneproduct.p_Title}">
+									<input type="hidden" id = "p_Manpay${seed}" name="basketbeanList[${num.index}].p_Manpay" value="${oneproduct.p_Manpay}">
+									<input type="hidden" id = "p_Landprice${seed}" name="basketbeanList[${num.index}].p_Landprice" value="${oneproduct.p_Landprice}">
+									<input type="hidden" id = "p_Landavailable${seed}" name="basketbeanList[${num.index}].p_Landavailable" value="${oneproduct.p_Landavailable}">
+								</c:forTokens>
+							
+						</form:form>
+						
+		
+					<input type="button" onClick="basket()" value="장바구니" />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                    <input type="button" onClick="payment()" value="결제"/>
+					<!-- 
+                    <input type="button" onClick="document.myHiddenForm.submit()" value="장바구니"/>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                    <input type="button" onClick="document.myHiddenForm2.submit()" value="결제"/>
+                     -->
                     </div>
                 </div>
                 
@@ -184,26 +556,30 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <div class="product__details__tab__desc">
-                                    <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
-                                        suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                                        vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
-                                        accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
-                                        pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
-                                        elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
-                                        et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
-                                        vel, ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-                                        <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                        Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed
-                                        porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum
-                                        sed sit amet dui. Proin eget tortor risus.</p>
+                                <div class="product__details__tab__desc" style="">
+                                    <h6>이미지 파일 저장</h6>
+                                    
+										<c:if test="${not empty oneproduct.p_Imgdetail1}">
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
+                                    		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
+										</c:if>
+										
+										<c:if test="${not empty oneproduct.p_Imgdetail2}">
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
+                                    		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
+										</c:if>	
+										
+										<c:if test="${not empty oneproduct.p_Imgdetail3}">
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
+                                    		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
+										</c:if>	
+										
+										<c:if test="${not empty oneproduct.p_Imgdetail4}">
+											<img src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}" 
+                                    		alt="${oneproduct.p_Imgdetail1}" title ="${oneproduct.p_Imgdetail1}">
+										</c:if>
+
+                                    
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
@@ -272,15 +648,6 @@
                                        onclick="paging(${pagebeen.pageend +1})">다음 </a>
                                  </c:if>
   								</div>
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-                              
-                                
-                                
                                 
                             </div>
                         </div>
@@ -292,6 +659,9 @@
         </div>
     </section>
 	
+		
+
+
 
 
 
@@ -437,15 +807,15 @@
 	
 	
 	    <!-- Js Plugins 상품 추가 -->
-    <script src="resources/product/js/jquery-3.3.1.min.js"></script>
+       <script src="resources/product/js/jquery-3.3.1.min.js"></script>
     <script src="resources/product/js/bootstrap.min.js"></script>
-    <script src="resources/product/js/jquery.nice-select.min.js"></script>
+
     <script src="resources/product/js/jquery-ui.min.js"></script>
     <script src="resources/product/js/jquery.slicknav.js"></script>
     <script src="resources/product/js/mixitup.min.js"></script>
     <script src="resources/product/js/owl.carousel.min.js"></script>
     <script src="resources/product/js/main.js"></script>
-	
+	<script src="resources/product/js/jquery.dd.min.js"></script>
 	
 	
 

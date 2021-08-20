@@ -22,9 +22,9 @@
 
 	<insert id="insert" parameterType="kr.co.everyfarm.product.ProductBean">
 		insert into product(p_Id,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,
-		p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,p_Imgdetail4,p_Land,p_Landprice,p_Manpay,p_Accept)
+		p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,p_Imgdetail4,p_Land,p_Landprice,p_Landavailable,p_Manpay,p_Accept)
 		 values (#{p_Id},#{p_Title},#{p_Content},#{p_Img},#{p_Subimg1},#{p_Subimg2},
-		 #{p_Subimg3},#{p_Subimg4},#{p_Imgdetail1},#{p_Imgdetail2},#{p_Imgdetail3},#{p_Imgdetail4},#{p_Land},#{p_Landprice},#{p_Manpay},#{p_Accept})
+		 #{p_Subimg3},#{p_Subimg4},#{p_Imgdetail1},#{p_Imgdetail2},#{p_Imgdetail3},#{p_Imgdetail4},#{p_Land},#{p_Landprice},#{p_Land},#{p_Manpay},#{p_Accept})
 	</insert>
 	
 	<select id="onelist" resultType="kr.co.everyfarm.product.ProductBean" parameterType="int">
@@ -39,7 +39,9 @@
 	</insert>
 	
 	
-	
+	<select id="listmaxpno" resultType="int">
+		select max(p_No) from product
+	</select>
 	
 	
 	
@@ -90,6 +92,15 @@
 
 
 
+<!-- 듄 payment에 이용 --> 
+	
+		<select id ="productinfo" resultType="kr.co.everyfarm.product.ProductBean">
+		    <![CDATA[
+		    SELECT p_no, p_img, p_title, p_landprice, p_manpay FROM product where p_no=#{p_no};
+		   ]]>
+		  </select>
+		  
+	<!-- 듄 payment에 이용 -->
 
 
 

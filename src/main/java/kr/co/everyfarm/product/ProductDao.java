@@ -18,6 +18,7 @@ public interface ProductDao {
 	public int update(ProductBean product);
 	public int delete(int productno);
 	public int insertbasket(BasketBean basket);
+	public int listmaxpno();
 	
 	
 	
@@ -26,5 +27,5 @@ public interface ProductDao {
 	
 	
 	
-	
+	public ProductBean productinfo(String p_No);
 }

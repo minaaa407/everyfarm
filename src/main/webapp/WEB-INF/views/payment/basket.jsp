@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.*"%>
-<%@ page import="java.text.DecimalFormat"%>
 <%@page import="kr.co.everyfarm.basket.BasketBean"%>
     
 <%
@@ -19,6 +15,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>장바구니</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -239,8 +236,6 @@
                            <c:forEach items="${basketList }" var="b" varStatus="now">
                               <c:set var="i" value="${i+1}"/>
       
-
-                         
                                   <div class="product">
                                      <div class="row">
                                         <div class="col-md-3">
