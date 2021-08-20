@@ -2,9 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page import="kr.co.everyfarm.product.ProductBean"%>
-<%@page import="kr.co.everyfarm.user.MemberBean"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,9 +38,6 @@
     <link rel="stylesheet" href="resources/product/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="resources/product/css/slicknav.min.css" type="text/css">
 	<link rel="stylesheet" href="resources/product/css/dd.css" type="text/css"/>	
-
-
-
 
 
 
@@ -112,23 +108,42 @@ function listChange(){
 function selectproduct(){
 	
 	
-	<%	String id ="";
-		MemberBean member = (MemberBean)session.getAttribute("member");
-		if(member==null){
-			id ="";
-		}else{
-			id = member.getM_Id();
-		}
-		
-		System.out.println(id);
-	%>  
 	var product = $('#productname').text();
 
 	
-	var uid = "<%=id%>";
+	
 	
 	
 	var amout = document.getElementById('productamout').value;
+	var product = document.getElementById('productlist').value;
+
+	var productbasket = document.getElementById('productbasket');
+	//alert(0);
+	
+
+/* 	여기 부분 밑에부분이랑 충돌나서 일단 주석처리해둿어요. 안쓰는거면 삭제해주세요
+	//var plusUl = document.createElement('ul');
+    // 추가할 plusUl 엘리먼트 안의 내용을 정해줍니다. ( 꼭 정해야 하는건 아닙니다. )
+   // plusUl.innerHTML =  "<oi>세엣</oi>";   
+    // appendChild 로 이전에 정의한 plusUl 변수의 내용을 실제 추가합니다.
+   // document.getElementById('productbasket').appendChild(plusUl);
+    
+
+    const table = document.getElementById('cartlist');
+    
+    const newRow = table.insertRow();
+    
+    // 새 행(Row)에 Cell 추가
+    const newCell1 = newRow.insertCell(0);
+    const newCell2 = newRow.insertCell(1);
+    const newCell3 = newRow.insertCell(2);
+    const newCell4 = newRow.insertCell(3);
+    newCell1.innerText = product;
+    newCell2.innerText = ${oneproduct.p_Landprice };
+    newCell3.innerText = amout;
+    newCell4.innerText = (${oneproduct.p_Landprice} * amout);
+    */
+	
 	
 	if(amout > 0){ //0이상 선택시 
 	
@@ -165,7 +180,7 @@ function selectproduct(){
 					    const table = document.getElementById('cartlist');
 					    const totalRowCnt = table.rows.length;
 					    const newRow = table.insertRow();
-					    newRow.id = rowid;
+					   
 					    // 새 행(Row)에 Cell 추가
 					    const newCell1 = newRow.insertCell(0);//씨앗
 					    const newCell2 = newRow.insertCell(1);//한개 가격
@@ -293,8 +308,6 @@ function check(){
 	
 }
 
-
-
 </script>
 <style>
 
@@ -366,7 +379,6 @@ function check(){
 
 </head>
 <body>
-
 
 	<div class="container pt-5 pb-4">
 		<div class="row justify-content-between">
@@ -600,6 +612,25 @@ function check(){
                     <input type="button" onClick="document.myHiddenForm.submit()" value="장바구니"/>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
                     <input type="button" onClick="document.myHiddenForm2.submit()" value="결제"/>
                      -->
+								
+								
+								
+								         // 여기 부분 사용안하시는 거면 지우시면 되세용
+                        <a href="#" class="primary-btn">ADD TO CARD</a>
+                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                        <ul>
+                            <li><b>Availability</b> <span>In Stock</span></li>
+                            <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                            <li><b>Weight</b> <span>0.5 kg</span></li>
+                            <li><b>Share on</b>
+                                <div class="share">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 
@@ -713,6 +744,15 @@ function check(){
                                        onclick="paging(${pagebeen.pageend +1})">다음 </a>
                                  </c:if>
   								</div>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                              
+                                
+                                
                                 
                             </div>
                         </div>
@@ -724,9 +764,6 @@ function check(){
         </div>
     </section>
 	
-		
-
-
 
 
 

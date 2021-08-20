@@ -63,6 +63,19 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
+
+	<beans:bean id="SessionInterceptor"
+		class="kr.co.everyfarm.user.SessionInterceptor" />
+
+	<interceptors>
+		<interceptor>
+			<mapping path="/reviewWrite" />	   <!-- 리뷰 작성 -->
+			<mapping path="/reviewCommWrite" /> <!-- 리뷰 댓글 작성 -->
+			<beans:ref bean="SessionInterceptor" /><!-- 모든 Logger에 대한 인텁세터 
+				할려면~ /** 하래요 -->
+		</interceptor>
+	</interceptors>
+
 	
 	<!-- file Upload -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -77,6 +90,8 @@
 	
 	<!-- Validator 추가 -->
 	<beans:bean
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" id="validator" />
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"
+		id="validator" />
+
 
 </beans:beans>

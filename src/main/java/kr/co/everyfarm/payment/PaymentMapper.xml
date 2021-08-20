@@ -18,11 +18,11 @@
 		]]>
 </select>
 
-<!-- <select id="selectavailable" resultType="kr.co.everyfarm.product.ProductBean">
+<select id="getinfo" resultType="int">
 		<![CDATA[
-		select p_Landavailable from product 
+		select p_Landavailable from product where p_no=#{p_No} 
 		]]>
-</select> -->
+</select> 
 
 
 <insert id="payinsert" parameterType="kr.co.everyfarm.payment.PaymentBean">
@@ -31,12 +31,11 @@
 		values(#{pay_No},#{pay_Id},#{pay_Land},#{pay_Seed},#{pay_Totalprice},#{pay_Method},#{pay_Deliverymemo},#{pay_Address})
 		]]>
 	</insert>
-<!-- <update id="paylandupdate" parameterType="kr.co.everyfarm.product.ProductBean" >
-		<![CDATA
-		[
-		update product set p_landavailable=#{p_Landavailable} where p_no=#{pay_No}
+<update id="landupdate" >
+		<![CDATA[
+		update product set p_landavailable=#{FinalAvailableLand} where p_no=#{P_Id}
 		]]>
-</update> -->
+</update> 
 
 
 <insert id="bpayinsert" parameterType="kr.co.everyfarm.payment.BpaymentBean">
