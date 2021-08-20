@@ -274,13 +274,14 @@ public class ProductController {
 
 	// 김주혁
 
-	@RequestMapping(value = "/productqnainsert")
-	public String getinsertqna(Model model, @ModelAttribute("productqna") ProductqnaBean productqna) {
-		ProductqnaDAO dao = sqlSessionTemplate.getMapper(ProductqnaDAO.class);
-		int productinsert = dao.insert(productqna);
-		System.out.println(productinsert);
-		return "redirect:/productqnalist";
-	}
+	@RequestMapping(value = "/productqnainsert") public String getinsertqna(Model
+	  model, @ModelAttribute("productqna") ProductqnaBean productqna) {
+	  ProductqnaDAO dao = sqlSessionTemplate.getMapper(ProductqnaDAO.class); int
+	  productinsert = dao.insert(productqna);
+	  System.out.println(productinsert); 
+	  String url = "redirect:/productdetail" +"?productno="; 
+	  return url; 
+	  }
 
 	@RequestMapping(value = "/proRegisterForm")
 	public String getRegisterform(Model model, @ModelAttribute("product") ProductBean productbean) {
@@ -323,8 +324,6 @@ public class ProductController {
 		String pre = realPath.substring(0, aa);
 		String savePath = pre + "\\everyfarm" + mPath;
 		path = savePath;
-
-		
 
 		File Folder = new File(path);
 		if (!Folder.exists()) {
