@@ -72,6 +72,7 @@ $(function(){
         			msg += '카드 승인번호 : ' + rsp.apply_num;
 
         			alert(msg);
+        			location.href='/payment/complete';
         		} else {
         			//[3] 아직 제대로 결제가 되지 않았습니다.
         			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.

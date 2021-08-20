@@ -2,6 +2,8 @@ package kr.co.everyfarm.payment;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface PaymentDAO {
 	public List<PaymentBean> paylist();
 	public List<BpaymentBean> bpaylist();
@@ -9,7 +11,7 @@ public interface PaymentDAO {
 	public int payinsert(PaymentBean payment);
 	public int bpayinsert(BpaymentBean bpayment);
 	
-	public int landupdate(PaymentBean payment);
+	public int landupdate(@Param("FinalAvailableLand")int FinalAvailableLand, @Param("P_Id")int P_Id);
 	public int update(PaymentBean payment);
 	
 	public int paydelete(int Orderno);

@@ -37,7 +37,7 @@
 							<th scope="col">${pay.p_Id }&nbsp;&nbsp;&nbsp; </th>
 							<th scope="col">${pay.p_Img }&nbsp;&nbsp;&nbsp; </th>
 							<th scope="col">${pay.p_No }&nbsp;&nbsp;&nbsp; </th>
-							<th scope="col">${pay.p_Title }&nbsp;&nbsp;&nbsp; </th>
+							<th scope="col">${pay.p_Title }외 2건&nbsp;&nbsp;&nbsp; </th>
 							<th scope="col">${pay.pay_Totalprice }&nbsp;&nbsp;&nbsp; </th>
 							<th scope="col"><c:out value="${pay_Date }"/>&nbsp;&nbsp;&nbsp; </th>
 							<th scope="col"><button type="button" onclick="location.href='/adminPayListDelete/${pay.pay_Orderno }'">삭제</button>&nbsp;</th>

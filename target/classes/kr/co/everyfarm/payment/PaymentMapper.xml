@@ -31,9 +31,9 @@
 		values(#{pay_No},#{pay_Id},#{pay_Land},#{pay_Seed},#{pay_Totalprice},#{pay_Method},#{pay_Deliverymemo},#{pay_Address})
 		]]>
 	</insert>
-<update id="landupdate" parameterType="kr.co.everyfarm.payment.PaymentBean" >
+<update id="landupdate" >
 		<![CDATA[
-		update product set p_landavailable=#{p_Landavailable} where p_no=#{pay_No}
+		update product set p_landavailable=#{FinalAvailableLand} where p_no=#{P_Id}
 		]]>
 </update> 
 
