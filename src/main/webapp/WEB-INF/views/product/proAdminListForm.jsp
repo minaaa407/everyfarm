@@ -226,7 +226,8 @@ function search(){
 			<tbody>
 				<c:forEach var="p" items="${productlist}">
 					<tr>
-						<td class="content"><a href="/productdetail?productno=${p.p_No}">${p.p_No}</a></td>
+						<td class="content"><a
+							href="/productdetail?productno=${p.p_No}">${p.p_No}</a></td>
 						<td class="content">${p.p_Id}</td>
 						<td class="content"><img id='product${p.p_No}'
 							src="/resources/upload/product/${p.p_No}/${p.p_Img}"

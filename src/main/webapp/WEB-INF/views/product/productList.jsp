@@ -77,7 +77,7 @@ function psub(id){
 
 function orderby(id){
 	
-	alert(id);
+	
 	
 	if(id=="orderbygrade"){
 		
@@ -153,32 +153,44 @@ window.onload = function(){
 <script type="text/javascript">
 		function testbutton(number) {
 			
-			var limitnumber = document.getElementById("limit").value;
-			var bean = {
-				"selectpage" : number,
-				"limit" : limitnumber
-			}
-
+				var orderby = document.getElementById('orderby').value;
+				var asc = document.getElementById('ascdesc').value;
+				
+				var limitnumber = document.getElementById("limit").value;
+				var bean = {
+					"selectpage" : number,
+					"limit" : limitnumber,
+					"orderby" : orderby,
+					"ascdesc" : asc
+				}
+			
 			$.ajax({
 				type : "post", //요청 메소드 방식
 				url : "/testlist2",
 				data : bean,
 				dataType : 'json', //서버가 요청 URL을 통해서 응답하는 내용의 타입
 				success : function(result) {//성공시 동작하는 파트
-
 					var page = result.pagebeen;
 					var list123 = result.productlist;
 					var abcd = document.getElementById("productlist1");
 					var pagesystem = document.getElementById("pagesystem");
 					var a = "";	//상품 리스트 처리파트 영역.
 					for(var i =0; i < list123.length; i++){
-						a += "<div class='col-lg-4 col-md-6 col-sm-6'> <img id='product";
-				        a += list123[i].p_No + " 'src='/resources/upload/product/"+ list123[i].p_No + "/"+list123[i].p_Img+"' class='test1' width='250' height='auto' alt='Image " + list123[i].p_No+"'><br> <a href='/productdetail?productno=";
-				        a += list123[i].p_No+"'>"+list123[i].p_No+"</a> "+list123[i].p_Title + list123[i].p_Landprice + list123[i].p_Manpay + "</div>";
-				        
+						//a += "<div class='col-lg-4 col-md-6 col-sm-6'> <img id='product";
+				        // a += list123[i].p_No + " 'src='/resources/upload/product/"+ list123[i].p_No + "/"+list123[i].p_Img+"' class='test1' width='250' height='auto' alt='Image " + list123[i].p_No+"'><br> <a href='/productdetail?productno=";
+				       // a += list123[i].p_No+"'>"+list123[i].p_No+"</a> "+list123[i].p_Title + list123[i].p_Landprice + list123[i].p_Manpay + "</div>";
+						a +="<div class='col-lg-4 col-md-6 col-sm-6'><a href='/productdetail?productno="+list123[i].p_No+"'>";
+				        a +="<img id='product"+list123[i].p_No+"' src='/resources/upload/product/"+list123[i].p_No+"/"+list123[i].p_Img+"' class='test1' width='250' height='200' alt='Image "+list123[i].p_No+"'><br>";
+				        a +=list123[i].p_Title+"</a><br>";
+				        a +=" 평당 :<span> "+list123[i].p_Landprice+"</span> 원 <br><br><br></div>";
 					}
-					abcd.innerHTML = a;
 					
+					
+                
+                  
+                  
+                  
+					abcd.innerHTML = a;
 					var b="";
 					if(page.pro == true){//페이징 처리 부분
 						b += "<a id = '"+page.pagestart+"-1 ' style='cursor:pointer' onclick= 'testbutton("+page.pagestart+" -1 )' >이전 </a>";
@@ -192,11 +204,7 @@ window.onload = function(){
 					}
 					
 					pagesystem.innerHTML = b;
-					
-					
-			
 
-		
 					
 				},
 				error : function(a, b, c) {
@@ -261,13 +269,11 @@ window.onload = function(){
 	  <!-- Product Section Begin -->
     <section class="product spad">
         <div class="container">
-                 	 <div class="row">          
-                                <div class="filter__option">
+                 	 <div class="row" style="float: right; margin-right: 55px;" >
+                                <div  class="filter__option">
                                     	<a id = "orderbygrade" style="cursor:pointer" onclick="orderby(this.id)">평점 </a>
                                     	<a id = "orderbyhighlandprice" style="cursor:pointer" onclick="orderby(this.id)">낮은땅가격 </a>
                                     	<a id = "orderbylowlandprice" style="cursor:pointer" onclick="orderby(this.id)">높은땅가격 </a>
-                                </div>
-                               
                                 <select id ="productlist" name="productlist" class="productlist" onChange="limitChange()">
                                 			<c:if test="${pagebeen.limit eq '3'}">
 												<option value="3" selected>3</option>
@@ -294,21 +300,21 @@ window.onload = function(){
 												<option value="9">9</option>
 												<option value="12" selected>12</option>
 											</c:if>	 
-											
-					
 							    </select>
+							    </div>
      				</div>
-                    <div class="row" id="productlist1">
+     				<br>
+     				<br>
+                    <div align="center" class="row" id="productlist1">
                     	<c:forEach var="p" items="${productlist }">
-	                        <div class="col-lg-4 col-md-6 col-sm-6">
-	                        	<img id='product${p.p_No}' src="/resources/upload/product/${p.p_No}/${p.p_Img}" class="test1" 
-									 width="250" height="auto" alt="Image ${p.p_No}"><br>
-									 <a href="/productdetail?productno=${p.p_No}">${p.p_No}</a> ${p.p_Title} ${p.p_Landprice} ${p.p_Manpay}
-									 
+	                        <div class="col-lg-4 col-md-6 col-sm-6"><a href="/productdetail?productno=${p.p_No}">
+	                        	<img id='product${p.p_No}' src="/resources/upload/product/${p.p_No}/${p.p_Img}" class="test1" width="250" height="200" alt="Image ${p.p_No}"><br>
+									 ${p.p_Title}</a><br>
+									 평당 :<span> ${p.p_Landprice}</span> 원 <br><br><br>
 	                        </div>
                        </c:forEach> 
                     </div>
-                    <div class="product__pagination" id="pagesystem">
+                    <div align="center" class="product__pagination" id="pagesystem">
                     
 	                	<c:if test="${pagebeen.pro eq 'true' }">
 						    <a id = "page${pagebeen.pagestart -1}" style="cursor:pointer" onclick="testbutton(${pagebeen.pagestart -1})">이전 </a>
@@ -341,10 +347,7 @@ window.onload = function(){
 							<input type="hidden" id = "orderby" name="orderby" value="${pagebeen.orderby}">
 							<input type="hidden" id = "ascdesc" name="ascdesc" value="${pagebeen.ascdesc}">
 					</form:form>
-
-                    	
                 </div>
-         		<input type="button" onClick="testbutton()"/>    
          		</section>
     <!-- Product Section End -->
 	
