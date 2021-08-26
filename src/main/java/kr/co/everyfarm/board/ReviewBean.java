@@ -2,25 +2,32 @@ package kr.co.everyfarm.board;
 
 import java.util.Date;
 
-public class ReviewVO {
-	
+public class ReviewBean {
+
 	private int rev_No;
+	private String rev_Name;
 	private String rev_Id;
 	private String rev_Title;
 	private String rev_Cont;
-	private String rev_Image;
 	private int rev_Readcount;
 	private Date rev_Date;
 	private Float rev_Rate;
+	
 	public int getRev_No() {
 		return rev_No;
 	}
 	public void setRev_No(int rev_No) {
 		this.rev_No = rev_No;
 	}
+	public String getRev_Name() {
+		return rev_Name;
+	}
+	public void setRev_Name(String rev_Name) {
+		this.rev_Name = rev_Name;
+	}
 	public String getRev_Id() {
 		return rev_Id;
-	} 
+	}
 	public void setRev_Id(String rev_Id) {
 		this.rev_Id = rev_Id;
 	}
@@ -35,12 +42,6 @@ public class ReviewVO {
 	}
 	public void setRev_Cont(String rev_Cont) {
 		this.rev_Cont = rev_Cont;
-	}
-	public String getRev_Image() {
-		return rev_Image;
-	}
-	public void setRev_Image(String rev_Image) {
-		this.rev_Image = rev_Image;
 	}
 	public int getRev_Readcount() {
 		return rev_Readcount;
@@ -62,5 +63,6 @@ public class ReviewVO {
 	}
 	
 	
-
+	
+	
 }

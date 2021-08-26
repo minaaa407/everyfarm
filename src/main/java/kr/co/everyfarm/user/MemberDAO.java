@@ -5,23 +5,25 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserDAO {
+public interface MemberDAO {
 	
 	public List<MemberBean> mlist();
 
-	public List<FarmerBean> flist();
-	
 	public void mjoin(MemberBean memberBean);
+
+	public void kakaoJoin(MemberBean memberBean);
 	
-	public void fjoin(FarmerBean farmerBean);
+	public void naverJoin(MemberBean memberBean);
 	
 	public MemberBean mlogin(MemberBean memberBean);
 
-	public FarmerBean flogin(FarmerBean farmerBean);
+	public MemberBean klogin(MemberBean memberBean);
 	
-	public void mail(MemberBean memberBean);
+	public void mail(EmailBean emailBean);
+
+	public void mailNumber(int mailNum);
 	
-	public int checkId(MemberBean memberBean);
+	public int checkId(String m_Id);
 	
 	public MemberBean findId(MemberBean memberBean);
 
@@ -31,16 +33,10 @@ public interface UserDAO {
 	
 	public void mUpdate(MemberBean memberbean);
 	
-	public void mDelete(MemberBean memberbean);
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public void mDelete(MemberBean memberbean); 
 	
 	public MemberBean userInfo(String userID);
+
+	public MemberBean mInfo(MemberBean memberBean);
+	
 }

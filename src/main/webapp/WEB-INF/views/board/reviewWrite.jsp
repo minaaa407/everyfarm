@@ -7,10 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-<!-- 합쳐지고 최소화된 최신 CSS -->
+<!--  CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
  
-<!-- 부가적인 테마 -->
+<!--  테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 <!-- 썸머노트 -->
@@ -23,7 +23,7 @@
 
 
 
-<title>Insert title here</title>
+<title>EVERY FARM</title>
 </head>
 <body>
 
@@ -32,23 +32,24 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <h2 class="text-center">게시글 쓰기</h2>
-        <form action="reviewInsert" method="post" enctype="multipart/form-data">
+        <form action="/reviewInsert" method="post"  enctype="multipart/form-data">
 
 
           <table class="table table-striped">
             <tr>
                 <td>작성자</td>
-                <td><input type="text"  class="form-control" name="rev_Id"></td>
+                <td><input type="text" value="${member.m_Name}"  class="form-control" name="rev_Name" readonly></td>
+                <td><input type="hidden" value="${member.m_Id}"  class="form-control" name="rev_Id" readonly></td>
             </tr>
             <tr>
                 <td>제목</td>
-                <td><input type="text" id="title" name="rev_Title" value=""  class="form-control" ></td>
+                <td><input type="text" id="title" name="rev_Title"   class="form-control" ></td>
             </tr>
             <tr>
-                <td>별점??</td>
+                <td>별점</td>
                 <td> 
 <fieldset class="rating">
-    <input type="radio" id="star5" name="rev_Rate" value="5" /><label class = "full" for="star5" ></label>
+    <input type="radio" id="star5" name="rev_Rate" value="5" readonly="readonly"/><label class = "full" for="star5" ></label>
     <input type="radio" id="star4half" name="rev_Rate" value="4.5" /><label class="half" for="star4half" ></label>
     <input type="radio" id="star4" name="rev_Rate" value="4" /><label class = "full" for="star4" ></label>
     <input type="radio" id="star3half" name="rev_Rate" value="3.5" /><label class="half" for="star3half" ></label>
@@ -83,7 +84,6 @@
     </div>
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -94,13 +94,38 @@
 
 <script type="text/javascript">
       $(document).ready(function() {
-        $('#summernote').summernote({
-          placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.',
-          height: 600,
-          minHeight: null,
-          maxHeight: null,
-          focus: true,
-        });
+    	  function sendFile(file, el) {
+    			var form_data = new FormData();
+    			form_data.append('file', file);
+    			$.ajax({
+    				data: form_data,
+    				type : "post",
+    				url: 'summer_image',
+    				cache :false,
+    				contentType : false,
+    				enctype : 'multipart/form-data',
+    				processData : false,
+    				success : function(img_name) {
+    					$(el).summernote('editor.insertImage',url, img_name);
+    				}
+    			});
+    		}
+    	$(function() {
+    			$('#summernote').summernote({
+    			placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.',
+    	          height: 600,
+    	          minHeight: null,
+    	          maxHeight: null,
+    	          focus: true,
+    			        callbacks: {
+    			        	onImageUpload: function(files, editor, welEditable) {
+    			        		for(var i = files.length -1; i>=0; i--) {
+    			        			sendFile(files[i], this);
+    			        		}
+    			        	}
+    			        }
+    			 });
+    	});
       });
       
     

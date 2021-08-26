@@ -55,10 +55,9 @@ String p_No = request.getParameter("no");
       <%--   <c:choose>
 					<c:when test="${empty param.no}"><!--  q_No --> --%>
 					
-				
+		<c:forEach items="${qnamodifyrecord}" var="q"> 			
 					
-		<form action="/qnaupdate" id="qna" name="qna" method="post" enctype="multipart/form-data">
-		<c:forEach items="${qnamodifyrecord}" var="q"> 	
+		<form action="qnaupdate" method="post" enctype="multipart/form-data">
 
 		 <table class="table table-striped">
              
@@ -112,7 +111,7 @@ String p_No = request.getParameter("no");
             
             <tr>
                 <td>작성자</td>
-                <td><input type="text" id="q_Id" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly></td>
+                <td><input type="text" id="title" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly></td>
             </tr>
             
 <!--             <tr>
@@ -133,10 +132,10 @@ String p_No = request.getParameter("no");
 </td>
             </tr> -->
              
-            <!-- <tr>
+            <tr>
                 <td></td>
                 <td><input multiple="multiple" type="file" name="q_Img" accept="image/gif, image/jpg, image/jpeg, image/png"/></td>
-            </tr> -->
+            </tr>
              
             <tr>
                 <td>글내용</td>
@@ -144,15 +143,8 @@ String p_No = request.getParameter("no");
    				 <textarea id="summernote"  name="q_Content" rows="30" style="width:100%;">${q.q_Content}</textarea>
               </td>
             </tr>
-             <tr>
-             	<td colspan="2"  class="text-center">
-                    <input type="submit" value="글 수정하기" class="btn btn-success">
-                   <!--  <input type="reset" value="다시작성" class="btn btn-warning"> -->
-                    <button type="button"  class="btn btn-primary" onclick="location.href='/qnalist'">목록으로 돌아가기</button>
-                </td>
-            </tr>
             
-       <%--        <% if(url.contains("my")) { %>  
+              <% if(url.contains("my")) { %>  
             <tr>
              	<td colspan="2"  class="text-center">
                     <input type="submit" value="수정하기" class="btn btn-success">
@@ -168,11 +160,10 @@ String p_No = request.getParameter("no");
                     <button type="button"  class="btn btn-primary" onclick="location.href='/qnalist'">게시글 목록</button>
                 </td>
             </tr>
-            	<% } %> --%>
+            	<% } %>
           </table>
-          </c:forEach>
         </form>	
-        
+        </c:forEach>
 		
    		
    		<% }else { %>
@@ -180,9 +171,9 @@ String p_No = request.getParameter("no");
       <%--   </c:when>
         	<c:when test="${ !empty param.no }"> <!-- q_No --> --%>
 			
- 			<%-- <c:forEach items="${qnalist}" var="q">  --%>
+ 			<c:forEach items="${qnalist}" var="q"> 
  			
-	 <form action="qnainsert" id="qna" name="qna" method="post" enctype="multipart/form-data">
+		<form action="qnainsert" method="post" enctype="multipart/form-data">
 
 
           <table class="table table-striped">
@@ -206,7 +197,7 @@ String p_No = request.getParameter("no");
             
             <tr>
                 <td>작성자</td>
-                <td><input type="text" id="q_Id" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly></td>
+                <td><input type="text" id="title" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly></td>
             </tr>
             
 <!--             <tr>
@@ -227,10 +218,10 @@ String p_No = request.getParameter("no");
 </td>
             </tr> -->
              
-        <!--     <tr>
+            <tr>
                 <td></td>
                 <td><input multiple="multiple" type="file" name="q_Img" accept="image/gif, image/jpg, image/jpeg, image/png"/></td>
-            </tr> -->
+            </tr>
              
             <tr>
                 <td>글내용</td>
@@ -239,18 +230,17 @@ String p_No = request.getParameter("no");
               </td>
             </tr>
             <tr>
-                 
                 <td colspan="2"  class="text-center">
-                    <input type="submit" value="글 등록하기" class="btn btn-success" >  <!-- onclick="write();" -->
-                 <!--    <input type="reset" value="다시작성" class="btn btn-warning"> -->
-                    <button type="button"  class="btn btn-primary" onclick="location.href='/qnalist'">목록으로 돌아가기</button>
+                    <input type="submit" value="확인" class="btn btn-success">
+                    <input type="reset" value="다시작성" class="btn btn-warning">
+                    <button type="button"  class="btn btn-primary" onclick="location.href='/qnalist'">게시글 목록</button>
                 </td>
             </tr>
              
           </table>
         </form>
         
-	 	<%-- </c:forEach> --%>
+	 	</c:forEach>
 	 	
 	 <%--  </c:when>
 	 	 </c:choose> --%>
@@ -262,10 +252,6 @@ String p_No = request.getParameter("no");
 
 
 <script type="text/javascript">
-
-
-
-
       $(document).ready(function() {
         $('#summernote').summernote({
           placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.',

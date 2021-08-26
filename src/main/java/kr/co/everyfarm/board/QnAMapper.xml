@@ -4,58 +4,87 @@
 
 <mapper namespace="kr.co.everyfarm.board.QnADAO">
 
-   	<select id ="list" resultType="kr.co.everyfarm.board.QnABean">
+	<select id="list" resultType="kr.co.everyfarm.board.QnABean">
   		<![CDATA[
    		 SELECT * FROM qna order by q_no desc
    		]]>
-  	</select>
-  
-  	<select id="mylist" parameterType="kr.co.everyfarm.user.MemberBean" resultType="kr.co.everyfarm.board.QnABean">
+	</select>
+
+	<select id="mylist"
+		parameterType="kr.co.everyfarm.user.MemberBean"
+		resultType="kr.co.everyfarm.board.QnABean">
 		select * from qna where q_Id=#{m_Id} order by q_no desc
 	</select>
-	
-	<select id="modifyrecord" parameterType="int" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qna where q_No=#{no} 
+
+	<select id="modifyrecord" parameterType="int"
+		resultType="kr.co.everyfarm.board.QnABean">
+		select * from qna where q_No=#{no}
 	</select>
-	
-	<select id="adminWriteO" resultType="kr.co.everyfarm.board.QnABean">
+
+	<select id="adminWriteO"
+		resultType="kr.co.everyfarm.board.QnABean">
 		select * from qna where q_answer=1 order by q_no desc
 	</select>
-	
-	<select id="adminWriteX" resultType="kr.co.everyfarm.board.QnABean">
+
+	<select id="adminWriteX"
+		resultType="kr.co.everyfarm.board.QnABean">
 		select * from qna where q_answer=0 order by q_no desc
 	</select>
-	
-	<select id="searchall" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qna where q_Content LIKE CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE CONCAT('%',#{q_Content},'%') 
-		or q_Title LIKE CONCAT('%',#{q_Content},'%') or q_Id LIKE CONCAT('%',#{q_Content},'%') order by q_no desc
+
+	<select id="searchall"
+		parameterType="kr.co.everyfarm.board.QnABean"
+		resultType="kr.co.everyfarm.board.QnABean">
+		select * from qna where q_Content LIKE
+		CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE
+		CONCAT('%',#{q_Content},'%')
+		or q_Title LIKE CONCAT('%',#{q_Content},'%') or q_Id LIKE
+		CONCAT('%',#{q_Content},'%') order by q_no desc
 	</select>
-	
-	<select id="searchId" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qna where q_Id LIKE CONCAT('%',#{q_Content},'%') order by q_no desc
+
+	<select id="searchId"
+		parameterType="kr.co.everyfarm.board.QnABean"
+		resultType="kr.co.everyfarm.board.QnABean">
+		select * from qna where q_Id LIKE
+		CONCAT('%',#{q_Content},'%') order by q_no desc
 	</select>
-	
-	<select id="searchEach" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qna where (q_Content LIKE CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE CONCAT('%',#{q_Content},'%')
-		or q_Title LIKE CONCAT('%',#{q_Content},'%')) and q_About=#{q_About} order by q_no desc
+
+	<select id="searchEach"
+		parameterType="kr.co.everyfarm.board.QnABean"
+		resultType="kr.co.everyfarm.board.QnABean">
+		select * from qna where (q_Content LIKE
+		CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE
+		CONCAT('%',#{q_Content},'%')
+		or q_Title LIKE
+		CONCAT('%',#{q_Content},'%')) and q_About=#{q_About} order by q_no
+		desc
 	</select>
-	
-	<insert id="insert" parameterType="kr.co.everyfarm.board.QnABean">
-		insert into qna (q_Id, q_Title, q_Content, q_Secret, q_About)
-		values (#{q_Id}, #{q_Title}, #{q_Content}, #{q_Secret}, #{q_About})
+
+	<insert id="insert"
+		parameterType="kr.co.everyfarm.board.QnABean">
+		insert into qna (q_Id, q_Title, q_Content, q_Secret,
+		q_About)
+		values (#{q_Id}, #{q_Title}, #{q_Content}, #{q_Secret},
+		#{q_About})
 	</insert>
-	
-	<update id="update" parameterType="kr.co.everyfarm.board.QnABean">
-		update qna set q_Title=#{q_Title}, q_Content=#{q_Content}, q_Secret=#{q_Secret}, q_About=#{q_About} where q_No=#{q_No}
+
+	<update id="update"
+		parameterType="kr.co.everyfarm.board.QnABean">
+		update qna set q_Title=#{q_Title},
+		q_Content=#{q_Content}, q_Secret=#{q_Secret}, q_About=#{q_About} where
+		q_No=#{q_No}
 	</update>
-	
-	<update id="adminWrite" parameterType="kr.co.everyfarm.board.QnABean">
-		update qna set q_answer=1, q_magdate=now(), q_magcontent =#{q_Magcontent} where q_No=#{q_No}
+
+	<update id="adminWrite"
+		parameterType="kr.co.everyfarm.board.QnABean">
+		update qna set q_answer=1, q_magdate=now(), q_magcontent
+		=#{q_Magcontent} where q_No=#{q_No}
 	</update>
-	
+
 	<delete id="delete" parameterType="int">
-		delete from qna where q_No=#{no}
+		delete from qna where
+		q_No=#{no}
 	</delete>
-	
-<!--   q_Img, #{q_Img}, -->
+
+
+	<!-- q_Img, #{q_Img}, -->
 </mapper>

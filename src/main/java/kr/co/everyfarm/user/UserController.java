@@ -1,5 +1,6 @@
 package kr.co.everyfarm.user;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,13 +19,24 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.google.gson.Gson;
 
 @Controller
 public class UserController {
@@ -32,25 +44,36 @@ public class UserController {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
+	@Autowired
+	private KakaoAPI kakao;
+
+	@Autowired
+	private NaverLoginBO naverLoginBO;
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home() {
 		return "home/home";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login() {
+	public String mlogin() {
 		System.out.println("login:: get");
 		return "user/loginForm";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(MemberBean memberBean, FarmerBean farmerBean, HttpServletRequest request) {
+	public String mlogin(MemberBean memberBean, HttpServletRequest request) {
 		System.out.println("login:: post");
 
 		HttpSession session = request.getSession();
+		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
 
-		UserDAO userDAO = sqlSessionTemplate.getMapper(UserDAO.class);
-		MemberBean member = userDAO.mlogin(memberBean);
+		System.out.println("첫번째:" + memberBean.getM_Pw());
+		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
+		memberBean.setM_Pw(encryPassword);
+		System.out.println("두번째:" + memberBean.getM_Pw());
+
+		MemberBean member = memberDAO.mlogin(memberBean);
 
 		if (member != null) {
 			session.setAttribute("member", member);
@@ -60,13 +83,100 @@ public class UserController {
 		}
 	}
 
+	private String apiResult = null;
+
+//	@RequestMapping(value = "/naverLogin", method = RequestMethod.GET)
+//	@ResponseBody
+//	public String naverLogin(HttpSession session, Model model) {
+//		System.out.println("naverLogin");
+//		String naverAuthUrl = naverBO.getAuthorizationUrl(session);
+//		model.addAttribute("url", naverAuthUrl);
+//
+//		return "/naverLogin";
+//	}
+
+	@SuppressWarnings("unlikely-arg-type")
+	@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
+	public String callback(Model model, HttpSession session, String m_Id, HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ParseException {
+
+		System.out.println("callback");
+
+		JSONParser parser = new JSONParser();
+
+		session = request.getSession();
+		String code = request.getParameter("code");
+		String state = request.getParameter("state");
+
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBO.getAccessToken(session, code, state);
+
+		if (oauthToken != null) {
+			apiResult = naverLoginBO.getUserProfile(session, oauthToken);
+
+			Object obj = parser.parse(apiResult);
+			JSONObject jsonObj = (JSONObject) obj;
+
+			JSONObject response_obj = (JSONObject) jsonObj.get("response");
+
+			String Id = (String) response_obj.get("email");
+			String Name = (String) response_obj.get("name");
+			String Tel = (String) response_obj.get("mobile");
+
+			if (Id.equals(dao.checkId(m_Id))) {
+				session.setAttribute("loginPI", "naver");
+				session.setAttribute("m_Id", Id);
+				session.setAttribute("m_Name", Name);
+				session.setAttribute("m_Tel", Tel);
+
+				model.addAttribute("result", apiResult);
+
+				return "redirect:/home";
+			} else {
+				return "redirect:/naverJoin";
+			}
+		} else {
+			return "/loginForm";
+		}
+	}
+
+	@SuppressWarnings("unlikely-arg-type")
+	@RequestMapping(value = "/kakaoLogin", method = RequestMethod.GET)
+	public String klogin(MemberBean memberBean, HttpSession session, HttpServletRequest request,
+			@RequestParam("code") String code) {
+		System.out.println("kakaologin:: get");
+
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+
+		String access_Token = kakao.getAccessToken(code);
+		HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
+
+		if (userInfo.get("email") != null) {
+			if ("email".equals(dao.checkId(memberBean.getM_Id()))) {
+
+				session.setAttribute("loginPI", "kakao");
+				session.setAttribute("m_Id", userInfo.get("email"));
+				session.setAttribute("m_Name", userInfo.get("nickname"));
+				session.setAttribute("access_Token", access_Token);
+
+				return "redirect:/home";
+			} else {
+				return "redirect:/kakaoJoin";
+			}
+		} else {
+			return "/loginForm";
+		}
+	}
+
 	@RequestMapping(value = "/sign", method = RequestMethod.GET)
-	public String sign() {
+	public String sign(Model model) {
+		model.addAttribute("memberBean", new MemberBean());
 		return "user/signUp";
 	}
 
 	@RequestMapping(value = "/sign", method = RequestMethod.POST)
-	public String sign(MemberBean memberBean, HttpServletRequest request) {
+	public String sign(@Valid MemberBean memberBean, BindingResult bindingResult, HttpServletRequest request) {
 
 		memberBean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
 				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
@@ -76,17 +186,78 @@ public class UserController {
 		memberBean.setM_Pw(encryPassword);
 		System.out.println("두번째:" + memberBean.getM_Pw());
 
-		UserDAO userDAO = sqlSessionTemplate.getMapper(UserDAO.class);
-		userDAO.mjoin(memberBean);
+		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
+		memberDAO.mjoin(memberBean);
 
+		if (bindingResult.hasErrors()) {
+			return "user/signUp";
+		}
 		return "home/home";
+	}
+
+	@RequestMapping(value = "/kakaoJoin", method = RequestMethod.GET)
+	public String kakaoJoin(MemberBean memberBean, Model model, HttpSession session) {
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+
+		memberBean.setM_Id((String) session.getAttribute("m_Id"));
+		memberBean.setM_Name((String) session.getAttribute("m_Name"));
+
+		model.addAttribute(memberBean);
+
+		dao.kakaoJoin(memberBean);
+
+		return "redirect:/";
+	}
+
+//	@RequestMapping(value = "/kakaoJoin", method = RequestMethod.POST)
+//	public String kakaoJoin(@Valid MemberBean memberBean, BindingResult bindingResult, HttpServletRequest request) {
+//
+//		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+//		memberBean.setM_Id((String) session.getAttribute("m_Id"));
+//		memberBean.setM_Name((String) session.getAttribute("m_Name"));
+//
+//		memberBean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
+//				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
+//
+//		System.out.println("첫번째:" + memberBean.getM_Pw());
+//		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
+//		memberBean.setM_Pw(encryPassword);
+//		System.out.println("두번째:" + memberBean.getM_Pw());
+//
+//		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
+//		memberDAO.mjoin(memberBean);
+//
+//		if (bindingResult.hasErrors()) {
+//			return "user/kakaoSignUp";
+//		}
+//		return "home/home";
+//	}
+
+	@RequestMapping(value = "/naverJoin", method = RequestMethod.GET)
+	public String naverJoin(MemberBean memberBean, Model model, HttpSession session) {
+
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+
+		String id = (String) session.getAttribute("m_Id");
+		memberBean.setM_Id(id);
+		memberBean.setM_Name((String) session.getAttribute("m_Name"));
+		memberBean.setM_Tel((String) session.getAttribute("m_Tel"));
+
+		model.addAttribute(memberBean);
+
+		dao.naverJoin(memberBean);
+
+		return "redirect:/";
+
 	}
 
 	@RequestMapping(value = "/checkMail", method = RequestMethod.POST, produces = "application/json;")
 	@ResponseBody
-	public Map<String, Object> checkMail(MemberBean memberBean, HttpServletRequest request) {
+	public Map<String, Object> checkMail(MemberBean memberBean, HttpServletRequest request, EmailBean emailBean) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
+
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
 
 		Properties prop = System.getProperties();
 		prop.put("mail.smtp.starttls.enable", "true");
@@ -115,6 +286,10 @@ public class UserController {
 
 			Transport.send(msg);
 
+			dao.mailNumber(mailNum);
+
+			System.out.println("email::::" + emailBean);
+
 			map.put("error", true);
 
 		} catch (AddressException ae) {
@@ -131,12 +306,28 @@ public class UserController {
 		return map;
 	}
 
+	@RequestMapping(value = "/mailNum", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> mail(EmailBean emailBean, HttpServletRequest request) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		return map;
+	}
+
+	@RequestMapping(value = "/mailNumCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String mailNumCheck(EmailBean emailBean, HttpServletRequest request) {
+
+		return "";
+	}
+
 	@RequestMapping(value = "/checkId", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkId(MemberBean memberBean) {
 
-		UserDAO dao = sqlSessionTemplate.getMapper(UserDAO.class);
-		int result = dao.checkId(memberBean);
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		int result = dao.checkId(memberBean.getM_Id());
 
 		if (result != 0) {
 			return "fail"; // 중복 아이디가 존재
@@ -147,16 +338,30 @@ public class UserController {
 
 	@RequestMapping(value = "/findId", method = RequestMethod.GET)
 	public String findId() {
-		return "/user/findPw";
+		return "/user/findId";
 	}
 
 	@RequestMapping(value = "/findId", method = RequestMethod.POST)
-	public String findId(MemberBean memberBean) {
+	@ResponseBody
+	public Map<String, Object> findId(@ModelAttribute MemberBean memberBean) {
 
-		UserDAO dao = sqlSessionTemplate.getMapper(UserDAO.class);
-		dao.findId(memberBean);
+		Map<String, Object> map = new HashMap<String, Object>();
 
-		return "/user/findPw";
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		MemberBean mem = dao.findId(memberBean);
+
+		System.out.println(mem);
+
+		if (mem == null) {
+			map.put("url", "/findId");
+			map.put("error", false);
+		} else {
+			map.put("url", "/login");
+			map.put("memId", mem.getM_Id());
+			map.put("error", true);
+		}
+
+		return map;
 	}
 
 	@RequestMapping(value = "/findPw", method = RequestMethod.GET)
@@ -165,55 +370,84 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/findPw", method = RequestMethod.POST)
-	public void findPw(MemberBean memberBean, HttpServletResponse response) {
+	@ResponseBody
+	public Map<String, Object> findPw(@ModelAttribute MemberBean memberBean, HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<String, Object>();
 
-		String pw = "";
-		for (int i = 0; i < 12; i++) {
-			pw += (char) ((Math.random() * 26) + 97);
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		MemberBean mem = dao.findPw(memberBean);
+
+		if (mem == null) {
+			map.put("url", "findPw");
+			map.put("error", false);
+		} else {
+			String pw = "";
+			for (int i = 0; i < 12; i++) {
+				pw += (char) ((Math.random() * 26) + 97);
+			}
+
+			memberBean.setM_Pw(pw);
+
+			Properties prop = System.getProperties();
+			prop.put("mail.smtp.starttls.enable", "true");
+			prop.put("mail.smtp.host", "smtp.gmail.com");
+			prop.put("mail.smtp.auth", "true");
+			prop.put("mail.smtp.port", "587");
+
+			Authenticator auth = new MailAuth();
+
+			Session session = Session.getDefaultInstance(prop, auth);
+
+			MimeMessage msg = new MimeMessage(session);
+
+			try {
+				msg.setSentDate(new Date());
+
+				msg.setFrom(new InternetAddress("alsdk9458@gmail.com", "EVERYFARM"));
+				InternetAddress to = new InternetAddress(memberBean.getM_Id());
+				msg.setRecipient(Message.RecipientType.TO, to);
+				msg.setSubject("EVERYFARM", "UTF-8");
+				msg.setText("안녕하세요 EVERY FARM에 방문해주셔서 감사합니다." + "\n\n" + memberBean.getM_Id() + "고객님의 임시 비밀번호는 "
+						+ memberBean.getM_Pw() + "입니다." + "\n해당 비밀번호로 로그인 후 반드시 비밀번호 변경을 해주시기 바랍니다." + "\n감사합니다.",
+						"UTF-8");
+
+				Transport.send(msg);
+
+				String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
+				memberBean.setM_Pw(encryPassword);
+
+				dao.upPw(memberBean);
+
+			} catch (AddressException ae) {
+				System.out.println("AddressException : " + ae.getMessage());
+			} catch (MessagingException me) {
+				System.out.println("MessagingException : " + me.getMessage());
+			} catch (UnsupportedEncodingException e) {
+				System.out.println("UnsupportedEncodingException : " + e.getMessage());
+			}
+
+			map.put("url", "/login");
+			map.put("error", true);
 		}
+		return map;
+	}
 
-		memberBean.setM_Pw(pw);
+	@RequestMapping(value = "/updatePw", method = RequestMethod.POST)
+	public String upPw(@RequestParam(value = "upId", defaultValue = "", required = false) String Id,
+			MemberBean memberBean) {
+		memberBean.setM_Id(Id);
+		System.out.println(memberBean);
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		dao.upPw(memberBean);
 
-		UserDAO dao = sqlSessionTemplate.getMapper(UserDAO.class);
-		dao.findPw(memberBean);
-
-		Properties prop = System.getProperties();
-		prop.put("mail.smtp.starttls.enable", "true");
-		prop.put("mail.smtp.host", "smtp.gmail.com");
-		prop.put("mail.smtp.auth", "true");
-		prop.put("mail.smtp.port", "587");
-
-		Authenticator auth = new MailAuth();
-
-		Session session = Session.getDefaultInstance(prop, auth);
-
-		MimeMessage msg = new MimeMessage(session);
-
-		try {
-			msg.setSentDate(new Date());
-
-			msg.setFrom(new InternetAddress("alsdk9458@gmail.com", "EVERYFARM"));
-			InternetAddress to = new InternetAddress(memberBean.getM_Id());
-			msg.setRecipient(Message.RecipientType.TO, to);
-			msg.setSubject("EVERYFARM", "UTF-8");
-			msg.setText(
-					"안녕하세요 EVERY FARM에 방문해주셔서 감사합니다." + "\n\n" + memberBean.getM_Id() + "고객님의 임시 비밀번호는 "
-							+ memberBean.getM_Pw() + "입니다." + "\n해당 비밀번호로 로그인 후 반드시 비밀번호 변경을 해주시기 바랍니다." + "\n감사합니다.",
-					"UTF-8");
-
-			Transport.send(msg);
-
-		} catch (AddressException ae) {
-			System.out.println("AddressException : " + ae.getMessage());
-		} catch (MessagingException me) {
-			System.out.println("MessagingException : " + me.getMessage());
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("UnsupportedEncodingException : " + e.getMessage());
-		}
+		return "user/loginForm";
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
+		kakao.kakaoLogout((String) session.getAttribute("access_Token"));
+		session.removeAttribute("access_Token");
+		session.removeAttribute("userId");
 		session.invalidate();
 		return "home/home";
 	}
@@ -224,24 +458,29 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/myInfoUpdate")
-	public String myInfoChange(MemberBean memberbean, HttpSession session) {
+	public String myInfoChange(MemberBean memberbean, HttpSession session, HttpServletRequest request) {
 
-		UserDAO memDao = sqlSessionTemplate.getMapper(UserDAO.class);
+		memberbean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
+				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
+
+		String encryPassword = UserPw.encrypt(memberbean.getM_Pw());
+		memberbean.setM_Pw(encryPassword);
+
+		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		memDao.mUpdate(memberbean);
 		System.out.println(memberbean);
 
 		session.invalidate();
 		return "redirect:/home";
 	}
-	
+
 	@RequestMapping(value = "/myInfoDelete")
 	public String myDelete(MemberBean memberbean, HttpSession session) {
-		
-		
-		UserDAO memDao = sqlSessionTemplate.getMapper(UserDAO.class);
+
+		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		System.out.println(memberbean.getM_Id());
 		memDao.mDelete(memberbean);
-		
+
 		session.invalidate();
 		return "redirect:/home";
 	}

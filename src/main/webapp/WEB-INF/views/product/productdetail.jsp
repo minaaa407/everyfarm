@@ -3,8 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <%@page import="kr.co.everyfarm.product.ProductBean"%>
-<%@page import="kr.co.everyfarm.user.MemberBean"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +46,7 @@ integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChi
 
 
 
+
 <link rel="stylesheet" href="resources/product/css/owl.carousel.min.css"
 	type="text/css">
 <link rel="stylesheet" href="resources/product/css/slicknav.min.css"
@@ -54,6 +56,7 @@ integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChi
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 
 <script>
 //script 전부 다 박살 에정. 방법 없다.
@@ -124,6 +127,7 @@ function selectproduct(){
 	 var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 	 var cn1 = cn1 +'원';
 	
+
 	 if(!(document.getElementById(rowid))){
 			var text="";	
 				text += document.getElementById('table1').innerHTML
@@ -174,6 +178,7 @@ function selectproduct(){
 			
 	
 
+
 	
 	
 		//if(!(document.getElementById(rowid))){
@@ -190,6 +195,7 @@ function selectproduct(){
 	    //	for (var i = 2; i < cartlist.rows.length; i++) {
 	    //	      var userName = cartlist.rows[i].cells[2].innerText;
 	    	      
+
 	    //	      totalproduct = parseInt(totalproduct) + parseInt(userName);
 	    //	}
 	    //				totalproduct = parseInt(totalproduct) + parseInt(amout)
@@ -210,6 +216,7 @@ function selectproduct(){
 					    //newCell2.innerText = ${oneproduct.p_Landprice };
 					    //newCell3.innerHTML ='<input name = "' + product + '" type="button" onclick="count1(this.name)" value="-"/>' + 
 					    //'&nbsp&nbsp&nbsp'+'<span value="'+amout+'"name="productprice" id ="'+ pnum+'">' + amout+'</span> &nbsp&nbsp&nbsp'+'<input name = "'+product +'"type="button" onclick="count2(this.name)" value="+"/>';
+
 					    //newCell3.innerText = amout;
 					    //newCell4.innerText = (${oneproduct.p_Landprice} * amout);
 					    //newCell5.innerHTML = '<i class="fas fa-window-close"  onclick="deleteRow(this,'+product2+')" ></i>';
@@ -332,10 +339,6 @@ function check(){
 	document.myhiddenform.submit();
 	
 }
-
-
-
-
 
 </script>
 <style>
@@ -635,7 +638,6 @@ ul {
 </head>
 <body>
 
-
 	<div class="container pt-5 pb-4">
 		<div class="row justify-content-between">
 			<div class="col-md-8 order-md-last">
@@ -876,6 +878,7 @@ ul {
                     <input type="button" onClick="document.myHiddenForm.submit()" value="장바구니"/>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
                     <input type="button" onClick="document.myHiddenForm2.submit()" value="결제"/>
                      -->
+
 					</div>
 					
 					
@@ -910,6 +913,7 @@ ul {
 
 						</form:form>
 				</div>
+
 
 
 				<div class="col-lg-12">

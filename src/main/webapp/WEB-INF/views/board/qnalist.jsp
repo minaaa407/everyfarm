@@ -188,8 +188,6 @@
                         <a href="./signin.html" class="primary-btn">Subscribe</a>
                         <button type="submit" class="site-btn" onClick="location.href='/qnawrite'">글쓰기</button>
                  		<button type="submit" class="site-btn" onClick="location.href='/qnamylist'">내글 보기</button>
-                 		<button type="submit" class="site-btn" onClick="location.href='/qnalist'">전체보기</button>
-                 		
                     </div>           <!--  http://localhost:8090/qnalist  -->          
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -197,20 +195,6 @@
                         <a href="./index.html"><img src="img/logo.png" alt=""></a>
                     </div>
                 </div>
-                
-                <form action="searchqna" method="post">
-         			<select name="searchBox"> <!-- style="padding: 7px 11px;" -->
-              			<option value="all">전체 검색</option>
-              			<option value="id">아이디</option>
-             			<option value="p">상품문의</option>
-         				<option value="d">배송문의</option>
-         				<option value="o">기타문의</option>
-         				
-            		</select> 
-            		<input type="text" name="searchText"> <!-- style="padding: 6px 11px;" -->
-         			<input type="submit" id="submit" value="검색">  <!-- style="padding: 6px 11px;" -->
-        		</form>
-        		
                 <div class="col-lg-3 col-md-3">
                     <div class="header__social">
                         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -254,20 +238,12 @@
                   <c:when test = "${buylist != null}">
                    </c:when>
                      </c:choose> --%>
-                     
-           <%--  <c:when test = "${empty qnamylist}">   --%>            
                        
                         <c:choose>   
-                 		<c:when test = "${empty qnalist}">
-                 			<div>내역이 없습니다.</div>
-                 		</c:when>
-                 		<c:when test = "${qnalist != null}">
-                            <c:forEach items="${qnalist}" var="q">
-                         	<c:set var="i" value="${i+1}"/> 
+                 		 <c:when test = "${empty qnamylist}">  
+                            <c:forEach items="${qnalist }" var="q">
                             
-                            <c:choose>
-                             <c:when test="${sessionScope.member.getM_Id() ne q.q_Id && q.q_Secret == true}">
-                                       <div class="categories__list__post__item">
+                            <div class="categories__list__post__item">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
                                         <div class="categories__post__item__pic set-bg"
@@ -281,64 +257,12 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6">
                                         <div class="categories__post__item__text">
-                                       
-                                            <span class="post__label">비밀글</span>
-                                          
-                                            <h3>비밀글 입니다.</h3>
+                                            <span class="post__label">${q.q_Secret}</span>
+                                            <h3><a href="#">${q.q_Title}</a></h3>
                                             <ul class="post__widget">
                                                 <li><span>${q.q_Id}</span></li>
                                                 <li>${q.q_Date}</li>
-                                     
-                                                <li></li>
-                                         
-                                            </ul>
-                                            <p></p>
-                                        </div>
-                                        
-                         
-                                    
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-      
-                  
-                             </c:when>
-                             <c:otherwise>
-                                       <div class="categories__list__post__item">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="categories__post__item__pic set-bg"
-                                            data-setbg="q_Img">
-                                            <div class="post__meta">
-                                                <h4>${q.q_No}</h4>
-                                               
-                                                <span>Aug</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="categories__post__item__text">
-                                        <c:choose>
-											<c:when test="${q.q_Secret == false}">
-											</c:when>
-											<c:when test="${q.q_Secret == true}">
-                                            <span class="post__label">비밀글</span>
-                                            </c:when>
-                                            </c:choose>
-                                            <h3>${q.q_Title}</h3>
-                                            <ul class="post__widget">
-                                                <li><span>${q.q_Id}</span></li>
-                                                <li>${q.q_Date}</li>
-                                        <c:choose>
-											<c:when test="${q.q_Answer == false}">
-											</c:when>
-											<c:when test="${q.q_Answer == true}">
-                                                <li><button data-toggle="collapse" href="#collapseExample${i-1}" aria-expanded="false" 
-                                                		aria-controls="collapseExample">답글보기</button></li>
-                                            </c:when>
-                                         </c:choose>
+                                                <li>${q.q_Answer}</li>
                                             </ul>
                                             <p>${q.q_Content}</p>
                                         </div>
@@ -349,17 +273,10 @@
 										
                                         <%--  <button type="button"  class="btn btn-primary" 
                                          	onclick="location.href='/qnamodify?no=${q.q_No}'">수정하기</button> --%>
-                                         <c:choose>
-											<c:when test="${q.q_Answer == false}">
                                          <button type="button"  class="btn btn-primary" 
                                          	onclick="location.href='/qnamodify/${q.q_No}'">수정하기</button>
-                                         	</c:when>
-											<c:when test="${q.q_Answer == true}">
-                                       		</c:when>
-                                       		</c:choose>
-                                       	<form action="qnadelete/${q.q_No}" id="delete" name="delete" class="btn btn-primary" method="post" >
-                                        <button type="submit"  class="btn btn-primary" onclick="qnadelete();">삭제하기</button>
-                                        </form>
+                                         <button type="button"  class="btn btn-primary" 
+                                         	onclick="location.href='/qnadelete/${q.q_No}'">삭제하기</button>
                                     </c:when>
                                     
         							<c:when test="${sessionScope.member.getM_Id() ne q.q_Id}">
@@ -376,34 +293,26 @@
                          <h4>Leave a comment</h4>
                      </div>
                         <form action="#">
-                         	<div class="collapse" id="collapseExample${i-1}">
-                               <div class="input-list">
-                           
-                                <input type="text" name="admin" value="관리자">
-                                <input type="text" name="q_Magdate" value="${q.q_Magdate}">
+                            <div class="input-list">
+                                <input type="text" placeholder="Name">
+                                <input type="text" placeholder="Email">
                                 <input type="text" placeholder="Website">
-                               </div>
-                        	<textarea id="q_magcontent" name="q_Magcontent">${q.q_Magcontent}</textarea>
-               
-                         	</div>
+                            </div>
+                        	<textarea placeholder="Message"></textarea>
+                         	<button type="submit" class="site-btn">Submit</button>
                         </form>
                   </div>  
-                             </c:otherwise>
-                             </c:choose>
-                            
-                  
                   
                   
                    <br>
                    <br>
                    <br>   
-                   
-                   
-                   </c:forEach>
+                            
+                         </c:forEach>
                     </c:when>
                   <c:when test = "${qnamylist != null}">
                       <c:forEach items="${qnamylist }" var="q">
-                            <c:set var="i" value="${i+1}"/> 
+                            
                             <div class="categories__list__post__item">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
@@ -418,37 +327,18 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6">
                                         <div class="categories__post__item__text">
-                                        <c:choose>
-											<c:when test="${q.q_Secret == false}">
-											</c:when>
-											<c:when test="${q.q_Secret == true}">
-                                            <span class="post__label">비밀글</span>
-                                            </c:when>
-                                            </c:choose>
-                                            
-                                            <h3>${q.q_Title}</h3>
+                                            <span class="post__label">${q.q_Secret}</span>
+                                            <h3><a href="#">${q.q_Title}</a></h3>
                                             <ul class="post__widget">
                                                 <li><span>${q.q_Id}</span></li>
                                                 <li>${q.q_Date}</li>
-                                         <c:choose>
-											<c:when test="${q.q_Answer == false}">
-											</c:when>
-											<c:when test="${q.q_Answer == true}">
-                                                <li><button data-toggle="collapse" href="#collapseExample${i-1}" aria-expanded="false" 
-                                                		aria-controls="collapseExample">답글 보기</button></li>
-											</c:when>
-                                         </c:choose>
+                                                <li>${q.q_Answer}</li>
                                             </ul>
                                             <p>${q.q_Content}</p>
                                         </div>
-                                        <c:choose>
-											<c:when test="${q.q_Answer == false}">
-												<button type="button"  class="btn btn-primary" 
-                                         			onclick="location.href='/qnamodify/my/${q.q_No}'">수정하기</button>
-											</c:when>
-											<c:when test="${q.q_Answer == true}">
-                                       		</c:when>
-                                         </c:choose>
+                                        
+                                       <button type="button"  class="btn btn-primary" 
+                                         	onclick="location.href='/qnamodify/my/${q.q_No}'">수정하기</button>
                                          <button type="button"  class="btn btn-primary" 
                                          	onclick="location.href='/qnadelete/my/${q.q_No}'">삭제하기</button>
                                 
@@ -463,16 +353,13 @@
                          <h4>Leave a comment</h4>
                      </div>
                         <form action="#">
-                         	<div class="collapse" id="collapseExample${i-1}">
-                               <div class="input-list">
-                           
-                                <input type="text" name="admin" value="관리자">
-                                <input type="text" name="q_Magdate" value="${q.q_Magdate}">
+                            <div class="input-list">
+                                <input type="text" placeholder="Name">
+                                <input type="text" placeholder="Email">
                                 <input type="text" placeholder="Website">
-                               </div>
-                        	<textarea id="q_magcontent" name="q_Magcontent">${q.q_Magcontent}</textarea>
-               
-                         	</div>
+                            </div>
+                        	<textarea placeholder="Message"></textarea>
+                         	<button type="submit" class="site-btn">Submit</button>
                         </form>
                   </div>  
                   
@@ -489,18 +376,7 @@
           </div>
        </div>
    </section>
-<script type="text/javascript">
-
-function qnadelete() {
-	if (confirm('정말 삭제하시겠습니까?')) {  
-		return true;
-	} else {   
-		event.preventDefault();
-		return false;
-	}
-}
-</script>
-                           
+                              
                            
  
     <!-- Js Plugins -->
