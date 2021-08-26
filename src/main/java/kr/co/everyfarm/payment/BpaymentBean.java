@@ -1,6 +1,7 @@
 package kr.co.everyfarm.payment;
 
 import java.util.Date;
+import java.util.List;
 
 public class BpaymentBean {
 
@@ -11,13 +12,50 @@ public class BpaymentBean {
 	private String bpay_Method;
 	private String bpay_Deliverymemo;
 	private String bpay_Seed;
-	private int bpay_Tel;
+	private String bpay_Tel;
 	private int bpay_Orderno;
 	private int bpay_No;
 	private int bpay_Land;
 	private int bpay_Totalprice;
 	private Date bpay_Date;
 	
+	private String p_Id;
+	private int p_No;
+	private String p_Title;
+	private String p_Img;
+	
+	private List<BpaymentBean> bpaymentbeanList;
+	
+	public List<BpaymentBean> getBpaymentbeanList() {
+		return bpaymentbeanList;
+	}
+	public void setBpaymentbeanList(List<BpaymentBean> bpaymentbeanList) {
+		this.bpaymentbeanList = bpaymentbeanList;
+	}
+	public String getP_Id() {
+		return p_Id;
+	}
+	public void setP_Id(String p_Id) {
+		this.p_Id = p_Id;
+	}
+	public int getP_No() {
+		return p_No;
+	}
+	public void setP_No(int p_No) {
+		this.p_No = p_No;
+	}
+	public String getP_Title() {
+		return p_Title;
+	}
+	public void setP_Title(String p_Title) {
+		this.p_Title = p_Title;
+	}
+	public String getP_Img() {
+		return p_Img;
+	}
+	public void setP_Img(String p_Img) {
+		this.p_Img = p_Img;
+	}
 	public String getBpay_Name() {
 		return bpay_Name;
 	}
@@ -60,10 +98,10 @@ public class BpaymentBean {
 	public void setBpay_Seed(String bpay_Seed) {
 		this.bpay_Seed = bpay_Seed;
 	}
-	public int getBpay_Tel() {
+	public String getBpay_Tel() {
 		return bpay_Tel;
 	}
-	public void setBpay_Tel(int bpay_Tel) {
+	public void setBpay_Tel(String bpay_Tel) {
 		this.bpay_Tel = bpay_Tel;
 	}
 	public int getBpay_Orderno() {
@@ -103,7 +141,8 @@ public class BpaymentBean {
 				+ ", bpay_Address=" + bpay_Address + ", bpay_Method=" + bpay_Method + ", bpay_Deliverymemo="
 				+ bpay_Deliverymemo + ", bpay_Seed=" + bpay_Seed + ", bpay_Tel=" + bpay_Tel + ", bpay_Orderno="
 				+ bpay_Orderno + ", bpay_No=" + bpay_No + ", bpay_Land=" + bpay_Land + ", bpay_Totalprice="
-				+ bpay_Totalprice + ", bpay_Date=" + bpay_Date + "]";
+				+ bpay_Totalprice + ", bpay_Date=" + bpay_Date + ", p_Id=" + p_Id + ", p_No=" + p_No + ", p_Title="
+				+ p_Title + ", p_Img=" + p_Img + ", bpaymentbeanList=" + bpaymentbeanList + "]";
 	}
 	
 }

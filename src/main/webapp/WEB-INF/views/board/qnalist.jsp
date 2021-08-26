@@ -20,194 +20,15 @@
     <link href="https://fonts.googleapis.com/css?family=Unna:400,700&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="resources/qna/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/qna/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/qna/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="resources/qna/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/qna/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/qna/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/resources/qna/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/resources/qna/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/resources/qna/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/resources/qna/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/resources/qna/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/resources/qna/css/style.css" type="text/css">
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <a href="./index.html"><img src="img/humberger/humberger-logo.png" alt=""></a>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li><a href="./index.html">Home</a></li>
-                <li><a href="#">Recipes</a></li>
-                <li><a href="#">Dinner</a></li>
-                <li><a href="#">Desserts</a></li>
-                <li class="dropdown"><a href="#">Pages</a>
-                    <ul class="dropdown__menu">
-                        <li><a href="./categories-grid.html">Categories Grid</a></li>
-                        <li><a href="./categories-list.html">Categories List</a></li>
-                        <li><a href="./single-post.html">Single Post</a></li>
-                        <li><a href="./signin.html">Sign In</a></li>
-                        <li><a href="./404.html">404</a></li>
-                        <li><a href="./typography.html">Typography</a></li>
-                    </ul>
-                </li>
-                <li><a href="./about.html">About</a></li>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-        <div class="humberger__menu__about">
-            <div class="humberger__menu__title sidebar__item__title">
-                <h6>About me</h6>
-            </div>
-            <img src="img/humberger/humberger-about.jpg" alt="">
-            <h6>Hi every one! I,m Lena Mollein.</h6>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua.</p>
-            <div class="humberger__menu__about__social sidebar__item__follow__links">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-youtube-play"></i></a>
-                <a href="#"><i class="fa fa-instagram"></i></a>
-                <a href="#"><i class="fa fa-envelope-o"></i></a>
-            </div>
-        </div>
-        <div class="humberger__menu__subscribe">
-            <div class="humberger__menu__title sidebar__item__title">
-                <h6>Subscribe</h6>
-            </div>
-            <p>Subscribe to our newsletter and get our newest updates right on your inbox.</p>
-            <form action="#">
-                <input type="text" class="email-input" placeholder="Your email">
-                <label for="agree-check">
-                    I agree to the terms & conditions
-                    <input type="checkbox" id="agree-check">
-                    <span class="checkmark"></span>
-                </label>
-              
-            </form>
-        </div>
-    </div>
-    <!-- Humberger End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
-        <div class="header__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-2 col-md-1 col-6 order-md-1 order-1">
-                        <div class="header__humberger">
-                            <i class="fa fa-bars humberger__open"></i>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-10 order-md-2 order-3">
-                        <nav class="header__menu">
-                            <ul>
-                                <li><a href="./index.html">Home</a></li>
-                                <li><a href="#">Recipes</a>
-                                    <div class="header__megamenu__wrapper">
-                                        <div class="header__megamenu">
-                                            <div class="header__megamenu__item">
-                                                <div class="header__megamenu__item--pic set-bg"
-                                                    data-setbg="img/megamenu/p-1.jpg">
-                                                    <div class="label">Vegan</div>
-                                                </div>
-                                                <div class="header__megamenu__item--text">
-                                                    <h5><a href="#">How to Make a Milkshake With Any Ice Cream ...</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                            <div class="header__megamenu__item">
-                                                <div class="header__megamenu__item--pic set-bg"
-                                                    data-setbg="img/megamenu/p-2.jpg">
-                                                    <div class="label">Vegan</div>
-                                                </div>
-                                                <div class="header__megamenu__item--text">
-                                                    <h5><a href="#">How to Make a Milkshake With Any Ice Cream ...</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                            <div class="header__megamenu__item">
-                                                <div class="header__megamenu__item--pic set-bg"
-                                                    data-setbg="img/megamenu/p-3.jpg">
-                                                    <div class="label">Vegan</div>
-                                                </div>
-                                                <div class="header__megamenu__item--text">
-                                                    <h5><a href="#">How to Make a Milkshake With Any Ice Cream ...</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                            <div class="header__megamenu__item">
-                                                <div class="header__megamenu__item--pic set-bg"
-                                                    data-setbg="img/megamenu/p-4.jpg">
-                                                    <div class="label">Vegan</div>
-                                                </div>
-                                                <div class="header__megamenu__item--text">
-                                                    <h5><a href="#">How to Make a Milkshake With Any Ice Cream ...</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                            <div class="header__megamenu__item">
-                                                <div class="header__megamenu__item--pic set-bg"
-                                                    data-setbg="img/megamenu/p-5.jpg">
-                                                    <div class="label">Vegan</div>
-                                                </div>
-                                                <div class="header__megamenu__item--text">
-                                                    <h5><a href="#">How to Make a Milkshake With Any Ice Cream ...</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li><a href="#">Dinner</a></li>
-                                <li><a href="#">Desserts</a></li>
-                                <li><a href="#">Vegan</a></li>
-                                <li><a href="./about.html">About</a></li>
-                                <li><a href="./contact.html">Contact</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="col-lg-2 col-md-1 col-6 order-md-3 order-2">
-                        <div class="header__search">
-                            <i class="fa fa-search search-switch"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__btn">
-                        <a href="./signin.html" class="primary-btn">Subscribe</a>
-                        <button type="submit" class="site-btn" onClick="location.href='/qnawrite'">글쓰기</button>
-                 		<button type="submit" class="site-btn" onClick="location.href='/qnamylist'">내글 보기</button>
-                    </div>           <!--  http://localhost:8090/qnalist  -->          
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="header__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-youtube-play"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                        <a href="#"><i class="fa fa-envelope-o"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- Header Section End -->
 
     <!-- Categories Section Begin -->
     <section class="categories categories-grid spad">
@@ -215,18 +36,95 @@
             <div class="container">
                 <div class="categories__grid__post">
                     <div class="row">
-                        <div class="col-lg-8 col-md-8">
                         
+                          <div class="col-lg-2 col-md-2">
+                          
+                              <div class="sidebar__item__categories">
+                                    <div class="sidebar__item__title">
+                                        <h6>QnA</h6>
+                                    </div>
+                                    <ul>
+                                        <li><a href="/qnalist/product">상품 문의 게시판<span>128</span></a></li>
+                                       <!--  <li><a href="/qnalist/admin">관리자 문의 게시판<span>32</span></a></li> -->
+                                        <li><a href="/qnawrite/product">문의하기 <span>86</span></a></li>
+                                       <!--  <li class="p-left"><a href="/qnawrite/product">상품 문의하기<span>25</span></a></li>
+                                        <li class="p-left"><a href="/qnawrite/admin">관리자 문의하기<span>36</span></a></li> -->
+                                        <!-- <li><a href="">내가 쓴 글<span>32</span></a></li> -->
+                                    </ul>
+                                </div>
+                        </div>
                         
+                      <div class="col-lg-10 col-md-10">
                       
-                        
-                            <div class="breadcrumb__text">
-                                <h2>Categories: <span>Recipes</span></h2>
+                       <c:choose>   
+                 		<c:when test = "${empty productQlist && empty adminQlist}">
+                 		</c:when>
+                 		<c:when test = "${productQlist != null}">
+                      
+                         <div class="breadcrumb__text">
+                                <h2><span>상품 문의 </span>게시판</h2>
                                 <div class="breadcrumb__option">
-                                    <a href="#">Home</a>
-                                    <span>Recipes</span>
+                                   <form action="searchqna" method="post">
+         								<select name="searchBox"> <!-- style="padding: 7px 11px;" -->
+              								<option value="all">전체 검색</option>
+              								<option value="pno">상품번호</option>
+         									<option value="ptitle">상품명</option>
+         									<option value="content">내용</option>
+         									<option value="id">아이디</option>
+         								</select> 
+         								
+            							<input type="text" name="searchText">
+            							
+            							<select name="searchAnswer"> <!-- style="padding: 7px 11px;" -->
+              								<option value="all">답글 여부</option>
+              								<option value="o">답글 O</option>
+             								<option value="x">답글 X</option>
+            							</select> 
+            							
+        							</form>
+        							  <!-- <a href="#">Home</a>
+                                   	  <span>Recipes</span> -->
+                                   	  
+        								<button type="submit" class="site-btn" onClick="location.href='/qnalist/product'">전체보기</button>
+        								<button type="submit" class="site-btn" onClick="location.href='/qnamylist/product'">내가 쓴 글</button>
+                 						
                                 </div>
                             </div>
+                            
+                            </c:when>
+                          <c:when test = "${adminQlist != null}">
+                            
+                          <div class="breadcrumb__text">
+                                <h2><span>관리자 문의 </span>게시판</h2>
+                                <div class="breadcrumb__option">
+                                   <form action="searchqna" method="post">
+         								<select name="searchBox"> <!-- style="padding: 7px 11px;" -->
+              								<option value="all">전체 검색</option>
+              								<option value="content">내용</option>
+         									<option value="id">아이디</option>
+         				
+            							</select> 
+            							<input type="text" name="searchText">
+            							
+            							<select name="searchAnswer"> <!-- style="padding: 7px 11px;" -->
+              								<option value="all">답글 여부</option>
+              								<option value="o">답글 O</option>
+             								<option value="x">답글 X</option>
+            							</select> 
+            							 <!-- style="padding: 6px 11px;" -->
+         								<input type="submit" id="submit" value="검색">  <!-- style="padding: 6px 11px;" -->
+        							</form>
+                                    <!-- <a href="#">Home</a>
+                                    <span>Recipes</span> -->
+                                    
+                                    <button type="submit" class="site-btn" onClick="location.href='/qnalist/admin'">전체보기</button>
+                                    <button type="submit" class="site-btn" onClick="location.href='/qnamylist/admin'">내가 쓴 글</button>
+                 					
+                                </div>
+                            </div>
+                            
+                            </c:when>
+                            </c:choose>
                             
                      <!--   <form method="post" name="qnamodify" action="reservationUpdate.bo">      -->
                        
@@ -238,153 +136,305 @@
                   <c:when test = "${buylist != null}">
                    </c:when>
                      </c:choose> --%>
+                     
+           <%--  <c:when test = "${empty qnamylist}">   --%>            
                        
                         <c:choose>   
-                 		 <c:when test = "${empty qnamylist}">  
-                            <c:forEach items="${qnalist }" var="q">
+                 		<c:when test = "${empty productQlist && empty adminQlist}">
+                 			<div>내역이 없습니다.</div>
+                 		</c:when>
+                 		<c:when test = "${productQlist != null}">
+                            <c:forEach items="${productQlist}" var="q">
+                         	<c:set var="i" value="${i+1}"/> 
                             
-                            <div class="categories__list__post__item">
+                            <c:choose>
+                             <c:when test="${sessionScope.member.getM_Id() ne q.q_Id && q.q_Secret == true}">
+                                       <div class="categories__list__post__item">
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6">
+                                    <div class="col-lg-3 col-md-3">
                                         <div class="categories__post__item__pic set-bg"
-                                            data-setbg="q_Img">
+                                            data-setbg="${q.q_Img}">
                                             <div class="post__meta">
-                                                <h4>${q.q_No}</h4>
-                                               
-                                                <span>Aug</span>
+                                                <%-- <h4>${q.q_No}</h4> --%>
+                                                	 <h4>${i}</h4>
+                                               <input type="hidden" id="" name="" value="${q.q_No}" />
+                                                <span>QnA</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="categories__post__item__text">
-                                            <span class="post__label">${q.q_Secret}</span>
-                                            <h3><a href="#">${q.q_Title}</a></h3>
+                                    <div class="col-lg-9 col-md-9">
+                                         <div class="categories__post__item__text">
+                                       
+                                           <!--  <span class="post__label">비밀글</span> -->
+                                            
+                                             <ul class="post__label--large">
+                                                <li>비밀글</li>
+                                                <li>${q.q_Pno} : ${q.q_Ptitle}</li>
+                                            </ul>
+                               				 	<h3>비밀글 입니다.</h3>
                                             <ul class="post__widget">
                                                 <li><span>${q.q_Id}</span></li>
                                                 <li>${q.q_Date}</li>
-                                                <li>${q.q_Answer}</li>
-                                            </ul>
-                                            <p>${q.q_Content}</p>
+                                     
+                                                <li></li>
+                                         	 </ul>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                        	<div class="categories__list__post__item">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="categories__post__item__pic set-bg"
+                                            data-setbg="q_Img">
+                                            <div class="post__meta">
+                                                <%-- <h4>${q.q_No}</h4> --%>
+                                               <h4>${i}</h4>
+                                               <input type="hidden" id="" name="" value="${q.q_No}" />
+                                                <span>QnA</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9">
+                                        <div class="categories__post__item__text">
+                                        	<c:choose>
+												<c:when test="${q.q_Secret == true}">
+                                           			<ul class="post__label--large">
+                                               	 		<li>비밀글</li>
+                                                		<li>${q.q_Pno} : ${q.q_Ptitle}</li>
+                                            		</ul>
+                                            	</c:when>	
+												<c:otherwise>
+													<span class="post__label">${q.q_Pno} : ${q.q_Ptitle}</span>
+												</c:otherwise>
+											</c:choose>
+                                           	 	<h3>${q.q_Title}</h3>
+                                            		<ul class="post__widget">
+                                                		<li><span>${q.q_Id}</span></li>
+                                                		<li>${q.q_Date}</li>
+                                                		
+                                        	<c:choose>
+												<c:when test="${q.q_Answer == false}">
+											  		<li><button data-toggle="collapse" href="#collapseExample${i-1}" aria-expanded="false" 
+                                                		aria-controls="collapseExample">내용 더보기</button></li>
+												</c:when>
+												<c:when test="${q.q_Answer == true}">
+                                                	<li><button data-toggle="collapse" href="#collapseExample${i-1}" aria-expanded="false" 
+                                                		aria-controls="collapseExample">내용 더보기 +답글</button></li>
+                                            	</c:when>
+                                         	</c:choose>
+                                         
+                                         <%--  <div class="collapse" id="collapseExample${i-1}"> --%>
+                                           			 </ul>
+                                           <%--  <p>${q.q_Content}</p> --%>
                                         </div>
                                         
-                                          <c:choose>
-								
-										 <c:when test="${sessionScope.member.getM_Id() eq q.q_Id}"> 
+                                        <div class="collapse" id="collapseExample${i-1}">
+                                       		<p>${q.q_Content}</p>
+                                        
+                                          		<c:choose>
+													<c:when test="${sessionScope.member.getM_Id() eq q.q_Id}"> 
 										
                                         <%--  <button type="button"  class="btn btn-primary" 
                                          	onclick="location.href='/qnamodify?no=${q.q_No}'">수정하기</button> --%>
-                                         <button type="button"  class="btn btn-primary" 
-                                         	onclick="location.href='/qnamodify/${q.q_No}'">수정하기</button>
-                                         <button type="button"  class="btn btn-primary" 
-                                         	onclick="location.href='/qnadelete/${q.q_No}'">삭제하기</button>
-                                    </c:when>
-                                    
-        							<c:when test="${sessionScope.member.getM_Id() ne q.q_Id}">
-									</c:when>
-									</c:choose>
-                                    
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                  <div class="single-post__leave__comment">
-                     <div class="widget__title">
-                         <h4>Leave a comment</h4>
-                     </div>
-                        <form action="#">
-                            <div class="input-list">
-                                <input type="text" placeholder="Name">
-                                <input type="text" placeholder="Email">
-                                <input type="text" placeholder="Website">
-                            </div>
-                        	<textarea placeholder="Message"></textarea>
-                         	<button type="submit" class="site-btn">Submit</button>
-                        </form>
-                  </div>  
-                  
-                  
+                                         				<c:choose>
+															<c:when test="${q.q_Answer == false}">
+                                        						 <button type="button"  class="btn btn-primary" 
+                                         							onclick="location.href='/qnamodify/${q.q_No}'">수정하기</button>
+                                         					</c:when>
+															<c:when test="${q.q_Answer == true}">
+                                       						</c:when>
+                                       					</c:choose>
+                                       						<form action="/qnadelete/${q.q_No}" id="delete" name="delete" class="btn btn-primary" method="post" >
+                                        						<button type="submit"  class="btn btn-primary" onclick="qnadelete();">삭제하기</button>
+                                        					</form>
+                                    				</c:when>
+					                                <c:when test="${sessionScope.member.getM_Id() ne q.q_Id}">
+													</c:when>
+											</c:choose>
+											
+					                        <c:choose>
+                   								<c:when test="${q.q_Magdate != null}">
+								                    <div class="single-post__author__profile">
+                                 						<div class="single-post__author__profile__text">
+                                 							<div class="widget__title">
+                            									<h4>by ${q.q_Pid}</h4>
+                        									</div>
+	                            								<sapn>${q.q_Magdate}</sapn>
+                               									<p>${q.q_Magcontent}</p>
+              					 						</div>
+                         							</div>
+                         						</c:when>
+                         	 					<c:when test="${empty q.q_Magdate}">
+                         	 					</c:when>
+                         					</c:choose>
+			                         	</div>
+                        			 </div>
+                      			</div>
+                  			</div>
+                  <!-- </div> -->  
+                       </c:otherwise>
+                    </c:choose>
+                   
                    <br>
-                   <br>
-                   <br>   
-                            
-                         </c:forEach>
-                    </c:when>
-                  <c:when test = "${qnamylist != null}">
-                      <c:forEach items="${qnamylist }" var="q">
-                            
-                            <div class="categories__list__post__item">
+    
+                </c:forEach>
+                </c:when>
+                <c:when test = "${adminQlist != null}">
+                	<c:forEach items="${adminQlist }" var="q">
+                    	<c:set var="i" value="${i+1}"/> 
+                    	
+                        	<c:choose>
+                             	<c:when test="${sessionScope.member.getM_Id() ne q.qa_Id && q.qa_Secret == true}">
+                                	<div class="categories__list__post__item">
+                                		<div class="row">
+                                    		<div class="col-lg-3 col-md-3">
+                                        		<div class="categories__post__item__pic set-bg"
+                                           			 data-setbg="${q.qa_Img}">
+                                           		<div class="post__meta">
+                                                <%-- <h4>${q.qa_No}</h4> --%>
+                                                	 <h4>${i}</h4>
+                                              		 <input type="hidden" id="" name="" value="${q.qa_No}" />
+                                                		<span>QnA</span>
+                                           		</div>
+                                        		</div>
+                                   			</div>
+                                    <div class="col-lg-9 col-md-9">
+                                         <div class="categories__post__item__text">
+                                       		<span class="post__label">비밀글</span>
+                                            
+                                           		<h3>비밀글 입니다.</h3>
+                                            	<ul class="post__widget">
+                                               		<li><span>${q.qa_Id}</span></li>
+                                               		<li>${q.qa_Date}</li>
+                                     				<li></li>
+                                         		</ul>
+                                         </div>
+                                      </div>
+                               	 </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                        	<div class="categories__list__post__item">
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6">
+                                    <div class="col-lg-3 col-md-3">
                                         <div class="categories__post__item__pic set-bg"
                                             data-setbg="q_Img">
                                             <div class="post__meta">
-                                                <h4>${q.q_No}</h4>
-                                               
-                                                <span>Aug</span>
+                                                <%-- <h4>${q.qa_No}</h4> --%>
+                                               <h4>${i}</h4>
+                                               <input type="hidden" id="" name="" value="${q.qa_No}" />
+                                                <span>QnA</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6">
+                                    <div class="col-lg-9 col-md-9">
                                         <div class="categories__post__item__text">
-                                            <span class="post__label">${q.q_Secret}</span>
-                                            <h3><a href="#">${q.q_Title}</a></h3>
-                                            <ul class="post__widget">
-                                                <li><span>${q.q_Id}</span></li>
-                                                <li>${q.q_Date}</li>
-                                                <li>${q.q_Answer}</li>
-                                            </ul>
-                                            <p>${q.q_Content}</p>
-                                        </div>
+                                        	<c:choose>
+												<c:when test="${q.qa_Secret == false}">
+												</c:when>
+												<c:when test="${q.qa_Secret == true}">
+													<span class="post__label">비밀글</span>
+                                           		</c:when>
+                                            </c:choose>
+                                            	<h3>${q.qa_Title}</h3>
+                                            	<ul class="post__widget">
+                                                	<li><span>${q.qa_Id}</span></li>
+                                                	<li>${q.qa_Date}</li>
+                                                	
+                                       			<c:choose>
+													<c:when test="${q.qa_Answer == false}">
+														<li><button data-toggle="collapse" href="#collapseExample${i-1}" aria-expanded="false" 
+                                                			aria-controls="collapseExample">내용 더보기</button></li>
+													</c:when>
+													<c:when test="${q.qa_Answer == true}">
+                                                		<li><button data-toggle="collapse" href="#collapseExample${i-1}" aria-expanded="false" 
+                                                		aria-controls="collapseExample">내용 더보기 + 답글</button></li>
+                                            		</c:when>
+                                        		</c:choose>
+                                           	 	</ul>
+                                     </div>
+                                     <div class="collapse" id="collapseExample${i-1}">
+                                     	<p>${q.qa_Content}</p>
                                         
-                                       <button type="button"  class="btn btn-primary" 
-                                         	onclick="location.href='/qnamodify/my/${q.q_No}'">수정하기</button>
-                                         <button type="button"  class="btn btn-primary" 
-                                         	onclick="location.href='/qnadelete/my/${q.q_No}'">삭제하기</button>
-                                
-                                    
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            
-                  <div class="single-post__leave__comment">
-                     <div class="widget__title">
-                         <h4>Leave a comment</h4>
-                     </div>
-                        <form action="#">
-                            <div class="input-list">
-                                <input type="text" placeholder="Name">
-                                <input type="text" placeholder="Email">
-                                <input type="text" placeholder="Website">
-                            </div>
-                        	<textarea placeholder="Message"></textarea>
-                         	<button type="submit" class="site-btn">Submit</button>
-                        </form>
-                  </div>  
-                  
-                  
+                                        <c:choose>
+											<c:when test="${sessionScope.member.getM_Id() eq q.qa_Id}"> 
+										
+                                        <%--  <button type="button"  class="btn btn-primary" 
+                                         	onclick="location.href='/qnamodify?no=${q.qa_No}'">수정하기</button> --%>
+                                        	 <c:choose>
+												<c:when test="${q.qa_Answer == false}">
+                                        			 <button type="button"  class="btn btn-primary" 
+                                         				onclick="location.href='/qnaAdmodify/${q.qa_No}'">수정하기</button>
+                                         		</c:when>
+												<c:when test="${q.qa_Answer == true}">
+                                       			</c:when>
+                                       		</c:choose>
+                                       			<form action="/qnaAddelete/${q.qa_No}" id="delete" name="delete" class="btn btn-primary" method="post" >
+                                        			<button type="submit"  class="btn btn-primary" onclick="qnadelete();">삭제하기</button>
+                                       			</form>
+                                   			</c:when>
+											<c:when test="${sessionScope.member.getM_Id() ne q.qa_Id}">
+											</c:when>
+										</c:choose>
+										
+                                    	<c:choose>
+                   							<c:when test="${q.qa_Adcontent != null}">    
+                								<div class="single-post__author__profile">
+                                					<div class="single-post__author__profile__text">
+                                 						<div class="widget__title">
+                            								<h4>by 관리자</h4>
+                        								</div>
+	                            							<sapn>${q.qa_Addate}"</sapn>
+                               								<p>${q.qa_Adcontent}</p>
+              											</div>
+                         						</div>
+                         					</c:when> 
+                         					<c:when test="${empty q.qa_Adcontent}">
+                         	 				</c:when>
+                         	 			</c:choose>
+			                        </div> 
+                             	</div>
+                             </div>
+                          </div>
+                       </c:otherwise>
+                     </c:choose>
+                     
                    <br>
-                   <br>
-                   <br> 
-                   </c:forEach>
-                   </c:when>
-                   </c:choose>
-                      </div>
-                  </div>
-             </div>
+                 </c:forEach>
+               </c:when>
+             </c:choose>
+            </div>
           </div>
+         </div>
        </div>
+     </div>
    </section>
-                              
-                           
- 
+   
+<script type="text/javascript">
+
+function qnadelete() {
+	if (confirm('정말 삭제하시겠습니까?')) {  
+		return true;
+	} else {   
+		event.preventDefault();
+		return false;
+	}
+}
+</script>
+                  
+    
     <!-- Js Plugins -->
-    <script src="resources/qna/js/jquery-3.3.1.min.js"></script>
-    <script src="resources/qna/js/bootstrap.min.js"></script>
-    <script src="resources/qna/js/jquery.slicknav.js"></script>
-    <script src="resources/qna/js/owl.carousel.min.js"></script>
-    <script src="resources/qna/js/main.js"></script>
+    <script src="/resources/qna/js/jquery-3.3.1.min.js"></script>
+    <script src="/resources/qna/js/bootstrap.min.js"></script>
+    <script src="/resources/qna/js/jquery.slicknav.js"></script>
+    <script src="/resources/qna/js/owl.carousel.min.js"></script>
+    <script src="/resources/qna/js/main.js"></script>
+    
+    
 </body>
 
 </html>
