@@ -86,7 +86,7 @@
 						<li class="nav-item active"><a href="index.jsp"
 							class="nav-link">Home</a></li>
 						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="services.html" class="nav-link">농장
+						<li class="nav-item"><a href="/proAdminListForm" class="nav-link">농장
 								등록</a></li>
 						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
 						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>

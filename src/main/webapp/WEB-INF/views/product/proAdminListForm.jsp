@@ -105,6 +105,13 @@ tbody tr #readc {
 </style>
 
 <script>
+
+function proDelete(p_No) {
+	if (confirm('삭제하시겠습니까?')) {
+		location.href='ProDelete?p_No=' + p_No;
+	}
+}
+
 function paging(i){
 	var page = "page" + i;
 	document.getElementById('selectpage').value = i;
@@ -202,11 +209,10 @@ function search(){
 	<!-- END Header -->
 	<h2>상품 리스트</h2>
 	<br>
-	<div id="rezButton">
-		<button type="button" class="btn btn-dark">승인전</button>
-		<button type="button" class="btn btn-dark">승인후</button>
-		<button type="button" class="btn btn-dark">전체보기</button>
-	</div>
+	<a href="/ProYList" class="btn btn-dark">승인전 </a>
+	<a href="/ProNList" class="btn btn-dark">승인후 </a>
+	<a href="/proAdminListForm?" class="btn btn-dark">전체보기 </a>
+	<br>
 	<br>
 
 	<div class="table">
@@ -217,27 +223,30 @@ function search(){
 					<th>아이디</th>
 					<th>메인이미지</th>
 					<th>제목</th>
-					<th>토지 사이즈</th>
 					<th>등록날짜</th>
-					<th>상품등록</th>
+					<th>승인여부</th>
+					<th>승인</th>
+					<th>삭제</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="p" items="${productlist}">
 					<tr>
-						<td class="content"><a
-							href="/productdetail?productno=${p.p_No}">${p.p_No}</a></td>
+						<td class="content">${p.p_No}</td>
 						<td class="content">${p.p_Id}</td>
 						<td class="content"><img id='product${p.p_No}'
 							src="/resources/upload/product/${p.p_No}/${p.p_Img}"
 							class="test1" width="150" height="auto" alt="Image ${p.p_No}">
 						</td>
 						<td class="content">${p.p_Title}</td>
-						<td class="content">${p.p_Land}</td>
 						<td class="content">${p.p_Date}</td>
-						<td><input class="buttonmenuadmin" type="button"
-							value="${p.p_Accept}"></td>
+						<td class="content">${p.p_Accept}</td>
+						<td class="content"><a
+							href="/productdetail?productno=${p.p_No}">상세보기</a></td>
+						<td><button type="button" class="btn btn-outline-dark"
+								onclick="javascript:proDelete(${p.p_No})">삭제</button></td>
+
 					</tr>
 				</c:forEach>
 			</tbody>

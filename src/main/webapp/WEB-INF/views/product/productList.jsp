@@ -11,7 +11,6 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 <link
 	href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
 	rel="stylesheet">
@@ -184,12 +183,6 @@ window.onload = function(){
 				        a +=list123[i].p_Title+"</a><br>";
 				        a +=" 평당 :<span> "+list123[i].p_Landprice+"</span> 원 <br><br><br></div>";
 					}
-					
-					
-                
-                  
-                  
-                  
 					abcd.innerHTML = a;
 					var b="";
 					if(page.pro == true){//페이징 처리 부분
@@ -202,10 +195,7 @@ window.onload = function(){
 					if(page.post == true){
 						b += "<a id = '"+page.pageend+"+1 ' style='cursor:pointer' onclick= 'testbutton("+page.pageend+" +1 )' >다음 </a>";
 					}
-					
 					pagesystem.innerHTML = b;
-
-					
 				},
 				error : function(a, b, c) {
 					//통신 실패시 발생하는 함수(콜백)

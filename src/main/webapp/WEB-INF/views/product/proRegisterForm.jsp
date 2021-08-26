@@ -198,11 +198,6 @@ tbody td {
             </textarea></td>
 				</tr>
 				<tr>
-					<td colspan="1" style="width: 20%;"><label>토지 크기</label></td>
-					<td colspan="3"><input type="text" name="p_Land"
-						maxlength="50" required autofocus></td>
-				</tr>
-				<tr>
 					<td colspan="1" style="width: 20%;"><label>토지 가격</label></td>
 					<td colspan="3"><input type="text" name="p_Landprice"
 						maxlength="50" required autofocus></td>
