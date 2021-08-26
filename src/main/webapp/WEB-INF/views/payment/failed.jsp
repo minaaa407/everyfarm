@@ -7,19 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
-<h1>결제 실패</h1>
+<header>
+<jsp:include page="/WEB-INF/views/home/header.jsp" />
+</header>
+<p style="font-size:500pt; text-align:center">결제 실패</p>
+<footer>
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />
+</footer>
 </body>
 </html>

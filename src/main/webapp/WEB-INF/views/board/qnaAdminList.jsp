@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="kr.co.everyfarm.user.MemberBean"%>
-<% MemberBean member  = (MemberBean) request.getSession().getAttribute("member"); %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -29,8 +27,7 @@
 </head>
 
 <body>
-
-    <!-- Categories Section Begin -->
+   <!-- Categories Section Begin -->
     <section class="categories categories-grid spad">
         <div class="categories__post">
             <div class="container">
@@ -44,12 +41,9 @@
                                         <h6>QnA</h6>
                                     </div>
                                     <ul>
-                                        <li><a href="/qnalist/product">상품 문의 게시판<span>128</span></a></li>
-                                       <!--  <li><a href="/qnalist/admin">관리자 문의 게시판<span>32</span></a></li> -->
-                                        <li><a href="/qnawrite/product">문의하기 <span>86</span></a></li>
-                                       <!--  <li class="p-left"><a href="/qnawrite/product">상품 문의하기<span>25</span></a></li>
-                                        <li class="p-left"><a href="/qnawrite/admin">관리자 문의하기<span>36</span></a></li> -->
-                                        <!-- <li><a href="">내가 쓴 글<span>32</span></a></li> -->
+                                        <li><a href="/adminQnaList/product">상품 문의 게시판<span>128</span></a></li>
+                                        <li><a href="/adminQnaList/admin">관리자 문의 게시판<span>32</span></a></li>
+                          
                                     </ul>
                                 </div>
                         </div>
@@ -85,8 +79,8 @@
         							  <!-- <a href="#">Home</a>
                                    	  <span>Recipes</span> -->
                                    	  
-        								<button type="submit" class="site-btn" onClick="location.href='/qnalist/product'">전체보기</button>
-        								<button type="submit" class="site-btn" onClick="location.href='/qnamylist/product'">내가 쓴 글</button>
+        								<button type="submit" class="site-btn" onClick="location.href='/adminQnaList/product'">전체보기</button>
+        								
                  						
                                 </div>
                             </div>
@@ -117,8 +111,8 @@
                                     <!-- <a href="#">Home</a>
                                     <span>Recipes</span> -->
                                     
-                                    <button type="submit" class="site-btn" onClick="location.href='/qnalist/admin'">전체보기</button>
-                                    <button type="submit" class="site-btn" onClick="location.href='/qnamylist/admin'">내가 쓴 글</button>
+                                    <button type="submit" class="site-btn" onClick="location.href='/adminQnaList/admin'">전체보기</button>
+                                   
                  					
                                 </div>
                             </div>
@@ -147,44 +141,7 @@
                             <c:forEach items="${productQlist}" var="q">
                          	<c:set var="i" value="${i+1}"/> 
                             
-                            <c:choose>
-                             <c:when test="${sessionScope.member.getM_Id() ne q.q_Id && q.q_Secret == true}">
-                                       <div class="categories__list__post__item">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-3">
-                                        <div class="categories__post__item__pic set-bg"
-                                            data-setbg="${q.q_Img}">
-                                            <div class="post__meta">
-                                                <%-- <h4>${q.q_No}</h4> --%>
-                                                	 <h4>${i}</h4>
-                                               <input type="hidden" id="" name="" value="${q.q_No}" />
-                                                <span>QnA</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-9 col-md-9">
-                                         <div class="categories__post__item__text">
-                                       
-                                           <!--  <span class="post__label">비밀글</span> -->
-                                            
-                                             <ul class="post__label--large">
-                                                <li>비밀글</li>
-                                                <li>${q.q_Pno} : ${q.q_Ptitle}</li>
-                                            </ul>
-                               				 	<h3>비밀글 입니다.</h3>
-                                            <ul class="post__widget">
-                                                <li><span>${q.q_Id}</span></li>
-                                                <li>${q.q_Date}</li>
-                                     
-                                                <li></li>
-                                         	 </ul>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
+                 
                         	<div class="categories__list__post__item">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3">
@@ -233,40 +190,30 @@
                                         </div>
                                         
                                         <div class="collapse" id="collapseExample${i-1}">
+                                         <button type="button"  class="btn btn-primary" 
+                                         							onclick="location.href='/adminFarmerQnaUpdate/${q.q_No}'">수정하기</button>
                                        		<p>${q.q_Content}</p>
                                         
-                                          		<c:choose>
-													<c:when test="${sessionScope.member.getM_Id() eq q.q_Id}"> 
+                                          		
 										
                                         <%--  <button type="button"  class="btn btn-primary" 
                                          	onclick="location.href='/qnamodify?no=${q.q_No}'">수정하기</button> --%>
-                                         				<c:choose>
-															<c:when test="${q.q_Answer == false}">
-                                        						 <button type="button"  class="btn btn-primary" 
-                                         							onclick="location.href='/qnamodify/${q.q_No}'">수정하기</button>
-                                         					</c:when>
-															<c:when test="${q.q_Answer == true}">
-                                       						</c:when>
-                                       					</c:choose>
-                                       						<form action="/qnadelete/${q.q_No}" id="delete" name="delete" class="btn btn-primary" method="post" >
-                                        						<button type="submit"  class="btn btn-primary" onclick="qnadelete();">삭제하기</button>
-                                        					</form>
-                                    				</c:when>
-					                                <c:when test="${sessionScope.member.getM_Id() ne q.q_Id}">
-													</c:when>
-											</c:choose>
-											
-					                        <c:choose>
+                                         			
+														
+                                 <c:choose>
                    								<c:when test="${q.q_Magdate != null}">
-								                    <div class="single-post__author__profile">
-                                 						<div class="single-post__author__profile__text">
-                                 							<div class="widget__title">
-                            									<h4>by ${q.q_Pid}</h4>
-                        									</div>
-	                            								<sapn>${q.q_Magdate}</sapn>
-                               									<p>${q.q_Magcontent}</p>
-              					 						</div>
-                         							</div>
+                   						               				<div class="single-post__leave__comment">
+                     								
+           											<form action="/adminFarmerQnaUpdate/${q.q_No}" name="adminFarmerQnaUpdate" method="post">
+                     									<div class="input-list">
+                           									<input type="text" name="q_Pid" value="${q.q_Pid}" readonly>
+                            								<input type="hidden" name="q_No" value="${q.q_No}">
+                        								</div>
+                        									<textarea id="q_magcontent" name="q_Magcontent">${q.q_Magcontent}</textarea>
+               												<button type="submit" class="site-btn">답글 수정하기</button>
+                         	<!-- 답글 삭제하기   답글 달리면 게시글 전체 삭제가 좋을듯. 답글 안 달리면 고객것만 수정, 삭제--> 
+                   									</form>
+      											</div> 	
                          						</c:when>
                          	 					<c:when test="${empty q.q_Magdate}">
                          	 					</c:when>
@@ -276,9 +223,7 @@
                       			</div>
                   			</div>
                   <!-- </div> -->  
-                       </c:otherwise>
-                    </c:choose>
-                   
+               
                    <br>
     
                 </c:forEach>

@@ -109,7 +109,7 @@ function basket(){
 }
 
 function payment(){
-	document.getElementById('myHiddenForm').action="/productpayment";
+	document.getElementById('myHiddenForm').action="/PaymentInfo";
 	document.myHiddenForm.submit();
 }
 

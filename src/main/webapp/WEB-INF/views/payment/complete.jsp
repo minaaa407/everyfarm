@@ -7,6 +7,9 @@
 <title>결제 완료 | EveryFarm</title>
 </head>
 <body>
+<header>
+<jsp:include page="/WEB-INF/views/home/header.jsp" />
+</header>
 			<div>
 				<h2><span>결제 완료</span></h2>
 				<hr>
@@ -37,17 +40,10 @@
 			<br>
 			<hr>
 			
-			<span>결제 내역</span>
-			
-				<div>
-					<span>주문번호</span> <span style="text-align:center">주문금액</span>
-				</div>
-				<div>
-				 <input type="hidden" name="image" value="${get().getP_No() }" />
-					<span>20210806154687</span> <span>853,000원</span>
-				</div>
 			
 			
-			
+<%-- <footer>
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />
+</footer>	 --%>
 </body>
 </html>

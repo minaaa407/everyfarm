@@ -102,7 +102,7 @@
 						<li class="nav-item"><a href="/productlist" class="nav-link">농장</a></li>
 
 						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
+						<li class="nav-item"><a href="/qnalist/product" class="nav-link">Q&A</a></li>
 					</ul>
 				</div>
 			</div>

@@ -19,8 +19,16 @@ public class BasketBean {
 	private String b_Seed;
 	private int b_Totalprice;
 	
+	private List<String> seed;
+	
 	private List<BasketBean> basketbeanList;
 	
+	public List<String> getSeed() {
+		return seed;
+	}
+	public void setSeed(List<String> seed) {
+		this.seed = seed;
+	}
 	public List<BasketBean> getBasketbeanList() {
 		return basketbeanList;
 	}
@@ -104,7 +112,7 @@ public class BasketBean {
 		return "BasketBean [b_No=" + b_No + ", b_Id=" + b_Id + ", b_Pno=" + b_Pno + ", b_Land=" + b_Land + ", p_Img="
 				+ p_Img + ", p_Title=" + p_Title + ", p_Manpay=" + p_Manpay + ", p_Landprice=" + p_Landprice
 				+ ", p_Landavailable=" + p_Landavailable + ", p_Accept=" + p_Accept + ", b_Seed=" + b_Seed
-				+ ", b_Totalprice=" + b_Totalprice + ", basketbeanList=" + basketbeanList + "]";
+				+ ", b_Totalprice=" + b_Totalprice + ", seed=" + seed + ", basketbeanList=" + basketbeanList + "]";
 	}
 	
 

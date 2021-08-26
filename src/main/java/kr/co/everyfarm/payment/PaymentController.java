@@ -1,8 +1,9 @@
 package kr.co.everyfarm.payment;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.everyfarm.basket.BasketBean;
-import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.user.MemberBean;
 import kr.co.everyfarm.user.MemberDAO;
 
@@ -24,7 +25,8 @@ public class PaymentController {
 
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-
+	List<PaymentBean> payInformationSave  = new ArrayList<PaymentBean>();
+	
 	@RequestMapping(value = "/PaymentInfo")
 	public String getPaymentInfo_Product(Model model, @ModelAttribute("basketbean") BasketBean basketbean) {
 		System.out.println("--페이먼트인포시작--"); //
@@ -57,52 +59,65 @@ public class PaymentController {
 		return "payment/payment";
 	}
 
-	@RequestMapping(value = "/paycomplete", method = RequestMethod.POST)
-	public String payInsert(Model model, @ModelAttribute("payment") PaymentBean paymentbean) {
-
-		System.out.println("--컴플릿시작--");
-
-		PaymentDAO paydao = sqlSessionTemplate.getMapper(PaymentDAO.class);
-		ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
-
-		List<PaymentBean> paylist = paymentbean.getPaymentbeanList();
-		int Land = 0;
-//			// System.out.println(paylist.get(0)+"pay");  // 확인용
-//				PaymentBean insertbean = paymentbean.getPaymentbeanList().get(0);
-//				System.out.println("인서트빈값" + insertbean);
-//				Land = paymentbean.getPaymentbeanList().get(0).getPay_Land();
-//				System.out.println("랜드값" + Land);
-//				insertbean.setPay_Id(paymentbean.getPay_Id());
-//				insertbean.setPay_Address(paymentbean.getPay_Address());
-//				insertbean.setPay_Deliverymemo(paymentbean.getPay_Deliverymemo());
-//				insertbean.setPay_Method(paymentbean.getPay_Method());
-//				insertbean.setPay_Totalprice(paymentbean.getPay_Totalprice());
-//				paydao.payinsert(insertbean);
-//				landtotal += Land;
-		for (int i = 0; i < paylist.size(); i++) {
-			PaymentBean insertbean = paymentbean.getPaymentbeanList().get(i);
-
-			Land = paymentbean.getPaymentbeanList().get(i).getPay_Land();
-
-			// 구매한 평수 프로덕트에 업데이트
-			int P_Id = paymentbean.getPaymentbeanList().get(i).getPay_No();
-			int AvailableLand = productdao.onelist(P_Id).getP_Landavailable();
-			int FinalAvailableLand = AvailableLand - Land;
-
-			insertbean.setPay_Id(paymentbean.getPay_Id());
-			insertbean.setPay_Address(paymentbean.getPay_Address());
-			insertbean.setPay_Deliverymemo(paymentbean.getPay_Deliverymemo());
-			insertbean.setPay_Method(paymentbean.getPay_Method());
-			insertbean.setPay_Totalprice(paymentbean.getPay_Totalprice());
-			paydao.payinsert(insertbean);
-			// Land2 = insertbean.setPay_Land(paymentbean.getPay_Land());
-			paydao.landupdate(FinalAvailableLand, P_Id);
-
-		}
-		System.out.println("--컴플릿끝--");
-
-		return "redirect:/complete";
-	}
+	@RequestMapping(value = "/paycomplete")  
+	   public String payInsert(Model model, HttpSession session) {
+		  System.out.println("-----페이컴플릿 시작-----");
+	      PaymentDAO paydao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+	      MemberBean member = (MemberBean)session.getAttribute("member");
+	      String m_id = member.getM_Id();
+	      System.out.println(m_id);
+	      String returnUrl = "";
+	      int n = 0;
+	      
+	      for(int i = 0; i < payInformationSave.size(); i++) {
+	         PaymentBean insertPayBean = new PaymentBean();
+	         insertPayBean.setPay_No(payInformationSave.get(i).getPay_No());
+	         insertPayBean.setPay_Id(m_id);
+	         insertPayBean.setPay_Land(payInformationSave.get(i).getPay_Land());
+	         insertPayBean.setPay_Seed(payInformationSave.get(i).getPay_Seed());
+	         insertPayBean.setPay_Totalprice(payInformationSave.get(i).getPay_Totalprice());
+	         insertPayBean.setPay_Method("kakaopay");
+	         insertPayBean.setPay_Deliverymemo(payInformationSave.get(i).getPay_Deliverymemo());
+	         insertPayBean.setPay_Address(payInformationSave.get(i).getPay_Address());
+	         n += paydao.payinsert(insertPayBean);
+	         System.out.println(insertPayBean);
+	      }
+	      if(n>0) {
+	         returnUrl = "payment/complete";
+	      }
+	      
+	      payInformationSave.clear();
+	      System.out.println("paycomplete  payInformationSave : " + payInformationSave);
+	      System.out.println("-----페이컴플릿 끝-----");
+	      return returnUrl;
+	     }
+	   
+	   @RequestMapping(value = "/payfail")  
+	   public String payFail(Model model) { 
+	      payInformationSave.clear();
+	      System.out.println("payfail  payInformationSave : " + payInformationSave);
+	      
+	      return "redirect:/home";
+	   }
+	
+	
+	   @RequestMapping(value = "/pay")
+	   public String kakaoPay(Model model, @ModelAttribute("payment") PaymentBean PaymentBean) {
+	         
+	      PaymentDAO paydao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+	      payInformationSave.clear();
+	      int totalprice=0;
+	      for(int i = 0; i < PaymentBean.getPaymentbeanList().size(); i++) {
+	         payInformationSave.add(PaymentBean.getPaymentbeanList().get(i));
+	         int price = PaymentBean.getPaymentbeanList().get(i).getPay_Totalprice();
+	         totalprice += (price + 3000);
+	      }
+	      	System.out.println(totalprice);
+	      	model.addAttribute("totalprice", totalprice);
+	      System.out.println("payInformationSave" + payInformationSave);
+	      return "payment/test1";
+	      
+	   }
 
 	@RequestMapping(value = "/complete", method = RequestMethod.GET)
 	public String test1() {
@@ -112,13 +127,36 @@ public class PaymentController {
 	@RequestMapping(value = "/adminPaymentList")
 	public String adminPaymentList(Model model) {
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		
 		List<PaymentBean> paymentlist = dao.paylist();
-		List<BpaymentBean> bpaymentlist = dao.bpaylist();
+		//int selecttotalindex = paymentlist.size();
+		//pagebeen.setTableindex(selecttotalindex);
+		paymentlist = dao.paylist();
+		
+		// model.addAttribute("pagebeen", pagebeen);
 		model.addAttribute("paymentlist", paymentlist);
-		model.addAttribute("bpaymentlist", bpaymentlist);
 		return "payment/adminPaymentList";
 	}
 
+	@RequestMapping(value = "/farmerPaymentList")
+	public String farmerPaymentList(Model model, HttpSession session) {
+		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		
+		MemberBean member = (MemberBean)session.getAttribute("member");
+		String m_id = member.getM_Id();
+		session.setAttribute("name", "maria");                // 이거 두개 임시
+		String temp=(String)session.getAttribute("name");     // 이거 두개 임시
+		List<PaymentBean> farmerpaymentlist = dao.farmerpaylist(temp); // temp 대신 m_id
+		System.out.println(m_id);
+		//List<PaymentBean> paymentlist = dao.farmerpaylistserachpageingcount(pagebeen);
+		//int selecttotalindex = paymentlist.size();
+		//pagebeen.setTableindex(selecttotalindex);
+		
+		//model.addAttribute("pagebeen", pagebeen);
+		model.addAttribute("paymentlist", farmerpaymentlist);
+		return "payment/farmerPaymentList";
+	}
+	
 	@RequestMapping(value = "/adminPayListDelete/{Orderno}")
 	public String adminPayListDelete(@PathVariable int Orderno, Model model) {
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
@@ -126,54 +164,44 @@ public class PaymentController {
 		System.out.println(payListDelete);
 		return "redirect:/adminPaymentList";
 	}
+	
+	@RequestMapping(value = "/farmerPayListDelete/{Orderno}")
+	public String farmerPayListDelete(@PathVariable int Orderno, Model model) {
+		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		int payListDelete = dao.paydelete(Orderno);
+		System.out.println(payListDelete);
+		return "redirect:/farmerPaymentList";
+	}
 
 	@RequestMapping(value = "/adminPaymentListDetail", method = RequestMethod.GET)
 	public String test4() {
 		return "payment/adminPaymentListDetail";
 	}
 
-	@RequestMapping(value = "/kakao")
-	public String kakaoPayTest() {
-		return "payment/formtest";
+	@RequestMapping(value = "/failed")
+	public String kakaoPayfailed() {
+		return "payment/failed";
 	}
 
-	@RequestMapping(value = "/pay")
-	public String kakaoPay(Model model, @ModelAttribute("payment") PaymentBean paymentbean,
-			HttpServletRequest request) {
-
-		PaymentDAO paydao = sqlSessionTemplate.getMapper(PaymentDAO.class);
-
-		List<PaymentBean> paylist = paymentbean.getPaymentbeanList();
-		int landtotal = 0;
-		int Land = 0;
-		int Land2 = 0;
-		// System.out.println(paylist.get(0)+"pay"); // 확인용
-		PaymentBean insertbean = paymentbean.getPaymentbeanList().get(0);
-		System.out.println("인서트빈값" + insertbean);
-		Land = paymentbean.getPaymentbeanList().get(0).getPay_Land();
-		System.out.println("랜드값" + Land);
-		insertbean.setPay_Id(paymentbean.getPay_Id());
-		insertbean.setPay_Address(paymentbean.getPay_Address());
-		insertbean.setPay_Deliverymemo(paymentbean.getPay_Deliverymemo());
-		insertbean.setPay_Method(paymentbean.getPay_Method());
-		insertbean.setPay_Totalprice(paymentbean.getPay_Totalprice());
-		landtotal += Land;
-
-		request.setAttribute("insertbean", insertbean);
-
-		return "payment/test1";
-	}
 
 	@RequestMapping(value = "/myPayList")
-	public String getMyPayList(Model model, PaymentBean PayBean, HttpSession session) {
-		MemberBean mBean = (MemberBean) session.getAttribute("member");
-		String m_Id = mBean.getM_Id();
-
+	public String getMyPayList(Model model, PaymentBean PayBean) {
 		PaymentDAO payDAO = sqlSessionTemplate.getMapper(PaymentDAO.class);
-		List<PaymentBean> myPay = payDAO.mypaylist(m_Id);
+
+		List<PaymentBean> myPay = payDAO.mypaylist();
 		model.addAttribute("mypay", myPay);
 		return "user/myPayList";
 
 	}
-
+	
+	@RequestMapping(value = "/modal/modal_view")
+	public String modelPopup(PaymentBean paymentbean, Model model) {
+		
+		PaymentDAO payDAO = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		
+		model.addAttribute("searchData", payDAO.getSearchData(paymentbean));
+		
+		return "/payment/viewResult";
+	}
+	
 }

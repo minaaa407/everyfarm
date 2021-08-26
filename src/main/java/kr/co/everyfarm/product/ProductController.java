@@ -107,7 +107,7 @@ public class ProductController {
 	      basketbean.setBasketbeanList(list);
 	      model.addAttribute("basketbean",basketbean);
 	      //String url = "redirect:/productdetail"+"?productno="+pno;    
-	      return "/product/test1";
+	      return "redirect:/basket";
 	   }
 	   
 	   
