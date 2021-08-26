@@ -13,7 +13,7 @@
 	<div class="Main-container">
 		<div class="col-md-6 container-login">
 			<div class="wrap-login">
-				<form class="login-form" action="farmer/login" method="post">
+				<form class="login-form" action="farmerLogin" method="post">
 					<span class="login-form-title">FARMER's FARM</span>
 
 					<div class="wrap-input">
@@ -34,8 +34,9 @@
 						<button type="submit" class="login-form-btn">Login</button>
 					</div>
 					<div class="text-center p-t-1">
-						<a href="/farmer/findId" class="txt2">아이디 찾기</a> <span class="txt1-1">/</span>
-						<a href="/farmer/findPw" class="txt2">비밀번호 찾기</a>
+						<a href="/farmer/findId" class="txt2">아이디 찾기</a> <span
+							class="txt1-1">/</span> <a href="/farmer/findPw" class="txt2">비밀번호
+							찾기</a>
 					</div>
 					<div class="text-center p-t-2">
 						<a href="/farmer/sign" class="txt2">계정이 없으신가요?<i

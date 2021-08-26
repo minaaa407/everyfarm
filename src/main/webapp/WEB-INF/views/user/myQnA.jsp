@@ -75,19 +75,19 @@
 									data-target="#menu-content"></i>
 								<div class="menu-list">
 									<ul id="menu-content" class="menu-content collapse out">
-										<li class="active"><a href="/mypage"> <i class="fa fa-user"></i>
+										<li ><a href="/mypage"> <i class="fa fa-user"></i>
 												내 정보
 										</a></li>
-										<li data-toggle="collapse" data-target="#products"><a
+										<li class="active" data-toggle="collapse" data-target="#products"><a
 											href="/mypage" onclick="return false;"><i class="fa fa-clock-o">
 											</i> 내가 쓴 게시글 <span class="arrow"></span></a></li>
 										<ul class="sub-menu collapse" id="products">
-											<li><a href="/myQnA?=m_Id${member.m_Id}">QnA</a></li>
-											<li><a href="/myReview?m_Id=${member.m_Id}">리뷰게시판</a></li>
+											<li><a href="/myQnA">QnA</a></li>
+											<li><a href="/myReview">리뷰게시판</a></li>
 											<li><a href="#">추가할공간</a></li>
 											<li><a href="#">추가할공간</a></li>
 										</ul>
-										<li><a href="/myPayList?m_Id=${member.m_Id}"> <i class="fa fa-credit-card"></i> 결제
+										<li><a href="/myPayList"> <i class="fa fa-credit-card"></i> 결제
 												내역
 										</a></li>
 									</ul>

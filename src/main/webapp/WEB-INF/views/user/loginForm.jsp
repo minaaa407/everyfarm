@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.net.URLEncoder"%>
+<%@ page import="java.security.SecureRandom"%>
+<%@ page import="java.math.BigInteger"%>
 <!DOCTYPE html>
 
 <html>
 <head>
 <link rel="stylesheet" href="resources/index/css/test.css">
 <meta charset="UTF-8">
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+	charset="utf-8"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <title>LOGIN</title>
 </head>
@@ -43,17 +49,22 @@
 							<img alt="카카오로그인버튼" src="/resources/img/kakaologin.png">
 						</a>
 					</div>
-					<div id="naver_id_login"></div>
-					<div id="naver">
-						<a href="javascript:void(0)"
-							onclick="naverLogout(); return false;"> <span>네이버 로그아웃</span>
-						</a>
-					</div>
+					<%
+						String clientId = "Ql4Y2VZqHjqj9oNnoWts";//애플리케이션 클라이언트 아이디값";
+						String redirectURI = URLEncoder.encode("http://localhost:8090/user/callback", "UTF-8");
+						SecureRandom random = new SecureRandom();
+						String state = new BigInteger(130, random).toString();
+						String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+						apiURL += "&client_id=" + clientId;
+						apiURL += "&redirect_uri=" + redirectURI;
+						apiURL += "&state=" + state;
+						session.setAttribute("state", state);
+					%>
+					<a href="<%=apiURL%>"><img height="50"
+						src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
+
 					<div class="text-center p-t-1">
-						<select name="authority">
-							<option value="ROLE_USER">member</option>
-							<option value="ROLE_ADMIN">farmer</option>
-						</select> <a href="/findId" class="txt2">아이디 찾기</a> <span class="txt1-1">/</span>
+						<a href="/findId" class="txt2">아이디 찾기</a> <span class="txt1-1">/</span>
 						<a href="/findPw" class="txt2">비밀번호 찾기</a>
 					</div>
 					<div class="text-center p-t-2">
@@ -64,32 +75,5 @@
 			</div>
 		</div>
 	</div>
-
-	<script type="text/javascript">
-		var naver_id_login = new naver_id_login("Ql4Y2VZqHjqj9oNnoWts",
-				"http://localhost:8090/callback");
-		var state = naver_id_login.getUniqState();
-		naver_id_login.setButton("white", 2, 40);
-		naver_id_login.setDomain("http://localhost:8090/login");
-		naver_id_login.setState(state);
-		naver_id_login.setPopup();
-		naver_id_login.init_naver_id_login();
-
-		var testPopUp;
-		function openPopUp() {
-			testPopUp = window
-					.open("https://nid.naver.com/nidlogin.logout", "_blank",
-							"toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
-		}
-		function closePopUp() {
-			testPopUp.close();
-		}
-		function naverLogout() {
-			openPopUp();
-			setTimeout(function() {
-				closePopUp();
-			}, 1000);
-		}
-	</script>
 </body>
 </html>

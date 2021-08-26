@@ -1,12 +1,14 @@
 package kr.co.everyfarm.admin;
 
+import java.util.Date;
+
 public class AdminBean {
 	
 	private String a_Id;
 	private String a_Pw;
 	private String a_Name;
 	private String a_Email;
-	private String a_Auth;
+	private Date a_Date;
 	
 	public String getA_Id() {
 		return a_Id;
@@ -32,16 +34,16 @@ public class AdminBean {
 	public void setA_Email(String a_Email) {
 		this.a_Email = a_Email;
 	}
-	public String getA_Auth() {
-		return a_Auth;
+	public Date getA_Date() {
+		return a_Date;
 	}
-	public void setA_Auth(String a_Auth) {
-		this.a_Auth = a_Auth;
+	public void setA_Date(Date a_Date) {
+		this.a_Date = a_Date;
 	}
 
 	@Override
 	public String toString() {
 		return "AdminBean [a_Id=" + a_Id + ", a_Pw=" + a_Pw + ", a_Name=" + a_Name + ", a_Email=" + a_Email
-				+ ", a_Auth=" + a_Auth + "]";
+				+ ", a_Date=" + a_Date + "]";
 	}
 }

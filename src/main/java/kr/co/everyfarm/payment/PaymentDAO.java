@@ -23,6 +23,6 @@ public interface PaymentDAO {
 
 	public Integer getinfo(int p_No);
 
-	public List<PaymentBean> mypaylist();
+	public List<PaymentBean> mypaylist(String m_Id);
 
 }

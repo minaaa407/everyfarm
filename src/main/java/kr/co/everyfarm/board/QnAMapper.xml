@@ -37,8 +37,10 @@
 		select * from qna where q_Content LIKE
 		CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE
 		CONCAT('%',#{q_Content},'%')
-		or q_Title LIKE CONCAT('%',#{q_Content},'%') or q_Id LIKE
-		CONCAT('%',#{q_Content},'%') order by q_no desc
+		or q_Title LIKE
+		CONCAT('%',#{q_Content},'%') or q_Id LIKE
+		CONCAT('%',#{q_Content},'%')
+		order by q_no desc
 	</select>
 
 	<select id="searchId"
@@ -84,6 +86,12 @@
 		delete from qna where
 		q_No=#{no}
 	</delete>
+
+
+	<select id="myQnA" resultType="kr.co.everyfarm.board.QnABean">
+		select * from qna where
+		q_Id=#{m_Id} order by q_no desc
+	</select>
 
 
 	<!-- q_Img, #{q_Img}, -->

@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <th>작성자</th>
-                <td>${revList.rev_Id}</td>
+                <td>${revList.rev_Name}</td>
                 <th>작성시간</th>
                 <td><fmt:formatDate pattern ="yyyy/MM/dd" value="${revList.rev_Date}" /></td>
             </tr>

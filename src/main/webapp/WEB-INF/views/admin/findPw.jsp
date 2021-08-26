@@ -16,9 +16,9 @@
 				type : "POST",
 				dataType: "json", 
 				data : {
-					m_Name : $("#m_Name").val(),
-					m_Id : $("#m_Id").val(),
-					m_Tel : $("#m_Tel").val()
+					a_Name : $("#a_Name").val(),
+					a_Id : $("#a_Id").val(),
+					a_Email : $("#a_Email").val()
 				},
 				success : function(result) {
 					if(result.error == false){
@@ -26,7 +26,7 @@
 					
 						location.href=result.url;
 					}else{
-						alert("인증번호를 메일로 전송했습니다.");
+						alert("임시 비밀번호를 메일로 전송했습니다.");
 						location.href=result.url;
 					}
 				},
@@ -64,15 +64,15 @@
 			<div>
 				<p>
 					<label>이름</label>
-					<input class="w3-input" type="text" id="m_Name" name="m_Name" placeholder="이름" required>
+					<input class="w3-input" type="text" id="a_Name" name="a_Name" placeholder="이름" required>
 				</p>
 				<p>
 					<label>아이디</label>
-					<input class="w3-input" type="text" id="m_Id" name="m_Id" placeholder="아이디" required>
+					<input class="w3-input" type="text" id="a_Id" name="a_Id" placeholder="아이디" required>
 				</p>
 				<p>
-					<label>전화번호</label>
-					<input class="w3-input" type="text" id="m_Tel" name="m_Tel" placeholder="전화번호" required>
+					<label>이메일</label>
+					<input class="w3-input" type="text" id="a_Eamil" name="a_Eamil" placeholder="이메일" required>
 				</p>
 				<p class="w3-center">
 					<button type="button" id="findBtn" class="w3-button w3-hover-white w3-ripple w3-margin-top w3-round mybtn">찾기</button>

@@ -74,19 +74,19 @@
 								<div class="menu-list">
 								<form action="" method="post">
 									<ul id="menu-content" class="menu-content collapse out">
-										<li class="active"><a href="/mypage"> <i class="fa fa-user"></i>
+										<li ><a href="/mypage"> <i class="fa fa-user"></i>
 												내 정보
 										</a></li>
-										<li data-toggle="collapse" data-target="#products"><a
+										<li class="active" data-toggle="collapse" data-target="#products"><a
 											href="" onclick="return false;"><i class="fa fa-clock-o">
 											</i> 내가 쓴 게시글 <span class="arrow"></span></a></li>
 										<ul class="sub-menu collapse" id="products">
-											<li><a href="/myQnA?=m_Id${member.m_Id}">QnA</a></li>
+											<li><a href="/myQnA">QnA</a></li>
 											<li><a onclick='return submit2(this.form);'>리뷰게시판</a></li>
 											<li><a href="#">추가할공간</a></li>
 											<li><a href="#">추가할공간</a></li>
 										</ul>
-										<li><a href="/myPayList?m_Id=${member.m_Id}"> <i class="fa fa-credit-card"></i> 결제
+										<li><a href="/myPayList"> <i class="fa fa-credit-card"></i> 결제
 												내역
 										</a></li>
 									</ul>
@@ -98,7 +98,7 @@
 
 					<div class="content-panel">
 						<h2 class="title">나의 리뷰</h2>
-						<form class="form-horizontal" method="post" id="">
+						<form class="form-horizontal" method="post" >
 							<fieldset class="fieldset">
 								<h3 class="fieldset-title">내가 남긴 추억</h3>
 								<div class="form-group avatar">
@@ -132,7 +132,7 @@
 												<td><a href="/reviewDetail?rev_No=${re.rev_No}">${re.rev_Title}</a></td>
 												<td style="text-align: center;">${re.rev_Name}</td>
 												<td style="text-align: center;"><span class="fa fa-eye"></span>&nbsp;${re.rev_Readcount}</td>
-												<td style="text-align: center;"><fmt:formatDate pattern="yyyy/MM/dd" value="${re.rev_Date}" />></td>
+												<td style="text-align: center;"><fmt:formatDate pattern="yyyy/MM/dd" value="${re.rev_Date}" /></td>
 											</tr>
 										</c:forEach>
 									</c:if>

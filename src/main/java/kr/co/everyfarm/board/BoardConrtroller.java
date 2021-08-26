@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -213,11 +214,12 @@ public class BoardConrtroller {
 	}
 
 	@RequestMapping(value = "/myQnA")
-	public String getQnAMylist2(Model model, HttpServletRequest request) {
+	public String getQnAMylist2(Model model, HttpServletRequest request, HttpSession session) {
 
-		MemberBean member = (MemberBean) request.getSession().getAttribute("member");
+		MemberBean member = (MemberBean) session.getAttribute("member");
+		String m_Id = member.getM_Id();
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-		List<QnABean> qnamylist = dao.mylist(member);
+		List<QnABean> qnamylist = dao.myQnA(m_Id);
 		model.addAttribute("qnamylist", qnamylist);
 		return "user/myQnA";
 	}

@@ -3,6 +3,7 @@ package kr.co.everyfarm.payment;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.exception.IamportResponseException;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.Payment;
 
 import kr.co.everyfarm.basket.BasketBean;
 import kr.co.everyfarm.product.ProductDao;
@@ -170,10 +165,12 @@ public class PaymentController {
 	}
 
 	@RequestMapping(value = "/myPayList")
-	public String getMyPayList(Model model, PaymentBean PayBean) {
-		PaymentDAO payDAO = sqlSessionTemplate.getMapper(PaymentDAO.class);
+	public String getMyPayList(Model model, PaymentBean PayBean, HttpSession session) {
+		MemberBean mBean = (MemberBean) session.getAttribute("member");
+		String m_Id = mBean.getM_Id();
 
-		List<PaymentBean> myPay = payDAO.mypaylist();
+		PaymentDAO payDAO = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		List<PaymentBean> myPay = payDAO.mypaylist(m_Id);
 		model.addAttribute("mypay", myPay);
 		return "user/myPayList";
 

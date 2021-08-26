@@ -9,10 +9,10 @@ import kr.co.everyfarm.user.MemberBean;
 
 @Repository
 public interface AdminDAO {
+	
+	List<MemberBean> mlist();
 
-	public List<MemberBean> mlist();
-
-	public List<FarmerBean> flist();
+	List<FarmerBean> flist();
 
 	public void ajoin(AdminBean adminBean);
 
@@ -21,5 +21,7 @@ public interface AdminDAO {
 	public AdminBean findId(AdminBean adminBean);
 
 	public AdminBean findPw(AdminBean adminBean);
+	
+	public void upPw(AdminBean adminBean);
 
 }

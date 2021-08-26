@@ -8,7 +8,8 @@
 <html lang="kr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi =medium-dpi">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi =medium-dpi">
 
 <title>Checkout example for Bootstrap</title>
 
@@ -51,8 +52,8 @@
 <script type="text/javascript" src="resources/user/js/sidemenu.js"></script>
 
 <style type="text/css">
-<!--
-탈퇴 Modal -->body {
+/* 모달 시작 */
+body {
 	font-family: 'Varela Round', sans-serif;
 }
 
@@ -158,9 +159,44 @@
 .trigger-btn {
 	display: inline-block;
 }
-<!--
-탈퇴Modal--
->
+/* 모달 끝 */
+.table__th {
+	background-color: #f7f7f7;
+	color: #333;
+	font-weight: normal;
+}
+
+.table__th, .table__td {
+	padding: 10px 20px;
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+}
+
+.table__td {
+	border-left: 1px solid #e7e7e7;
+}
+
+.button__span {
+	font-size: 12px;
+	color: #fff;
+	line-height: 1;
+	font-weight: normal;
+	border: 1px solid #73757c;
+	background-color: #73757c;
+}
+
+.id {
+	color: #f0562d;
+}
+
+.edit {
+	font-size: 15px;
+	color: #fff;
+	line-height: 1;
+	font-weight: normal;
+	border: 5px solid #73757c;
+	background-color: #73757c;
+}
 </style>
 
 </head>
@@ -191,13 +227,15 @@
 											href="#" onclick="return false;"><i class="fa fa-clock-o">
 											</i> 내가 쓴 게시글 <span class="arrow"></span></a></li>
 										<ul class="sub-menu collapse" id="products">
-											<li><a  onclick="location.href='/myQnA?m_Id=${member.m_Id}'" type="submit" >QnA</a></li>
-											<li><a  onclick="location.href='/myReview?m_Id=${member.m_Id}'" type="submit" >리뷰게시판</a></li>
+											<li><a
+												onclick="location.href='/myQnA'"
+												type="submit">QnA</a></li>
+											<li><a href="/myReview">리뷰게시판</a></li>
 											<li><a href="#">추가할공간</a></li>
 											<li><a href="#">추가할공간</a></li>
 										</ul>
-										<li><a href="/myPayList?m_Id=${member.m_Id}"> <i class="fa fa-credit-card"></i> 결제
-												내역
+										<li><a href="/myPayList"> <i
+												class="fa fa-credit-card"></i> 결제 내역
 										</a></li>
 									</ul>
 								</div>
@@ -223,107 +261,152 @@
 											Image</button>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-2 col-sm-3 col-xs-12 control-label">이
-										름 </label>
-									<div class="col-md-10 col-sm-9 col-xs-12">
-										<input type="text" name="m_Name" class="form-control"
-											value="${member.m_Name}">
-									</div>
-								</div>
+								<table>
+									<colgroup>
+										<col width="20%">
+										<col width="100%">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th class="table__th">아이디</th>
+											<td class="table__td id">${member.m_Id}<input
+												type="hidden" name="m_Id" id="m_Id" value="${member.m_Id}"></td>
+										</tr>
+									</tbody>
+									<tbody id="pwd_hide">
+										<tr>
+											<th class="table__th">비밀번호</th>
+											<td class="table__td"><strong>●●●●●●●●●●</strong> <a
+												style="display: inline;" href="#" class=""
+												id="pwd_modify_on"><span class="edit">변경</span></a></td>
+										</tr>
+									</tbody>
+									<tbody id="pwd_modify_on1" style="display: none;">
+										<tr>
+											<th class="table__th">비밀번호</th>
+											<td class="table__td">
+												<div class="col-md-10 col-sm-9 col-xs-12">
+													<input type="password" name="m_Pw" id="m_Pw"
+														placeholder="신규 비밀번호" class="form-control" required>
+													<span class="glyphicon glyphicon-ok form-control-feedback"></span>
+												</div>
+												<div class="form-group has-feedback">
+													<label class="col-md-2 col-sm-3 col-xs-12 control-label">
+													</label>
+													<div class="col-md-10 col-sm-9 col-xs-12">
+														<input type="password" id="txtPasswordConfirm"
+															placeholder="비밀번호 확인" name="txtPasswordConfirm"
+															class="form-control" value="" required>
+													</div>
+													<span class="glyphicon glyphicon-ok form-control-feedback"></span>
+												</div>
+												<button class="btn btn-style-1" type="submit"
+													formaction="/myInfoPwdrUpdate">
+													<span class="edit">변경</span>
+												</button> <a href="#" id="pwd_modify_off"><span class="edit">취소</span></a>
+											</td>
+										</tr>
+									</tbody>
 
-								<div class="form-group">
-									<label class="col-md-2 col-sm-3 col-xs-12 control-label">연락처
-									</label>
-									<div class="col-md-10 col-sm-9 col-xs-12">
-										<input type="text" name="m_Tel" class="form-control"
-											value="${member.m_Tel}">
-									</div>
-								</div>
+									<tbody id="Name_hide">
+										<tr>
+											<th class="table__th">이름</th>
+											<td class="table__td">${member.m_Name}<a
+												style="display: inline;" class="" id="Name_modify_on"> <span
+													class="edit">수정</span>
+											</a>
+											</td>
+										</tr>
+									</tbody>
 
-								<div class="form-group">
-									<label class="col-md-2 col-sm-3 col-xs-12 control-label">
-										아이디</label>
-									<div class="col-md-10 col-sm-9 col-xs-12">
-										<input type="text" id="txtId" class="form-control" name="m_Id"
-											value="${member.m_Id}" readonly>
-									</div>
-								</div>
+									<tbody id="Name_modify_on1" style="display: none;">
+										<tr>
+											<th class="table__th">이름</th>
+											<td class="table__td"><input type="text" name="m_Name"
+												id="m_Name" placeholder="변경할 이름" class="form-control"
+												style="display: inline;" required>
+												<button class="btn btn-style-1" type="submit"
+													formaction="/myInfoNameUpdate">
+													<span class="edit">변경</span>
+												</button> <a href="#" id="Name_modify_off"> <span class="edit">취소</span></a></td>
+										</tr>
+									</tbody>
 
-								<div class="form-group has-feedback">
-									<label class="col-md-2 col-sm-3 col-xs-12 control-label">
-										변경할 비밀번호</label>
-									<div class="col-md-10 col-sm-9 col-xs-12">
-										<input type="password" name="m_Pw" id="m_Pw"
-											class="form-control" value="" required>
-									</div>
-									<span class="glyphicon glyphicon-ok form-control-feedback"></span>
-								</div>
+									<tbody>
+										<tr>
+											<th class="table__th">연락처</th>
+											<td class="table__td">${member.m_Tel}<input
+												type="hidden" name="m_Tel" id="m_Tel"
+												value="${member.m_Tel}"></td>
+										</tr>
+									</tbody>
 
-								<div class="form-group has-feedback">
-									<label class="col-md-2 col-sm-3 col-xs-12 control-label">비밀번호
-										확인 </label>
-									<div class="col-md-10 col-sm-9 col-xs-12">
-										<input type="password" id="txtPasswordConfirm"
-											name="txtPasswordConfirm" class="form-control" value=""
-											required>
-									</div>
-									<span class="glyphicon glyphicon-ok form-control-feedback"></span>
-								</div>
-							</fieldset>
-							<fieldset class="fieldset">
-								<h3 class="fieldset-title">Contact Info</h3>
-								<div class="form-group">
-									<label class="col-md-2  col-sm-3 col-xs-12 control-label">현재
-										주소</label>
-									<div class="col-md-10 col-sm-9 col-xs-12">
-										<input type="text" class="form-control" name="M_Addr"
-											value="${member.m_Addr}" readonly>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
-									<div class="col-md-10 col-sm-9 col-xs-12">
-										<input class="form-control" placeholder="우편번호" id="Addr1"
-											name="Addr1" type="text" readonly="readonly"> <input
-											type="button" onclick="execPostCode();" value="우편번호 찾기">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
-									<div class="col-md-10 col-sm-9 col-xs-12">
-										<input class="form-control" placeholder="도로명 주소" id="Addr2"
-											name="Addr2" type="text" readonly="readonly" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
-									<div class="col-md-10 col-sm-9 col-xs-12">
-										<input class="form-control" placeholder="상세주소" id="Addr3"
-											name="Addr3" type="text" />
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
-									<div class="col-md-10 col-sm-9 col-xs-12">
-										<input class="form-control" placeholder="참고항목" id="Addr4"
-											name="Addr4" type="text" />
-									</div>
-								</div>
-							</fieldset>
-							<hr>
-							<div class="form-group">
-								<div
-									class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
-									<button class="btn btn-style-1 btn-primary" type="submit"
-										formaction="/myInfoUpdate">내 정보 수정</button>
-								</div>
+									<tbody id="Addr_hide">
+										<tr>
+											<th class="table__th">주소</th>
+											<td class="table__td">${member.m_Addr}<a
+												style="display: inline;" href="#" class=""
+												id="Addr_modify_on"><span class="edit">변경</span></a> <input
+												type="hidden" name="m_Addr" id="m_Addr"
+												value="${member.m_Addr}"></td>
+										</tr>
+									</tbody>
+
+									<tbody id="Addr_modify_on1" style="display: none;">
+										<tr>
+											<th class="table__th">주소</th>
+											<td class="table__td">
+												<div class="form-group">
+
+													<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
+													<div class="col-md-10 col-sm-9 col-xs-12">
+														<input class="form-control" placeholder="우편번호" id="Addr1"
+															name="Addr1" type="text" readonly="readonly"> <input
+															type="button" onclick="execPostCode();" value="우편번호 찾기">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
+													<div class="col-md-10 col-sm-9 col-xs-12">
+														<input class="form-control" placeholder="도로명 주소"
+															id="Addr2" name="Addr2" type="text" readonly="readonly" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
+													<div class="col-md-10 col-sm-9 col-xs-12">
+														<input class="form-control" placeholder="상세주소" id="Addr3"
+															name="Addr3" type="text" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
+													<div class="col-md-10 col-sm-9 col-xs-12">
+														<input class="form-control" placeholder="참고항목" id="Addr4"
+															name="Addr4" type="text" />
+													</div>
+												</div>
+												<button class="btn btn-style-1" type="submit"
+													formaction="/myInfoAddrUpdate">
+													<span class="edit">변경</span>
+												</button> <a href="#" id="Addr_modify_off"><span class="edit">취소</span></a>
+											</td>
+										</tr>
+									<tbody>
+										<tr>
+											<th class="table__th">가입 날짜</th>
+											<td class="table__td"><fmt:formatDate
+													value="${member.m_Date}" pattern="yyyy/MM/dd" />
+										</tr>
+									</tbody>
+								</table>
 								<div class="text-center">
 									<!-- Button  (Modal) -->
 									<a href="#myModal" class="trigger-btn" id="DeleteBtn"
 										data-toggle="modal">계정 탈퇴</a>
 								</div>
-							</div>
+							</fieldset>
+							<hr>
 						</form>
 					</div>
 				</div>
@@ -350,19 +433,113 @@
 				<div class="modal-footer justify-content-center">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">취 소</button>
-						<button onclick="location.href='/myInfoDelete?m_Id=${member.m_Id}'"  type="submit"
-						class="btn btn-danger" formaction="/myInfoDelete">탈 퇴</button>
+					<button onclick="location.href='/myInfoDelete?m_Id=${member.m_Id}'"
+						type="submit" class="btn btn-danger" formaction="/myInfoDelete">탈
+						퇴</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
 
+
+<script type="text/javascript">
+	Name_modify_on
+
+	$(function() {
+		$("#Name_modify_on").click(function() {
+			if ($("#Name_modify_on").css("display") == "inline") {
+				$('#Name_modify_on1').hide();
+				$('#Name_hide').hide();
+			}
+			if ($("#Name_modify_on1").css("display") == "none") {
+				$('#Name_modify_on1').show();
+			}
+		});
+	});
+	$(function() {
+		$("#Name_modify_off").click(function() {
+			if ($("#Name_modify_on").css("display") == "inline") {
+				$('#Name_modify_on').hide();
+				$('#Name_modify_on1').hide();
+			}
+			if ($("#Name_modify_on1").css("display") == "none") {
+				$('#Name_hide').show();
+				$('#Name_modify_on').show();
+			}
+		});
+	});
+
+	$(function() {
+		$("#pwd_modify_on").click(function() {
+			if ($("#pwd_modify_on").css("display") == "inline") {
+				$("#Addr_modify_on1").hide();
+				$('#pwd_modify_on').hide();
+				$('#pwd_hide').hide();
+				$("#Name_modify_on1").hide();
+			}
+			if ($("#pwd_modify_on1").css("display") == "none") {
+				$('#pwd_modify_on1').show();
+
+			}
+		});
+	});
+
+	$(function() {
+		$("#pwd_modify_off").click(function() {
+			if ($("#pwd_modify_on").css("display") == "none") {
+				$('#pwd_modify_on').show();
+				$('#Addr_modify_on1').hide();
+			}
+			if ($("#pwd_modify_on1").css("display") !== "none") {
+				$('#pwd_modify_on1').hide();
+				$('#pwd_hide').show();
+			}
+		});
+	});
+
+	$(function() {
+		$("#Addr_modify_on").click(function() {
+			if ($("#Addr_modify_on").css("display") == "inline") {
+				$('#Addr_modify_on').hide();
+				$('#pwd_modify_on1').hide();
+				$('#Name_modify_on1').hide();
+				$('#Addr_hide').hide();
+			}
+			if ($("#Addr_modify_on1").css("display") == "none") {
+				$('#Addr_modify_on1').show();
+
+			}
+		});
+	});
+
+	$(function() {
+		$("#Addr_modify_off").click(function() {
+			if ($("#Addr_modify_on").css("display") == "none") {
+				$('#Addr_modify_on').show();
+				$('#pwd_modify_on').show();
+				$('#Addr_hide').show();
+			}
+			if ($("#Addr_modify_on1").css("display") !== "none") {
+				$('#Addr_modify_on1').hide();
+			}
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	
+	
+</script>
+
+
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
 <script src="http://code.jquery.com/jquery-1.3.2.min.js"></script>
 <script
 	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
+
+
 
 <script type="text/javascript">
 	$('#DeleteBtn').click(function() {
@@ -434,7 +611,8 @@
 											}*/
 											},
 											submitHandler : function(frm) {
-												location.replace('/myInfoDelete');
+												location
+														.replace('/myInfoDelete');
 												form.submit();
 												frm.submit(); //유효성  통과하면 submit();
 											},

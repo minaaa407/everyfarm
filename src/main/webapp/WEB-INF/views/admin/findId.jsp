@@ -13,19 +13,19 @@
 	$(function() {
 		$("#findBtn").click(function() {
 			$.ajax({
-				url : "/findId",
+				url : "/adminFindId",
 				type : "POST",
 				dataType : "json",
 				data : {
-					m_Name : $("#f_Name").val(),
-					m_Tel : $("#f_Tel").val()
+					a_Name : $("#a_Name").val(),
+					a_Email : $("#a_Eamil").val()
 				},
 				success : function(result) {
 					if (result.error == false) {
 						alert("해당정보는 존재하지 않습니다.");
 						location.href = result.url;
 					} else {
-						alert("고객님의 아이디는 "+ result.memId +"입니다.");
+						alert("관리자님 아이디는 "+ result.memId +"입니다.");
 						location.href = result.url;
 					}
 				},
@@ -64,12 +64,12 @@
 			</div>
 			<div>
 				<p>
-					<label>이름</label> <input class="w3-input" type="text" id="f_Name"
-						name="f_Name" placeholder="이름" required>
+					<label>이름</label> <input class="w3-input" type="text" id="a_Name"
+						name="a_Name" placeholder="이름" required>
 				</p>
 				<p>
-					<label>전화번호</label> <input class="w3-input" type="text" id="f_Tel"
-						name="f_Tel" placeholder="전화번호" required>
+					<label>이메일</label> <input class="w3-input" type="text" id="a_Email"
+						name="a_Email" placeholder="이메일" required>
 				</p>
 				<p class="w3-center">
 					<button type="button" id="findBtn"

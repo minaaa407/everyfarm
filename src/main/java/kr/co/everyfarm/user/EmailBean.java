@@ -14,7 +14,7 @@ public class EmailBean {
 		return e_Id;
 	}
 
-	public void setE_Mail(String e_Id) {
+	public void setE_Id(String e_Id) {
 		this.e_Id = e_Id;
 	}
 
