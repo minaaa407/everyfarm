@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.everyfarm.admin.AdminDAO">
+
+	<select id="mlist" resultType="kr.co.everyfarm.user.MemberBean">
+		select * from member
+	</select>
+
+	<select id="flist" resultType="kr.co.everyfarm.farmer.FarmerBean">
+		select * from farmer
+	</select>
+	
+	<select id="alogin" resultType="kr.co.everyfarm.admin.AdminBean">
+		select * from admin where a_id =
+		#{a_Id} and a_pw = #{a_Pw}
+	</select>
+	
+	<insert id="ajoin"
+		parameterType="kr.co.everyfarm.admin.AdminDAO">
+		insert into admin (a_id, a_pw, a_name, a_Email)
+		Values (#{a_Id}, #{a_Pw}, #{a_Name}, #{a_Email})
+	</insert>
+	
+	<update id="upPw">
+		update admin set a_Pw = #{a_Pw} where a_Id = #{a_Id}
+	</update>
+
+	<select id="findId" resultType="kr.co.everyfarm.admin.AdminBean">
+		select * from admin where
+		a_name=#{a_Name} and a_email=#{a_Email}
+	</select>
+
+	<select id="findPw" resultType="kr.co.everyfarm.admin.AdminBean">
+		select * from admin where
+		a_id=#{a_Id} and a_name=#{a_Name} and a_email=#{a_Email}
+	</select>
+
+</mapper>
