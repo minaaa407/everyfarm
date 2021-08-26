@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class ProductBean {
 	
+	
 	private String p_Id;
 	private int p_No;
 	private String p_Title;
@@ -17,10 +18,9 @@ public class ProductBean {
 	private String p_Imgdetail2;
 	private String p_Imgdetail3;
 	private String p_Imgdetail4;
-	private int p_Land;
 	private int p_Landprice;
-	private int p_Landavailable;
 	private int p_Manpay;
+	private int p_View;
 	private Date p_Date;
 	private String p_Accept;
 	public String getP_Id() {
@@ -101,29 +101,23 @@ public class ProductBean {
 	public void setP_Imgdetail4(String p_Imgdetail4) {
 		this.p_Imgdetail4 = p_Imgdetail4;
 	}
-	public int getP_Land() {
-		return p_Land;
-	}
-	public void setP_Land(int p_Land) {
-		this.p_Land = p_Land;
-	}
 	public int getP_Landprice() {
 		return p_Landprice;
 	}
 	public void setP_Landprice(int p_Landprice) {
 		this.p_Landprice = p_Landprice;
 	}
-	public int getP_Landavailable() {
-		return p_Landavailable;
-	}
-	public void setP_Landavailable(int p_Landavailable) {
-		this.p_Landavailable = p_Landavailable;
-	}
 	public int getP_Manpay() {
 		return p_Manpay;
 	}
 	public void setP_Manpay(int p_Manpay) {
 		this.p_Manpay = p_Manpay;
+	}
+	public int getP_View() {
+		return p_View;
+	}
+	public void setP_View(int p_View) {
+		this.p_View = p_View;
 	}
 	public Date getP_Date() {
 		return p_Date;
@@ -142,10 +136,15 @@ public class ProductBean {
 		return "ProductBean [p_Id=" + p_Id + ", p_No=" + p_No + ", p_Title=" + p_Title + ", p_Content=" + p_Content
 				+ ", p_Img=" + p_Img + ", p_Subimg1=" + p_Subimg1 + ", p_Subimg2=" + p_Subimg2 + ", p_Subimg3="
 				+ p_Subimg3 + ", p_Subimg4=" + p_Subimg4 + ", p_Imgdetail1=" + p_Imgdetail1 + ", p_Imgdetail2="
-				+ p_Imgdetail2 + ", p_Imgdetail3=" + p_Imgdetail3 + ", p_Imgdetail4=" + p_Imgdetail4 + ", p_Land="
-				+ p_Land + ", p_Landprice=" + p_Landprice + ", p_Landavailable=" + p_Landavailable + ", p_Manpay="
-				+ p_Manpay + ", p_Date=" + p_Date + ", p_Accept=" + p_Accept + "]";
+				+ p_Imgdetail2 + ", p_Imgdetail3=" + p_Imgdetail3 + ", p_Imgdetail4=" + p_Imgdetail4 + ", p_Landprice="
+				+ p_Landprice + ", p_Manpay=" + p_Manpay + ", p_View=" + p_View + ", p_Date=" + p_Date + ", p_Accept="
+				+ p_Accept + "]";
 	}
+	
+	
+	
+	
+	
 	
 		
 }

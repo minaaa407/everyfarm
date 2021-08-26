@@ -10,6 +10,9 @@ public interface ProductDao {
 	public List<ProductBean> listpageing(PageBeen pagebeen);
 	public List<ProductBean> listserachpageing(PageBeen pagebeen);
 	public List<ProductBean> listserachpageingcount(PageBeen pagebeen);
+	public List<ProductBean> desclist(PageBeen pagebeen);
+	public List<ProductBean> asclist(PageBeen pagebeen);
+	
 	
 	public int listcount();
 	public ProductBean info(int productno);
@@ -19,7 +22,10 @@ public interface ProductDao {
 	public int delete(int productno);
 	public int insertbasket(BasketBean basket);
 	public int listmaxpno();
-	
+	public int updateaccept(ProductBean product);
+	public int viewpno(int p_No);
+	public int updateview(ProductBean product);
+
 	
 	
 	public ProductBean productinfo(String p_No);

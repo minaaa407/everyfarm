@@ -87,10 +87,12 @@
 		q_No=#{no}
 	</delete>
 
+
 	<select id="myQnA" resultType="kr.co.everyfarm.board.QnABean">
 		select * from qna where
 		q_Id=#{m_Id} order by q_no desc
 	</select>
+
 
 	<!-- q_Img, #{q_Img}, -->
 </mapper>

@@ -98,7 +98,9 @@
 					<ul class="navbar-nav m-auto">
 						<li class="nav-item active"><a href="index.jsp"
 							class="nav-link">Home</a></li>
+
 						<li class="nav-item"><a href="/productlist" class="nav-link">농장</a></li>
+
 						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
 						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
 					</ul>
