@@ -21,6 +21,8 @@ public interface QnADAO {
 	public List<QnABean> searchId(QnABean qna);
 
 	public List<QnABean> searchEach(QnABean qna);
+	
+	public List<QnABean> myQnA(String m_Id);
 
 	public int insert(QnABean qna);
 

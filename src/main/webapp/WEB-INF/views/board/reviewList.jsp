@@ -45,11 +45,6 @@
 <link rel="stylesheet" href="resources/review/style.css">
 </head>
 <body>
-	<!-- Page Preloder -->
-
-	<div id="preloder">
-		<div class="loader"></div>
-	</div>
 	<!-- Shoping Cart Section Begin -->
 	<section class="ftco-section">
 		<div class="container">
@@ -67,7 +62,7 @@
 								<c:when test="${!empty revList}">
 									<c:forEach var="re" items="${revList}">
 										<a href="" class="block-20 img"
-											style="background-image: url('resources/review/reviewList/img/test.jpg')"></a>
+											style="background-image: url('resources/review/reviewList/img/product/test.jpg')"></a>
 										<div class="meta mb-3">
 											<div>
 												<fmt:formatDate pattern="yyyy/MM/dd" value="${re.rev_Date}" />

@@ -13,10 +13,9 @@
 		parameterType="kr.co.everyfarm.farmer.FarmerBean">
 		insert into farmer (f_id,
 		f_name, f_pw, f_Addr, f_tel,
-		f_birth,
-		f_profile, f_auth)
+		f_birth, f_auth)
 		Values (#{f_Id}, #{f_Name}, #{f_Pw},
-		#{f_Addr}, #{f_Tel}, #{f_Birth}, #{f_Profile}, #{f_Auth})
+		#{f_Addr}, #{f_Tel}, #{f_Birth}, #{f_Auth})
 	</insert>
 
 	<select id="flogin" resultType="kr.co.everyfarm.farmer.FarmerBean">
@@ -36,7 +35,6 @@
 		f_Addr=#{f_Addr},
 		f_tel=#{f_Tel},
 		f_birth=#{f_Birth},
-		f_profile=#{f_Profile},
 		f_auth=#{f_Auth},
 		where f_id=#{f_Id}
 	</update>

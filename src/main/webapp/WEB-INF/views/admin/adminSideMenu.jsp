@@ -33,18 +33,18 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="">
+            <a class="nav-link " href="userList">
               <i class="ni ni-bullet-list-67 text-red"></i> 회원관리
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="adminLogout">
               <i class="ni ni-key-25 text-info"></i> 로그아웃
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="ni ni-circle-08 text-pink"></i> Register
+            <a class="nav-link" href="adminSign">
+              <i class="ni ni-circle-08 text-pink"></i> 관리자 추가
             </a>
           </li>
         </ul>

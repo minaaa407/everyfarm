@@ -8,12 +8,12 @@
 	</select>
 	
 	<select id="mylist" resultType="kr.co.everyfarm.board.ReviewBean">
-		SELECT * FROM review WHERE rev_Id=#{m_Id}
+		select * from review WHERE rev_Id=#{m_Id}
 	</select>
 
 	<select resultType="kr.co.everyfarm.board.ReviewBean"
 		id="revDetail">
-		SELECT * FROM review where rev_No=#{rev_No}
+		SELECT * FROM review WHERE rev_No=#{rev_No}
 	</select>
 
 	<insert id="insert" parameterType="kr.co.everyfarm.board.ReviewBean">

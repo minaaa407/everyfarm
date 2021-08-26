@@ -31,10 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.everyfarm.user.KakaoAPI;
 import kr.co.everyfarm.user.MailAuth;
-import kr.co.everyfarm.user.MemberBean;
-import kr.co.everyfarm.user.MemberDAO;
 import kr.co.everyfarm.user.UserPw;
 
 @Controller
@@ -43,21 +40,18 @@ public class FarmerController {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	@Autowired
-	private KakaoAPI kakao;
-	
 	@RequestMapping(value = "/farmer", method = RequestMethod.GET)
 	public String farmer() {
 		return "farmer/farmer";
 	}
 
-	@RequestMapping(value = "/farmer/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/farmerLogin", method = RequestMethod.GET)
 	public String flogin() {
 		System.out.println("login:: get");
 		return "farmer/FmLogin";
 	}
 
-	@RequestMapping(value = "/farmer/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/farmerLogin", method = RequestMethod.POST)
 	public String flogin(FarmerBean farmerBean, HttpServletRequest request) {
 		System.out.println("login:: post");
 
@@ -75,17 +69,17 @@ public class FarmerController {
 			session.setAttribute("farmer", farmer);
 			return "redirect:/farmer";
 		} else {
-			return "redirect:/farmer/login";
+			return "redirect:/farmerLogin";
 		}
 	}
 	
-	@RequestMapping(value = "/farmer/sign", method = RequestMethod.GET)
+	@RequestMapping(value = "/farmerSign", method = RequestMethod.GET)
 	public String sign(Model model) {
 		model.addAttribute("farmerBean", new FarmerBean());
 		return "user/signUp";
 	}
 
-	@RequestMapping(value = "/farmer/sign", method = RequestMethod.POST)
+	@RequestMapping(value = "/farmerSign", method = RequestMethod.POST)
 	public String sign(@Valid FarmerBean farmerBean, BindingResult bindingResult, HttpServletRequest request) {
 
 		farmerBean.setF_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
@@ -105,7 +99,7 @@ public class FarmerController {
 		return "farmer/farmer";
 	}
 
-	@RequestMapping(value = "/farmer/checkMail", method = RequestMethod.POST, produces = "application/json;")
+	@RequestMapping(value = "/farmerCheckMail", method = RequestMethod.POST, produces = "application/json;")
 	@ResponseBody
 	public Map<String, Object> checkMail(FarmerBean farmerBean, HttpServletRequest request) {
 
@@ -150,11 +144,10 @@ public class FarmerController {
 			System.out.println("UnsupportedEncodingException : " + e.getMessage());
 			map.put("error", false);
 		}
-
 		return map;
 	}
 
-	@RequestMapping(value = "/farmer/checkId", method = RequestMethod.POST)
+	@RequestMapping(value = "/farmerCheckId", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkId(FarmerBean farmerBean) {
 
@@ -168,12 +161,12 @@ public class FarmerController {
 		}
 	}
 
-	@RequestMapping(value = "/farmer/findId", method = RequestMethod.GET)
+	@RequestMapping(value = "/farmerFindId", method = RequestMethod.GET)
 	public String findId() {
 		return "/farmer/findId";
 	}
 
-	@RequestMapping(value = "/farmer/findId", method = RequestMethod.POST)
+	@RequestMapping(value = "/farmerFindId", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> findId(@ModelAttribute FarmerBean farmerBean) {
 
@@ -183,23 +176,22 @@ public class FarmerController {
 		FarmerBean farm = dao.findId(farmerBean);
 
 		if (farm == null) {
-			map.put("url", "/farmer/findId");
+			map.put("url", "/farmerFindId");
 			map.put("error", false);
 		} else {
-			map.put("url", "/farmer/login");
+			map.put("url", "/farmerLogin");
 			map.put("farmId", farm.getF_Id());
 			map.put("error", true);
 		}
-		
 		return map;
 	}
 
-	@RequestMapping(value = "/farmer/findPw", method = RequestMethod.GET)
+	@RequestMapping(value = "/farmerFindPw", method = RequestMethod.GET)
 	public String findPw() {
 		return "/farmer/findPw";
 	}
 
-	@RequestMapping(value = "/farmer/findPw", method = RequestMethod.POST)
+	@RequestMapping(value = "/farmerFindPw", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> findPw(@ModelAttribute FarmerBean farmerBean, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -208,7 +200,7 @@ public class FarmerController {
 		FarmerBean farm = dao.findPw(farmerBean);
 
 		if (farm == null) {
-			map.put("url", "/farmer/findPw");
+			map.put("url", "/farmerFindPw");
 			map.put("error", false);
 		} else {
 			String pw = "";
@@ -256,13 +248,13 @@ public class FarmerController {
 				System.out.println("UnsupportedEncodingException : " + e.getMessage());
 			}
 
-			map.put("url", "/farmer/login");
+			map.put("url", "/farmerLogin");
 			map.put("error", true);
 		}
 		return map;
 	}
 
-	@RequestMapping(value = "/farmer/updatePw", method = RequestMethod.POST)
+	@RequestMapping(value = "/farmerUpdatePw", method = RequestMethod.POST)
 	public String upPw(@RequestParam(value = "upId", defaultValue = "", required = false) String Id,
 			FarmerBean farmerBean) {
 		farmerBean.setF_Id(Id);
@@ -272,21 +264,19 @@ public class FarmerController {
 		return "farmer/FmLogin";
 	}
 
-	@RequestMapping(value = "/farmer/logout", method = RequestMethod.GET)
+	@RequestMapping(value = "/farmerLogout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		kakao.kakaoLogout((String)session.getAttribute("access_Token"));
-	    session.removeAttribute("access_Token");
-	    session.removeAttribute("userId");
+
 		session.invalidate();
 		return "farmer/farmer";
 	}
 
-	@RequestMapping(value = "/farmer/mypage")
+	@RequestMapping(value = "/farmerMypage")
 	public String myInfo() {
 		return "farmer/myPage";
 	}
 
-	@RequestMapping(value = "/farmer/myInfoUpdate")
+	@RequestMapping(value = "/farmerMyInfoUpdate")
 	public String myInfoChange(FarmerBean farmerbean, HttpSession session, HttpServletRequest request) {
 
 		farmerbean.setF_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
@@ -298,14 +288,14 @@ public class FarmerController {
 		return "redirect:/farmer";
 	}
 
-	@RequestMapping(value = "/farmer/myInfoDelete")
+	@RequestMapping(value = "/farmerMyInfoDelete")
 	public String myDelete(FarmerBean farmerbean, HttpSession session) {
 
 		FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		dao.fDelete(farmerbean);
 
 		session.invalidate();
-		return "redirect:/farmer";
+		return "redirect:/farmerHome";
 	}
 	
 	@RequestMapping(value = "/contact")

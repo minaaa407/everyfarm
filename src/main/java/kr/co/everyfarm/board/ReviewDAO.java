@@ -2,10 +2,11 @@ package kr.co.everyfarm.board;
 
 import java.util.List;
 
+
 public interface ReviewDAO  {
 	
 	 List<ReviewBean> list();
-	 List<ReviewBean> mylist();
+	 List<ReviewBean> mylist(String m_Id);
 	 public int insert(ReviewBean reviewBean);
 	
 	

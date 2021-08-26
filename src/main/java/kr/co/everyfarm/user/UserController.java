@@ -36,7 +36,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.google.gson.Gson;
 
 @Controller
 public class UserController {
@@ -50,14 +49,17 @@ public class UserController {
 	@Autowired
 	private NaverLoginBO naverLoginBO;
 
+	private String apiResult = null;
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home() {
 		return "home/home";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String mlogin() {
+	public String mlogin(Model model) {
 		System.out.println("login:: get");
+
 		return "user/loginForm";
 	}
 
@@ -83,61 +85,62 @@ public class UserController {
 		}
 	}
 
-	private String apiResult = null;
+	// 네이버 로그인
+	@RequestMapping(value = "/user/callback", method = RequestMethod.GET)
+	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
+			MemberBean memberBean) throws IOException, ParseException {
+		System.out.println("여기는 callback session : " + session);
+		System.out.println("여기는 callback state : " + state);
+		System.out.println("여기는 callback code : " + code);
 
-//	@RequestMapping(value = "/naverLogin", method = RequestMethod.GET)
-//	@ResponseBody
-//	public String naverLogin(HttpSession session, Model model) {
-//		System.out.println("naverLogin");
-//		String naverAuthUrl = naverBO.getAuthorizationUrl(session);
-//		model.addAttribute("url", naverAuthUrl);
-//
-//		return "/naverLogin";
-//	}
+		OAuth2AccessToken oauthToken;
 
-	@SuppressWarnings("unlikely-arg-type")
-	@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
-	public String callback(Model model, HttpSession session, String m_Id, HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ParseException {
+		oauthToken = naverLoginBO.getAccessToken(session, code, state);
+		System.out.println("oauthToken쪽 : " + oauthToken);
+		// 1. 로그인 사용자 정보를 읽어온다.
+		apiResult = naverLoginBO.getUserProfile(oauthToken); // String형식의 json데이터
 
-		System.out.println("callback");
-
+		// 2. String형식인 apiResult를 json형태로 바꿈
 		JSONParser parser = new JSONParser();
-
-		session = request.getSession();
-		String code = request.getParameter("code");
-		String state = request.getParameter("state");
+		Object obj = parser.parse(apiResult);
+		JSONObject jsonObj = (JSONObject) obj;
 
 		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
-		OAuth2AccessToken oauthToken;
-		oauthToken = naverLoginBO.getAccessToken(session, code, state);
 
-		if (oauthToken != null) {
-			apiResult = naverLoginBO.getUserProfile(session, oauthToken);
+		// 3. 데이터 파싱
+		// Top레벨 단계 _response 파싱
+		JSONObject response_obj = (JSONObject) jsonObj.get("response");
+		// response의 nickname값 파싱
+		String id = (String) response_obj.get("email");
+		String name = (String) response_obj.get("name");
+		String mobile = (String) response_obj.get("mobile");
 
-			Object obj = parser.parse(apiResult);
-			JSONObject jsonObj = (JSONObject) obj;
+		System.out.println("네이버 ID : " + id);
+		System.out.println("이름 : " + name);
+		System.out.println("모바일" + mobile);
 
-			JSONObject response_obj = (JSONObject) jsonObj.get("response");
+		if (response_obj.get("id") != null) {
+			// 4.파싱 닉네임 세션으로 저장
+			System.out.println("4번 주석");
+			session.setAttribute("m_Id", id); // 세션 생성
+			session.setAttribute("m_Name", name);
+			session.setAttribute("m_Tel", mobile);
 
-			String Id = (String) response_obj.get("email");
-			String Name = (String) response_obj.get("name");
-			String Tel = (String) response_obj.get("mobile");
+			model.addAttribute("result", apiResult);
+			String auth_id = (String) session.getAttribute("m_Id");
+			System.out.println("id test:::" + auth_id);
+			MemberBean member = dao.nlogin(memberBean);
 
-			if (Id.equals(dao.checkId(m_Id))) {
-				session.setAttribute("loginPI", "naver");
-				session.setAttribute("m_Id", Id);
-				session.setAttribute("m_Name", Name);
-				session.setAttribute("m_Tel", Tel);
+			model.addAttribute("member", member);
+			session.setAttribute("member", member);
 
-				model.addAttribute("result", apiResult);
-
-				return "redirect:/home";
-			} else {
+			if (member == null) {
 				return "redirect:/naverJoin";
+			} else {
+				return "redirect:/home";
 			}
 		} else {
-			return "/loginForm";
+			return "/login";
 		}
 	}
 
@@ -206,48 +209,24 @@ public class UserController {
 
 		dao.kakaoJoin(memberBean);
 
-		return "redirect:/";
+		return "redirect:/home";
 	}
 
-//	@RequestMapping(value = "/kakaoJoin", method = RequestMethod.POST)
-//	public String kakaoJoin(@Valid MemberBean memberBean, BindingResult bindingResult, HttpServletRequest request) {
-//
-//		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
-//		memberBean.setM_Id((String) session.getAttribute("m_Id"));
-//		memberBean.setM_Name((String) session.getAttribute("m_Name"));
-//
-//		memberBean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
-//				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
-//
-//		System.out.println("첫번째:" + memberBean.getM_Pw());
-//		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
-//		memberBean.setM_Pw(encryPassword);
-//		System.out.println("두번째:" + memberBean.getM_Pw());
-//
-//		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
-//		memberDAO.mjoin(memberBean);
-//
-//		if (bindingResult.hasErrors()) {
-//			return "user/kakaoSignUp";
-//		}
-//		return "home/home";
-//	}
-
 	@RequestMapping(value = "/naverJoin", method = RequestMethod.GET)
-	public String naverJoin(MemberBean memberBean, Model model, HttpSession session) {
+	public String naverJoin(MemberBean member, Model model, HttpSession session) {
 
 		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
 
-		String id = (String) session.getAttribute("m_Id");
-		memberBean.setM_Id(id);
-		memberBean.setM_Name((String) session.getAttribute("m_Name"));
-		memberBean.setM_Tel((String) session.getAttribute("m_Tel"));
+		member.setM_Id((String) session.getAttribute("m_Id"));
+		member.setM_Name((String) session.getAttribute("m_Name"));
+		member.setM_Tel((String) session.getAttribute("m_Tel"));
 
-		model.addAttribute(memberBean);
+		dao.naverJoin(member);
 
-		dao.naverJoin(memberBean);
+		model.addAttribute("member", member);
+		session.setAttribute("member", member);
 
-		return "redirect:/";
+		return "redirect:/home";
 
 	}
 
@@ -257,8 +236,6 @@ public class UserController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
-
 		Properties prop = System.getProperties();
 		prop.put("mail.smtp.starttls.enable", "true");
 		prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -266,7 +243,7 @@ public class UserController {
 		prop.put("mail.smtp.port", "587");
 
 		Random random = new Random();
-		int mailNum = random.nextInt(999999);
+		int e_Num = random.nextInt(999999);
 
 		Authenticator auth = new MailAuth();
 
@@ -281,14 +258,10 @@ public class UserController {
 			InternetAddress to = new InternetAddress(memberBean.getM_Id());
 			msg.setRecipient(Message.RecipientType.TO, to);
 			msg.setSubject("EVERYFARM", "UTF-8");
-			msg.setText("안녕하세요 EVERY FARM에 방문해주셔서 감사합니다." + "\n\n이메일 인증번호는 " + mailNum + "입니다."
+			msg.setText("안녕하세요 EVERY FARM에 방문해주셔서 감사합니다." + "\n\n이메일 인증번호는 " + e_Num + "입니다."
 					+ "\n해당 인증번호를 인증번호 확인란에 기입해주십시오." + "\n감사합니다.", "UTF-8");
 
 			Transport.send(msg);
-
-			dao.mailNumber(mailNum);
-
-			System.out.println("email::::" + emailBean);
 
 			map.put("error", true);
 
@@ -445,9 +418,10 @@ public class UserController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		kakao.kakaoLogout((String) session.getAttribute("access_Token"));
-		session.removeAttribute("access_Token");
-		session.removeAttribute("userId");
+		/*
+		 * kakao.kakaoLogout((String) session.getAttribute("access_Token"));
+		 * session.removeAttribute("access_Token"); session.removeAttribute("userId");
+		 */
 		session.invalidate();
 		return "home/home";
 	}
@@ -485,13 +459,43 @@ public class UserController {
 		return "redirect:/home";
 	}
 
-}
+	@RequestMapping(value = "/myInfoPwdUpdate")
+	public String myInfoChange1(MemberBean memberbean, HttpSession session, HttpServletRequest request) {
 
-/*
- * @Controller public class MemberController {
- * 
- * @RequestMapping(value = "/user/{var}") public String
- * User(@PathVariable("var") String var) { String returnUrl = "";
- * if(var.equals("login")) { returnUrl = "member/loginForm"; }else
- * if(var.equals("sign")) { returnUrl = "member/signUp"; } return returnUrl; } }
- */
+		String encryPassword = UserPw.encrypt(memberbean.getM_Pw());
+		memberbean.setM_Pw(encryPassword);
+
+		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		memDao.mPwdUp(memberbean);
+		System.out.println(memberbean);
+
+		session.invalidate();
+		return "redirect:/home";
+	}
+
+	@RequestMapping(value = "/myInfoAddrUpdate")
+	public String myInfoChange2(MemberBean memberbean, HttpSession session, HttpServletRequest request) {
+
+		memberbean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
+				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
+
+		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		memDao.mAddrUpdate(memberbean);
+		System.out.println(memberbean);
+
+		session.invalidate();
+		return "redirect:/home";
+	}
+
+	@RequestMapping(value = "/myInfoNameUpdate")
+	public String myInfoChange3(MemberBean memberbean, HttpSession session, HttpServletRequest request) {
+
+		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		memDao.mNameUpdate(memberbean);
+		System.out.println(memberbean);
+
+		session.invalidate();
+		return "redirect:/home";
+	}
+
+}

@@ -23,7 +23,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="./index.html"> <img
+			<a class="navbar-brand pt-0" href="/admin"> <img
 				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
 				alt="...">
 			</a>

@@ -33,8 +33,6 @@ public class FarmerBean {
 	
 	private Date f_Date;
 	
-	private String f_Profile;
-	
 	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String f_Auth;
 	
@@ -86,12 +84,6 @@ public class FarmerBean {
 	public void setF_Date(Date f_Date) {
 		this.f_Date = f_Date;
 	}
-	public String getF_Profile() {
-		return f_Profile;
-	}
-	public void setF_Profile(String f_Profile) {
-		this.f_Profile = f_Profile;
-	}
 	public String getF_Auth() {
 		return f_Auth;
 	}
@@ -101,8 +93,9 @@ public class FarmerBean {
 	
 	@Override
 	public String toString() {
-		return "FarmerVO [f_Id=" + f_Id + ", f_Name=" + f_Name + ", f_Pw=" + f_Pw + ", f_Addr=" + f_Addr + ", f_Tel="
-				+ f_Tel + ", f_Birth=" + f_Birth + ", f_Rate=" + f_Rate + ", f_Date=" + f_Date + ", f_Profile="
-				+ f_Profile + ", f_Auth=" + f_Auth + "]";
+		return "FarmerBean [f_Id=" + f_Id + ", f_Name=" + f_Name + ", f_Pw=" + f_Pw + ", f_Addr=" + f_Addr + ", f_Tel="
+				+ f_Tel + ", f_Birth=" + f_Birth + ", f_Rate=" + f_Rate + ", f_Date=" + f_Date + ", f_Auth=" + f_Auth
+				+ "]";
 	}
+	
 }
