@@ -29,6 +29,11 @@ select:option {cursor: url('/resources/editor/css/sap.cur'), auto;}
  height:100%;
  width:15%;
  }
+.title {
+background-color:#E6E6E6;
+margin-right:0px;
+margin-left:0px;
+}
 th, td {
 padding:15px
 }
@@ -39,7 +44,10 @@ table {
  border-left-color: #FFFFFF;
  border-right-color: #FFFFFF;
       }
-th {
+.order {
+border-left:none;
+}
+.th {
 border-right-color:#cccccc;
 }
 .grid {
@@ -51,6 +59,75 @@ height: 25px;
 #raddr1 , #raddr2 {
 margin-top: 12px;
 }
+.option {
+   list-style:none;
+   color:black;
+   font-size:13px;
+   background-color: #C8E6D1;
+   padding-left:20px;
+   margin-bottom: 4px;
+   padding-top: 5px;
+   border-bottom: 1px solid #cccccc;
+   }
+.ulborder {
+   border-top: 1px solid #cccccc;
+   border-bottom: 1px solid #cccccc;
+   padding-top: 5px;
+   margin-bottom:0px;
+}
+.optionH {
+height: 25px;
+}
+.none {
+   border-left-style: hidden;
+   border-right-style: hidden;
+}
+.ulStep {
+    list-style:none;
+    margin:0;
+    padding:0;
+    display: inline-block;
+}
+
+.order1 {
+    border : 0;
+    float: left;
+    border: 1px solid #E6E6E6;
+    width:250px;
+    height:60px;
+    text-align: center; 
+    display: inline-block;
+    margin: 0;
+    padding: 15px;
+    
+	
+}
+.orderStep {
+	margin-bottom: 50px;
+	margin-top: 50px;
+	text-align: center;
+}
+
+.select {
+font-weight:bold;
+background-color:#E6E6E6;
+}
+.deliverinfo {
+margin-top:50px;
+}
+
+.list{
+font-weight:bold;
+padding-left:0px;
+}
+.button{
+margin-left:870px;
+margin-top:2px;
+}
+.right{
+text-align:right;
+}
+
 </style>
 </head>
 <body>
@@ -60,44 +137,41 @@ margin-top: 12px;
 <div class="container">	
 	<div clss="row">
 	<div clss="col">
-	<div>
-				<h2><span>결제</span></h2>
-				<hr>
-				<div>
-					<a href="/product/basket"><span style="color:black;">장바구니</span></a>
-					<span>&gt;</span>
-					<span style="font-weight:bold">주문서</span>
-					<span>&gt;</span>
-					<span>결제 완료</span>
+				<div class="orderStep">
+			        <ul class="ulStep">
+						<li class="order1">01 - 장바구니</li>
+			            <li class="order1 select">02 - 주문서작성</li>
+			            <li class="order1">03 - 결제완료</li>
+			        </ul>
 				</div>
-			</div>
 			<br>
-			<hr>
 	
 				<form:form commandName="payment" action="/pay" method="post" id="pay_data" name="pay_data">
 				
 				<input type="hidden" name="pay_Id" id="" value="${Member.m_Id}" />
-				<p>&#10071; 상품의 옵션 및 수량 변경은 상품상세 또는 장바구니에서 가능합니다.</p>
+				<ul class="option ulborder">
+					<li class="optionH">&#10071;상품의 옵션 및 수량 변경은 상품상세 또는 장바구니에서 가능합니다.</li>
+				</ul>
+		
 				<!-- 국내배송상품 주문내역 -->
-	<div class="orderListArea ">
-        <div class="title">
-            <h3>배송상품 주문내역</h3>
-            <p class="button">
-            	<a href="javascript:window.history.back();">
-            		<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_prev.gif" alt="이전페이지"/>
+	<div class="order ">
+        <div class="row title" style="margin-right:0px; margin-left:0px;">
+            <span class="list">&nbsp;&nbsp;&nbsp;배송상품 주문내역</span>
+            <span class="button">
+            	<a href="javascript:window.history.back();" >
+            		<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_prev.gif" style="float:right" alt="이전페이지"/>
             	</a>
-            </p>
-        </div>
-        
+            </span>
+            </div>
+        		<!-- 선택상품 제어 버튼 -->
          <!-- 기본배송 -->
-        <div class="ec-base-table typeList ">
+        <div class="ec-base-table typeList">
             <table border="1" summary="">
-				<caption>기본배송</caption>
 				<colgroup>
 					<col style="width:27px" class=""/>
-					<col style="width:92px"/>
+					<col style="width:100px"/>
 					<col style="width:auto"/>
-					<col style="width:98px"/>
+					<col style="width:auto"/>
 					<col style="width:75px"/>
 					<col style="width:98px"/>
 					<col style="width:98px"/>
@@ -106,14 +180,14 @@ margin-top: 12px;
 				</colgroup>
 				<thead>
 					<tr>
-						<th scope="col" class="">
+						<th scope="col">
 							<input type="checkbox" onclick="EC_SHOP_FRONT_ORDERFORM_PRODUCT.proc.setCheckOrderList('chk_order_cancel_list_basic', this);"/>
 						</th>
                         <th scope="col">상품이미지</th>
                         <th scope="col">상품정보</th>
+                        <th scope="col">씨앗</th>
                         <th scope="col">땅가격</th>
                         <th scope="col">수량</th>
-                        <th scope="col">씨앗</th>
                         <th scope="col">인건비</th>
                         <th scope="col">배송비</th>
                         <th scope="col">합계</th>
@@ -134,12 +208,12 @@ margin-top: 12px;
 							</th>
 							<th scope="col"><a href="/productdetail"><img src="/resources/img/${p.p_Img }" name="image"  /></a></th>
 							<th scope="col"><input name="title" value="${p.p_Title}" size="5" readonly /></th>
+							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}" size="5" readonly/></th>
 							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }" size="5" readonly/></th>
 							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}" size="5" readonly/></th>
-							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}" size="5" readonly/></th>
 							<th scope="col"><input name="landprice" value="${ p.b_Land * p.p_Landprice }" size="5" readonly/>원</th>
 							<th scope="col"><input name="manpay" value="${ p.b_Land * p.p_Manpay }" size="5" readonly/>원</th>
-							<th scope="col">= <input name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }" size="5" readonly/>원</th>
+							<th scope="col"> <input name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }" size="5" readonly/>원</th>
 								<c:set var= "total_price" value="${total_price + price}"/>
 								<c:set var= "landtotal" value="${landtotal + p.b_Land}"/>
 						</tr>
@@ -151,16 +225,20 @@ margin-top: 12px;
 						<c:set var="price" value="${ p.b_Totalprice + p.b_Land * p.p_Manpay }" />
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="dm" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }"/>
 						<tr>
+							<th scope="col">
+								<input type="checkbox" id="chk_order_cancel_list0" name="chk_order_cancel_list_basic0" value="">
+							</th>
 							<th scope="col"><input name="image" value="${p.p_Img }" size="5" readonly /></th>
 							<th scope="col"><input name="title" value="${p.p_Title}" size="5" readonly /></th>
-							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }" size="5" readonly/></th>
-							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}" size="5" readonly/></th>
 							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}" size="5" readonly/></th>
-							<th scope="col"><input name="landprice" value="${ p.b_Land * p.p_Landprice }" size="5" readonly/>원</th>
-							<th scope="col"><input name="manpay" value="${ p.b_Land * p.p_Manpay }" size="5" readonly/>원</th>
-							<th scope="col">= <input name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }" size="5" readonly/>원</th>
-								
+							<th scope="col"><input name="landprice" value="${ p.p_Landprice }" size="5" readonly/></th>
+							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}" size="5" readonly/></th>
+							<th scope="col"><input name="manpay" value="${ p.p_Manpay }" size="5" readonly/></th>
+							<th scope="col"><input name="delivery" value="3000원" size="5" readonly/></th>
+							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }" size="5" readonly/></th>
+							
 								<c:set var= "total_price" value="${total_price + price}"/>
 								<c:set var= "landtotal" value="${landtotal + p.b_Land}"/>
 						</tr>
@@ -174,7 +252,7 @@ margin-top: 12px;
 			<tr>
 				<td class=""></td>
 		        <td colspan="8">
-					<span class="gLeft">[기본배송]</span> 상품구매금액 
+					<span class="gLeft">상품구매금액</span>  
 					<strong>130,000
 						<span class="displaynone"> (0)</span>
 					</strong> + 배송비 
@@ -190,38 +268,27 @@ margin-top: 12px;
 				</table>
 		   </div>
 		</div>
-						
+		<ul class="option">
+			<li class="optionH">&#10071;상품의 옵션 및 수량 변경은 상품상세 또는 장바구니에서 가능합니다.</li>
+		</ul>
+					<div class="ec-base-button">
+        	<span class="gLeft ">
+            	<strong class="text">선택상품을</strong>
+            	<a href="#none" id="btn_product_delete"><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_delete2.gif" alt="삭제하기"/></a>
+        	</span>
+        </div>	
 								
 					
-					<div class="container ">
-						<div class="col">
-							<div class="row form-group">
-								<div>
-									<span class="col-mb-3">합계</span>
-									<span class="col-mb-3">배송비</span>
-									<span class="col-mb-3">총금액</span>
-								</div>
-							</div>
-							<div class="row form-control">	
-								<div>
-							    	<span class="col-mb-3"><input name="price" value="${ total_price }" size="5" readonly/>원</span>
-									<span class="col-mb-3"><input name="delivery" value="3000" size="5" readonly/>원</span>
-									<span class="col-mb-3"><input name="payTotalprice" value="${ delivery + total_price }" size="5" readonly />원</span>
-								</div>
-							</div>	
-						</div>
-					</div>
-					<br>
-				
+					
+	<div class="deliverinfo">			
 	<div class="row">			
-		<span class="col-md-10" style="text-align:left; font-weight:bold">배송 정보</span>
-		<span class="col-md-2" style="text-align:right"><img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/> 필수입력사항</span>
+		<div class="col-md-10" style="text-align:left; font-weight:bold">&nbsp;&nbsp;&nbsp;배송 정보</div>
+		<div class="col-md-2" style="text-align:right"><img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/> 필수입력사항</div>
 	</div>
-	<hr>
 		<table border=1 >
 			<tbody class="">
 				<tr class="">
-					<th scope="row">배송지 선택</th>
+					<th scope="row" class="th">배송지 선택</th>
 					<td>
 						<div class="address">
 							<input id="sameaddr" name="sameaddr" value="M" type="radio" /><label for="sameaddr" >회원 정보와 동일</label>
@@ -231,11 +298,11 @@ margin-top: 12px;
 					</td>
 				</tr>
 				<tr>
-					<th scope="row">받으시는 분<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
+					<th scope="row" class="th">받으시는 분<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
 					<td><input id="m_Name" name="m_Name" class="inputTypeText" size="15" value="" type="text" /></td>
 				</tr>
 				<tr>
-					<th scope="row">주소 <img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
+					<th scope="row" class="th">주소 <img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
 					<td>
                         <input id="postcode" name="postcode" size="6" maxlength="6" value="" type="text" />    
                                             
@@ -253,7 +320,7 @@ margin-top: 12px;
                     </td>
                 </tr>		
 				<tr class="">
-					<th scope="row">전화번호 <span class=""><img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></span></th>
+					<th scope="row" class="th">전화번호 <span class=""><img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></span></th>
 					<td>
 						<input id="tel" name="tel" maxlength="3" size="3" value="${fn:substring(Member.m_Tel,0,3) }" />
 						-<input id="tel1" name="tel1" maxlength="4" size="4" value="${fn:substring(Member.m_Tel,3,7) }" />
@@ -263,7 +330,7 @@ margin-top: 12px;
                 </tbody>
                 <tbody class="email">
                 	<tr>
-                		<th scope="row">이메일 <img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
+                		<th scope="row" class="th">이메일 <img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
 						<td>
 							<input id="mail1" name="mail1" value="" type="text" />@<input id="mail2" name="mail2" value="" type="text" />
 							<select id="mail" name="mail">
@@ -288,7 +355,7 @@ margin-top: 12px;
 				<tbody class="delivery ">
 
 				<tr class="">
-				<th scope="row">배송메시지 <span class="displaynone" ></span>
+				<th scope="row" class="th">배송메시지 <span class="displaynone" ></span>
 				</th>
 
                     <td>
@@ -306,6 +373,7 @@ margin-top: 12px;
                     </td>
                     	</tr>
         		</table>
+        		</div>
 							
                             	<div><input type="hidden" id="pay_Address1" name="pay_Address1" value="" /></div>
                             	<div><input type="hidden" id="pay_Address2" name="pay_Address2" value="" /></div>
@@ -315,7 +383,25 @@ margin-top: 12px;
         		<br>
         		 
         		<hr>
-        			
+        			<div class="container ">
+						<div class="col">
+							<div class="row form-group">
+								<div>
+									<span class="col-mb-3">합계</span>
+									<span class="col-mb-3">배송비</span>
+									<span class="col-mb-3">총금액</span>
+								</div>
+							</div>
+							<div class="row form-control">	
+								<div>
+							    	<span class="col-mb-3"><input name="price" value="${ total_price }" size="5" readonly/>원</span>
+									<span class="col-mb-3"><input name="delivery" value="3000" size="5" readonly/>원</span>
+									<span class="col-mb-3"><input name="payTotalprice" value="${ delivery + total_price }" size="5" readonly />원</span>
+								</div>
+							</div>	
+						</div>
+					</div>
+					<br>
 				<hr>
                        
                         <h3>결제 정보</h3>

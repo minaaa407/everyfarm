@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="description" content="Ogani Template">
 <meta name="keywords" content="Ogani, unica, creative, html">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="widtd=device-widtd, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>REVIEW</title>
 
@@ -30,19 +30,101 @@
     <link rel="stylesheet" href="resources/review/reviewList/css/style.css" type="text/css">
     -->
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="https://stackpatd.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="resources/review/reviewList/css/animate.css">
 <link rel="stylesheet"
 	href="resources/review/reviewList/css/owl.carousel.min.css">
 <link rel="stylesheet"
-	href="resources/review/reviewList/css/owl.theme.default.min.css">
+	href="resources/review/reviewList/css/owl.tdeme.default.min.css">
 <link rel="stylesheet"
 	href="resources/review/reviewList/css/magnific-popup.css">
 <link rel="stylesheet"
 	href="resources/review/reviewList/css/flaticon.css">
 <link rel="stylesheet" href="resources/review/reviewList/css/style.css">
 <link rel="stylesheet" href="resources/review/style.css">
+
+<style type="text/css">
+/* CSS 작업중 삭제 XXXXXXXX */
+.container{
+	margin: auto;
+	
+}
+.bb {
+	border-left: 0px solid rgba(0, 0, 0, 0.05);
+	border-right: 0px solid rgba(0, 0, 0, 0.05);
+	border-radius: 5px;
+	border-bottom: 0px;
+	border-collapse: separate;
+    border-spacing: 0 20px;
+    margin: auto;
+}
+
+.ff {
+	background: #389d29 !important;
+	margin-bottom: 20px;
+	font-weight: 600;
+	border-radius: 11px;
+	padding: 0;
+	border: 0;
+	text-align: left;
+}
+
+.cc {
+
+	text-align: center;
+	padding: 20px 25px;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+}
+
+.bef-list {
+text-align: center;
+	margin-bottom: 20px;
+	border-top: 0px;
+	border-radius: 11px;
+	padding: 0;
+	margin: 0;
+}
+
+.list {
+	border-right: 1px solid rgba(0, 0, 0, 0.05);
+	margin-bottom: 20px;
+	align-items: center;
+	align-items: stretch;
+	padding: 0;
+	margin: 0;
+	background: #F3F3F3;
+}
+
+.list-end {
+border-right: 1px solid rgba(0, 0, 0, 0.05);
+	border-bottom-left-radius: 11px;
+	border-top-left-radius: 11px;
+	margin-bottom: 20px;
+	padding: 0;
+	margin: 0;
+	background: #F3F3F3;
+}
+
+.list-start {
+	border-top-right-radius: 11px;
+	border-bottom-right-radius: 11px;
+	margin-bottom: 20px;
+	padding: 0;
+	margin: 0;
+	background: #F3F3F3;
+}
+ /* a 태그 CSS 하는중 */
+ a:link  {color: black; text-decoration: none;}
+ a:visited  {color: black; text-decoration: none;}
+ a:hover   {color: black; text-decoration: underline;}
+
+	
+
+/* CSS 작업중 삭제 XXXXXXXX */
+</style>
 </head>
 <body>
 	<!-- Shoping Cart Section Begin -->
@@ -52,65 +134,73 @@
 				<div class="col-md-3 d-flex ftco-animate">
 					<div class="blog-entry justify-content-end">
 						<div class="text">
-							
-							<c:choose>
-								<c:when test="${empty revList}">
-									<div>
-										<p align="center">게시글이 없습니다</p>
-									</div>
-								</c:when>
-								<c:when test="${!empty revList}">
-									<c:forEach var="re" items="${revList}">
-										<a href="" class="block-20 img"
-											style="background-image: url('resources/review/reviewList/img/product/test.jpg')"></a>
-										<div class="meta mb-3">
-											<div>
-												<fmt:formatDate pattern="yyyy/MM/dd" value="${re.rev_Date}" />
-											</div>
-											<div>${re.rev_Name}</div>
-											<div>
-												<a class="meta-chat"><span class="fa fa-eye"></span>&nbsp;${re.rev_Readcount}</a>
-											</div>
-											<h3 class="heading">
-												<a href="/reviewDetail?rev_No=${re.rev_No}">${re.rev_Title}</a>
-											</h3>
-											<fieldset class="rating">
-												<c:if test="${re.rev_Rate eq 0.5}">
-													<label class="half" for="starhalf"></label>
-												</c:if>
-												<c:if test="${re.rev_Rate eq 1}">
-													<label class="full" for="star1"></label>
-												</c:if>
-												<c:if test="${re.rev_Rate eq 1.5}">
-													<label class="half" for="star1half"></label>
-												</c:if>
-												<c:if test="${re.rev_Rate eq 2}">
-													<label class="full" for="star2"></label>
-												</c:if>
-												<c:if test="${re.rev_Rate eq 2.5}">
-													<label class="half" for="star2half"></label>
-												</c:if>
-												<c:if test="${re.rev_Rate eq 3}">
-													<label class="full" for="star3"></label>
-												</c:if>
-												<c:if test="${re.rev_Rate eq 3.5}">
-													<label class="half" for="star3half"></label>
-												</c:if>
-												<c:if test="${re.rev_Rate eq 4}">
-													<label class="full" for="star4"></label>
-												</c:if>
-												<c:if test="${re.rev_Rate eq 4.5}">
-													<label class="half" for="star4half"></label>
-												</c:if>
-												<c:if test="${re.rev_Rate eq 5}">
-													<label class="full" for="star5"></label>
-												</c:if>
-											</fieldset>
-										</div>
 
-									</c:forEach>
-								</c:when>
-							</c:choose>
+								<table class="bb">
+									<thead>
+										<tr class="ff">
+											<td class="cc">번호</td>
+											<td class="cc">제목</td>
+											<td class="cc"></td>
+											<td class="cc">작성자</td>
+											<td class="cc">조회수</td>
+											<td class="cc">작성일</td>
+										</tr>
+									</thead>
+									<tbody>
+									<c:choose>
+										<c:when test="${empty revList}">
+											<tbody>
+												<tr>
+													<td align="center"><p>게시글이 없습니다</p></td>
+												</tr>
+											</tbody>
+										</c:when>
+										<c:when test="${!empty revList}">
+											<c:forEach var="re" items="${revList}">
+												<tr class="bef-list">
+													<td class="list-end">${re.rev_No}</td>
+													<td class="list"><a href="reviewDetail?rev_No=${re.rev_No}">${re.rev_Title}</a>
+													<td class="list"><c:if test="${re.rev_Rate eq 0.5}">
+															<img alt="0.5점"
+																src="resources/review/reviewList/img/half.png" />
+														</c:if> <c:if test="${re.rev_Rate eq 1}">
+															<img alt="1점"
+																src="resources/review/reviewList/img/one.png" />
+														</c:if> <c:if test="${re.rev_Rate eq 1.5}">
+															<img alt="1.5점"
+																src="resources/review/reviewList/img/one-half.png" />
+														</c:if> <c:if test="${re.rev_Rate eq 2}">
+															<img alt="2점"
+																src="resources/review/reviewList/img/two.png" />
+														</c:if> <c:if test="${re.rev_Rate eq 2.5}">
+															<img alt="2.5점"
+																src="resources/review/reviewList/img/two-half.png" />
+														</c:if> <c:if test="${re.rev_Rate eq 3}">
+															<img alt="3점"
+																src="resources/review/reviewList/img/three.png" />
+														</c:if> <c:if test="${re.rev_Rate eq 3.5}">
+															<img alt="3.5점"
+																src="resources/review/reviewList/img/three-half.png" />
+														</c:if> <c:if test="${re.rev_Rate eq 4}">
+															<img alt="4점"
+																src="resources/review/reviewList/img/four.png" />
+														</c:if> <c:if test="${re.rev_Rate eq 4.5}">
+															<img alt="4.5점"
+																src="resources/review/reviewList/img/four-half.png" />
+														</c:if> <c:if test="${re.rev_Rate eq 5}">
+															<img alt="5점"
+																src="resources/review/reviewList/img/five.png" />
+														</c:if></td>
+													<td class="list">${re.rev_Name}</td>
+													<td class="list"><span class="fa fa-eye"></span>&nbsp;${re.rev_Readcount}</td>
+													<td class="list-start"><fmt:formatDate
+															pattern="yyyy/MM/dd" value="${re.rev_Date}" /></td>
+												</tr>
+											</c:forEach>
+										</c:when>
+									</c:choose>
+								</tbody>
+								</table>
 							<button type="button" id="revWrite"
 								class="btn btn-outline-success"
 								onclick="location.href='/reviewWrite'">글쓰기</button>
