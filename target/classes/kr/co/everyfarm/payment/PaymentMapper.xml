@@ -16,7 +16,7 @@
 		resultType="kr.co.everyfarm.payment.PaymentBean">
 		<![CDATA[
 		select member.m_Name, product.p_No,product.p_Title,payment.pay_seed,payment.pay_land,product.p_Img,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,pay_Address
-		from product, payment,member where product.p_Id=#{m_Id} and payment.pay_No=product.p_No and payment.pay_id=member.m_id
+		from product, payment,member where product.p_Id=#{f_Id} and payment.pay_No=product.p_No and payment.pay_id=member.m_id
 		]]>
 	</select>
 

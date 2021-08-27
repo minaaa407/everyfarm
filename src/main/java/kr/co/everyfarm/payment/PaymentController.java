@@ -2,7 +2,6 @@ package kr.co.everyfarm.payment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.everyfarm.basket.BasketBean;
+import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.user.MemberBean;
 import kr.co.everyfarm.user.MemberDAO;
 
@@ -142,12 +141,12 @@ public class PaymentController {
 	public String farmerPaymentList(Model model, HttpSession session) {
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
 		
-		MemberBean member = (MemberBean)session.getAttribute("member");
-		String m_id = member.getM_Id();
-		session.setAttribute("name", "maria");                // 이거 두개 임시
-		String temp=(String)session.getAttribute("name");     // 이거 두개 임시
-		List<PaymentBean> farmerpaymentlist = dao.farmerpaylist(temp); // temp 대신 m_id
-		System.out.println(m_id);
+		FarmerBean farmer = (FarmerBean)session.getAttribute("farmer");
+		String f_id = farmer.getF_Id();
+//		session.setAttribute("name", "maria");                // 이거 두개 임시
+//		String temp=(String)session.getAttribute("name");     // 이거 두개 임시
+		List<PaymentBean> farmerpaymentlist = dao.farmerpaylist(f_id); // temp 대신 f_id
+		System.out.println(f_id);
 		//List<PaymentBean> paymentlist = dao.farmerpaylistserachpageingcount(pagebeen);
 		//int selecttotalindex = paymentlist.size();
 		//pagebeen.setTableindex(selecttotalindex);
@@ -204,4 +203,9 @@ public class PaymentController {
 		return "/payment/viewResult";
 	}
 	
+	@RequestMapping(value = "/FPLIST")
+	public String FPLIST() {
+		return "payment/FPLIST";
+	}
+
 }
