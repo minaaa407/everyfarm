@@ -11,7 +11,6 @@
 <head>
 <meta charset="UTF-8">
 <title>결제 : EveryFarm</title>
- 
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -35,7 +34,7 @@ margin-right:0px;
 margin-left:0px;
 }
 th, td {
-padding:15px
+padding:15px;
 }
 table {
  width: -webkit-fill-available;
@@ -127,7 +126,25 @@ margin-top:2px;
 .right{
 text-align:right;
 }
-
+.img{
+width:inherit;
+max-width:100%;
+height:auto;
+}
+.center{
+text-align:center;
+}
+.bold{
+color:black;
+font-weight:bold;
+}
+.pay{
+text-align:center;
+height:150px;
+border-bottom: 1px solid #cccccc;
+background-color:#fbfafa;
+padding-top:10px;
+}
 </style>
 </head>
 <body>
@@ -156,10 +173,10 @@ text-align:right;
 				<!-- 국내배송상품 주문내역 -->
 	<div class="order ">
         <div class="row title" style="margin-right:0px; margin-left:0px;">
-            <span class="list">&nbsp;&nbsp;&nbsp;배송상품 주문내역</span>
+            <span class="list">&nbsp;&nbsp;&nbsp;상품 주문내역</span>
             <span class="button">
             	<a href="javascript:window.history.back();" >
-            		<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_prev.gif" style="float:right" alt="이전페이지"/>
+            		<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_prev.gif" style="float:right; padding-left:30px" alt="이전페이지"/>
             	</a>
             </span>
             </div>
@@ -169,9 +186,8 @@ text-align:right;
             <table border="1" summary="">
 				<colgroup>
 					<col style="width:27px" class=""/>
-					<col style="width:100px"/>
-					<col style="width:auto"/>
-					<col style="width:auto"/>
+					<col style="width:130px"/>
+					<col style="width:150px"/>
 					<col style="width:75px"/>
 					<col style="width:98px"/>
 					<col style="width:98px"/>
@@ -179,15 +195,14 @@ text-align:right;
 					<col style="width:98px"/>
 				</colgroup>
 				<thead>
-					<tr>
+					<tr class="center">
 						<th scope="col">
 							<input type="checkbox" onclick="EC_SHOP_FRONT_ORDERFORM_PRODUCT.proc.setCheckOrderList('chk_order_cancel_list_basic', this);"/>
 						</th>
-                        <th scope="col">상품이미지</th>
+                        <th scope="col">이미지</th>
                         <th scope="col">상품정보</th>
-                        <th scope="col">씨앗</th>
-                        <th scope="col">땅가격</th>
                         <th scope="col">수량</th>
+                        <th scope="col">작물가</th>
                         <th scope="col">인건비</th>
                         <th scope="col">배송비</th>
                         <th scope="col">합계</th>
@@ -201,19 +216,24 @@ text-align:right;
 					 		<c:forEach var="p" varStatus="ps" items="${memBasket}" >
 						    <c:set var="price" value="${(p.b_Land * p.p_Manpay) + (p.b_Land * p.p_Landprice) }" />
 						    <input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="dm" value=""/>
-							<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }"/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}"/>
 						<tr>
-							<th scope="col">
+							<td>
 								<input type="checkbox" id="chk_order_cancel_list0" name="chk_order_cancel_list_basic0" value="">
-							</th>
-							<th scope="col"><a href="/productdetail"><img src="/resources/img/${p.p_Img }" name="image"  /></a></th>
-							<th scope="col"><input name="title" value="${p.p_Title}" size="5" readonly /></th>
-							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}" size="5" readonly/></th>
-							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }" size="5" readonly/></th>
-							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}" size="5" readonly/></th>
-							<th scope="col"><input name="landprice" value="${ p.b_Land * p.p_Landprice }" size="5" readonly/>원</th>
-							<th scope="col"><input name="manpay" value="${ p.b_Land * p.p_Manpay }" size="5" readonly/>원</th>
-							<th scope="col"> <input name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }" size="5" readonly/>원</th>
+							</td>
+							<td><a href="/productdetail"><img src="/resources/upload/product/1/${p.p_Img }" name="image" class="img" /></a></td>
+							<td>
+                				<a href="/productdetail" class="bold">${p.p_Title}</a>
+                            	<div>${p.b_Seed}</div>
+                        	</td>
+							<td><input name="landprice" value="${ p.p_Landprice }" size="5" readonly/></td>
+							<td><input name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}" size="5" readonly/></td>
+							<td><input name="manpay" value="${ p.p_Manpay }" size="5" readonly/></td>
+							<td><input name="delivery" value="3000원" size="5" readonly/></td>
+							<td><input name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }" size="5" readonly/></td>
+							
 								<c:set var= "total_price" value="${total_price + price}"/>
 								<c:set var= "landtotal" value="${landtotal + p.b_Land}"/>
 						</tr>
@@ -221,26 +241,37 @@ text-align:right;
 						</c:when>
 						
 						<c:otherwise>
-					 		<c:forEach var="p" varStatus="ps" items="${memBasketModel.getBasketbeanList() }" >
-						<c:set var="price" value="${ p.b_Totalprice + p.b_Land * p.p_Manpay }" />
+						<c:set var="landtotal" value="0" />
+						<c:set var="deliverytotal" value="0" />
+						
+					 	<c:forEach var="p" varStatus="ps" items="${memBasketModel.getBasketbeanList() }" >
+					 	
+						<c:set var="landprice" value="${ p.p_Landprice * p.b_Land }" />
+						<c:set var="manpay" value="${ p.p_Manpay * p.b_Land }" />
+						<c:set var="delivery" value="3000" />
+						<c:set var="price" value="${ landprice + manpay + delivery }" />
+						<c:set var="price" value="${ landprice + manpay + delivery }" />
+						
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="dm" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }"/>
-						<tr>
-							<th scope="col">
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}"/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}"/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }"/>
+						<tr class="center">
+							<td>
 								<input type="checkbox" id="chk_order_cancel_list0" name="chk_order_cancel_list_basic0" value="">
-							</th>
-							<th scope="col"><input name="image" value="${p.p_Img }" size="5" readonly /></th>
-							<th scope="col"><input name="title" value="${p.p_Title}" size="5" readonly /></th>
-							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}" size="5" readonly/></th>
-							<th scope="col"><input name="landprice" value="${ p.p_Landprice }" size="5" readonly/></th>
-							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}" size="5" readonly/></th>
-							<th scope="col"><input name="manpay" value="${ p.p_Manpay }" size="5" readonly/></th>
-							<th scope="col"><input name="delivery" value="3000원" size="5" readonly/></th>
-							<th scope="col"><input name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }" size="5" readonly/></th>
+							</td>
+							<td><a href="/productdetail"><img src="/resources/upload/product/1/${p.p_Img }" name="image" class="img" /></a></td>
+							<td><a href="/productdetail" class="bold">${p.p_Title} - ${p.b_Seed}</a></td>
+							<td><div>${p.b_Land}</div></td>
+                        	<td><div>${ landprice }</div></td>
+							<td><div>${ manpay }</div></td>
+							<td><div>${ delivery }</div></td>
+							<td><div>${ price }</div></td>
 							
-								<c:set var= "total_price" value="${total_price + price}"/>
-								<c:set var= "landtotal" value="${landtotal + p.b_Land}"/>
+								<c:set var= "landtotal" value="${landtotal + price}"/>
+								<c:set var= "deliverytotal" value="${deliverytotal + delivery}"/>
 						</tr>
 						</c:forEach>
 						</c:otherwise>
@@ -252,16 +283,12 @@ text-align:right;
 			<tr>
 				<td class=""></td>
 		        <td colspan="8">
-					<span class="gLeft">상품구매금액</span>  
-					<strong>130,000
-						<span class="displaynone"> (0)</span>
-					</strong> + 배송비 
-					<span id="domestic_ship_fee">0 (무료)</span> 
-					<span class="displaynone"> - 상품할인금액 0 </span> = 합계 : 
-					<strong class="txtEm gIndent10">
-						<span id="domestic_ship_fee_sum" class="txt18">130,000</span>
-					</strong> 
+					<span class="gLeft">상품주문금액</span>  
+					<span>${landtotal}</span> + 배송비 ${ deliverytotal }
+					<span id="domestic_ship_fee"></span> = 합계 : 
+					<strong>${landtotal + deliverytotal }</strong> 
 					<span class="displaynone"></span>
+					<c:set var= "total_price" value="${landtotal + deliverytotal }"/>
 				</td>
 				</tr>
 				</tfoot>
@@ -374,52 +401,18 @@ text-align:right;
                     	</tr>
         		</table>
         		</div>
-							
                             	<div><input type="hidden" id="pay_Address1" name="pay_Address1" value="" /></div>
                             	<div><input type="hidden" id="pay_Address2" name="pay_Address2" value="" /></div>
                             	<div><input type="hidden" id="pay_Address3" name="pay_Address3" value="" /></div>
-    			
-        		
-        		<br>
-        		 
-        		<hr>
-        			<div class="container ">
-						<div class="col">
-							<div class="row form-group">
-								<div>
-									<span class="col-mb-3">합계</span>
-									<span class="col-mb-3">배송비</span>
-									<span class="col-mb-3">총금액</span>
-								</div>
-							</div>
-							<div class="row form-control">	
-								<div>
-							    	<span class="col-mb-3"><input name="price" value="${ total_price }" size="5" readonly/>원</span>
-									<span class="col-mb-3"><input name="delivery" value="3000" size="5" readonly/>원</span>
-									<span class="col-mb-3"><input name="payTotalprice" value="${ delivery + total_price }" size="5" readonly />원</span>
-								</div>
-							</div>	
-						</div>
-					</div>
-					<br>
-				<hr>
-                       
-                        <h3>결제 정보</h3>
-                       <input type="radio" id="method1" name="pay_Method" value="신용카드"/><label for="method1" >신용카드</label>
-                       <input type="radio" id="method2" name="pay_Method" value="카카오페이"/><label for="method2" >카카오페이</label>
-                       <input type="radio" id="method3" name="pay_Method" value="네이버페이"/><label for="method3" >네이버페이</label>
-                       <input type="radio" id="method4" name="pay_Method" value="계좌이체"/><label for="method4" >계좌이체</label>
-                       	
                         </form:form>
-                        <div class="col">
-                                <input type="button" onClick="submit()" id="kakao" value="${ delivery + total_price }원 결제하기" />
+                        <div class="pay">
+                        	<div class=""><span style="font-size:30px; font-weight:400px">총 결제금액 : ${ total_price }</span> <span style="font-size:20px;">원</span></div>
+                                <input class="btn btn-primary" style="width:200px; height:60px; font-size:20px" type="button" onClick="submit()" id="kakao" value="결제하기" />
                         </div>
                         
 			</div>
 		</div>
 	</div>
-	
-	
 	<script>
 	// 우편번호 자르기
 	var post = '${Member.m_Addr }';
@@ -584,11 +577,11 @@ text-align:right;
 	
 		document.pay_data.submit();
 	}
-	
 	</script>
 	
-<%-- <footer>
+	
+
 <jsp:include page="/WEB-INF/views/home/footer.jsp" />
-</footer> --%>
+
 </body>
 </html>
