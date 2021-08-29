@@ -49,7 +49,7 @@ public class PaymentController {
 		String id = basketbean.getBasketbeanList().get(0).getB_Id();
 		MemberBean getinfo1 = userdao.userInfo(id);
 
-		System.out.println(id); //
+		System.out.println(getinfo1.getM_Id()+"너 id 임"); //
 		model.addAttribute("Member", getinfo1);
 		model.addAttribute("memBasketModel", basketbean);
 		model.addAttribute("payment", paymentbean);

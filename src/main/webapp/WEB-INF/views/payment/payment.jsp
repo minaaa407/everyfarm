@@ -140,10 +140,13 @@ font-weight:bold;
 }
 .pay{
 text-align:center;
-height:150px;
+height:200px;
 border-bottom: 1px solid #cccccc;
 background-color:#fbfafa;
 padding-top:10px;
+}
+.agree {
+margin-bottom:10px;
 }
 </style>
 </head>
@@ -197,7 +200,7 @@ padding-top:10px;
 				<thead>
 					<tr class="center">
 						<th scope="col">
-							<input type="checkbox" onclick="EC_SHOP_FRONT_ORDERFORM_PRODUCT.proc.setCheckOrderList('chk_order_cancel_list_basic', this);"/>
+							<input type="checkbox" id="all" name="all"/>
 						</th>
                         <th scope="col">이미지</th>
                         <th scope="col">상품정보</th>
@@ -260,7 +263,7 @@ padding-top:10px;
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }"/>
 						<tr class="center">
 							<td>
-								<input type="checkbox" id="chk_order_cancel_list0" name="chk_order_cancel_list_basic0" value="">
+								<input type="checkbox" id="list0" name="list0" value="">
 							</td>
 							<td><a href="/productdetail"><img src="/resources/upload/product/1/${p.p_Img }" name="image" class="img" /></a></td>
 							<td><a href="/productdetail" class="bold">${p.p_Title} - ${p.b_Seed}</a></td>
@@ -301,7 +304,9 @@ padding-top:10px;
 					<div class="ec-base-button">
         	<span class="gLeft ">
             	<strong class="text">선택상품을</strong>
-            	<a href="#none" id="btn_product_delete"><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_delete2.gif" alt="삭제하기"/></a>
+            	<input type="button" id="submit" value="삭제" onclick="checkremove();" />
+            	<a id="checkdelete" onclick="checkdelete();">
+            	<img src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_delete2.gif" alt="삭제하기"/></a>
         	</span>
         </div>	
 								
@@ -371,7 +376,7 @@ padding-top:10px;
 							<option value="korea.com">korea.com</option>
 							<option value="dreamwiz.com">dreamwiz.com</option>
 							<option value="gmail.com">gmail.com</option>
-							<option value="etc">직접입력</option>
+							<option value="">직접입력</option>
 							</select>
 							<p class="grid">이메일을 통해 주문처리과정을 보내드립니다.
 							<br>
@@ -407,13 +412,81 @@ padding-top:10px;
                         </form:form>
                         <div class="pay">
                         	<div class=""><span style="font-size:30px; font-weight:400px">총 결제금액 : ${ total_price }</span> <span style="font-size:20px;">원</span></div>
-                                <input class="btn btn-primary" style="width:200px; height:60px; font-size:20px" type="button" onClick="submit()" id="kakao" value="결제하기" />
+                        	<div class="agree"><input type="checkbox" id="agree" name="agree" /><label for="agree"> &nbsp;결제정보를 확인하였으며, 구매진행에 동의합니다.</label></div> 
+                            	<input class="btn btn-primary" style="width:200px; height:60px; font-size:20px" type="button" onClick="submit()" id="kakao" value="결제하기" />
                         </div>
                         
 			</div>
 		</div>
 	</div>
 	<script>
+	var check = 0;
+	var allcheck = $("input:checkbox[id='list0']").length;
+	var $checkok = 0;
+	var arr = [];
+	var checktrue = false;
+	
+	$(document).on('click','#all',function(){
+		if($("#all").prop("checked")){
+			$("input[id='list0']").prop("checked",true);
+			} else {
+			$("input[id='list0']").prop("checked",false);	
+			}
+		});
+		
+	$(document).on('click','input[id=list0]',function(){
+    	if($('input[id=list0]:checked').length==$('input[id=list0]').length){
+        	$('#all').prop('checked',true);
+        }else{
+            $('#all').prop('checked',false);
+        }
+	});
+	
+	function checkdelete() {
+	    	 var check = $("input:checkbox[name='list0']:checked").length;
+	    	 var allcheck = $("input:checkbox[name='list0']").length;
+			 arr.length = 0;
+			 var no = [];
+			 if(check == 0) {
+				 alert("선택하신 상품이 없습니다. 삭제를 원하시는 상품을 선택해주세요.");
+			 } else {
+				 if (confirm('선택하신 상품을 삭제하시겠습니까?')) {
+					 for (const i = 0; i < allcheck; i++) {
+						 var $checkok = $('#'+i);
+						 if($checkok.prop('checked')){
+							 arr.push(i);
+						 }
+					 }
+					 for (const j = 0; j < check; j++){
+						 no.push($('#'+arr[j]).val() * 1);
+					 }
+					 window.location.href = "http://localhost:8090/paymentinfo?no="+no;
+				 } else {
+					 return false;
+				 }
+			 } 
+		}	
+	
+	
+	function submit() {
+		
+		// 구매동의 체크박스
+		if(document.getElementById("agree").checked) {
+			document.pay_data.submit();
+			// 주소
+			var address1 = document.getElementById('postcode').value;
+			var address2 = document.getElementById('raddr1').value;
+			var address3 = document.getElementById('raddr2').value;
+			var address = address1 + address2 + address3;
+			document.getElementById('Ad').value=address;
+		} else {
+			alert("결제정보 확인 및 구매진행에 동의하셔야 주문이 가능합니다.")	
+		}
+	}
+	
+	
+	
+	
 	// 우편번호 자르기
 	var post = '${Member.m_Addr }';
 	var lastpost = post.slice(-6, -1);
@@ -429,11 +502,17 @@ padding-top:10px;
 	var tel2 = $('#tel2').val();
 	
 	// 이메일
-	var email = '${Member.m_Id}';
+	
+	var email = '${Member.m_Id }';
 	var strArray = email.split('@');
+	console.log(email);
+	console.log("이메일");
 	console.log(strArray[0] + ', ' + strArray[1]);
-	var mail1 = document.getElementById('mail1').value = strArray[0];
-	var mail2 = document.getElementById('mail2').val = strArray[1];
+	
+	document.getElementById('mail1').value = strArray[0];
+	var mail1 = document.getElementById('mail1').value;
+	document.getElementById('mail2').value = strArray[1];
+	var mail2 = document.getElementById('mail2').value;
 	console.log(mail1 + mail2);
 	
 	$(document).ready(function(){
@@ -442,17 +521,19 @@ padding-top:10px;
 		$("input:radio[id=sameaddr]").prop("checked", true); // 사용자동일에 체크되어있음
 		if($("input:radio[id=sameaddr]").is(":checked")) {       // 사용자동일에 체크되어있으면 실행
 			$("input:radio[id=otheraddr]").prop("checked", false);  // 새로운배송지에 체크 해제
-			$('#m_Name').val(name);       $('#m_Name').prop('readonly', true);
-			$('#postcode').val(lastpost); $('#postcode').prop('readonly', true);
-			$('#raddr1').val(firstpost);  $('#raddr1').prop('readonly', true);
-			$('#tel').val(tel);			  $('#tel').prop('readonly', true);
-			$('#tel1').val(tel1);		  $('#tel1').prop('readonly', true);
-			$('#tel2').val(tel2);		  $('#tel2').prop('readonly', true);
-			$('#mail1').val(mail1);  	  $('#mail1').prop('readonly', true);
-			$('#mail2').val(mail2);		  $('#mail2').prop('readonly', true);
+			$('#m_Name').val(name);       $('#m_Name').prop('disabled', true);
+			$('#postcode').val(lastpost); $('#postcode').prop('disabled', true);  
+			$('#raddr1').val(firstpost);  $('#raddr1').prop('disabled', true);
+			$('#raddr2').val(firstpost);  $('#raddr2').prop('disabled', true);
+			$('#tel').val(tel);			  $('#tel').prop('disabled', true);
+			$('#tel1').val(tel1);		  $('#tel1').prop('disabled', true);
+			$('#tel2').val(tel2);		  $('#tel2').prop('disabled', true);
+			$('#mail1').val(mail1);  	  $('#mail1').prop('disabled', true);
+			$('#mail2').val(mail2);		  $('#mail2').prop('disabled', true);
 			$("#mail").hide();
 			console.log(name);
 		}
+		
 	});
 	 
 	// 새로운 배송지 체크할 경우	
@@ -460,35 +541,60 @@ padding-top:10px;
 		 var empty = '';
 	      $("input:radio[id=otheraddr]").click(function(){
 	    	  $("input:radio[id=sameaddr]").prop("checked", false);
-	    	  $('#m_Name').val(empty);   $('#m_Name').prop('readonly', false);
-	    	  $('#postcode').val(empty); $('#postcode').prop('readonly', false);
-			  $('#raddr1').val(empty);	 $('#raddr1').prop('readonly', false);
-			  $('#tel').val(empty);		 $('#tel').prop('readonly', false);
-			  $('#tel1').val(empty);	 $('#tel1').prop('readonly', false);
-			  $('#tel2').val(empty);	 $('#tel2').prop('readonly', false);
-			  $('#mail1').val(empty);	 $('#mail1').prop('readonly', false);
-			  $('#mail2').val(empty);	 $('#mail2').prop('readonly', false);
+	    	  $('#m_Name').val(empty);   $('#m_Name').prop('disabled', false);
+	    	  $('#postcode').val(empty); $('#postcode').prop('disabled', false);
+			  $('#raddr1').val(empty);	 $('#raddr1').prop('disabled', false);
+			  $('#raddr2').val(empty);	 $('#raddr2').prop('disabled', false);
+			  $('#tel').val(empty);		 $('#tel').prop('disabled', false);
+			  $('#tel1').val(empty);	 $('#tel1').prop('disabled', false);
+			  $('#tel2').val(empty);	 $('#tel2').prop('disabled', false);
+			  $('#mail1').val(empty);	 $('#mail1').prop('disabled', false);
+			  $('#mail2').val(empty);	 $('#mail2').prop('disabled', false);
 			  $("#mail").show();
 	    	  console.log(empty + "empty");
-	      });
-	});
-	 
+	    	  
+	    	  $("#mail").on("change", function() {
+	    		  const $select = $(this);
+	    		  $("#mail2").val(function(i, val) {
+	    			  return val = $select.val();
+	    			  
+	    		  });
+	    		  	if ($select.val() == "") {
+	    		  	$("#mail2").prop("disabled", false);
+	    		  	} else {
+	    		  	$("#mail2").prop("disabled", true);	
+	    		  	}
+	    	  });
+	    	  
+	    	  $("#mail2").on("keypress", function() {
+	    		 $("#mail option:eq(10)").prop("selected", true);
+	    		  
+	    	  });
+	    	  $("#omessage").on("keypress", function() {
+		    		 $("#memo option:eq(6)").prop("selected", true);
+	    	  });
+	    	});
+	     });
 	// 사용자 동일에 체크할 경우
 	 $(function(){
 		 var name = '${Member.m_Name }';
 	      $("input:radio[id=sameaddr]").click(function(){
 	    	  $("input:radio[id=otheraddr]").prop("checked", false);
-	    	  $('#m_Name').val(name);        $('#m_Name').prop('readonly', true);
-	    	  $('#postcode').val(lastpost);	 $('#postcode').prop('readonly', true);
-			  $('#raddr1').val(firstpost);	 $('#raddr1').prop('readonly', true);
-			  $('#tel').val(tel);			 $('#tel').prop('readonly', true);
-			  $('#tel1').val(tel1);			 $('#tel1').prop('readonly', true);
-			  $('#tel2').val(tel2);			 $('#tel2').prop('readonly', true);
-			  $('#mail1').val(mail1);		 $('#mail1').prop('readonly', true);
-			  $('#mail2').val(mail2);		 $('#mail2').prop('readonly', true);
+	    	  $('#m_Name').val(name);        $('#m_Name').prop('disabled', true);
+	    	  $('#postcode').val(lastpost);	 $('#postcode').prop('disabled', true);
+			  $('#raddr1').val(firstpost);	 $('#raddr1').prop('disabled', true);
+			  $('#raddr2').val(firstpost);	 $('#raddr2').prop('disabled', true);
+			  $('#tel').val(tel);			 $('#tel').prop('disabled', true);
+			  $('#tel1').val(tel1);			 $('#tel1').prop('disabled', true);
+			  $('#tel2').val(tel2);			 $('#tel2').prop('disabled', true);
+			  $('#mail1').val(mail1);		 $('#mail1').prop('disabled', true);
+			  $('#mail2').val(mail2);		 $('#mail2').prop('disabled', true);
 			  $("#mail").hide();	
 	    	  console.log(name);
 	      });
+	      $("#omessage").on("keypress", function() {
+	    		 $("#memo option:eq(6)").prop("selected", true);
+	 	  });
 	});
 	 
 	
@@ -497,7 +603,12 @@ padding-top:10px;
 	    var $select = $(this);
 	    $("#omessage").val(function(i, val) {
 	        return val = $select.val();
-	    })
+	    });
+	    if ($select.val() == "") {
+		  	$("#omessage").prop("disabled", false);
+		  	} else {
+		  	$("#omessage").prop("disabled", true);	
+		  	}
 	});
 	
 	// 배송메시지 id값 dm에다 전달
@@ -565,18 +676,9 @@ padding-top:10px;
 						}
 					}
 				}).open();
-	}
+	 }
 	
-	function submit() {
-		// 주소
-		var address1 = document.getElementById('postcode').value;
-		var address2 = document.getElementById('raddr1').value;
-		var address3 = document.getElementById('raddr2').value;
-		var address = address1 + address2 + address3;
-		document.getElementById('Ad').value=address;
 	
-		document.pay_data.submit();
-	}
 	</script>
 	
 	
