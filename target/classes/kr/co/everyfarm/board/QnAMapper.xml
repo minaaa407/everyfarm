@@ -4,6 +4,24 @@
 
 <mapper namespace="kr.co.everyfarm.board.QnADAO">
 
+   	<!-- 총 게시글 갯수 출력 -->
+	<select id="countBoard" resultType="int">
+		SELECT COUNT(*) FROM qnatofarmer
+	</select>
+
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectBoard" resultType="kr.co.everyfarm.board.QnABean">
+	 	SELECT *
+			FROM (
+    			SELECT @ROWNUM := @ROWNUM + 1 as rn, q_No, q_Id, q_Title, q_Content,
+    				q_Date, q_Secret, q_Answer, q_Pno, q_Ptitle, q_Pid, q_Magdate, q_Magcontent  
+    				FROM qnatofarmer, (SELECT @ROWNUM :=0) A
+   					ORDER BY q_no DESC
+    			) RESULT
+    	WHERE RN BETWEEN #{start} AND #{end}		
+	
+	</select> <!-- q_Img -->
+ 
    	<select id ="list" resultType="kr.co.everyfarm.board.QnABean">
   		<![CDATA[
    		 SELECT * FROM qna order by q_no desc
@@ -52,12 +70,71 @@
 	</select>
 	
 	<select id="searchall" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qna where q_Content LIKE CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE CONCAT('%',#{q_Content},'%') 
-		or q_Title LIKE CONCAT('%',#{q_Content},'%') or q_Id LIKE CONCAT('%',#{q_Content},'%') order by q_no desc
+		select * from qnatofarmer where (q_Content LIKE CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE CONCAT('%',#{q_Content},'%') 
+		or q_Title LIKE CONCAT('%',#{q_Content},'%') or q_Id LIKE CONCAT('%',#{q_Content},'%') or q_pno LIKE CONCAT('%',#{q_Content},'%')
+		or q_ptitle LIKE CONCAT('%',#{q_Content},'%') or q_pid LIKE CONCAT('%',#{q_Content},'%') or q_date LIKE CONCAT('%',#{q_Content},'%')
+		or q_magdate LIKE CONCAT('%',#{q_Content},'%')) 
+		<choose> 
+			<when test="q_Answer == true">  
+				and q_answer = 1
+			</when>
+			<when test="q_Answer == false">
+				and q_answer = 0
+			</when>
+		</choose>
+		order by q_no desc
+	</select>
+	
+	<select id="searchpno" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
+		select * from qnatofarmer where q_pno LIKE CONCAT('%',#{q_Content},'%')
+		<choose> 
+			<when test="q_Answer == true">  
+				and q_answer = 1
+			</when>
+			<when test="q_Answer == false">
+				and q_answer = 0
+			</when>
+		</choose>
+		order by q_no desc
+	</select>
+	
+	<select id="searchptitle" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
+		select * from qnatofarmer where q_ptitle LIKE CONCAT('%',#{q_Content},'%')
+		<choose> 
+			<when test="q_Answer == true">  
+				and q_answer = 1
+			</when>
+			<when test="q_Answer == false">
+				and q_answer = 0
+			</when>
+		</choose>
+		order by q_no desc
+	</select>
+	
+	<select id="searchcontent" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
+		select * from qnatofarmer where q_content LIKE CONCAT('%',#{q_Content},'%')
+		<choose> 
+			<when test="q_Answer == true">  
+				and q_answer = 1
+			</when>
+			<when test="q_Answer == false">
+				and q_answer = 0
+			</when>
+		</choose>
+		order by q_no desc
 	</select>
 	
 	<select id="searchId" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qna where q_Id LIKE CONCAT('%',#{q_Content},'%') order by q_no desc
+		select * from qnatofarmer where q_Id LIKE CONCAT('%',#{q_Content},'%') or  q_pid LIKE CONCAT('%',#{q_Content},'%')
+		<choose> 
+			<when test="q_Answer == true">  
+				and q_answer = 1
+			</when>
+			<when test="q_Answer == false">
+				and q_answer = 0
+			</when>
+		</choose>
+		order by q_no desc
 	</select>
 	
 	<select id="searchEach" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">

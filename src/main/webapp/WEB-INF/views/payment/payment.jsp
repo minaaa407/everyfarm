@@ -212,48 +212,16 @@ margin-bottom:10px;
                     </tr>
                 </thead>
                 <tbody> 
-						<c:set var="total_price" value="0" />
-						<c:set var="delivery" value="3000" />
+						<c:set var="landtotal" value="0" />
+						<c:set var="deliverytotal" value="0" />
 						<c:choose>
 					 		<c:when test = "${memBasket != null}">  
 					 		<c:forEach var="p" varStatus="ps" items="${memBasket}" >
-						    <c:set var="price" value="${(p.b_Land * p.p_Manpay) + (p.b_Land * p.p_Landprice) }" />
-						    <input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="dm" value=""/>
-						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
-						<input type="hidden" name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }"/>
-						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}"/>
-						<tr>
-							<td>
-								<input type="checkbox" id="chk_order_cancel_list0" name="chk_order_cancel_list_basic0" value="">
-							</td>
-							<td><a href="/productdetail"><img src="/resources/upload/product/1/${p.p_Img }" name="image" class="img" /></a></td>
-							<td>
-                				<a href="/productdetail" class="bold">${p.p_Title}</a>
-                            	<div>${p.b_Seed}</div>
-                        	</td>
-							<td><input name="landprice" value="${ p.p_Landprice }" size="5" readonly/></td>
-							<td><input name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}" size="5" readonly/></td>
-							<td><input name="manpay" value="${ p.p_Manpay }" size="5" readonly/></td>
-							<td><input name="delivery" value="3000원" size="5" readonly/></td>
-							<td><input name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }" size="5" readonly/></td>
-							
-								<c:set var= "total_price" value="${total_price + price}"/>
-								<c:set var= "landtotal" value="${landtotal + p.b_Land}"/>
-						</tr>
-						</c:forEach>
-						</c:when>
-						
-						<c:otherwise>
-						<c:set var="landtotal" value="0" />
-						<c:set var="deliverytotal" value="0" />
-						
-					 	<c:forEach var="p" varStatus="ps" items="${memBasketModel.getBasketbeanList() }" >
-					 	
-						<c:set var="landprice" value="${ p.p_Landprice * p.b_Land }" />
+						    <c:set var="landprice" value="${ p.p_Landprice * p.b_Land }" />
 						<c:set var="manpay" value="${ p.p_Manpay * p.b_Land }" />
 						<c:set var="delivery" value="3000" />
 						<c:set var="price" value="${ landprice + manpay + delivery }" />
-						<c:set var="price" value="${ landprice + manpay + delivery }" />
+						<c:set var="price2" value="${ landprice + manpay }" />
 						
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="dm" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
@@ -273,7 +241,43 @@ margin-bottom:10px;
 							<td><div>${ delivery }</div></td>
 							<td><div>${ price }</div></td>
 							
-								<c:set var= "landtotal" value="${landtotal + price}"/>
+								<c:set var= "landtotal" value="${landtotal + price2}"/>
+								<c:set var= "deliverytotal" value="${deliverytotal + delivery}"/>
+						</tr>
+						</c:forEach>
+						</c:when>
+						
+						<c:otherwise>
+						<c:set var="landtotal" value="0" />
+						<c:set var="deliverytotal" value="0" />
+						
+					 	<c:forEach var="p" varStatus="ps" items="${memBasketModel.getBasketbeanList() }" >
+					 	
+						<c:set var="landprice" value="${ p.p_Landprice * p.b_Land }" />
+						<c:set var="manpay" value="${ p.p_Manpay * p.b_Land }" />
+						<c:set var="delivery" value="3000" />
+						<c:set var="price" value="${ landprice + manpay + delivery }" />
+						<c:set var="price2" value="${ landprice + manpay }" />
+						
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="dm" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }"/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}"/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}"/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }"/>
+						<tr class="center">
+							<td>
+								<input type="checkbox" id="list0" name="list0" value="">
+							</td>
+							<td><a href="/productdetail"><img src="/resources/upload/product/1/${p.p_Img }" name="image" class="img" /></a></td>
+							<td><a href="/productdetail" class="bold">${p.p_Title} - ${p.b_Seed}</a></td>
+							<td><div>${p.b_Land}</div></td>
+                        	<td><div>${ landprice }</div></td>
+							<td><div>${ manpay }</div></td>
+							<td><div>${ delivery }</div></td>
+							<td><div>${ price }</div></td>
+							
+								<c:set var= "landtotal" value="${landtotal + price2}"/>
 								<c:set var= "deliverytotal" value="${deliverytotal + delivery}"/>
 						</tr>
 						</c:forEach>
@@ -287,9 +291,9 @@ margin-bottom:10px;
 				<td class=""></td>
 		        <td colspan="8">
 					<span class="gLeft">상품주문금액</span>  
-					<span>${landtotal}</span> + 배송비 ${ deliverytotal }
-					<span id="domestic_ship_fee"></span> = 합계 : 
-					<strong>${landtotal + deliverytotal }</strong> 
+					<span id="ordercost">${landtotal}</span> + 배송비
+					<span id="delcost"> ${ deliverytotal }</span> = 합계 : 
+					<strong id="sumcost">${landtotal + deliverytotal }</strong> 
 					<span class="displaynone"></span>
 					<c:set var= "total_price" value="${landtotal + deliverytotal }"/>
 				</td>
@@ -304,7 +308,6 @@ margin-bottom:10px;
 					<div class="ec-base-button">
         	<span class="gLeft ">
             	<strong class="text">선택상품을</strong>
-            	<input type="button" id="submit" value="삭제" onclick="checkremove();" />
             	<a id="checkdelete" onclick="checkdelete();">
             	<img src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_delete2.gif" alt="삭제하기"/></a>
         	</span>
@@ -420,55 +423,8 @@ margin-bottom:10px;
 		</div>
 	</div>
 	<script>
-	var check = 0;
-	var allcheck = $("input:checkbox[id='list0']").length;
-	var $checkok = 0;
-	var arr = [];
-	var checktrue = false;
 	
-	$(document).on('click','#all',function(){
-		if($("#all").prop("checked")){
-			$("input[id='list0']").prop("checked",true);
-			} else {
-			$("input[id='list0']").prop("checked",false);	
-			}
-		});
-		
-	$(document).on('click','input[id=list0]',function(){
-    	if($('input[id=list0]:checked').length==$('input[id=list0]').length){
-        	$('#all').prop('checked',true);
-        }else{
-            $('#all').prop('checked',false);
-        }
-	});
-	
-	function checkdelete() {
-	    	 var check = $("input:checkbox[name='list0']:checked").length;
-	    	 var allcheck = $("input:checkbox[name='list0']").length;
-			 arr.length = 0;
-			 var no = [];
-			 if(check == 0) {
-				 alert("선택하신 상품이 없습니다. 삭제를 원하시는 상품을 선택해주세요.");
-			 } else {
-				 if (confirm('선택하신 상품을 삭제하시겠습니까?')) {
-					 for (const i = 0; i < allcheck; i++) {
-						 var $checkok = $('#'+i);
-						 if($checkok.prop('checked')){
-							 arr.push(i);
-						 }
-					 }
-					 for (const j = 0; j < check; j++){
-						 no.push($('#'+arr[j]).val() * 1);
-					 }
-					 window.location.href = "http://localhost:8090/paymentinfo?no="+no;
-				 } else {
-					 return false;
-				 }
-			 } 
-		}	
-	
-	
-	function submit() {
+function submit() {
 		
 		// 구매동의 체크박스
 		if(document.getElementById("agree").checked) {
@@ -484,6 +440,53 @@ margin-bottom:10px;
 		}
 	}
 	
+	
+var check = 0;
+var allcheck = $("input:checkbox[id='list0']").length;
+var $checkok = 0;
+var arr = [];
+var checktrue = false;
+
+$(document).on('click','#all',function(){
+alert("전체 체크박스 개수" + allcheck);
+	if($("#all").prop("checked")){
+		$("input[id='list0']").prop("checked",true);
+		} else {
+		$("input[id='list0']").prop("checked",false);	
+		}
+	});
+	
+$(document).on('click','input[id=list0]',function(){
+	if($('input[id=list0]:checked').length==$('input[id=list0]').length){
+    	$('#all').prop('checked',true);
+    }else{
+        $('#all').prop('checked',false);
+    }
+});
+
+function checkdelete() {
+    	 var check = $("input:checkbox[name='list0']:checked").length;
+    	 var allcheck = $("input:checkbox[name='list0']").length;
+    	 alert(check + "개");
+    	 arr.length = 0;
+    	 var check2 = $("input:checkbox[name='list0']:checked");
+		 var pno = [];
+		 if(check == 0) {
+			 alert("선택하신 상품이 없습니다. 삭제를 원하시는 상품을 선택해주세요.");
+		 } else {
+			 if (confirm('선택하신 상품을 삭제하시겠습니까?')) {
+				 for (const i = 0; i < check; i++) {
+					 check2.parent().parent().remove();
+					 $('#all').prop('checked',false);
+				 }
+				 document.getElementById('ordercost').innerHTML="이순신"
+
+			 } else {
+				 return false;
+			 }
+		 } 
+				 alert("체크가능개수" + allcheck);
+	}	
 	
 	
 	

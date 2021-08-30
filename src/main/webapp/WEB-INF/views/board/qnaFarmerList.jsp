@@ -46,7 +46,7 @@
                          	<div class="breadcrumb__text">
                                 <h2><span>상품 문의 </span>게시판</h2>
                                 <div class="breadcrumb__option">
-                                   <form action="searchqna" method="post">
+                                   <form action="farmerQnasearch" method="post">
          								<select name="searchBox"> <!-- style="padding: 7px 11px;" -->
               								<option value="all">전체 검색</option>
               								<option value="pno">상품번호</option>
@@ -62,6 +62,7 @@
               								<option value="o">답글 O</option>
              								<option value="x">답글 X</option>
             							</select> 
+            							<button type="submit" class="btn btn-primary">검색</button>
             						</form>
         							  <!-- <a href="#">Home</a>
                                    	  <span>Recipes</span> -->
@@ -152,7 +153,7 @@
                            									<input type="text" name="q_Pid" value="<%=farmer.getF_Id()%>" readonly>
                             								<input type="hidden" name="q_No" value="${q.q_No}">
                         								</div>
-                        									<textarea id="q_magcontent" name="q_Magcontent">${q.q_Magcontent}</textarea>
+                        									<textarea required id="q_magcontent" name="q_Magcontent">${q.q_Magcontent}</textarea>
                												<button type="submit" class="site-btn">답글 수정하기</button>
                          	
                    									</form>
@@ -169,7 +170,7 @@
                            							<input type="text" name="q_Pid" value="<%=farmer.getF_Id()%>" readonly>
                                						<input type="hidden" name="q_No" value="${q.q_No}">
                                					</div>
-                        	   						<textarea id="q_magcontent" name="q_Magcontent"></textarea>
+                        	   						<textarea required id="q_magcontent" name="q_Magcontent"></textarea>
                				   						<button type="submit" class="site-btn">답글 등록하기</button>
 					                         </form>
 								      </div> 

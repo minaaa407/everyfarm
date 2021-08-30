@@ -31,6 +31,8 @@
 
 <style type="text/css">
 
+.fix{position:fixed;_position:absolute;width:100%;top:0;z-index:100}
+
 /*  style="width:300px;height:200px;font-size:30px;" */
 
 /* input[type="text"]{
@@ -179,6 +181,9 @@
 </style>	
 	
 </head>
+<header>
+<jsp:include page="/WEB-INF/views/home/header.jsp" />
+</header>
 <body>
 	<main class="page">
 	 	<section class="shopping-cart dark">
@@ -210,7 +215,7 @@
 		       </div>
 		        <div class="content">
 	 				<div class="row">
-	 					<div class="col-md-12 col-lg-9">
+	 					<div class="col-7 col-sm-7 col-md-8 col-lg-9">
 	 						<div class="items">
 	 						
 							
@@ -246,14 +251,11 @@
 				 								<div class="row">
 					 								<div class="col-md-3">
 														<c:choose>
-															<c:when test="${b.p_Landavailable eq 0}">
-																<div><label><input type="checkbox" id="${i-1}" name="choose" value="${b.b_No}" onchange="paybox()" disabled/></label></div>
-															</c:when>
 															<c:when test="${b.p_Accept eq 'N'}">
-																<div><label><input type="checkbox" id="${i-1}" name="choose" value="${b.b_No}" onchange="paybox()" disabled/></label></div>
+																<div><label for="${i-1}"><input type="checkbox" id="${i-1}" name="choose" value="${b.b_No}" onchange="paybox()" disabled/></label></div>
 															</c:when>
 															<c:otherwise>
-																<div><label><input type="checkbox" id="${i-1}" name="choose" value="${b.b_No}" onchange="paybox()"/></label></div>
+																<div><label for="${i-1}"><input type="checkbox" id="${i-1}" name="choose" value="${b.b_No}" onchange="paybox()"/></label></div>
 															</c:otherwise>
 														</c:choose>
 					 									<label><a href="#">${b.p_Img}</a></label>
@@ -271,59 +273,66 @@
 		List<String> list = Arrays.asList(seed);   %>
 								 							
 								 									<div class="product-info">
-								 							
+								 									<label for="${i-1}">
 																	<c:choose>
-																		<c:when test="${b.p_Landavailable eq 0 or b.p_Accept eq 'N'}">
+																		<c:when test="${b.p_Accept eq 'N'}">
  																			<div>씨앗: <span class="value"><select id="b_Seed${i-1}" name="basketbeanList[${now.index}].b_Seed" onFocus='this.initialSelect = this.selectedIndex;'
 																						onChange='this.selectedIndex = this.initialSelect;' onchange="seedupdate(this.id)"> <!-- style="width:60%; float:right;" --> 
 						 															  <option value="${b.b_Seed}" selected >${b.b_Seed} : 선택</option>
+						 															  <% 	for(int i=0 ;i<seed.length;i++) {
+																								if (!(seed[i].equals("basketList.getB_Seed()"))){       %>
+																									<option value="<%=seed[i]%>"><%=seed[i]%></option>
+																				 		<%    }
+ 			   																				}  %>
+ 			   																		</select></span></div> 
 																		</c:when>
 																		<c:otherwise>
 																			<div>씨앗: <span class="value"><select id="b_Seed${i-1}" name="basketbeanList[${now.index}].b_Seed" onchange="seedupdate(this.id)"> <!-- style="width:60%; float:right;" --> 
 																					  <option value="${b.b_Seed}" selected >${b.b_Seed} : 선택</option>
-			
-																		</c:otherwise>
-																	</c:choose>
-			
-																	<% 	for(int i=0 ;i<seed.length;i++) {
-																		if (!(seed[i].equals("basketList.getB_Seed()"))){       %>
-			
- 																		<option value="<%=seed[i]%>"><%=seed[i]%></option>
- 				
- 																	<%  }
- 			   															}  %>
- 			   														</select></span></div>  <%-- <input type="text" id="p_Landprice${i-1}" name="basketbeanList[${now.index}].p_Landprice" class="form-control" value="${b.p_Landprice}" dir="rtl"/> --%>
-	
-																	<div>평당 가격: <span class="value" id="p_Landprice${i-1}">${b.p_Landprice}원</span></div>
-																	<div>평당 노동력: <span class="value" id="p_Manpay${i-1}">${b.p_Manpay}원</span></div>
-		
+																					  <% 	for(int i=0 ;i<seed.length;i++) {
+																								if (!(seed[i].equals("basketList.getB_Seed()"))){       %>
+																									<option value="<%=seed[i]%>"><%=seed[i]%></option>
+																				 		<%    }
+ 			   																				}  %>
+ 			   																		</select></span></div> 
+ 			   														  </c:otherwise>
+																</c:choose>
+																
+																	<%-- <div>평당 가격: <span class="value" id="p_Landprice${i-1}">${b.p_Landprice}원</span></div> --%>
+																	<fmt:formatNumber value="${b.p_Landprice }" pattern="#,###" var="landprice"/>
+																	<div>평당 가격: <span class="value" id="Landprice${i-1}">${landprice}원</span></div>
+																	
+																	
+																	<%-- <div>평당 노동력: <span class="value" id="p_Manpay${i-1}">${b.p_Manpay}원</span></div> --%>
+																	<fmt:formatNumber value="${b.p_Manpay}" pattern="#,###" var="Manpay"/>
+																	<div>평당 노동력: <span class="value" id="Manpay${i-1}">${Manpay}원</span></div>
+																	</label>
 																</div>
 									 						</div>
 							 							</div>
 							 							<div class="col-md-4 quantity">
 							 								<label for="land${i-1}"></label>
-							 							
-															<c:choose>
+							 								<c:choose>
 																<c:when test="${b.p_Accept eq 'N'}">
-																	<input type="number" id="land${i-1}" min="1" max="${b.p_Landavailable }" name="basketbeanList[${now.index}].b_Land" 
+																	<input type="number" id="land${i-1}" min="1" max="" name="basketbeanList[${now.index}].b_Land" 
 																			value="${b.b_Land}" disabled onchange="eachtotal(this.id)" class="form-control quantity-input">
-																			
- 																			<div>구매 불가. 품절</div>
+																			<div>구매 불가. 품절</div>
  																</c:when>                                                                    
             													<c:otherwise>
-            														<input type="number" id="land${i-1}" min="1" max="${b.p_Landavailable }" name="basketbeanList[${now.index}].b_Land" 
+            														<input type="number" id="land${i-1}" min="1" max="" name="basketbeanList[${now.index}].b_Land" 
             																value="${b.b_Land}" onchange="eachtotal(this.id)" class="form-control quantity-input">
-            																<%-- <div>${b.p_Landavailable}까지 선택 가능</div> --%>
             																
             														<input type="hidden" id="beforeland${i-1}" value="${b.b_Land}" />
             														
 																</c:otherwise>
 															</c:choose>
+														
 							 							</div>
 							 							<div class="col-md-3 price">
-															<span id="b_Totalprice${i-1}">${b.b_Totalprice}원</span>
- 															<input type="hidden" id="p_Landavailable${i-1}" name="basketbeanList[${now.index}].p_Landavailable" value="${b.p_Landavailable}" />
- 				     										<input type="hidden" id="p_Accept${i-1}" name="basketbeanList[${now.index}].p_Accept" value="${b.p_Accept}" />
+							 								<label for="${i-1}">
+							 								<fmt:formatNumber value="${b.b_Totalprice}" pattern="#,###" var="ttotalprice"/>
+															<span id="Totalprice${i-1}">${ttotalprice}원</span>
+							 								<input type="hidden" id="p_Accept${i-1}" name="basketbeanList[${now.index}].p_Accept" value="${b.p_Accept}" />
  															<input type="hidden" id="b_Pno${i-1}" name="basketbeanList[${now.index}].b_Pno" value="${b.b_Pno}" />
  															<input type="hidden" id="b_Id${i-1}" name="basketbeanList[${now.index}].b_Id" value="${b.b_Id}" />
  															<input type="hidden" id="b_No${i-1}" name="basketbeanList[${now.index}].b_No" value="${b.b_No}" />
@@ -331,23 +340,16 @@
  															<input type="hidden" id="p_Title${i-1}" name="basketbeanList[${now.index}].p_Title" value="${b.p_Title}" />
  															<input type="hidden" id="p_Manpay${i-1}" name="basketbeanList[${now.index}].p_Manpay" value="${b.p_Manpay}" />
  															<input type="hidden" id="p_Landprice${i-1}" name="basketbeanList[${now.index}].p_Landprice" value="${b.p_Landprice}" />
- 															<input type="hidden" id="Totalprice${i-1}" name="basketbeanList[${now.index}].b_Totalprice" value="${b.b_Totalprice}" />
- 															<%-- <input type="hidden" id="p_Landavailable${i-1}" name="basketbeanList[${now.index}].p_Landavailable" value="${b.p_Landavailable}" /> --%>
- 															
+ 															<input type="hidden" id="b_Totalprice${i-1}" name="basketbeanList[${now.index}].b_Totalprice" value="${b.b_Totalprice}" />
+ 															</label>
  														</div>
 							 						
 							 							<div class="col-md-2 price" style="padding-left: 0px;">
 							 								<c:set var = "title" value = "${b.p_Title}"/>
- 																<c:choose>
- 																	<c:when test="${fn:contains(title, '제주도')}">
- 																		<div><span class="value" id="delivery${i-1}">5000원</span></div>
- 																	</c:when>
- 																	<c:otherwise>
- 																		<div><span class="value" id="delivery${i-1}">3000원</span></div>
- 																	</c:otherwise>
- 																</c:choose>	
-							 							</div>
-							 						
+							 									<label for="${i-1}">
+ 																<div><span class="value" id="delivery${i-1}">3,000원</span></div>
+ 																</label>
+ 														</div>
 							 						</div>
 							 					</div>
 					 						</div>
@@ -359,8 +361,17 @@
 					</c:choose>
 				</div>
 			</div>
-			<div class="col-md-12 col-lg-3">
-				<div class="summary" id="scroll" style="position: absolute; top: -100px; height: 462px; width: 255px;">  
+			<div class="col-5 col-sm-5 col-md-4 col-lg-3">
+			<!-- 	<div class="summary" id="scroll" style="position: absolute; top: -100px; height: 462px; width: 255px;">  
+			 					<h3>선택 합계</h3>
+			 					<div class="summary-item"><span class="text">상품수</span><span class="price" id="choosecount" value="0">0개</span></div>
+			 					<div class="summary-item"><span class="text">상품 금액</span><span class="price" id="producttotal" value="0">0원</span></div>
+			 					<div class="summary-item"><span class="text">배송비</span><span class="price" id="deliverytotal" value="0">0원</span></div>
+			 					<div class="summary-item"><span class="text">Total</span><span class="price" id="finaltotal" value="0">0원</span></div>
+			 					<button type="submit" form="basket" value="구매하기" onclick="checkbuy();" class="btn btn-primary btn-lg btn-block">구매하기</button>
+			 	</div> -->
+			 		<div class="summary" id="floatMenu" style="top: 130px; height: 420px; width: 255px;">  <!-- position: absolute;  -->
+			 		
 			 					<h3>선택 합계</h3>
 			 					<div class="summary-item"><span class="text">상품수</span><span class="price" id="choosecount" value="0">0개</span></div>
 			 					<div class="summary-item"><span class="text">상품 금액</span><span class="price" id="producttotal" value="0">0원</span></div>
@@ -369,7 +380,7 @@
 			 					<button type="submit" form="basket" value="구매하기" onclick="checkbuy();" class="btn btn-primary btn-lg btn-block">구매하기</button>
 			 	</div>
 			</div>
-			 	<span id="brr"></span>
+			 	<!-- <span id="brr"></span> -->
 			 </div> 
 		   </div>
 	 	</section>
@@ -408,21 +419,19 @@
         deliverytotal = 0;
         
      	for (var k = 0; k < check_length; k++) {
-     		product = $('#b_Totalprice'+index_i_arr[k]).text().replace(/[^0-9]/g,'');
-   			producttotal += (product * 1);
-   			
+     		producttotal += ($('#b_Totalprice'+index_i_arr[k]).val() * 1);
+     	
      		delivery = $('#delivery'+index_i_arr[k]).text().replace(/[^0-9]/g,'');
      		deliverytotal += (delivery * 1);
         }
-     	var finaltotal = (producttotal - (producttotal * 0.03) + deliverytotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
+     	var finaltotal = (producttotal + deliverytotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
+     	
+    /*  	producttotal = producttotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     	deliverytotal = deliverytotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); */
      	
      	
-     	producttotal = producttotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-     	deliverytotal = deliverytotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-     	
-     	
-		document.getElementById("producttotal").innerHTML = producttotal + "원";
-		document.getElementById("deliverytotal").innerHTML = deliverytotal + "원";
+		document.getElementById("producttotal").innerHTML = producttotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
+		document.getElementById("deliverytotal").innerHTML = deliverytotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 		document.getElementById("finaltotal").innerHTML = finaltotal + "원";
 		document.getElementById("choosecount").innerHTML = check_length + "개";
     }
@@ -431,20 +440,13 @@
     	onlynumber = clicked_id.replace(/[^0-9]/g,'');
     	index_i_arr.length = 0;
     	check_length = $("input:checkbox[name='choose']:checked").length;
-    	product = $('#b_Totalprice'+onlynumber).text().replace(/[^0-9]/g,'');
+    	/* product = $('#b_Totalprice'+onlynumber).text().replace(/[^0-9]/g,'');
     	landprice = $('#p_Landprice'+onlynumber).text().replace(/[^0-9]/g,'');
-    	manpay = $('#p_Manpay'+onlynumber).text().replace(/[^0-9]/g,'');
+    	manpay = $('#p_Manpay'+onlynumber).text().replace(/[^0-9]/g,''); */
     	
     	
     	if($('#'+clicked_id).val() <= 0) {
     		alert("주문 가능한 최소 수량은 1개 입니다.");
-    		document.getElementById(clicked_id).value = $('#beforeland'+onlynumber).val();
-    		return false;
-    	}
-    	
-    	var maxprice = ($('#p_Landavailable'+onlynumber).val() * 1);
-    	if($('#'+clicked_id).val() > maxprice) {
-    		alert("주문 가능한 최대 수량은 "+ maxprice + "개 입니다.");
     		document.getElementById(clicked_id).value = $('#beforeland'+onlynumber).val();
     		return false;
     	}
@@ -471,20 +473,21 @@
     	leftzerodeleteval = ($('#'+clicked_id).val().replace(/(^0+)/, "") * 1);
     	
     	if (checktrue) {
-			producttotal = producttotal - (product * 1);
-			eachtotalvar =(leftzerodeleteval * (landprice * 1)) +  (leftzerodeleteval *(manpay * 1));
-			document.getElementById("b_Totalprice"+onlynumber).innerHTML = eachtotalvar + "원";
-			document.getElementById("Totalprice"+onlynumber).value = eachtotalvar; 
-			product = $('#b_Totalprice'+onlynumber).text().replace(/[^0-9]/g,'');
+    		producttotal = producttotal - ($('#b_Totalprice'+onlynumber).val() * 1);
+			eachtotalvar =(leftzerodeleteval * ($('#p_Landprice'+onlynumber).val() * 1)) +  (leftzerodeleteval *($('#p_Manpay'+onlynumber).val() * 1));
+			document.getElementById("Totalprice"+onlynumber).innerHTML = eachtotalvar + "원";
+			/* document.getElementById("Totalprice"+onlynumber).value = eachtotalvar;  */
+			/* product = $('#b_Totalprice'+onlynumber).text().replace(/[^0-9]/g,''); */
 			
-			producttotal = producttotal + (product * 1);
-			document.getElementById("producttotal").innerHTML = producttotal + "원";
-			document.getElementById("finaltotal").innerHTML = producttotal - (producttotal * 0.03) + deliverytotal + "원";
+			/* producttotal = producttotal + ($('#b_Totalprice'+onlynumber).val() * 1); */
+			producttotal = producttotal + (eachtotalvar * 1);
+			document.getElementById("producttotal").innerHTML = producttotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
+			document.getElementById("finaltotal").innerHTML = (producttotal + deliverytotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
 			checktrue = false;
 		} else {
-			eachtotalvar = (leftzerodeleteval * (landprice * 1)) +  (leftzerodeleteval *(manpay * 1));
-			document.getElementById("b_Totalprice"+onlynumber).innerHTML = eachtotalvar + "원";
-			document.getElementById("Totalprice"+onlynumber).value = eachtotalvar;
+			eachtotalvar =(leftzerodeleteval * ($('#p_Landprice'+onlynumber).val() * 1)) +  (leftzerodeleteval *($('#p_Manpay'+onlynumber).val() * 1));
+			document.getElementById("Totalprice"+onlynumber).innerHTML = eachtotalvar + "원";
+			/* document.getElementById("Totalprice"+onlynumber).value = eachtotalvar; */
 		}
 		var bno = $('#'+onlynumber).val() * 1;
 		var land = $('#land'+onlynumber).val() * 1;
@@ -515,7 +518,7 @@
 			if($("#checkall").prop("checked")){
         		$("input[name=choose]").prop("checked",true);
         		for (var i = 0; i < allcheckbox_length; i++) {
-        			if(($('#p_Landavailable'+i).val() * 1) == 0 || $('#p_Accept'+i).val() == 'N') {
+        			if($('#p_Accept'+i).val() == 'N') {
         				$('#'+i).prop("checked",false);
         			}
         		 }
@@ -530,15 +533,18 @@
                 producttotal = 0;
                 deliverytotal = 0;
              	for (var k = 0; k < check_length; k++) {
-             		product = $('#b_Totalprice'+index_i_arr[k]).text().replace(/[^0-9]/g,'');
-             		producttotal += (product * 1);
+             		/* product = $('#b_Totalprice'+index_i_arr[k]).text().replace(/[^0-9]/g,''); 
+             		producttotal += (product * 1);*/
+             		producttotal += ($('#b_Totalprice'+index_i_arr[k]).val() * 1);
+             		
              		delivery = $('#delivery'+index_i_arr[k]).text().replace(/[^0-9]/g,'');
              		deliverytotal += (delivery * 1);
                 }
-        		document.getElementById("producttotal").innerHTML = producttotal + "원";
-        		document.getElementById("deliverytotal").innerHTML = deliverytotal + "원";
-        		document.getElementById("finaltotal").innerHTML = producttotal - (producttotal * 0.03) + deliverytotal + "원";
+        		document.getElementById("producttotal").innerHTML = producttotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
+        		document.getElementById("deliverytotal").innerHTML = deliverytotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
+        		document.getElementById("finaltotal").innerHTML = (producttotal + deliverytotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
         		document.getElementById("choosecount").innerHTML = check_length + "개";
+        		
         		/* productalltotal = 0;
             	deliveryalltotal = 0;
             	for (var i = 0; i < allcheckbox_length; i++) {
@@ -582,6 +588,7 @@
 	$(document).ready(function () {
 		if (localStorage.getItem("my_app_name_here-quote-scroll") != null) {
 	        $(window).scrollTop(localStorage.getItem("my_app_name_here-quote-scroll"));
+	       /*   alert("1:::: "+localStorage.getItem("my_app_name_here-quote-scroll")); */
 	    }
 		 $(window).on("scroll", function() {
 	        localStorage.setItem("my_app_name_here-quote-scroll", $(window).scrollTop());
@@ -635,15 +642,13 @@
 	function zeroremove() {   
 		var soldout = true;
 		var allcheckbox_length = $("input:checkbox[name='choose']").length;
-		var landavailable = [];
 		var accept = [];
 		
 		for (var i = 0; i < allcheckbox_length; i++) {
-			landavailable.push($('#p_Landavailable'+i).val() * 1);
 			accept.push($('#p_Accept'+i).val());
 		}
 		if(soldout) {
-			if(!(landavailable.includes(0)) && !(accept.includes('N'))){
+			if(!(accept.includes('N'))){
 				soldout = false;
 			}
 			if(soldout == false){
@@ -664,19 +669,57 @@
 	    if(e.keyCode==13 && e.srcElement.type != 'textarea') 
 	    return false; 
 	} 
+
+ 
+/* 	원본!! $(document).ready(function() {
+		
+		// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
+		var floatPosition = parseInt($("#floatMenu").css('top'));
+		// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
+
+		$(window).scroll(function() {
+			// 현재 스크롤 위치를 가져온다.
+			var scrollTop = $(window).scrollTop();
+			var newPosition = scrollTop + floatPosition + "px";
+
+			 애니메이션 없이 바로 따라감
+			 $("#floatMenu").css('top', newPosition);
+			 
+
+			$("#floatMenu").stop().animate({
+				"top" : newPosition
+			}, 500);
+
+		}).scroll();
+
+	}); */
+
 	
-	/* function scroll_follow( id ){
-	  $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발생
-	  	var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
-	      $( id ).stop().animate({top:position+"px"}, 1000); //해당 오브젝트 위치값 재설정
-	   });
-	}
-	 scroll_follow( "#scroll" ); //스크롤이 생기도록 <br> 을 여러게 넣은 부분..
-	$(document).ready(function(){ for( var i=0; i<200; i++ ) {$('#brr').html($('#brr').html() +"<br>" + i);} }); */
+	$(window).scroll(  
+		    function(){  
+		        //스크롤의 위치가 상단에서 450보다 크면  
+		        if($(window).scrollTop() > 450){  
+		        /* if(window.pageYOffset >= $('원하는위치의엘리먼트').offset().top){ */  
+		            $("#floatMenu").addClass("fix");  
+		            //위의 if문에 대한 조건 만족시 fix라는 class를 부여함  
+		        }else if($(window).scrollTop() < 800){  
+		        	 $("#floatMenu").removeClass("fix");  
+			            //위의 if문에 대한 조건 아닌경우 fix라는 class를 삭제함  
+		        }else{
+		        	  $("#floatMenu").removeClass("fix");  
+			            //위의 if문에 대한 조건 아닌경우 fix라는 class를 삭제함  
+		        }
+		    }     
+		);
+	
 	
 </script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<footer>
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />
+</footer>
 </body>
 </html>
     

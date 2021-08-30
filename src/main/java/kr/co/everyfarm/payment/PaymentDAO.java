@@ -2,8 +2,6 @@ package kr.co.everyfarm.payment;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import kr.co.everyfarm.product.PageBeen;
 
 public interface PaymentDAO {
@@ -15,9 +13,10 @@ public interface PaymentDAO {
 	public List<PaymentBean> farmerpaylistserachpageing(PageBeen pagebeen);
 	public List<PaymentBean> farmerpaylistserachpageingcount(PageBeen pagebeen);
 
+	
 	public int payinsert(PaymentBean payment);
 
-	public int landupdate(@Param("FinalAvailableLand") int FinalAvailableLand, @Param("P_Id") int P_Id);
+	// public int landupdate(@Param("FinalAvailableLand") int FinalAvailableLand, @Param("P_Id") int P_Id);
 
 	public int update(PaymentBean payment);
 

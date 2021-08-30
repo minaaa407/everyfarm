@@ -41,7 +41,7 @@ public class PaymentController {
 			}
 		}
 		basketbean.setBasketbeanList(list);
-
+		System.out.println("현재 list size" + list.size() );
 		System.out.println(basketbean.getBasketbeanList().get(0).getB_Seed() + "작물"); //
 
 		MemberDAO userdao = sqlSessionTemplate.getMapper(MemberDAO.class);
@@ -53,6 +53,10 @@ public class PaymentController {
 		model.addAttribute("Member", getinfo1);
 		model.addAttribute("memBasketModel", basketbean);
 		model.addAttribute("payment", paymentbean);
+		
+		for (int i = 0; i < j; i++) {
+			System.out.println("넘겨주는 바스켓 데이터" + basketbean.getBasketbeanList().get(i));
+		}
 		System.out.println("--페이먼트인포끝--"); //
 
 		return "payment/payment";

@@ -7,6 +7,14 @@ import kr.co.everyfarm.user.MemberBean;
 
 public interface QnADAO {
 	
+	
+	// 게시물 총 갯수
+	public int countBoard();
+
+	// 페이징 처리 게시글 조회
+	public List<QnABean> selectBoard(PagingBean vo);
+	
+	
 	public List<QnABean> list(); 
 	
 	public List<QnABean> productQlist();
@@ -36,6 +44,12 @@ public interface QnADAO {
 	public List<QnABean> adminWriteX();
 	
 	public List<QnABean> searchall(QnABean qna);
+	
+	public List<QnABean> searchpno(QnABean qna);
+	
+	public List<QnABean> searchptitle(QnABean qna);
+	
+	public List<QnABean> searchcontent(QnABean qna);
 	
 	public List<QnABean> searchId(QnABean qna);
 	

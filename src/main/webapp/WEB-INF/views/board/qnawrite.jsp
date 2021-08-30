@@ -32,231 +32,181 @@ String p_No = request.getParameter("no");
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 <!-- 썸머노트 -->
-<link rel="stylesheet" href="resources/editor/css/summernote-lite.css">
+<link rel="stylesheet" href="/resources/editor/css/summernote-lite.css">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
 
 
-<link rel="stylesheet" href="resources/review/style.css">
+<link rel="stylesheet" href="/resources/review/style.css">
 
 
-<title>Insert title here</title>
+<title>QnA 글쓰기</title>
+
+<style type="text/css">
+
+.errorMsg {
+	color: red;
+	font-style: italic;
+} 
+
+input::placeholder {
+  color: red;
+  font-style: italic;
+}
+
+.my-control {
+    display: block;
+    outline:none;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143; 
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); */
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
+}
+
+
+
+</style>
+
 </head>
+<header>
+<jsp:include page="/WEB-INF/views/home/header.jsp" />
+</header>
 <body>
 
 
 <div class="row">
     <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <h2 class="text-center">게시글 쓰기</h2>
-        
-<%--         <div class="errorMsg">
-			<spring:bind path="qna.q_Title">
-				${status.errorMessage }
-			</spring:bind>
-			<spring:bind path="qna.q_Content">
-				${status.errorMessage }
-			</spring:bind>
-		</div>
-         --%>
+    	<div class="col-md-8">
+        	<h2 class="text-center">게시글 쓰기</h2>
         
         <%  if(url.matches(".*[0-9].*")) { %>
-        	
-    
-      <%--   <c:choose>
-					<c:when test="${empty param.no}"><!--  q_No --> --%>
-					
-				
-					
-		<form action="/qnaupdate" id="qna" name="qna" method="post" enctype="multipart/form-data">
-		<c:forEach items="${qnamodifyrecord}" var="q"> 	
-
-		 <table class="table table-striped">
+           
+    			<form action="/qnaupdate" id="qna" name="qna" method="post" enctype="multipart/form-data">
+    				<c:forEach items="${qnamodifyrecord}" var="q">    
+						<table class="table table-striped">
+             				<input type="hidden" name="q_No" value="${q.q_No}" />
              
-             <input type="hidden" name="q_No" value="${q.q_No}" />
-             
-             <tr>
-                <td>비밀글</td>
-                <label><td><input type="checkbox" name="q_Secret" value="1" 
-                				<c:if test="${q.q_Secret eq 'true'}">checked</c:if> ></td></label>
-      		 </tr>
-					<tr>													
- 				<td>상품 선택</td>												
-																		
-				<td><select id="" name="q_Pno" > 
-					<option value="${q.q_Pno}" selected>${q.q_Pno} : ${q.q_Ptitle}</option>
-					
-																		
-			
-					<% 	for(int i=0 ;i<count;i++) {
-					if(qnamodifyrecord.get(0).getQ_Pno() != pnoTitleList.get(i).getQ_Pno()) {
-						%>
-						<option value="<%=pnoTitleList.get(i).getQ_Pno()%>"><%=pnoTitleList.get(i).getQ_Pno()%> : <%=pnoTitleList.get(0).getQ_Ptitle()%></option>
-						
- 				
- 					<%  }
- 			   			}  %>
-      		 
-      		
-      		</select></td>
-      		
-      		</tr>
-      		
-      		
-      		
-            <tr>
-                <td>제목</td>
-                <td><input type="text" id="title" name="q_Title" class="form-control" value="${q.q_Title}" ></td>
-            </tr>
+             				<tr>
+                				<td>비밀글</td>
+                				<label><td><input type="checkbox" name="q_Secret" value="1" 
+                            		<c:if test="${q.q_Secret eq 'true'}">checked</c:if> ></td></label>
+            				</tr>
+            				
+              				<tr>                                       
+             					<td>상품 선택</td>                                    
+                                <td><select id="" name="q_Pno" > 
+              							<option value="${q.q_Pno}" selected>${q.q_Pno} : ${q.q_Ptitle}</option>
+	        							<%  for(int i=0 ;i<count;i++) {
+              								if(qnamodifyrecord.get(0).getQ_Pno() != pnoTitleList.get(i).getQ_Pno()) {
+             							%>
+                 						<option value="<%=pnoTitleList.get(i).getQ_Pno()%>"><%=pnoTitleList.get(i).getQ_Pno()%> : <%=pnoTitleList.get(0).getQ_Ptitle()%></option>
+						                <%  }
+                     					 }  %>
+						             </select></td>
+            				</tr>
+				            
+				            <tr>
+                				<td>제목</td>
+                				<td><input type="text" id="title" name="q_Title" class="form-control" value="${q.q_Title}" required></td>
+           				 	</tr>
             
-            <tr>
-                <td>작성자</td>
-                <td><input type="text" id="q_Id" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly></td>
-            </tr>
-            
-<!--             <tr>
-                <td>별점??</td>
-                <td> 
-<fieldset class="rating">
-    <input type="radio" id="star5" name="rev_Rate" value="5" /><label class = "full" for="star5" ></label>
-    <input type="radio" id="star4half" name="rev_Rate" value="4.5" /><label class="half" for="star4half" ></label>
-    <input type="radio" id="star4" name="rev_Rate" value="4" /><label class = "full" for="star4" ></label>
-    <input type="radio" id="star3half" name="rev_Rate" value="3.5" /><label class="half" for="star3half" ></label>
-    <input type="radio" id="star3" name="rev_Rate" value="3" /><label class = "full" for="star3" ></label>
-    <input type="radio" id="star2half" name="rev_Rate" value="2.5" /><label class="half" for="star2half"></label>
-    <input type="radio" id="star2" name="rev_Rate" value="2" /><label class = "full" for="star2" ></label>
-    <input type="radio" id="star1half" name="rev_Rate" value="1.5" /><label class="half" for="star1half" ></label>
-    <input type="radio" id="star1" name="rev_Rate" value="1" /><label class = "full" for="star1" ></label>
-    <input type="radio" id="starhalf" name="rev_Rate" value="0.5" /><label class="half" for="starhalf" ></label>
-</fieldset>
-</td>
-            </tr> -->
+           	 				<tr>
+                				<td>작성자</td>
+                				<td><input type="text" id="q_Id" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly></td>
+            				</tr>
+ 
+            			<!-- <tr>
+               					<td></td>
+                				<td><input multiple="multiple" type="file" name="q_Img" accept="image/gif, image/jpg, image/jpeg, image/png"/></td>
+            				</tr> -->
              
-            <!-- <tr>
-                <td></td>
-                <td><input multiple="multiple" type="file" name="q_Img" accept="image/gif, image/jpg, image/jpeg, image/png"/></td>
-            </tr> -->
-             
-            <tr>
-                <td>글내용</td>
-                <td>
-   				 <textarea id="summernote"  name="q_Content" rows="30" style="width:100%;">${q.q_Content}</textarea>
-              </td>
-            </tr>
-             <tr>
-             	<td colspan="2"  class="text-center">
-                    <input type="submit" value="글 수정하기" class="btn btn-success">
-                   <!--  <input type="reset" value="다시작성" class="btn btn-warning"> -->
-                    <button type="button"  class="btn btn-primary" onclick="location.href='/qnalist/product'">목록으로 돌아가기</button>
-                </td>
-            </tr>
+            				<tr>
+                				<td>글내용</td>
+                				<td><textarea id="summernote"  name="q_Content" rows="30" style="width:100%;" required="required">${q.q_Content}</textarea></td>
+            				</tr>
+            				
+            				<tr>
+                				<td colspan="2"  class="text-center">
+                    				<input type="submit" value="글 수정하기" class="btn btn-success">
+                   					<!--  <input type="reset" value="다시작성" class="btn btn-warning"> -->
+                    				<button type="button"  class="btn btn-primary" onclick="location.href='/qnalist'">목록으로 돌아가기</button>
+                				</td>
+           					</tr>
             
-       <%--        <% if(url.contains("my")) { %>  
-            <tr>
-             	<td colspan="2"  class="text-center">
-                    <input type="submit" value="수정하기" class="btn btn-success">
-                    <input type="reset" value="다시작성" class="btn btn-warning">
-                    <button type="button"  class="btn btn-primary" onclick="location.href='/qnalist'">게시글 목록</button>
-                </td>
-            </tr>
-            	<% }else {%>
-             <tr>
-             	<td colspan="2"  class="text-center">
-                    <input type="submit" value="수정하기" class="btn btn-success">
-                    <input type="reset" value="다시작성" class="btn btn-warning">
-                    <button type="button"  class="btn btn-primary" onclick="location.href='/qnalist'">게시글 목록</button>
-                </td>
-            </tr>
-            	<% } %> --%>
-          </table>
-          </c:forEach>
-        </form>	
+						</table>
+         		 	</c:forEach>
+        		</form>   
         
-		
-   		
-   		<% }else { %>
-   		
-      <%--   </c:when>
-        	<c:when test="${ !empty param.no }"> <!-- q_No --> --%>
-			
- 			<%-- <c:forEach items="${qnalist}" var="q">  --%>
- 			
-	 <form action="/qnaPdinsert" id="qna" name="qna" method="post" enctype="multipart/form-data">
-
-
-          <table class="table table-striped">
-             <tr>
-                <td>비밀글</td>
-                <label><td><input type="checkbox" name="q_Secret" value="1">비밀글</td></label>
-      		 </tr>
-      		 <tr>
-      		 	<td>상품 선택</td>
-      		 	<td><select name="q_Pno">
-      		 		<!-- <option value="not check">옵션을 선택해주세요</option> -->
-      		 			<c:forEach items="${pnoTitleList}" var="q" varStatus="now">
-             				<option value="${q.q_Pno}">${q.q_Pno} : ${q.q_Ptitle}</option>
-               			</c:forEach>
-            		</select>
-            	</td>
-             </tr>
-            <tr>
-                <td>제목</td>
-                <td><input type="text" id="title" name="q_Title" class="form-control" ></td>
-            </tr>
+      
+         
+         <% }else { %>
+    		  	<form action="/qnainsert" id="qna" name="qna" method="post" enctype="multipart/form-data">
+					<table class="table table-striped">
+					
+             		<tr>
+                		<td>비밀글</td>
+                		<label><td><input type="checkbox" name="q_Secret" value="1">비밀글</td></label>
+             		</tr>
+             		
+             		<tr>
+                		<td>상품 선택</td>
+                		<td><select name="q_Pno">
+                   				<c:forEach items="${pnoTitleList}" var="q" varStatus="now">
+                        	 		<option value="${q.q_Pno}">${q.q_Pno} : ${q.q_Ptitle}</option>
+                        		</c:forEach>
+                  			</select>
+               			</td>
+             		</tr>
+             		
+            		<tr>
+            			<spring:bind path="qna.q_Title">
+                			<td>제목</td>
+               		 		<td><input type="text" id="title" name="q_Title" class="my-control" placeholder="${status.errorMessage }"></td>
+                		</spring:bind>
+            		</tr>
             
-            <tr>
-                <td>작성자</td>
-                <td><input type="text" id="q_Id" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly></td>
-            </tr>
-            
-<!--             <tr>
-                <td>별점??</td>
-                <td> 
-<fieldset class="rating">
-    <input type="radio" id="star5" name="rev_Rate" value="5" /><label class = "full" for="star5" ></label>
-    <input type="radio" id="star4half" name="rev_Rate" value="4.5" /><label class="half" for="star4half" ></label>
-    <input type="radio" id="star4" name="rev_Rate" value="4" /><label class = "full" for="star4" ></label>
-    <input type="radio" id="star3half" name="rev_Rate" value="3.5" /><label class="half" for="star3half" ></label>
-    <input type="radio" id="star3" name="rev_Rate" value="3" /><label class = "full" for="star3" ></label>
-    <input type="radio" id="star2half" name="rev_Rate" value="2.5" /><label class="half" for="star2half"></label>
-    <input type="radio" id="star2" name="rev_Rate" value="2" /><label class = "full" for="star2" ></label>
-    <input type="radio" id="star1half" name="rev_Rate" value="1.5" /><label class="half" for="star1half" ></label>
-    <input type="radio" id="star1" name="rev_Rate" value="1" /><label class = "full" for="star1" ></label>
-    <input type="radio" id="starhalf" name="rev_Rate" value="0.5" /><label class="half" for="starhalf" ></label>
-</fieldset>
-</td>
-            </tr> -->
+            		<tr>
+                		<td>작성자</td>
+                		<td><input type="text" id="q_Id" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly></td>
+            		</tr>
              
-        <!--     <tr>
-                <td></td>
-                <td><input multiple="multiple" type="file" name="q_Img" accept="image/gif, image/jpg, image/jpeg, image/png"/></td>
-            </tr> -->
+       		 <!--    <tr>
+                	<td></td>
+               		 	<td><input multiple="multiple" type="file" name="q_Img" accept="image/gif, image/jpg, image/jpeg, image/png"/></td>
+            		</tr> -->
              
-            <tr>
-                <td>글내용</td>
-                <td>
-   				 <textarea id=""  name="q_Content" rows="30" style="width:100%;"></textarea>
-              </td>
-            </tr>
-            <tr>
-                 
-                <td colspan="2"  class="text-center">
-                    <input type="submit" value="글 등록하기" class="btn btn-success" >  <!-- onclick="write();" -->
-                 <!--    <input type="reset" value="다시작성" class="btn btn-warning"> -->
-                    <button type="button"  class="btn btn-primary" onclick="location.href='/qnalist/product'">목록으로 돌아가기</button>
-                </td>
-            </tr>
+            		<tr>
+						<spring:bind path="qna.q_Content">
+                			<td>글내용</td>
+                			<td><div class="errorMsg">${status.errorMessage }</div>
+                				<textarea id="summernote"  name="q_Content" rows="30" style="width:100%;" ></textarea></td>
+                		</spring:bind>
+            		</tr>
+            		
+            		<tr>
+                		<td colspan="2"  class="text-center">
+                    		<input type="submit" value="글 등록하기" class="btn btn-success" >  <!-- onclick="write();" -->
+                	 <!--    <input type="reset" value="다시작성" class="btn btn-warning"> -->
+                    		<button type="button"  class="btn btn-primary" onclick="location.href='/qnalist'">목록으로 돌아가기</button>
+                		</td>
+            		</tr>
              
-          </table>
-        </form>
-        
-	 	<%-- </c:forEach> --%>
-	 	
-	 <%--  </c:when>
-	 	 </c:choose> --%>
-	 	 
-	  <% } %>
-	  
+          		</table>
+        	</form>
+         
+     <% } %>
+     
     </div>
 </div>
 
@@ -267,47 +217,50 @@ String p_No = request.getParameter("no");
 
 <!-- 썸머노트 -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="resources/editor/js/summernote-lite.js"></script>
-<script src="resources/editor/js/lang/summernote-ko-KR.js"></script>
+<script src="/resources/editor/js/summernote-lite.js"></script>
+<script src="/resources/editor/js/lang/summernote-ko-KR.js"></script>
+
+
+
+
+
 <script type="text/javascript">
 
-
-
-
-      $(document).ready(function() {
+     
         $('#summernote').summernote({
-          placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.',
+         /*  placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.', */
           height: 600,
           minHeight: null,
           maxHeight: null,
-          focus: true,
-/*  사진 업로드 후  DB에 준비중            callbacks: {
-            onImageUpload: function(files, editor, welEditable) {
-              for (var i = files.length - 1; i >= 0; i--) {
-                sendFile(files[i], this);
-              }
-            }
-          } */
-        });
-      });
+          focus: false,
+          toolbar: [
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+          
+	 });
+        
+        funtion 
+        
+        /* toolbar: [
+    	    ['style', ['bold', 'italic', 'underline', 'clear']],
+    	    ['font', ['strikethrough', 'superscript', 'subscript']],
+    	    ['fontsize', ['fontsize']],
+    	    ['color', ['color']],
+    	    ['para', ['ul', 'ol', 'paragraph']],
+    	    ['height', ['height']]
+    	  ]
+      */
       
-/*  사진 업로드 후  DB에 준비중     function sendFile(file, el) {
-        var form_data = new FormData();
-        form_data.append('file', file);
-        $.ajax({
-          data: form_data,
-          type: "POST",
-          url: '/image',
-          cache: false,
-          contentType: false,
-          enctype: 'multipart/form-data',
-          processData: false,
-          success: function(url) {
-            $(el).summernote('insertImage', url);
-            $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
-          }
-        });
-      } */
+    
   </script>
 
 

@@ -3,9 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
 <%@page import="kr.co.everyfarm.product.ProductBean"%>
-
+<%@page import="kr.co.everyfarm.user.MemberBean"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +45,6 @@ integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChi
 
 
 
-
 <link rel="stylesheet" href="resources/product/css/owl.carousel.min.css"
 	type="text/css">
 <link rel="stylesheet" href="resources/product/css/slicknav.min.css"
@@ -57,42 +55,43 @@ integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChi
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-
 <script>
 //script 전부 다 박살 에정. 방법 없다.
 //여기아래부분 정말로 잘 보존해서 어떻게든 우려먹기는 안되겠네
 //응용해서 처리해보자. 일단 그대로 가져가는건 현재 불가능하다. 코드 잘못짰네. 의존도 겁내 높다. ㅎㅎ
 function productaccept(accept) {
-	
-			var bean = {
-				"p_No" : ${oneproduct.p_No},
-				"p_Accept" : accept
+			if(!(accept == 'Y' && ${not empty farmer}) ){
+				var bean = {
+					"p_No" : ${oneproduct.p_No},
+					"p_Accept" : accept
+				}
+					$.ajax({
+					type : "post", //요청 메소드 방식
+					url : "/productaccept",
+					data : bean,
+					success : function(result) {//성공시 동작하는 파트
+						
+						var resultaccept = result;
+						var resultext="";
+						var resultdiv = document.getElementById("productaccept");
+						
+						if(result =='Y'){
+							resultext += "승인처리상태 <input class='mybtn' style='width: 60px;' type='button' name='N' value='승인' onClick='productaccept(this.name)'/>"
+						}else{
+							resultext += "미승인처리상태 <input class='mybtn2' style='width: 60px;' type='button' name='Y' value='미승인' onClick='productaccept(this.name)'/>"
+						}
+					
+						resultdiv.innerHTML = resultext;
+						
+						},
+						error : function(a, b, c) {
+							//통신 실패시 발생하는 함수(콜백)
+							alert("a:" + a + "b:" + b + "c:" + c);
+						}
+					});
+			}else{
+				alert("승인권한이 없습니다.")
 			}
-				$.ajax({
-				type : "post", //요청 메소드 방식
-				url : "/productaccept",
-				data : bean,
-				success : function(result) {//성공시 동작하는 파트
-					
-					var resultaccept = result;
-					var resultext="";
-					var resultdiv = document.getElementById("productaccept");
-					
-					if(result =='N'){
-						resultext += "승인처리상태 <input type='button' name='Y' value='미승인처리' onClick='productaccept(this.name)'/>"
-					}else{
-						resultext += "미승인처리상태 <input type='button' name='N' value='승인처리' onClick='productaccept(this.name)'/>"
-					}
-				
-					resultdiv.innerHTML = resultext;
-					
-					},
-					error : function(a, b, c) {
-						//통신 실패시 발생하는 함수(콜백)
-						alert("a:" + a + "b:" + b + "c:" + c);
-					}
-				});
-		
 
 }
 
@@ -109,8 +108,13 @@ function basket(){
 }
 
 function payment(){
-	document.getElementById('myHiddenForm').action="/PaymentInfo";
-	document.myHiddenForm.submit();
+	if($('table1').children()){
+		document.getElementById('myHiddenForm').action="/PaymentInfo";
+		document.myHiddenForm.submit();
+	}else{
+		alert("상품을 선택해주세요.");
+	}
+	
 }
 
 
@@ -127,7 +131,6 @@ function selectproduct(){
 	 var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 	 var cn1 = cn1 +'원';
 	
-
 	 if(!(document.getElementById(rowid))){
 			var text="";	
 				text += document.getElementById('table1').innerHTML
@@ -155,10 +158,15 @@ function selectproduct(){
 					var totalprice = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
 					var cn2 = totalprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 					var cn2 = cn2 +'원';
+					var totalproduct = (${oneproduct.p_Landprice} * a1);
+					var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+					var c3 = c3 +'원';
 					
-				
-					document.getElementById("totalmanpay").innerHTML = "인건비<br/>"+cn1;
-					document.getElementById("total").innerHTML = "총 가격<br/>"+cn2;
+					
+					document.getElementById("totalproduct").innerHTML = c3;
+					document.getElementById("totalmanpay").innerHTML = cn1;
+					document.getElementById("total").innerHTML = cn2;
+					document.getElementById("totaltable").style.display = "";
 					//아래 값 전달하기.
 					var b_Pno = ("b_Pno" + product);
 					var b_Id = ("b_Id" + product);
@@ -178,7 +186,6 @@ function selectproduct(){
 			
 	
 
-
 	
 	
 		//if(!(document.getElementById(rowid))){
@@ -195,7 +202,6 @@ function selectproduct(){
 	    //	for (var i = 2; i < cartlist.rows.length; i++) {
 	    //	      var userName = cartlist.rows[i].cells[2].innerText;
 	    	      
-
 	    //	      totalproduct = parseInt(totalproduct) + parseInt(userName);
 	    //	}
 	    //				totalproduct = parseInt(totalproduct) + parseInt(amout)
@@ -216,7 +222,6 @@ function selectproduct(){
 					    //newCell2.innerText = ${oneproduct.p_Landprice };
 					    //newCell3.innerHTML ='<input name = "' + product + '" type="button" onclick="count1(this.name)" value="-"/>' + 
 					    //'&nbsp&nbsp&nbsp'+'<span value="'+amout+'"name="productprice" id ="'+ pnum+'">' + amout+'</span> &nbsp&nbsp&nbsp'+'<input name = "'+product +'"type="button" onclick="count2(this.name)" value="+"/>';
-
 					    //newCell3.innerText = amout;
 					    //newCell4.innerText = (${oneproduct.p_Landprice} * amout);
 					    //newCell5.innerHTML = '<i class="fas fa-window-close"  onclick="deleteRow(this,'+product2+')" ></i>';
@@ -294,7 +299,7 @@ function count2(name)  {
 function deleteRow(btndel,name){
 	var b_Land = ("b_Land" + name);
 	var b_Totalprice = ("b_Totalprice" + name);
-	alert(name);
+	
 	
     if (typeof(btndel) == "object") {
         $(btndel).closest("tr").remove();
@@ -309,6 +314,9 @@ function deleteRow(btndel,name){
 			
 		if(totalRowCnt<=2){
 			$('#cartlisttable').css("display","none");
+			
+			
+			document.getElementById("totalproduct").innerText = "";
 			document.getElementById("totalmanpay").innerText = "";
 			document.getElementById("total").innerText = "";
 		}else{
@@ -320,10 +328,17 @@ function deleteRow(btndel,name){
 			var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 			alert("11");
 			var cn1 = cn1 +'원';
+			var totalproduct = (${oneproduct.p_Landprice} * a1);
+			var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			var c3 = c3 +'원';
 			
 			
-			document.getElementById("totalmanpay").innerText = "인건비"+cn1;
-			document.getElementById("total").innerText = "총 가격 "+((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
+			document.getElementById("totalproduct").innerHTML = c3;
+			
+			document.getElementById("totalmanpay").innerText = cn1;
+			document.getElementById("total").innerText = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
+			document.getElementById("totaltable").style.display = "";
+			
 		}
 		
 		
@@ -339,6 +354,12 @@ function check(){
 	document.myhiddenform.submit();
 	
 }
+
+
+function listChange(){
+	$('#iniamout').val('1');
+}
+
 
 </script>
 <style>
@@ -360,8 +381,6 @@ function check(){
 }
 
 .mybtn {
-	width: 150px;
-	height: 40px;
 	padding: 0;
 	display: inline;
 	border-radius: 4px;
@@ -371,9 +390,24 @@ function check(){
 	border: solid 0.5px #212529;
 	transition: all 0.5s ease-in-out 0s;
 }
-
 .mybtn:hover {
 	background: #4CAF00;
+	color: #fff;
+	text-decoration: none;
+}
+
+.mybtn2 {
+	padding: 0;
+	display: inline;
+	border-radius: 4px;
+	background: #FF0000;
+	color: #fff;
+	margin-top: 20px;
+	border: solid 0.5px #212529;
+	transition: all 0.5s ease-in-out 0s;
+}
+.mybtn2:hover {
+	background: #C40000;
 	color: #fff;
 	text-decoration: none;
 }
@@ -408,6 +442,41 @@ i.fa-plus-circle:active{
 i.fa-plus-circle{
 	color : green;
 }
+
+.owl-item img{
+
+height:60px;
+
+}
+
+
+a.sidenav{
+	color: #FFFFFF;
+	font-size: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-transform: uppercase;
+}
+
+a.sidenav:hover, focus {
+    color: yellow;
+}
+
+.owl-carousel .owl-item img{
+	width:115%;
+}
+
+<!--메뉴바 -->
+
+
+#header{width: 100%; height:600px; line-height: 600px; font-size: 60px; background:red; transition: background 0.6s; text-align: center;}
+#lnb.fixed{position: fixed; left: 0; top: 0; width: 100%; z-index:99;}
+#lnb ul{font-size:0; line-height: 0; background: #4e9525;}
+#lnb li{display: inline-block; vertical-align: top; padding: 20px 0; font-size: 25px; text-align: center;}
+#container{width:100%; height:1500px; line-height: 1500px; font-size: 60px; background: blue; text-align: center;}
+
+
+
 
 </style>
 
@@ -455,14 +524,30 @@ ul {
 	padding-left: 0px;
 }
 
+td .mybtn{
+	width: 100pt;
+}
 
+@media screen and (max-width: 768px) {
+	div.select{
+	width: 250px;
+	}
+	.onlyNumber{
+	  width: 50px;
+	}
+	td{
+	font-size: 90%
+	}
+	td .mybtn{
+	width: 80pt;
+	}
+
+}
 
 
 </style>
 
 <script>
-
-	
 			$(document).ready(function () {
 				  $("div.select > a").click(function () {
 					  $(this).next("ul").toggle();
@@ -516,7 +601,39 @@ ul {
 			        var oneprice = ${oneproduct.p_Landprice} * number;
 					var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 					var cn1 = cn1 +'원';
-					$(this).parent().next().html(cn1);
+					$(this).parent().next().html(cn1);//수정위치지워라.
+					
+					
+					  var size = document.getElementsByName("productamout").length;
+					  var a1 = "0";
+					  for(var i = 0; i < size; i++){				
+							a2 = document.getElementsByName("productamout")[i].value;
+							a1 = parseInt(a2) + parseInt(a1);
+						}
+					  
+					    oneprice = (${oneproduct.p_Manpay} * a1);
+						 cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+						 cn1 = cn1 +'원';
+						var totalprice = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
+						 cn2 = totalprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+						 cn2 = cn2 +'원';
+					
+						if(size>0){
+							var totalproduct = (${oneproduct.p_Landprice} * a1);
+							var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+							var c3 = c3 +'원';
+							document.getElementById("totalproduct").innerHTML = c3;
+							document.getElementById("totalmanpay").innerHTML = cn1;
+							document.getElementById("total").innerHTML = cn2;
+							document.getElementById("totaltable").style.display = "";
+							  
+						}
+					
+					
+					
+					
+					
+					
 			    });
 			   
 			   $(document).on("click","div > input",function (){//테이블 안에 input 값 처리하기.
@@ -560,8 +677,16 @@ ul {
 						 cn2 = cn2 +'원';
 					
 						if(size>0){
-							document.getElementById("totalmanpay").innerHTML = "인건비<br/>"+cn1;
-							document.getElementById("total").innerHTML = "총 가격<br/>"+cn2;
+							var totalproduct = (${oneproduct.p_Landprice} * a1);
+							var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+							var c3 = c3 +'원';
+							
+							
+							document.getElementById("totalproduct").innerHTML = c3;
+							document.getElementById("totalmanpay").innerHTML = cn1;
+							document.getElementById("total").innerHTML = cn2;
+							document.getElementById("totaltable").style.display = "";
+							  
 						}
 						
 						
@@ -596,8 +721,15 @@ ul {
 					 cn2 = cn2 +'원';
 				
 					if(size>0){
-						document.getElementById("totalmanpay").innerHTML = "인건비<br/>"+cn1;
-						document.getElementById("total").innerHTML = "총 가격<br/>"+cn2;
+						var totalproduct = (${oneproduct.p_Landprice} * a1);
+						var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+						var c3 = c3 +'원';
+						
+						
+						document.getElementById("totalproduct").innerHTML = c3;
+						document.getElementById("totalmanpay").innerHTML = cn1;
+						document.getElementById("total").innerHTML = cn2;
+						document.getElementById("totaltable").style.display = "";
 					}
 				  
 				  
@@ -621,22 +753,46 @@ ul {
 						var cn2 = cn2 +'원';
 						
 						if(size>0){
-							document.getElementById("totalmanpay").innerHTML = "인건비<br/>"+cn1;
-							document.getElementById("total").innerHTML = "총 가격<br/>"+cn2;
+							var totalproduct = (${oneproduct.p_Landprice} * a1);
+							var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+							var c3 = c3 +'원';
+							
+							
+							document.getElementById("totalproduct").innerHTML = c3;
+							document.getElementById("totalmanpay").innerHTML = cn1;
+							document.getElementById("total").innerHTML = cn2;
+							document.getElementById("totaltable").style.display = "";
 						}else{
 							document.getElementById("totalmanpay").innerHTML = "";
 							document.getElementById("total").innerHTML = "";
+							document.getElementById("totaltable").style.display = "none";
 						}
-					  
-					  
-					  
 				});
 	});
+			
+			
+	//메뉴바 중간
+	$(function() {
+        var lnb = $("#lnb").offset().top;
+        $(window).scroll(function() {
+          var window = $(this).scrollTop();
+          
+          if(lnb <= window) {
+            $("#lnb").addClass("fixed");
+          } else {
+            $("#lnb").removeClass("fixed");
+          }
+        })
+      });
 
+
+			
+			
 	</script>
 
 </head>
 <body>
+
 
 	<div class="container pt-5 pb-4">
 		<div class="row justify-content-between">
@@ -701,23 +857,29 @@ ul {
 		<div class="container">
 			<div class="row">
 				<!--승인 여부 해당 파트 관리자만 보이게 만들어야됨. 차후 수정 예정.-->
-				<div align="right" class="col-lg-12" id="productupdate">
-					<input type="button" value="수정" onclick="p" />
-				</div>
-				<div align="right" class="col-lg-12" id="productaccept">
-					<c:choose>
-						<c:when test="${oneproduct.p_Accept eq 'Y'}">
-							승인처리상태 <input name='N' type="button" value="미승인처리"
-								onclick="productaccept('N')" />
-						</c:when>
-						<c:otherwise>
-						미승인처리상태  <input name='Y' type="button" value="승인처리"
-								onclick="productaccept('Y')" />
+				
+					<c:if test="${not empty farmer || not empty admin}">
 
-						</c:otherwise>
-					</c:choose>
-				</div>
 
+						<div align="right" class="col-lg-12" id="productupdate">
+							<input type="button" value="수정" onclick="p" />
+						</div>
+						
+						<div align="right" class="col-lg-12" id="productaccept">
+							<c:choose>
+								<c:when test="${oneproduct.p_Accept eq 'Y'}">
+									승인처리상태 <input style="width: 60px;" class='mybtn' name='N' type="button" value="승인"
+										onclick="productaccept('N')" />
+								</c:when>
+								<c:otherwise>
+								미승인처리상태  <input style="width: 60px;" class='mybtn2' name='Y' type="button" value="미승인"
+										onclick="productaccept('Y')" />
+		
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</c:if>
+				
 				<div class="col-lg-6 col-md-6" id="maindiv">
 					<div class="product__details__pic">
 						<div class="product__details__pic__item">
@@ -731,22 +893,26 @@ ul {
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
-								style="cursor: pointer" onclick="selectimg(this.name)"> <img
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
-								style="cursor: pointer" onclick="selectimg(this.name)"> <img
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
-								style="cursor: pointer" onclick="selectimg(this.name)"> <img
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
-								style="cursor: pointer" onclick="selectimg(this.name)"> <img
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
 								alt=""
@@ -760,6 +926,8 @@ ul {
 					<div class="product__details__text">
 						<h2>${oneproduct.p_Title}</h2>
 						<hr>
+						<h3>평점 : ${f_rate}</h3>
+						
 						<div class="product__details__rating">
 							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 								class="fa fa-star"></i> <i class="fa fa-star"></i> <i
@@ -790,7 +958,7 @@ ul {
 							<!-- 상품 리스트 선택 -->
 
 							<div class="select"
-								style="position: relative; line-height: 35px; width: 330px">
+								style="position: relative; line-height: 35px; width: 250px">
 								<a href="#" id="aaa" onClick="test()"> <img height="50px"
 									width="50px" src="/resources/product/img/감자.png"><span
 									id="productname">감자</span></a>
@@ -834,11 +1002,9 @@ ul {
 
 						<form>
 
-							<i class="fas fa-minus-circle" style='font-size:24px; vertical-align: middle;'></i> 
-							<input class="onlyNumber" id="iniamout" type=text min=1  name=amount value=1 size=10> 
-							<i class="fas fa-plus-circle" style='font-size:24px; vertical-align: middle;'></i>
-							<input type=button class="choicebutton" value="선택"
-								onClick="selectproduct()">
+							<i class="fas fa-minus-circle" style='font-size:24px; vertical-align: middle;'>
+							</i><input class="onlyNumber" id="iniamout" type=text min=1  name=amount value=1 size=10><i class="fas fa-plus-circle" style='font-size:24px; vertical-align: middle;'></i>
+							<input style="width: 50px;" type=button class="mybtn" value="선택" onClick="selectproduct()">
 						</form>
 
 						<ol id="productbasket" style="display:none;">
@@ -853,23 +1019,42 @@ ul {
 						
 							<div id="table1" class="table1">
 							</div>
-					    <table style="width: 100%;">
+						<br>
+					    <table id="totaltable" style="width: 100%;display: none; table-layout:fixed;">
+					    <tr style="border: 0.1px;border-top: solid #9e9c9c;">
+						    <td style="width:30%; text-align: left;font-size: 16px;">
+							<span>구입작물</span>
+							</td>
+							<td style="width:70%;text-align:right">
+							<span style="font-size: 16px;" id="totalproduct"></span>
+							</td>
+						</tr>
 					    
 					    <tr>
-					    <td>
-					    <div style="text-align: right; font-size: 24px;" id="totalmanpay"></div>
-						<div style="text-align: right; font-size: 24px;" id="total"></div>
-						</td>
+						    <td style="text-align: left;font-size: 16px;">
+							<span>인건비</span>
+							</td>
+							<td style="text-align:right">
+							<span style=" font-size: 16px;" id="totalmanpay"></span>
+							</td>
+						</tr>
+						<tr style="border: 0.1px;border-top: solid #9e9c9c;">
+							<td style="text-align: left;font-size: 24px;">
+							<span>총 가격</span>
+							</td>
+							<td style="text-align:right">
+							<span style="font-size: 24px;" id="total"></span>
+							</td>
 						</tr>
 						 <tr>
 					    <td>
 						<button type="button" class="mybtn"
-							style="width: 100pt; cursor: pointer;" onClick="basket()"
+							style=" cursor: pointer;" onClick="basket()"
 							value="장바구니">장바구니</button>
-						&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</td>
+						<td style="text-align:right">
 						<button type="button" class="mybtn"
-							style="width: 100pt; cursor: pointer;" type="button"
+							style=" cursor: pointer;" type="button"
 							onClick="payment()" value="결제">결제</button>
 						</td>
 						</tr>	
@@ -878,9 +1063,8 @@ ul {
                     <input type="button" onClick="document.myHiddenForm.submit()" value="장바구니"/>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
                     <input type="button" onClick="document.myHiddenForm2.submit()" value="결제"/>
                      -->
-
 					</div>
-					
+					<div id="lnbposition"></div>
 					
 					<form:form commandName="basketbean" id="myHiddenForm"
 							name="myHiddenForm" action="/productbasketchoice" method="post">
@@ -913,23 +1097,23 @@ ul {
 
 						</form:form>
 				</div>
-
-
-
+		</div>
+		
+	</div>
+				<!-- 메뉴바?? -->
+				<div id="lnb" style="text-align: center;">
+				   <ul>
+				     <li><a href="#lnbposition" class="sidenav">설명2</a></li>
+				     <li><a href="#" class="sidenav">덧글</a></li>
+				   </ul>
+				 </div>
+				 <br><br>
+		<div class="container">
+			<div class="row">				 
 				<div class="col-lg-12">
 					<div class="product__details__tab">
-						<ul class="nav nav-tabs" role="tablist">
-							<li class="nav-item"><a class="nav-link active"
-								data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">Description</a>
-							</li>
-							<li class="nav-item"><a class="nav-link" data-toggle="tab"
-								href="#tabs-2" role="tab" aria-selected="false">Information</a>
-							</li>
-							<li class="nav-item"><a class="nav-link" data-toggle="tab"
-								href="#tabs-3" role="tab" aria-selected="false">Reviews <span>(1)</span></a>
-							</li>
-						</ul>
-						<div class="tab-content">
+						
+						
 							<div class="tab-pane active" id="tabs-1" role="tabpanel">
 								<div class="product__details__tab__desc"
 									style="text-align: center;">
@@ -969,36 +1153,9 @@ ul {
 
 								</div>
 							</div>
-							<div class="tab-pane" id="tabs-2" role="tabpanel">
-								<div class="product__details__tab__desc">
-									<h6>Products Infomation</h6>
-									<p>Vestibulum ac diam sit amet quam vehicula elementum sed
-										sit amet dui. Pellentesque in ipsum id orci porta dapibus.
-										Proin eget tortor risus. Vivamus suscipit tortor eget felis
-										porttitor volutpat. Vestibulum ac diam sit amet quam vehicula
-										elementum sed sit amet dui. Donec rutrum congue leo eget
-										malesuada. Vivamus suscipit tortor eget felis porttitor
-										volutpat. Curabitur arcu erat, accumsan id imperdiet et,
-										porttitor at sem. Praesent sapien massa, convallis a
-										pellentesque nec, egestas non nisi. Vestibulum ac diam sit
-										amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-										ipsum primis in faucibus orci luctus et ultrices posuere
-										cubilia Curae; Donec velit neque, auctor sit amet aliquam vel,
-										ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-									<p>Praesent sapien massa, convallis a pellentesque nec,
-										egestas non nisi. Lorem ipsum dolor sit amet, consectetur
-										adipiscing elit. Mauris blandit aliquet elit, eget tincidunt
-										nibh pulvinar a. Cras ultricies ligula sed magna dictum porta.
-										Cras ultricies ligula sed magna dictum porta. Sed porttitor
-										lectus nibh. Mauris blandit aliquet elit, eget tincidunt nibh
-										pulvinar a.</p>
-								</div>
-							</div>
+							
 							<div class="tab-pane" id="tabs-3" role="tabpanel">
 								<div class="product__details__tab__desc">
-
-
-
 
 									<h6>댓 글</h6>
 									<hr>
@@ -1010,7 +1167,7 @@ ul {
 												<td colspan="3"><input type="text"
 													style="text-align: left;" name="p_Id"
 													placeholder="* 이름을 입력하세요." maxlength="50" required
-													autofocus></td>
+													></td>
 											</tr>
 											<tr>
 												<td colspan="1"><label>댓글 내용</label></td>
@@ -1040,12 +1197,12 @@ ul {
 
 							</div>
 						</div>
-					</div>
+					
 				</div>
+				
 			</div>
 		</div>
-		</div>
-		</div>
+		
 	</section>
 
 
