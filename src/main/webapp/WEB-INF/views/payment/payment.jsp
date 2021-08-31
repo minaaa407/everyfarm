@@ -223,6 +223,9 @@ margin-bottom:10px;
 						<c:set var="price" value="${ landprice + manpay + delivery }" />
 						<c:set var="price2" value="${ landprice + manpay }" />
 						
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Name" id="pay_Name" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Tel" id="pay_Tel" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Ema0il" id="pay_Email" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="dm" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }"/>
@@ -259,6 +262,9 @@ margin-bottom:10px;
 						<c:set var="price" value="${ landprice + manpay + delivery }" />
 						<c:set var="price2" value="${ landprice + manpay }" />
 						
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Name" id="pay_Name" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Tel" id="pay_Tel" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Email" id="pay_Email" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="dm" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }"/>
@@ -334,32 +340,33 @@ margin-bottom:10px;
 				</tr>
 				<tr>
 					<th scope="row" class="th">받으시는 분<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
-					<td><input id="m_Name" name="m_Name" class="inputTypeText" size="15" value="" type="text" /></td>
+					<td><input id="Name" name="Name" class="inputTypeText" size="15" 
+					value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Zㄱ-힣0-9]/gi,'');" required="required"/></td>
 				</tr>
 				<tr>
 					<th scope="row" class="th">주소 <img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
 					<td>
                         <input id="postcode" name="postcode" size="6" maxlength="6" value="" type="text" />    
                                             
-                        <a href="#none" id="btn_search_rzipcode" onclick="sample4_execDaumPostcode()">
+                        <a href="#none" id="zipcode" onclick="sample6_execDaumPostcode()">
                         	<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_zipcode.gif" alt="우편번호"/>
                         </a>
                         
                         <br>
                         
-                        <input id="raddr1" name="raddr1" size="70" value="${Member.m_Addr }" type="text"/> 기본주소
+                        <input id="raddr1" name="raddr1" size="60" value="${Member.m_Addr }" type="text"/> 기본주소
                         
                         <br>
                         
-                        <input id="raddr2" name="raddr2" size="40" value="" type="text" /> 나머지주소 (선택입력가능)
+                        <input id="raddr2" name="raddr2" size="60" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Zㄱ-힣0-9()]/gi,'');" required="required"/> 상세주소 (선택입력가능)
                     </td>
                 </tr>		
 				<tr class="">
 					<th scope="row" class="th">전화번호 <span class=""><img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></span></th>
 					<td>
-						<input id="tel" name="tel" maxlength="3" size="3" value="${fn:substring(Member.m_Tel,0,3) }" />
-						-<input id="tel1" name="tel1" maxlength="4" size="4" value="${fn:substring(Member.m_Tel,3,7) }" />
-						-<input id="tel2" name="tel2" maxlength="4" size="4" value="${fn:substring(Member.m_Tel,7,11) }" />
+						<input id="tel" name="tel" maxlength="3" size="3" value="" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" required="required" />
+						-<input id="tel1" name="tel1" maxlength="4" size="4" value="" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" required="required" />
+						-<input id="tel2" name="tel2" maxlength="4" size="4" value="" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"required="required" />
 					</td>
                 </tr>
                 </tbody>
@@ -367,7 +374,8 @@ margin-bottom:10px;
                 	<tr>
                 		<th scope="row" class="th">이메일 <img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
 						<td>
-							<input id="mail1" name="mail1" value="" type="text" />@<input id="mail2" name="mail2" value="" type="text" />
+							<input id="mail1" name="mail1" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9()]/gi,'');" required="required"/>@
+							<input id="mail2" name="mail2" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9()]/gi,'');" required="required"/>
 							<select id="mail" name="mail">
 							<option value="" selected="selected">- 이메일 선택 -</option>
 							<option value="naver.com">naver.com</option>
@@ -394,7 +402,7 @@ margin-bottom:10px;
 				</th>
 
                     <td>
-                        <textarea id="omessage" name="pay_Deliverymemo" maxlength="255" cols="70" ></textarea> 
+                        <textarea id="pay_Deliverymemo" name="pay_Deliverymemo" maxlength="255" cols="70" ></textarea> 
                         <div class="message displaynone"></div>
                         <select id="memo" name="memo" onChange="memo1()">
 		                        <option value="">배송 시 요청사항을 선택해주세요</option>
@@ -425,20 +433,48 @@ margin-bottom:10px;
 	<script>
 	
 function submit() {
+		if(document.getElementById("Name").value == "") {
+			alert("받으시는 분의 이름을 입력해주세요.");
+			document.getElementById('Name').focus();
+		} else if(document.getElementById('postcode').value == "") {
+			alert("주소를 입력해주세요.");
+		} else if(document.getElementById('tel').value == "") {
+			alert("전화번호를 입력해주세요.");
+			document.getElementById('tel').focus();
+		} else if(document.getElementById('tel1').value == "") {
+			alert("전화번호를 입력해주세요.");
+			document.getElementById('tel1').focus();
+		} else if(document.getElementById('tel2').value == "") {
+			alert("전화번호를 입력해주세요.");
+			document.getElementById('tel2').focus();
+		} else if(document.getElementById('mail1').value == "") {
+			alert("이메일을 입력해주세요.");
+			document.getElementById('mail1').focus();	
+		} else if(document.getElementById('mail2').value == "") {
+			alert("이메일을 입력해주세요.");
+			document.getElementById('mail2').focus();	
+		} else if(document.getElementById('agree').checked == false) {
+			alert("결제정보 확인 및 구매진행에 동의하셔야 주문이 가능합니다.");
+		} else {
+			document.pay_data.submit();
+		}
+	}
+		
 		
 		// 구매동의 체크박스
-		if(document.getElementById("agree").checked) {
-			document.pay_data.submit();
 			// 주소
 			var address1 = document.getElementById('postcode').value;
 			var address2 = document.getElementById('raddr1').value;
 			var address3 = document.getElementById('raddr2').value;
 			var address = address1 + address2 + address3;
 			document.getElementById('Ad').value=address;
-		} else {
-			alert("결제정보 확인 및 구매진행에 동의하셔야 주문이 가능합니다.")	
-		}
-	}
+			
+			const payname = document.getElementById('Name').value;
+			document.getElementById('Pay_Name').value = payname;
+			const paytel = document.getElementById('Name').value;
+			document.getElementById('Pay_Name').value = payname;
+			const payname = document.getElementById('Name').value;
+			document.getElementById('Pay_Name').value = payname;
 	
 	
 var check = 0;
@@ -464,6 +500,13 @@ $(document).on('click','input[id=list0]',function(){
     }
 });
 
+/* 
+for(var i = 0; i < paylistLength; i++){
+	paylistLength[i].addEventListener("click",function(event){
+		alert('test');
+	});
+} */
+
 function checkdelete() {
     	 var check = $("input:checkbox[name='list0']:checked").length;
     	 var allcheck = $("input:checkbox[name='list0']").length;
@@ -478,17 +521,19 @@ function checkdelete() {
 				 for (const i = 0; i < check; i++) {
 					 check2.parent().parent().remove();
 					 $('#all').prop('checked',false);
+					 var paylist = document.querySelectorAll("#list0");
+					 alert(paylist);
+					 var paylistLength = paylist.length;
+					 alert(paylistLength);
 				 }
-				 document.getElementById('ordercost').innerHTML="이순신"
 
 			 } else {
 				 return false;
 			 }
 		 } 
-				 alert("체크가능개수" + allcheck);
+		alert("체크가능개수" + allcheck);
 	}	
-	
-	
+
 	
 	// 우편번호 자르기
 	var post = '${Member.m_Addr }';
@@ -500,10 +545,11 @@ function checkdelete() {
 	document.getElementById('raddr1').value = firstpost;
 	
 	// 전화번호
-	var tel = $('#tel').val();
-	var tel1 = $('#tel1').val();
-	var tel2 = $('#tel2').val();
+	var tel = '${fn:substring(Member.m_Tel,0,3) }';
+	var tel1 = '${fn:substring(Member.m_Tel,3,7) }';
+	var tel2 = '${fn:substring(Member.m_Tel,7,11) }';
 	
+	document.getElementById('pay_Tel').value = '${tel tel1 tel2}'
 	// 이메일
 	
 	var email = '${Member.m_Id }';
@@ -524,7 +570,7 @@ function checkdelete() {
 		$("input:radio[id=sameaddr]").prop("checked", true); // 사용자동일에 체크되어있음
 		if($("input:radio[id=sameaddr]").is(":checked")) {       // 사용자동일에 체크되어있으면 실행
 			$("input:radio[id=otheraddr]").prop("checked", false);  // 새로운배송지에 체크 해제
-			$('#m_Name').val(name);       $('#m_Name').prop('disabled', true);
+			$('#Name').val(name);       $('#Name').prop('disabled', true);
 			$('#postcode').val(lastpost); $('#postcode').prop('disabled', true);  
 			$('#raddr1').val(firstpost);  $('#raddr1').prop('disabled', true);
 			$('#raddr2').val(firstpost);  $('#raddr2').prop('disabled', true);
@@ -533,7 +579,8 @@ function checkdelete() {
 			$('#tel2').val(tel2);		  $('#tel2').prop('disabled', true);
 			$('#mail1').val(mail1);  	  $('#mail1').prop('disabled', true);
 			$('#mail2').val(mail2);		  $('#mail2').prop('disabled', true);
-			$("#mail").hide();
+			$('#mail').hide();
+			$('#zipcode').hide();
 			console.log(name);
 		}
 		
@@ -544,16 +591,17 @@ function checkdelete() {
 		 var empty = '';
 	      $("input:radio[id=otheraddr]").click(function(){
 	    	  $("input:radio[id=sameaddr]").prop("checked", false);
-	    	  $('#m_Name').val(empty);   $('#m_Name').prop('disabled', false);
-	    	  $('#postcode').val(empty); $('#postcode').prop('disabled', false);
-			  $('#raddr1').val(empty);	 $('#raddr1').prop('disabled', false);
+	    	  $('#Name').val(empty);     $('#Name').prop('disabled', false);
+	    	  $('#postcode').val(empty); $('#postcode').prop('disabled', true);
+			  $('#raddr1').val(empty);	 $('#raddr1').prop('disabled', true);
 			  $('#raddr2').val(empty);	 $('#raddr2').prop('disabled', false);
 			  $('#tel').val(empty);		 $('#tel').prop('disabled', false);
 			  $('#tel1').val(empty);	 $('#tel1').prop('disabled', false);
 			  $('#tel2').val(empty);	 $('#tel2').prop('disabled', false);
 			  $('#mail1').val(empty);	 $('#mail1').prop('disabled', false);
 			  $('#mail2').val(empty);	 $('#mail2').prop('disabled', false);
-			  $("#mail").show();
+			  $("#mail").show();		
+			  $('#zipcode').show();		
 	    	  console.log(empty + "empty");
 	    	  
 	    	  $("#mail").on("change", function() {
@@ -573,7 +621,7 @@ function checkdelete() {
 	    		 $("#mail option:eq(10)").prop("selected", true);
 	    		  
 	    	  });
-	    	  $("#omessage").on("keypress", function() {
+	    	  $("#pay_Deliverymemo").on("keypress", function() {
 		    		 $("#memo option:eq(6)").prop("selected", true);
 	    	  });
 	    	});
@@ -583,7 +631,7 @@ function checkdelete() {
 		 var name = '${Member.m_Name }';
 	      $("input:radio[id=sameaddr]").click(function(){
 	    	  $("input:radio[id=otheraddr]").prop("checked", false);
-	    	  $('#m_Name').val(name);        $('#m_Name').prop('disabled', true);
+	    	  $('#Name').val(name);          $('#Name').prop('disabled', true);
 	    	  $('#postcode').val(lastpost);	 $('#postcode').prop('disabled', true);
 			  $('#raddr1').val(firstpost);	 $('#raddr1').prop('disabled', true);
 			  $('#raddr2').val(firstpost);	 $('#raddr2').prop('disabled', true);
@@ -592,10 +640,11 @@ function checkdelete() {
 			  $('#tel2').val(tel2);			 $('#tel2').prop('disabled', true);
 			  $('#mail1').val(mail1);		 $('#mail1').prop('disabled', true);
 			  $('#mail2').val(mail2);		 $('#mail2').prop('disabled', true);
-			  $("#mail").hide();	
+			  $("#mail").hide();
+			  $('#zipcode').hide();
 	    	  console.log(name);
 	      });
-	      $("#omessage").on("keypress", function() {
+	      $("#pay_Deliverymemo").on("keypress", function() {
 	    		 $("#memo option:eq(6)").prop("selected", true);
 	 	  });
 	});
@@ -604,13 +653,13 @@ function checkdelete() {
 	// 셀렉트 박스 배송메시지
 	$("#memo").on("change", function() {
 	    var $select = $(this);
-	    $("#omessage").val(function(i, val) {
+	    $("#pay_Deliverymemo").val(function(i, val) {
 	        return val = $select.val();
 	    });
 	    if ($select.val() == "") {
-		  	$("#omessage").prop("disabled", false);
+		  	$("#pay_Deliverymemo").prop("disabled", false);
 		  	} else {
-		  	$("#omessage").prop("disabled", true);	
+		  	$("#pay_Deliverymemo").prop("disabled", true);	
 		  	}
 	});
 	
@@ -622,64 +671,58 @@ function checkdelete() {
 	}
 	
 	// 주소 API
-	function sample4_execDaumPostcode() {
-		new daum.Postcode(
-				{
-					oncomplete : function(
-							data) {
-						var roadAddr = data.roadAddress;
-						var extraRoadAddr = '';
-						if (data.bname !== ''
-								&& /[동|로|가]$/g
-										.test(data.bname)) {
-							extraRoadAddr += data.bname;
+		function sample6_execDaumPostcode() {
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+							// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+							// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+							var addr = ''; // 주소 변수
+							var extraAddr = ''; // 참고항목 변수
+
+							//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+							if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+								addr = data.roadAddress;
+							} else { // 사용자가 지번 주소를 선택했을 경우(J)
+								addr = data.jibunAddress;
+							}
+
+							// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+							if (data.userSelectedType === 'R') {
+								// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+								// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+								if (data.bname !== ''
+										&& /[동|로|가]$/g.test(data.bname)) {
+									extraAddr += data.bname;
+								}
+								// 건물명이 있고, 공동주택일 경우 추가한다.
+								if (data.buildingName !== ''
+										&& data.apartment === 'Y') {
+									extraAddr += (extraAddr !== '' ? ', '
+											+ data.buildingName
+											: data.buildingName);
+								}
+								// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+								if (extraAddr !== '') {
+									extraAddr = ' (' + extraAddr + ')';
+								}
+								// 조합된 참고항목을 해당 필드에 넣는다.
+								document.getElementById("raddr1").value = extraAddr;
+
+							} else {
+								document.getElementById("raddr1").value = '';
+							}
+
+							// 우편번호와 주소 정보를 해당 필드에 넣는다.
+							document.getElementById('postcode').value = data.zonecode;
+							document.getElementById("raddr1").value = addr;
+							// 커서를 상세주소 필드로 이동한다.
+							document.getElementById("raddr1").focus();
 						}
-						if (data.buildingName !== ''
-								&& data.apartment === 'Y') {
-							extraRoadAddr += (extraRoadAddr !== '' ? ', '
-									+ data.buildingName
-									: data.buildingName);
-						}
-						if (extraRoadAddr !== '') {
-							extraRoadAddr = ' ('
-									+ extraRoadAddr
-									+ ')';
-						}
-						document
-								.getElementById('postcode').value = data.zonecode;
-						document
-								.getElementById('pay_Address1').value = roadAddr;
-						document
-								.getElementById("pay_Address2").value = data.jibunAddress;
-						if (roadAddr !== '') {
-							document
-									.getElementById("pay_Address3").value = extraRoadAddr;
-						} else {
-							document
-									.getElementById("pay_Address3").value = '';
-						}
-						var guideTextBox = document
-								.getElementById("guide");
-						if (data.autoRoadAddress) {
-							var expRoadAddr = data.autoRoadAddress
-									+ extraRoadAddr;
-							guideTextBox.innerHTML = '(예상 도로명 주소 : '
-									+ expRoadAddr
-									+ ')';
-							guideTextBox.style.display = 'block';
-						} else if (data.autoJibunAddress) {
-							var expJibunAddr = data.autoJibunAddress;
-							guideTextBox.innerHTML = '(예상 지번 주소 : '
-									+ expJibunAddr
-									+ ')';
-							
-						} else {
-							guideTextBox.innerHTML = '';
-							guideTextBox.style.display = 'none';
-						}
-					}
-				}).open();
-	 }
+					}).open();
+		}
 	
 	
 	</script>

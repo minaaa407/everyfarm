@@ -3,6 +3,7 @@ package kr.co.everyfarm.payment;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.everyfarm.basket.BasketBean;
 import kr.co.everyfarm.farmer.FarmerBean;
@@ -41,7 +43,7 @@ public class PaymentController {
 			}
 		}
 		basketbean.setBasketbeanList(list);
-		System.out.println("현재 list size" + list.size() );
+		System.out.println("현재 list size" + list.size());
 		System.out.println(basketbean.getBasketbeanList().get(0).getB_Seed() + "작물"); //
 
 		MemberDAO userdao = sqlSessionTemplate.getMapper(MemberDAO.class);
@@ -62,6 +64,25 @@ public class PaymentController {
 		return "payment/payment";
 	}
 
+	@RequestMapping("/paymentdelete")
+	public String paymentDelete(@RequestParam String[] pno, @ModelAttribute("basketbean") BasketBean basketbean, Model model, HttpServletRequest request) {
+		
+		List<BasketBean> list = basketbean.getBasketbeanList();
+		int j = list.size();
+		
+		System.out.println("현재 list size" + list.size());
+		
+		model.addAttribute("memBasketModel", basketbean);
+		
+		for (int i = 0; i < j; i++) {
+			System.out.println("넘겨주는 바스켓 데이터" + basketbean.getBasketbeanList().get(i));
+		}
+		System.out.println("--페이먼트딜리트 끝--"); //
+		
+		return "payment/payment";
+	}
+	
+	
 	@RequestMapping(value = "/paycomplete")  
 	   public String payInsert(Model model, HttpSession session) {
 		  System.out.println("-----페이컴플릿 시작-----");
@@ -79,9 +100,11 @@ public class PaymentController {
 	         insertPayBean.setPay_Land(payInformationSave.get(i).getPay_Land());
 	         insertPayBean.setPay_Seed(payInformationSave.get(i).getPay_Seed());
 	         insertPayBean.setPay_Totalprice(payInformationSave.get(i).getPay_Totalprice());
-	         insertPayBean.setPay_Method("kakaopay");
 	         insertPayBean.setPay_Deliverymemo(payInformationSave.get(i).getPay_Deliverymemo());
 	         insertPayBean.setPay_Address(payInformationSave.get(i).getPay_Address());
+	         insertPayBean.setPay_Name(payInformationSave.get(i).getPay_Name());
+	         insertPayBean.setPay_Tel(payInformationSave.get(i).getPay_Tel());
+	         insertPayBean.setPay_Email(payInformationSave.get(i).getPay_Email());
 	         n += paydao.payinsert(insertPayBean);
 	         System.out.println(insertPayBean);
 	      }
@@ -112,12 +135,13 @@ public class PaymentController {
 	      int totalprice=0;
 	      for(int i = 0; i < PaymentBean.getPaymentbeanList().size(); i++) {
 	         payInformationSave.add(PaymentBean.getPaymentbeanList().get(i));
+	         System.out.println(PaymentBean.getPaymentbeanList().get(i));
 	         int price = PaymentBean.getPaymentbeanList().get(i).getPay_Totalprice();
-	         totalprice += (price + 3000);
+	         totalprice += price;
 	      }
 	      	System.out.println(totalprice);
 	      	model.addAttribute("totalprice", totalprice);
-	      System.out.println("payInformationSave" + payInformationSave);
+	      System.out.println("payInformationSave2 = " + payInformationSave);
 	      return "payment/test1";
 	      
 	   }
