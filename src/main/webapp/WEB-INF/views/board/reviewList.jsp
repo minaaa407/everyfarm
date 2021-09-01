@@ -59,7 +59,6 @@
     border-spacing: 0 20px;
     margin: auto;
 }
-
 .ff {
 	background: #389d29 !important;
 	margin-bottom: 20px;
@@ -69,16 +68,13 @@
 	border: 0;
 	text-align: left;
 }
-
 .cc {
-
 	text-align: center;
 	padding: 20px 25px;
 	color: #fff;
 	font-size: 14px;
 	font-weight: 700;
 }
-
 .bef-list {
 text-align: center;
 	margin-bottom: 20px;
@@ -87,7 +83,6 @@ text-align: center;
 	padding: 0;
 	margin: 0;
 }
-
 .list {
 	border-right: 1px solid rgba(0, 0, 0, 0.05);
 	margin-bottom: 20px;
@@ -97,7 +92,6 @@ text-align: center;
 	margin: 0;
 	background: #F3F3F3;
 }
-
 .list-end {
 border-right: 1px solid rgba(0, 0, 0, 0.05);
 	border-bottom-left-radius: 11px;
@@ -107,7 +101,6 @@ border-right: 1px solid rgba(0, 0, 0, 0.05);
 	margin: 0;
 	background: #F3F3F3;
 }
-
 .list-start {
 	border-top-right-radius: 11px;
 	border-bottom-right-radius: 11px;
@@ -120,9 +113,7 @@ border-right: 1px solid rgba(0, 0, 0, 0.05);
  a:link  {color: black; text-decoration: none;}
  a:visited  {color: black; text-decoration: none;}
  a:hover   {color: black; text-decoration: underline;}
-
 	
-
 /* CSS 작업중 삭제 XXXXXXXX */
 </style>
 </head>
@@ -210,17 +201,86 @@ border-right: 1px solid rgba(0, 0, 0, 0.05);
 			</div>
 		</div>
 	</section>
-
-	<!-- Js Plugins 
-    <script src="resources/review/reviewList/js/jquery-3.3.1.min.js"></script>
-    <script src="resources/review/reviewList/js/bootstrap.min.js"></script>
-    <script src="resources/review/reviewList/js/jquery.nice-select.min.js"></script>
-    <script src="resources/review/reviewList/js/jquery-ui.min.js"></script>
-    <script src="resources/review/reviewList/js/jquery.slicknav.js"></script>
-    <script src="resources/review/reviewList/js/mixitup.min.js"></script>
-    <script src="resources/review/reviewList/js/owl.carousel.min.js"></script>
-    <script src="resources/review/reviewList/js/main.js"></script>
-    -->
+        <script type="text/javascript">
+            $(document).ready(function(){
+                 
+                //--페이지 셋팅
+                var totalPage = ${totalPage}; //전체 페이지
+                var startPage = ${startPage}; //현재 페이지
+                 
+                var pagination = "";
+                 
+                //--페이지네이션에 항상 10개가 보이도록 조절
+                var forStart = 0;
+                var forEnd = 0;
+                 
+                if((startPage-5) < 1){
+                    forStart = 1;
+                }else{
+                    forStart = startPage-5;
+                }
+                 
+                if(forStart == 1){
+                     
+                    if(totalPage>9){
+                        forEnd = 10;
+                    }else{
+                        forEnd = totalPage;
+                    }
+                     
+                }else{
+                     
+                    if((startPage+4) > totalPage){
+                         
+                        forEnd = totalPage;
+                         
+                        if(forEnd>9){
+                            forStart = forEnd-9
+                        }
+                         
+                    }else{
+                        forEnd = startPage+4;
+                    }
+                }
+                //--페이지네이션에 항상 10개가 보이도록 조절
+                 
+                //전체 페이지 수를 받아 돌린다.
+                for(var i = forStart ; i<= forEnd ; i++){
+                    if(startPage == i){
+                        pagination += ' <button name="page_move" start_page="'+i+'" disabled>'+i+'</button>';
+                    }else{
+                        pagination += ' <button name="page_move" start_page="'+i+'" style="cursor:pointer;" >'+i+'</button>';
+                    }
+                }
+                 
+                //하단 페이지 부분에 붙인다.
+                $("#pagination").append(pagination);
+                //--페이지 셋팅
+                 
+                 
+                $("a[name='subject']").click(function(){
+                     
+                    location.href = "/board/view?id="+$(this).attr("content_id");
+                     
+                });
+                 
+                $("#write").click(function(){
+                    location.href = "/board/edit";
+                });
+                                 
+                $(document).on("click","button[name='page_move']",function(){
+                     
+                    var visiblePages = 10;//리스트 보여줄 페이지
+                     
+                    $('#startPage').val($(this).attr("start_page"));//보고 싶은 페이지
+                    $('#visiblePages').val(visiblePages);
+                     
+                    $("#frmSearch").submit();
+                     
+                });
+                 
+            });
+        </script>
 	<script src="resources/review/reviewList/js/jquery.min.js"></script>
 	<script
 		src="resources/review/reviewList/js/jquery-migrate-3.0.1.min.js"></script>

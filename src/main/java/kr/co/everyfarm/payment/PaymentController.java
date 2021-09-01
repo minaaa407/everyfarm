@@ -225,10 +225,12 @@ public class PaymentController {
 
 
 	@RequestMapping(value = "/myPayList")
-	public String getMyPayList(Model model, PaymentBean PayBean) {
+	public String getMyPayList(Model model, PaymentBean PayBean,HttpSession session) {
+		MemberBean mBean = (MemberBean) session.getAttribute("member");
 		PaymentDAO payDAO = sqlSessionTemplate.getMapper(PaymentDAO.class);
-
-		List<PaymentBean> myPay = payDAO.mypaylist();
+		String m_Id = mBean.getM_Id();
+		
+		List<PaymentBean> myPay = payDAO.mypaylist(m_Id);
 		model.addAttribute("mypay", myPay);
 		return "user/myPayList";
 

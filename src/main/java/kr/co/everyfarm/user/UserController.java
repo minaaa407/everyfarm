@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
@@ -37,6 +38,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
+import kr.co.everyfarm.board.ReviewBean;
+import kr.co.everyfarm.board.ReviewDAO;
+import kr.co.everyfarm.farmer.FarmerBean;
+import kr.co.everyfarm.farmer.FarmerDAO;
+import kr.co.everyfarm.payment.PaymentBean;
+import kr.co.everyfarm.payment.PaymentDAO;
+import kr.co.everyfarm.product.ProductBean;
+import kr.co.everyfarm.product.ProductDao;
+
 @Controller
 public class UserController {
 
@@ -52,7 +62,24 @@ public class UserController {
 	private String apiResult = null;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String home() {
+	public String home(Model model, ProductBean product, FarmerBean farmerBean, ReviewBean review, PaymentBean pay) {
+
+		ProductDao prodao = sqlSessionTemplate.getMapper(ProductDao.class);
+		List<ProductBean> proView = prodao.viewList();
+		model.addAttribute("proView", proView);
+
+		ReviewDAO revdao = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		List<ReviewBean> revView = revdao.reviewList();
+		model.addAttribute("revView", revView);
+
+		PaymentDAO paydao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		List<PaymentBean> payView = paydao.seedList();
+		model.addAttribute("payView", payView);
+
+		FarmerDAO farDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		List<FarmerBean> farView = farDAO.bestFarmer();
+		model.addAttribute("farView", farView);
+
 		return "home/home";
 	}
 
@@ -89,14 +116,10 @@ public class UserController {
 	@RequestMapping(value = "/user/callback", method = RequestMethod.GET)
 	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
 			MemberBean memberBean) throws IOException, ParseException {
-		System.out.println("여기는 callback session : " + session);
-		System.out.println("여기는 callback state : " + state);
-		System.out.println("여기는 callback code : " + code);
 
 		OAuth2AccessToken oauthToken;
 
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
-		System.out.println("oauthToken쪽 : " + oauthToken);
 		// 1. 로그인 사용자 정보를 읽어온다.
 		apiResult = naverLoginBO.getUserProfile(oauthToken); // String형식의 json데이터
 
@@ -115,10 +138,6 @@ public class UserController {
 		String name = (String) response_obj.get("name");
 		String mobile = (String) response_obj.get("mobile");
 
-		System.out.println("네이버 ID : " + id);
-		System.out.println("이름 : " + name);
-		System.out.println("모바일" + mobile);
-
 		if (response_obj.get("id") != null) {
 			// 4.파싱 닉네임 세션으로 저장
 			System.out.println("4번 주석");
@@ -129,18 +148,17 @@ public class UserController {
 			model.addAttribute("result", apiResult);
 			String auth_id = (String) session.getAttribute("m_Id");
 			System.out.println("id test:::" + auth_id);
-			MemberBean member = dao.nlogin(memberBean);
 
-			model.addAttribute("member", member);
-			session.setAttribute("member", member);
+			MemberBean member = dao.mlogin(memberBean);
 
-			if (member == null) {
-				return "redirect:/naverJoin";
-			} else {
+			if (member != null) {
+				session.setAttribute("member", member);
 				return "redirect:/home";
+			} else {
+				return "redirect:/naverJoin";
 			}
 		} else {
-			return "/login";
+			return "user/loginForm";
 		}
 	}
 
@@ -162,7 +180,7 @@ public class UserController {
 				session.setAttribute("m_Id", userInfo.get("email"));
 				session.setAttribute("m_Name", userInfo.get("nickname"));
 				session.setAttribute("access_Token", access_Token);
-
+				
 				return "redirect:/home";
 			} else {
 				return "redirect:/kakaoJoin";
@@ -236,6 +254,8 @@ public class UserController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
+		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+
 		Properties prop = System.getProperties();
 		prop.put("mail.smtp.starttls.enable", "true");
 		prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -262,6 +282,9 @@ public class UserController {
 					+ "\n해당 인증번호를 인증번호 확인란에 기입해주십시오." + "\n감사합니다.", "UTF-8");
 
 			Transport.send(msg);
+
+//			emailBean.setE_Id(memberBean.getM_Id());
+//			dao.mailNumber(e_Num);
 
 			map.put("error", true);
 

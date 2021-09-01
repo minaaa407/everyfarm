@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class PaymentBean {
-	
+
 	private String pay_Id;
 	private String pay_Seed;
 	private String pay_Deliverymemo;
@@ -17,14 +17,13 @@ public class PaymentBean {
 	private String pay_Name;
 	private String pay_Tel;
 	private String pay_Email;
-	
+  
 	private String p_Id;
 	private int p_No;
 	private String p_Title;
 	private String p_Img;
-	
-	
-	private List<PaymentBean> paymentbeanList;
+
+  private List<PaymentBean> paymentbeanList;
 
 
 	public String getPay_Id() {
@@ -206,6 +205,4 @@ public class PaymentBean {
 				+ ", p_Title=" + p_Title + ", p_Img=" + p_Img + ", paymentbeanList=" + paymentbeanList + "]";
 	}
 
-
-	
 }

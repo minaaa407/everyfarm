@@ -5,14 +5,14 @@
 <head>
 <meta charset="utf-8" />
   <!-- Favicon -->
-  <link href="resources/admin/img/brand/favicon.png" rel="icon" type="image/png">
+  <link href="resources/farmer/img/brand/favicon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
-  <link href="resources/admin/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-  <link href="resources/admin/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="resources/farmer/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+  <link href="resources/farmer/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link href="resources/admin/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+  <link href="resources/farmer/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
 </head>
 <body>
 
@@ -38,7 +38,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/farmerLogout">
               <i class="ni ni-key-25 text-info"></i> 로그아웃
             </a>
           </li>
