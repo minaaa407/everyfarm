@@ -7,6 +7,7 @@ public interface ProductqnaDAO {
 	public ProductqnaBean info(int productqnano);
 	public int insert(ProductqnaBean productqna);
 	public int update(ProductqnaBean productqna);
+	public int updatedelete(ProductqnaBean productqna);
 	public int delete(int productqnano);
 	
 	
@@ -15,5 +16,9 @@ public interface ProductqnaDAO {
 	
 	public List<ProductqnaBean> listserachpageing(PageBeen pagebeen);
 	public int listserachcount();
-	
+	public int productqnalistcount(String c_no);
+	public List<ProductqnaBean> productqnalist(PageBeen pagebeen);
+	public int maxcmainno(String c_no);
+	public int maxcsubno(String c_Seq);
+	public int mainno(String c_Seq);
 }

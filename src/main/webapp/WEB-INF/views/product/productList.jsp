@@ -37,7 +37,15 @@
 
     <link rel="stylesheet" href="resources/product/css/style.css" type="text/css">
 
+<style>
+a:hover, a:focus {
+    text-decoration: none;
+    outline: none;
+    color: #d8d57d;
+}
 
+
+</style>
 </head>
 <body>
 
@@ -91,6 +99,9 @@ function orderby(id){
 		document.getElementById('orderby').value = "p_Landprice";
 		document.getElementById('ascdesc').value = "DESC";
 		
+	}else if(id =="orderbyview"){
+		document.getElementById('orderby').value = "p_View";
+		document.getElementById('ascdesc').value = "DESC";
 	}
 	document.myHiddenForm.submit();
 
@@ -165,12 +176,14 @@ window.onload = function(){
 			
 			$.ajax({
 				type : "post", //요청 메소드 방식
-				url : "/testlist2",
+				url : "/productlistpage",
 				data : bean,
 				dataType : 'json', //서버가 요청 URL을 통해서 응답하는 내용의 타입
 				success : function(result) {//성공시 동작하는 파트
 					var page = result.pagebeen;
 					var list123 = result.productlist;
+					var pricecomma = result.pricecomma;
+					var rateArray = result.rateArray;
 					var abcd = document.getElementById("productlist1");
 					var pagesystem = document.getElementById("pagesystem");
 					var a = "";	//상품 리스트 처리파트 영역.
@@ -181,7 +194,10 @@ window.onload = function(){
 						a +="<div class='col-lg-4 col-md-6 col-sm-6'><a href='/productdetail?productno="+list123[i].p_No+"'>";
 				        a +="<img id='product"+list123[i].p_No+"' src='/resources/upload/product/"+list123[i].p_No+"/"+list123[i].p_Img+"' class='test1' width='250' height='200' alt='Image "+list123[i].p_No+"'><br>";
 				        a +=list123[i].p_Title+"</a><br>";
-				        a +=" 평당 :<span> "+list123[i].p_Landprice+"</span> 원 <br><br><br></div>";
+				        a +=" 평당 :<span> "+pricecomma[i]+"</span> 원 <br>평점 : "+rateArray[i];
+						a +="<br>조회수 : "+list123[i].p_View +"<br></div>";				        
+				        
+				        
 					}
 					abcd.innerHTML = a;
 					var b="";
@@ -264,6 +280,7 @@ window.onload = function(){
                                     	<a id = "orderbygrade" style="cursor:pointer" onclick="orderby(this.id)">평점 </a>
                                     	<a id = "orderbyhighlandprice" style="cursor:pointer" onclick="orderby(this.id)">낮은땅가격 </a>
                                     	<a id = "orderbylowlandprice" style="cursor:pointer" onclick="orderby(this.id)">높은땅가격 </a>
+                                    	<a id = "orderbyview" style="cursor:pointer" onclick="orderby(this.id)">조회수 </a>
                                 <select id ="productlist" name="productlist" class="productlist" onChange="limitChange()">
                                 			<c:if test="${pagebeen.limit eq '3'}">
 												<option value="3" selected>3</option>
@@ -296,11 +313,13 @@ window.onload = function(){
      				<br>
      				<br>
                     <div align="center" class="row" id="productlist1">
-                    	<c:forEach var="p" items="${productlist }">
+                    	<c:forEach var="p" items="${productlist }" varStatus="status">
 	                        <div class="col-lg-4 col-md-6 col-sm-6"><a href="/productdetail?productno=${p.p_No}">
-	                        	<img id='product${p.p_No}' src="/resources/upload/product/${p.p_No}/${p.p_Img}" class="test1" width="250" height="200" alt="Image ${p.p_No}"><br>
+	                        	<img id='product${p.p_No}' src="/resources/upload/product/${p.p_No}/${p.p_Img}"
+	                        	 class="test1" width="250" height="200" alt="Image ${p.p_No}"><br>
 									 ${p.p_Title}</a><br>
-									 평당 :<span> ${p.p_Landprice}</span> 원 <br><br><br>
+									 평당 :<span> ${pricecomma[status.index]}</span> 원 <br>평점 : ${ rateArray[status.index] }<br>
+									 조회수 : ${p.p_View}<br>
 	                        </div>
                        </c:forEach> 
                     </div>
@@ -340,16 +359,6 @@ window.onload = function(){
                 </div>
          		</section>
     <!-- Product Section End -->
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
