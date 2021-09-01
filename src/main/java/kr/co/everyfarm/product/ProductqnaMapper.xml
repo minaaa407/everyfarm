@@ -12,16 +12,47 @@
 	</insert>
 	
 	<select id="info" resultType="kr.co.everyfarm.product.ProductBean">
-		select* from emp2 where empno = #{empno}		
+		select * from emp2 where empno = #{empno}		
 	</select>
 	
-	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
-		update emp2 set deptno=#{deptno}, sal=#{sal} where empno=#{empno}
+	<update id="update" parameterType="kr.co.everyfarm.product.ProductqnaBean">
+		update productqna set c_content = #{c_Content} where c_Seq = #{c_Seq};
 	</update>
+	
+	<update id="updatedelete" parameterType="kr.co.everyfarm.product.ProductqnaBean">
+		update productqna set c_content = #{c_Content}, c_Id = #{c_Id} where c_Seq = #{c_Seq};
+	</update>
+	
+	
 	
 	<delete id="delete">
 		delete from emp2 where empno=#{empno}	
 	</delete>
+	
+	
+	<select id="productqnalist" resultType="kr.co.everyfarm.product.ProductqnaBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select c_seq,c_id,c_no,c_content,c_date,c_mainno,c_subno,c_secret,REPLACE(c_subno,0,9999) from productqna
+		 where c_no=#{wherecolumn} order by c_mainno DESC,REPLACE(c_subno,0,9999) desc limit #{limit} offset #{offset}
+	</select>
+
+	<select id="productqnalistcount" resultType="int"  parameterType="String">
+		select count(*) from productqna where c_no = #{c_no}
+	</select>
+	
+	<select id="maxcmainno" resultType="int" parameterType="String">
+		select max(c_mainno) from productqna where c_no =#{c_no}
+	</select>
+	
+	<select id="mainno" resultType="int" parameterType="String">
+		select c_mainno from productqna where c_seq = #{c_seq}
+	</select>
+	
+	
+	<select id="maxcsubno" resultType="int" parameterType="String">
+		select max(c_subno) from productqna where c_mainno = (select c_mainno from productqna where c_seq = #{c_seq})
+	</select>
+	
+	
 
 
 </mapper>

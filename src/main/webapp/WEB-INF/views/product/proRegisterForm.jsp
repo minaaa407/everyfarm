@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page import="java.util.*"%>
+
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -32,12 +33,37 @@
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
 </head>
+
+<script>
+	function hideRowSub() {
+		const row = document.getElementById('Subimg');
+		row.style.display = 'none';
+	}
+
+	function showRowSub() {
+		const row = document.getElementById('Subimg');
+		row.style.display = '';
+	}
+
+	function hideRowDetail() {
+		const row = document.getElementById('Imgdetail');
+		row.style.display = 'none';
+	}
+
+	function showRowDetail() {
+		const row = document.getElementById('Imgdetail');
+		row.style.display = '';
+	}
+</script>
+
 <style>
 table {
-	width: 100%;
+	width: 52%;
 	border-collapse: collapse;
 	text-align: left;
 	line-height: 1.5;
+	vertical-align: middle;
+	margin: auto;
 }
 
 thead th {
@@ -46,7 +72,6 @@ thead th {
 	vertical-align: top;
 	color: black;
 	border-bottom: 3px solid black;
-	background: #dcdcdc;
 }
 
 tbody td {
@@ -57,7 +82,8 @@ tbody td {
 }
 
 #button {
-	text-align: right;
+	text-align: center;
+	color: #4e9525;
 }
 </style>
 </head>
@@ -132,16 +158,20 @@ tbody td {
 				</tr>
 				<tr>
 					<td colspan="1" style="width: 20%;"><label>제 목</label></td>
-					<td colspan="3"><input type="text" name="p_Title"
+					<td colspan="3"><input type="text" name="p_Title" 
 						maxlength="50" required autofocus></td>
 				</tr>
 				<tr>
-				<tr>
 					<td style="width: 20%;"><label> 메인 이미지 </label></td>
 					<td style="text-align: left;"><input name="p_Img1" type="file"
-						accept="image/*" /> <input type="hidden" name="p_Img"
-						value="1111"></td>
+						accept="img/*" /> <input type="hidden" name="p_Img" value=""></td>
 				</tr>
+				<tr>
+					<td style="width: 20%;"><input type='button' value='서브사진 등록'
+						onclick='showRowSub()' /></td>
+					<td></td>
+				</tr>
+			<tbody id="Subimg" style="display: none;">
 				<tr>
 					<td style="width: 20%;"><label> 서브 이미지1 </label></td>
 					<td style="text-align: left;"><input name="p_Subimg12"
@@ -164,9 +194,18 @@ tbody td {
 					<td style="width: 20%;"><label> 서브 이미지4 </label></td>
 					<td style="text-align: left;"><input name="p_Subimg42"
 						type="file" accept="subimg4/image/*" /> <input type="hidden"
-						name="p_Subimg4" value="1111"></td>
+						name="p_Subimg4" value="1111"><input
+						type='button' value='닫기' onclick='hideRowSub()' /></td>
 				</tr>
+			</tbody>
 
+
+			<tr>
+				<td style="width: 20%;"><input type='button' value='상세사진 등록'
+					onclick='showRowDetail()' /></td>
+				<td></td>
+			</tr>
+			<tbody id="Imgdetail" style="display: none;">
 				<tr>
 					<td style="width: 20%;"><label> 디테일 이미지1 </label></td>
 					<td style="text-align: left;"><input name="p_Imgdetail12"
@@ -189,28 +228,33 @@ tbody td {
 					<td style="width: 20%;"><label> 디테일 이미지4 </label></td>
 					<td style="text-align: left;"><input name="p_Imgdetail42"
 						type="file" accept="imgdetail4/image/*" /> <input type="hidden"
-						name="p_Imgdetail" value="1111"></td>
+						name="p_Imgdetail" value="1111"><input type='button'
+					value='닫기' onclick='hideRowDetail()' /></td>
 				</tr>
-				<tr>
-					<td colspan="1"><label>상세 내용</label></td>
-					<td colspan="3"><textarea class="form-control"
-							name="p_Content" rows="10" placeholder="* 내용을 입력하세요." required> 
+
+			</tbody>
+			<tr>
+				<td colspan="1"><label>상세 내용</label></td>
+				<td colspan="3"><textarea class="form-control" name="p_Content" placeholder="* 내용을 입력하세요."
+						rows="10"  required> 
             </textarea></td>
-				</tr>
-				<tr>
-					<td colspan="1" style="width: 20%;"><label>토지 가격</label></td>
-					<td colspan="3"><input type="text" name="p_Landprice"
-						maxlength="50" required autofocus></td>
-				</tr>
-				<tr>
-					<td colspan="1" style="width: 20%;"><label>유지 관리비</label></td>
-					<td colspan="3"><input type="text" name="p_Manpay"
-						maxlength="50" required autofocus></td>
-				</tr>
+			</tr>
+			<tr>
+				<td colspan="1" style="width: 20%;"><label>토지 가격</label></td>
+				<td colspan="3"><input type="text" name="p_Landprice" 
+					maxlength="50" required autofocus></td>
+			</tr>
+			<tr>
+				<td colspan="1" style="width: 20%;"><label>유지 관리비</label></td>
+				<td colspan="3"><input type="text" name="p_Manpay" 
+					maxlength="50" required autofocus></td>
+			</tr>
+
 			</tbody>
 		</table>
+
 		<br>
-		<div>
+		<div id="button">
 			<input type="submit" class="btn btn-dark" value="글쓰기">&nbsp;&nbsp;
 			<button class="btn btn-outline-dark" onclick="back()">뒤로가기</button>
 		</div>

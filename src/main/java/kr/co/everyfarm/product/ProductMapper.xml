@@ -19,6 +19,12 @@
 		  where (${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) order by ${orderby} ${ascdesc} limit #{limit}  offset #{offset};		
 	</select>
 	
+	<select id="listserachacceptpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept, p_View from product
+		  where (${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) and (p_Accept = 'Y') order by ${orderby} ${ascdesc} limit #{limit}  offset #{offset};		
+	</select>
+	
 
 	<insert id="insert" parameterType="kr.co.everyfarm.product.ProductBean">
 		insert into product(p_Id,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,
@@ -56,7 +62,9 @@
 		update product set p_Accept=#{p_Accept} where p_no = #{p_No}	
 	</update>
 	
-	
+	<select id="productfrate" resultType="float" parameterType="int">
+		select f_rate from farmer where f_id = (select p_id from product where p_no= #{p_No});		
+	</select>
 	
 	
 	
@@ -65,11 +73,23 @@
 		select count(*) from product		
 	</select>
 	
+	
+	
 	<select id="listpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
 		select p_id,p_no,p_title,p_content,p_Mainimage,p_Subimage,p_imagedetail,p_landprice,p_main,p_sub,p_seedprice,p_manpay,p_delivery,p_date,p_accept, p_seedcount from product limit #{limit}  offset #{offset};		
 	</select>
 	
 	
+	<select id="listacceptcount" resultType="int">
+		select count(*) from product where p_Accept = 'Y' 		
+	</select>
+	
+		<select id="listacceptpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_id,p_no,p_title,p_content,p_Mainimage,p_Subimage,p_imagedetail,p_landprice,p_main,p_sub,p_seedprice,p_manpay,p_delivery,p_date,p_accept, p_seedcount from
+		 product where p_Accept = 'Y' limit #{limit}  offset #{offset}	
+	</select>
+	
+
 
 	
 	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
@@ -108,8 +128,11 @@
 		  </select>
 		  
 	<!-- 듄 payment에 이용 -->
-
-
-
+	
+	<!-- index -->
+	<select id="viewList" resultType="kr.co.everyfarm.product.ProductBean">
+	select * from product order by p_View desc limit 3;
+	</select>
+	<!-- index -->
 
 </mapper>

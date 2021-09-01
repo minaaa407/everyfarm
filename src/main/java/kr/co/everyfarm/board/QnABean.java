@@ -10,12 +10,14 @@ public class QnABean {
 	private int q_No;
 	private String q_Id;
 	
-	@NotEmpty(message="필수 입력 항목입니다.")
+	@NotEmpty(message = "제목을 작성해주세요.")
 	private String q_Title;
+	
 	private MultipartFile q_Img;
 	
-	@NotEmpty(message="필수 입력 항목입니다.")
+	@NotEmpty(message = "내용을 작성해주세요.")
 	private String q_Content;
+	
 	private Date q_Date;
 	private Boolean q_Secret;
 	private Boolean q_Answer;

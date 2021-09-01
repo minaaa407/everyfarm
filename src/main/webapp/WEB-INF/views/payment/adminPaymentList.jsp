@@ -98,7 +98,7 @@
 						<div class="row ">
 							<span class="col-md-2">${pay.p_Title }</span>
 							<span class="col-md-1">${pay.p_No }</span>
-							<span class="col-md-1">${pay.m_Name }</span>
+							<span class="col-md-1">${pay.pay_Name }</span>
 							<span class="col-md-2">${pay_order}${pay.pay_Orderno }</span>
 							<span class="col-md-1">${pay.p_Id }</span>
 							<span class="col-md-1">${pay.pay_Totalprice }</span>
@@ -127,7 +127,7 @@
 										</div> 
 										<div class="col-md-6 form-group">
 											<label for="2">주문자 성명</label>
-											<input name="name" class="form-control" id="2" value="${pay.m_Name }" readonly>
+											<input name="name" class="form-control" id="2" value="${pay.pay_Name }" readonly>
 										</div>
 									</div>
 									<div class="row"> 

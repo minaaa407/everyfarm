@@ -30,8 +30,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.everyfarm.farmer.FarmerBean;
+import kr.co.everyfarm.farmer.FarmerDAO;
 import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.MemberBean;
+import kr.co.everyfarm.user.MemberDAO;
 import kr.co.everyfarm.user.UserPw;
 
 @Controller
@@ -39,17 +41,24 @@ public class AdminController {
 
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-	
+
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String admin() {
+	public String admin(Model model, FarmerBean farmerBean, MemberBean memberBean) {
+		
+		AdminDAO adDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
+		List<MemberBean> mchart = adDAO.mchart();
+		List<FarmerBean> fchart = adDAO.fchart();
+		model.addAttribute("mchart", mchart);
+		model.addAttribute("fchart", fchart);
+		
 		return "admin/admin";
 	}
-	
+
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.GET)
 	public String alogin() {
 		return "admin/sign-in";
 	}
-	
+
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
 	public String alogin(AdminBean adminBean, HttpServletRequest request) {
 		System.out.println("login:: post");
@@ -71,13 +80,13 @@ public class AdminController {
 			return "redirect:/adminLogin";
 		}
 	}
-	
+
 	@RequestMapping(value = "/adminSign", method = RequestMethod.GET)
 	public String sign(Model model) {
 		model.addAttribute("adminBean", new AdminBean());
 		return "admin/sign-up";
 	}
-	
+
 	@RequestMapping(value = "/adminSign", method = RequestMethod.POST)
 	public String sign(AdminBean adminBean, BindingResult bindingResult, HttpServletRequest request) {
 
@@ -94,7 +103,7 @@ public class AdminController {
 		}
 		return "redirect:/adminSign";
 	}
-	
+
 	@RequestMapping(value = "/userList", method = RequestMethod.GET)
 	public String mlist(Model model) {
 		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
@@ -102,7 +111,7 @@ public class AdminController {
 		model.addAttribute("member", mlist);
 		return "admin/userList";
 	}
-	
+
 	@RequestMapping(value = "/farmerList", method = RequestMethod.GET)
 	public String flist(Model model) {
 		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
@@ -110,14 +119,14 @@ public class AdminController {
 		model.addAttribute("farmer", flist);
 		return "admin/farmerList";
 	}
-	
+
 	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 
 		session.invalidate();
 		return "admin/sign-in";
 	}
-	
+
 	@RequestMapping(value = "/amdinFindId", method = RequestMethod.GET)
 	public String findId() {
 		return "/admin/findId";
@@ -211,5 +220,69 @@ public class AdminController {
 		}
 		return map;
 	}
-	
+
+	@RequestMapping(value = "/farmerAdd", method = RequestMethod.GET)
+	public String farmerAdd(Model model) {
+		model.addAttribute("farmerBean", new FarmerBean());
+		return "admin/farmerTest";
+	}
+
+	@RequestMapping(value = "/farmerAdd", method = RequestMethod.POST)
+	public String farmerAdd(FarmerBean farmerBean, BindingResult bindingResult, HttpServletRequest request) {
+
+		System.out.println("첫번째:" + farmerBean.getF_Pw());
+		String encryPassword = UserPw.encrypt(farmerBean.getF_Pw());
+		farmerBean.setF_Pw(encryPassword);
+		System.out.println("두번째:" + farmerBean.getF_Pw());
+
+		FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		farmerDAO.farmerAdd(farmerBean);
+
+		if (bindingResult.hasErrors()) {
+			return "admin/farmerTest";
+		}
+		return "redirect:/farmerList";
+	}
+
+	@RequestMapping(value = "/userAdd", method = RequestMethod.GET)
+	public String userAdd(Model model) {
+		model.addAttribute("memberBean", new MemberBean());
+		return "admin/userTest";
+	}
+
+	@RequestMapping(value = "/userAdd", method = RequestMethod.POST)
+	public String userAdd(MemberBean memberBean, BindingResult bindingResult, HttpServletRequest request) {
+
+		System.out.println("첫번째:" + memberBean.getM_Pw());
+		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
+		memberBean.setM_Pw(encryPassword);
+		System.out.println("두번째:" + memberBean.getM_Pw());
+
+		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
+		memberDAO.userAdd(memberBean);
+
+		if (bindingResult.hasErrors()) {
+			return "admin/userTest";
+		}
+		return "redirect:/userList";
+	}
+//
+//	@RequestMapping(value = "/userDelete")
+//	@ResponseBody
+//	public Map<String, Object> userDelete(MemberBean memberbean, @RequestParam(value = "checkArr[]") List<String> checkArr) {
+//
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
+//
+//		for (int i=0; i<checkArr.size(); i++) {
+//			if (memberbean.getM_Addr().equals("TEST")) {
+//				memDao.mDelete(memberbean);
+//				map.put("error", true);
+//			} else {
+//				map.put("error", false);
+//			}
+//		}
+//		return map;
+//	}
+
 }

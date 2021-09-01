@@ -23,5 +23,9 @@ public interface AdminDAO {
 	public AdminBean findPw(AdminBean adminBean);
 	
 	public void upPw(AdminBean adminBean);
+	
+	List<MemberBean> mchart();
+
+	List<FarmerBean> fchart();
 
 }

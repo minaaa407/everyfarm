@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%> 
+	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -50,11 +50,17 @@ table {
 	line-height: 1.5;
 }
 
+.table th{
+    padding: 0.75rem;
+    /* vertical-align: top; */
+    border-top: 1px solid #dee2e6;
+}
+
 thead th {
 	padding-top: 15px;
 	padding-bottom: 15px;
 	font-weight: bold;
-	vertical-align: top;
+	vertical-align: center;
 	color: black;
 	border-bottom: 3px solid black;
 	background: #dcdcdc;
@@ -209,23 +215,33 @@ function search(){
 	<!-- END Header -->
 	<h2>상품 리스트</h2>
 	<br>
-	<a href="/ProYList" class="btn btn-dark">승인전 </a>
-	<a href="/ProNList" class="btn btn-dark">승인후 </a>
-	<a href="/proAdminListForm?" class="btn btn-dark">전체보기 </a>
-	<br>
-	<br>
+	<div id=rezButton class="col-lg-12">
+		<a href="/ProYList" class="btn btn-dark">승인전 </a>
 
-	<div class="table">
+		<%-- <form:form commandName="pagebeenY" name="myHiddenFormY"
+      action="/ProYList" method="post">승인전</form:form> --%>
+
+		<a href="/ProNList" class="btn btn-dark">승인후 </a>
+
+		<%-- <form:form commandName="pagebeenN" name="myHiddenFormN"
+      action="/ProNList" method="post">승인후</form:form> --%>
+
+
+		<a href="/proAdminListForm?" class="btn btn-dark">전체보기 </a>
+	</div><br>
+
+	<div class="table" class="col-lg-12">
 		<table>
 			<thead>
 				<tr>
 					<th>상품번호</th>
-					<th>아이디</th>
 					<th>메인이미지</th>
+					<th>아이디</th>
 					<th>제목</th>
 					<th>등록날짜</th>
 					<th>승인여부</th>
 					<th>승인</th>
+					<th>수정</th>
 					<th>삭제</th>
 					<th></th>
 				</tr>
@@ -234,19 +250,20 @@ function search(){
 				<c:forEach var="p" items="${productlist}">
 					<tr>
 						<td class="content">${p.p_No}</td>
-						<td class="content">${p.p_Id}</td>
 						<td class="content"><img id='product${p.p_No}'
 							src="/resources/upload/product/${p.p_No}/${p.p_Img}"
-							class="test1" width="150" height="auto" alt="Image ${p.p_No}">
+							class="test1" width="90" height="auto" alt="Image ${p.p_No}">
 						</td>
+						<td class="content">${p.p_Id}</td>
 						<td class="content">${p.p_Title}</td>
 						<td class="content">${p.p_Date}</td>
 						<td class="content">${p.p_Accept}</td>
 						<td class="content"><a
 							href="/productdetail?productno=${p.p_No}">상세보기</a></td>
+						<td><a href="proRegDetailForm?p_No=${p.p_No}">수정</a></td>	
+						
 						<td><button type="button" class="btn btn-outline-dark"
 								onclick="javascript:proDelete(${p.p_No})">삭제</button></td>
-
 					</tr>
 				</c:forEach>
 			</tbody>

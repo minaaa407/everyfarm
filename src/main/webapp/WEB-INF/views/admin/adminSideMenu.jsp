@@ -38,6 +38,11 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link " href="farmerList">
+              <i class="ni ni-bullet-list-67 text-red"></i> 농부관리
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="adminLogout">
               <i class="ni ni-key-25 text-info"></i> 로그아웃
             </a>

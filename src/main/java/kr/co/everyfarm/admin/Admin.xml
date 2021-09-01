@@ -37,5 +37,13 @@
 		select * from admin where
 		a_id=#{a_Id} and a_name=#{a_Name} and a_email=#{a_Email}
 	</select>
+	
+	<select id="mchart" resultType="kr.co.everyfarm.user.MemberBean">
+		select count(*) from member
+	</select>
+
+	<select id="fchart" resultType="kr.co.everyfarm.farmer.FarmerBean">
+		select count(*) from farmer
+	</select>
 
 </mapper>
