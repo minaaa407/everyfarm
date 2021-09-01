@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page import="java.util.*"%>
+
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -32,12 +33,37 @@
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
 </head>
+
+<script>
+	function hideRowSub() {
+		const row = document.getElementById('Subimg');
+		row.style.display = 'none';
+	}
+
+	function showRowSub() {
+		const row = document.getElementById('Subimg');
+		row.style.display = '';
+	}
+
+	function hideRowDetail() {
+		const row = document.getElementById('Imgdetail');
+		row.style.display = 'none';
+	}
+
+	function showRowDetail() {
+		const row = document.getElementById('Imgdetail');
+		row.style.display = '';
+	}
+</script>
+
 <style>
 table {
-	width: 100%;
+	width: 52%;
 	border-collapse: collapse;
 	text-align: left;
 	line-height: 1.5;
+	vertical-align: middle;
+	margin: auto;
 }
 
 thead th {
@@ -46,7 +72,6 @@ thead th {
 	vertical-align: top;
 	color: black;
 	border-bottom: 3px solid black;
-	background: #dcdcdc;
 }
 
 tbody td {
@@ -57,12 +82,13 @@ tbody td {
 }
 
 #button {
-	text-align: right;
+	text-align: center;
+	color: #4e9525;
 }
 </style>
 </head>
 <body>
-<header>
+	<header>
 		<div class="container pt-5 pb-4">
 			<div class="row justify-content-between">
 				<div class="col-md-8 order-md-last">
@@ -81,19 +107,6 @@ tbody td {
 									</button>
 								</div>
 							</form>
-						</div>
-						<div>
-							<c:choose>
-								<c:when test="${empty member}">
-									<li><a href="/login">로그인</a></li>
-									<li><a href="/sign">회원가입</a></li>
-								</c:when>
-								<c:when test="${not empty member}">
-									<li>${member.m_Name}님환영합니다.</li>
-									<li><a href="/mypage">내 정보</a></li>
-									<li><a href="/logout">로그아웃</a></li>
-								</c:when>
-							</c:choose>
 						</div>
 					</div>
 				</div>
@@ -115,11 +128,12 @@ tbody td {
 						<li class="nav-item active"><a href="index.jsp"
 							class="nav-link">Home</a></li>
 						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="/proRegisterForm" class="nav-link">농장
-								등록</a></li>
+						<li class="nav-item"><a href="/proRegisterForm"
+							class="nav-link">농장 등록</a></li>
 						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
 						<li class="nav-item"><a href="blog.html" class="nav-link">Q&A</a></li>
-						<li class="nav-item"><a href="/proAdminListForm" class="nav-link">Contact</a></li>
+						<li class="nav-item"><a href="/proAdminListForm"
+							class="nav-link">Contact</a></li>
 					</ul>
 				</div>
 			</div>
@@ -127,82 +141,127 @@ tbody td {
 	</header>
 	<!-- END NavBar -->
 	<!-- END Header -->
-	<table>
-		<thead>
+	<form:form enctype="multipart/form-data" commandName="product"
+		action="/proUpdate" method="post">
+		<table>
+			<thead>
+				<tr>
+					<th scope="row" colspan="4">상품 수정</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="1" style="width: 20%;"><label>작성자</label></td>
+					<td colspan="3"><input type="text" style="text-align: left;"
+						name="p_Id" value="${productinfo.p_Id}" maxlength="50" required
+						autofocus></td>
+				</tr>
+				<tr>
+					<td colspan="1" style="width: 20%;"><label>제 목</label></td>
+					<td colspan="3"><input type="text" name="p_Title" value="${productinfo.p_Title}"
+						maxlength="50" required autofocus></td>
+				</tr>
+				<tr>
+					<td style="width: 20%;"><label> 메인 이미지 </label></td>
+					<td style="text-align: left;"><input name="p_Img1" type="file"
+						accept="img/*" /> <input type="hidden" name="p_Img" value=""></td>
+				</tr>
+				<tr>
+					<td style="width: 20%;"><input type='button' value='서브사진 등록'
+						onclick='showRowSub()' /></td>
+					<td></td>
+				</tr>
+			<tbody id="Subimg" style="display: none;">
+				<tr>
+					<td style="width: 20%;"><label> 서브 이미지1 </label></td>
+					<td style="text-align: left;"><input name="p_Subimg12"
+						type="file" accept="subimg1/image/*" /> <input type="hidden"
+						name="p_Subimg1" value="1111"></td>
+				</tr>
+				<tr>
+					<td style="width: 20%;"><label> 서브 이미지2 </label></td>
+					<td style="text-align: left;"><input name="p_Subimg22"
+						type="file" accept="subimg2/image/*" /> <input type="hidden"
+						name="p_Subimg2" value="1111"></td>
+				</tr>
+				<tr>
+					<td style="width: 20%;"><label> 서브 이미지3 </label></td>
+					<td style="text-align: left;"><input name="p_Subimg32"
+						type="file" accept="subimg3/image/*" /> <input type="hidden"
+						name="p_Subimg3" value="1111"></td>
+				</tr>
+				<tr>
+					<td style="width: 20%;"><label> 서브 이미지4 </label></td>
+					<td style="text-align: left;"><input name="p_Subimg42"
+						type="file" accept="subimg4/image/*" /> <input type="hidden"
+						name="p_Subimg4" value="1111"><input
+						type='button' value='닫기' onclick='hideRowSub()' /></td>
+				</tr>
+			</tbody>
+
+
 			<tr>
-				<th scope="row" colspan="4">승인 요청</th>
+				<td style="width: 20%;"><input type='button' value='상세사진 등록'
+					onclick='showRowDetail()' /></td>
+				<td></td>
 			</tr>
-		</thead>
-		<tbody>
+			<tbody id="Imgdetail" style="display: none;">
+				<tr>
+					<td style="width: 20%;"><label> 디테일 이미지1 </label></td>
+					<td style="text-align: left;"><input name="p_Imgdetail12"
+						type="file" accept="imgdetail1/image/*" /> <input type="hidden"
+						name="p_Imgdetail" value="1111"></td>
+				</tr>
+				<tr>
+					<td style="width: 20%;"><label> 디테일 이미지2 </label></td>
+					<td style="text-align: left;"><input name="p_Imgdetail22"
+						type="file" accept="imgdetail2/image/*" /> <input type="hidden"
+						name="p_Imgdetail" value="1111"></td>
+				</tr>
+				<tr>
+					<td style="width: 20%;"><label> 디테일 이미지3 </label></td>
+					<td style="text-align: left;"><input name="p_Imgdetail32"
+						type="file" accept="imgdetail3/image/*" /> <input type="hidden"
+						name="p_Imgdetail" value="1111"></td>
+				</tr>
+				<tr>
+					<td style="width: 20%;"><label> 디테일 이미지4 </label></td>
+					<td style="text-align: left;"><input name="p_Imgdetail42"
+						type="file" accept="imgdetail4/image/*" /> <input type="hidden"
+						name="p_Imgdetail" value="1111"><input type='button'
+					value='닫기' onclick='hideRowDetail()' /></td>
+				</tr>
+
+			</tbody>
 			<tr>
-				<td style="width: 20%;"><label>작성자</label></td>
-				<td class="content">${productinfo.p_Id}</td>
+				<td colspan="1"><label>상세 내용</label></td>
+				<td colspan="3"><textarea class="form-control" name="p_Content" value="${productinfo.p_Content}"
+						rows="10"  required> 
+            </textarea></td>
 			</tr>
 			<tr>
-				<td style="width: 20%;"><label>제 목</label></td>
-				<td class="content">${productinfo.p_Title}</td>
+				<td colspan="1" style="width: 20%;"><label>토지 가격</label></td>
+				<td colspan="3"><input type="text" name="p_Landprice" value="${productinfo.p_Landprice}"
+					maxlength="50" required autofocus></td>
 			</tr>
 			<tr>
-				<td style="width: 20%;"><label>메인 이미지</label></td>
-				<td class="content"><img id='product${p.p_No}'
-							src="/resources/upload/product/${p.p_No}/${p.p_Img}"
-							class="test1" width="150" height="auto" alt="Image ${p.p_No}">
-						</td>
-			<tr>
-				<td style="width: 20%;"><label>서브 이미지1</label></td>
-				<td class="content">${productinfo.p_Subimg1}</td>
+				<td colspan="1" style="width: 20%;"><label>유지 관리비</label></td>
+				<td colspan="3"><input type="text" name="p_Manpay" value="${productinfo.p_Manpay}"
+					maxlength="50" required autofocus></td>
 			</tr>
-			<tr>
-				<td style="width: 20%;"><label>서브 이미지2</label></td>
-				<td class="content">${productinfo.p_Subimg2}</td>
-			</tr>
-			<tr>
-				<td style="width: 20%;"><label>서브 이미지3</label></td>
-				<td class="content">${productinfo.p_Subimg3}</td>
-			</tr>
-			<tr>
-				<td style="width: 20%;"><label>서브 이미지4</label></td>
-				<td class="content">${productinfo.p_Subimg4}</td>
-			</tr>
-			<tr>
-				<td style="width: 20%;"><label>디테일 이미지1</label></td>
-				<td class="content">${productinfo.p_Imgdetail1}</td>
-			</tr>
-			<tr>
-				<td style="width: 20%;"><label>디테일 이미지2</label></td>
-				<td class="content">${productinfo.p_Imgdetail2}</td>
-			</tr>
-			<tr>
-				<td style="width: 20%;"><label>디테일 이미지3</label></td>
-				<td class="content">${productinfo.p_Imgdetail3}</td>
-			</tr>
-			<tr>
-				<td style="width: 20%;"><label>디테일 이미지4</label></td>
-				<td class="content">${productinfo.p_Imgdetail4}</td>
-			</tr>
-			<tr>
-				<td style="width: 20%;"><label>상세 내용</label></td>
-				<td class="content">${productinfo.p_Content}</td>
-			</tr>
-			<tr>
-				<td style="width: 20%;"><label>토지 크기</label></td>
-				<td class="content">${productinfo.p_Land}</td>
-			</tr>
-			<tr>
-				<td style="width: 20%;"><label>토지 가격</label></td>
-				<td class="content">${productinfo.p_Landprice}</td>
-			</tr>
-			<tr>
-				<td style="width: 20%;"><label>유지 관리비</label></td>
-				<td class="content">${productinfo.p_Manpay}</td>
-			</tr>
-		</tbody>
-	</table><br>
-	<div>
-		<input type="submit" class="btn btn-dark" value="승인 하기">&nbsp;&nbsp;
-		<button class="btn btn-outline-dark" onclick="back()">뒤로가기</button>
-	</div><br><br>
-		<!-- Start Footer -->
+
+			</tbody>
+		</table>
+
+		<br>
+		<div id="button">
+			<input type="submit" class="btn btn-dark" value="글쓰기">&nbsp;&nbsp;
+			<button class="btn btn-outline-dark" onclick="back()">뒤로가기</button>
+		</div>
+	</form:form>
+	<br>
+	<br>
+	<!-- Start Footer -->
 	<footer class="ftco-footer ftco-bg-dark ftco-section">
 		<div class="container">
 			<div class="row mb-5">

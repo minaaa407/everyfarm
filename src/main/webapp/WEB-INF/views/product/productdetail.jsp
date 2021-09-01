@@ -3,8 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
 <%@page import="kr.co.everyfarm.product.ProductBean"%>
+<%@page import="kr.co.everyfarm.user.MemberBean"%>
+<%@page import="kr.co.everyfarm.farmer.FarmerBean"%>
+<%@page import="kr.co.everyfarm.admin.AdminBean"%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,53 +49,58 @@ integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChi
 
 
 
-
 <link rel="stylesheet" href="resources/product/css/owl.carousel.min.css"
 	type="text/css">
 <link rel="stylesheet" href="resources/product/css/slicknav.min.css"
 	type="text/css">
 <link rel="stylesheet" href="resources/product/css/dd.css"
 	type="text/css" />
+	
+	
+	
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 
 <script>
 //script 전부 다 박살 에정. 방법 없다.
 //여기아래부분 정말로 잘 보존해서 어떻게든 우려먹기는 안되겠네
 //응용해서 처리해보자. 일단 그대로 가져가는건 현재 불가능하다. 코드 잘못짰네. 의존도 겁내 높다. ㅎㅎ
+
+var nowpage= "1";
 function productaccept(accept) {
-	
-			var bean = {
-				"p_No" : ${oneproduct.p_No},
-				"p_Accept" : accept
+			if(!(accept == 'Y' && ${not empty farmer}) ){
+				var bean = {
+					"p_No" : ${oneproduct.p_No},
+					"p_Accept" : accept
+				}
+					$.ajax({
+					type : "post", //요청 메소드 방식
+					url : "/productaccept",
+					data : bean,
+					success : function(result) {//성공시 동작하는 파트
+						
+						var resultaccept = result;
+						var resultext="";
+						var resultdiv = document.getElementById("productaccept");
+						
+						if(result =='Y'){
+							resultext += "승인처리상태 <input class='mybtn' style='width: 60px;' type='button' name='N' value='승인' onClick='productaccept(this.name)'/>"
+						}else{
+							resultext += "미승인처리상태 <input class='mybtn2' style='width: 60px;' type='button' name='Y' value='미승인' onClick='productaccept(this.name)'/>"
+						}
+					
+						resultdiv.innerHTML = resultext;
+						
+						},
+						error : function(a, b, c) {
+							//통신 실패시 발생하는 함수(콜백)
+							alert("a:" + a + "b:" + b + "c:" + c);
+						}
+					});
+			}else{
+				alert("승인권한이 없습니다.")
 			}
-				$.ajax({
-				type : "post", //요청 메소드 방식
-				url : "/productaccept",
-				data : bean,
-				success : function(result) {//성공시 동작하는 파트
-					
-					var resultaccept = result;
-					var resultext="";
-					var resultdiv = document.getElementById("productaccept");
-					
-					if(result =='N'){
-						resultext += "승인처리상태 <input type='button' name='Y' value='미승인처리' onClick='productaccept(this.name)'/>"
-					}else{
-						resultext += "미승인처리상태 <input type='button' name='N' value='승인처리' onClick='productaccept(this.name)'/>"
-					}
-				
-					resultdiv.innerHTML = resultext;
-					
-					},
-					error : function(a, b, c) {
-						//통신 실패시 발생하는 함수(콜백)
-						alert("a:" + a + "b:" + b + "c:" + c);
-					}
-				});
-		
 
 }
 
@@ -109,146 +117,19 @@ function basket(){
 }
 
 function payment(){
-	document.getElementById('myHiddenForm').action="/PaymentInfo";
-	document.myHiddenForm.submit();
-}
-
-
-
-
-function selectproduct(){
-	var product = $('#productname').text();//선택 작물 리스트 값 저장.
-	var amout = document.getElementById('iniamout').value;//소비자 선택 값.
-	var rowid = "product"+product;
-	var pnum = "pnum"+product;
-	var total = "total"+product;
-	
-	 var oneprice = ${oneproduct.p_Landprice} * amout;
-	 var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-	 var cn1 = cn1 +'원';
-	
-
-	 if(!(document.getElementById(rowid))){
-			var text="";	
-				text += document.getElementById('table1').innerHTML
-			
-			    text += '<table id="'+rowid+'"style="width: 100%;">';
-				text += '<tr><td>'+product+ '</td><td></td></tr>' ;
-				text += '<tr><td><i class="fas fa-minus-circle" style="font-size:24px; vertical-align: middle;"></i>';
-				text += '<input class="onlyNumber" type=text min=1  name=productamout value='+amout+' size=10>';
-				text += '<i class="fas fa-plus-circle" style="font-size:24px; vertical-align: middle;"></i>';	
-				text += '</td><td>'+cn1+'</td>';
-				text += '<td><i class="fas fa-times" style="vertical-align: middle;"></i></td></tr></table>';
-				document.getElementById('table1').innerHTML=text;
-				var size = document.getElementsByName("productamout").length;
-				var a1 = 0;
-				
-					for(var i = 0; i < size; i++){				
-						a2 = document.getElementsByName("productamout")[i].value;
-						a1 = parseInt(a2) + parseInt(a1);
-					}
-					
-					var oneprice = (${oneproduct.p_Manpay} * a1);
-					var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-					var cn1 = cn1 +'원';
-					
-					var totalprice = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
-					var cn2 = totalprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-					var cn2 = cn2 +'원';
-					
-				
-					document.getElementById("totalmanpay").innerHTML = "인건비<br/>"+cn1;
-					document.getElementById("total").innerHTML = "총 가격<br/>"+cn2;
-					//아래 값 전달하기.
-					var b_Pno = ("b_Pno" + product);
-					var b_Id = ("b_Id" + product);
-					var b_Land = ("b_Land" + product);
-					var b_Totalprice = ("b_Totalprice" + product);
-					document.getElementById(b_Land).value= amout;
-					document.getElementById(b_Totalprice).value= totalprice;
-		
-			
-				
-	 }else{
-		 alert("동일 제품이 존재합니다. 수량을 조절해주십시요.")
-	 }
-		
-				
-				
-			
-	
-
-
-	
-	
-		//if(!(document.getElementById(rowid))){
-		//	var cartlisttableinnertext = document.getElementById("cartlisttable").innerText
-			
-			
-		//}
-		
-	    
-	  //  if(!(document.getElementById(rowid))){ // 중복 씨앗 없을 때
-	    	
-	    //	var cartlist = document.getElementById('cartlist');		
-		//	var totalproduct = 0;
-	    //	for (var i = 2; i < cartlist.rows.length; i++) {
-	    //	      var userName = cartlist.rows[i].cells[2].innerText;
-	    	      
-
-	    //	      totalproduct = parseInt(totalproduct) + parseInt(userName);
-	    //	}
-	    //				totalproduct = parseInt(totalproduct) + parseInt(amout)
-					    //const table = document.getElementById('cartlist');
-					  //  const totalRowCnt = table.rows.length;
-					   // const newRow = table.insertRow();
-					   // newRow.id = rowid;
-					    
-					    
-					    //const newCell1 = newRow.insertCell(0);//씨앗
-					    //const newCell2 = newRow.insertCell(1);//한개 가격
-					    //const newCell3 = newRow.insertCell(2);//땅 갯수
-					    //const newCell4 = newRow.insertCell(3);//총 가격
-					    //const newCell5 = newRow.insertCell(4);//삭제버튼
-					   //newCell4.id=total;
-					    //newCell1.innerText = product;
-					  	//var product2="'"+product+"'";
-					    //newCell2.innerText = ${oneproduct.p_Landprice };
-					    //newCell3.innerHTML ='<input name = "' + product + '" type="button" onclick="count1(this.name)" value="-"/>' + 
-					    //'&nbsp&nbsp&nbsp'+'<span value="'+amout+'"name="productprice" id ="'+ pnum+'">' + amout+'</span> &nbsp&nbsp&nbsp'+'<input name = "'+product +'"type="button" onclick="count2(this.name)" value="+"/>';
-
-					    //newCell3.innerText = amout;
-					    //newCell4.innerText = (${oneproduct.p_Landprice} * amout);
-					    //newCell5.innerHTML = '<i class="fas fa-window-close"  onclick="deleteRow(this,'+product2+')" ></i>';
-					   // newCell5.innerHTML = '<input name = ' + product + ' type="button" onclick="deleteRow(this,this.name)" value="삭제"/>';
-						//var b_Pno = ("b_Pno" + product);
-						//var b_Id = ("b_Id" + product);
-						//var b_Land = ("b_Land" + product);
-						//var b_Totalprice = ("b_Totalprice" + product);
-					    //document.getElementById('b_Pno').value = "farmers";
-						//document.getElementById('b_Id').value= "farmers";
-						//document.getElementById(b_Id).value= uid;
-						//document.getElementById(b_Land).value= amout;
-						//document.getElementById(b_Totalprice).value= (${oneproduct.p_Landprice} * amout);
-						//전체 수량 처리하기.
-						//	var a1 = 0;
-						//	var a2;
-						//	var size = document.getElementsByName("productprice").length;
-							//	for(var i = 0; i < size; i++){				
-							//		a2 = document.getElementsByName("productprice")[i].innerText;
-							//		a1 = parseInt(a2) + parseInt(a1);
-							//	}
-							//	document.getElementById("totalmanpay").innerText = "인건비"+(${oneproduct.p_Manpay} * a1);
-							//	document.getElementById("total").innerText = "총 가격 "+((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
-
-						
-	    //}else{
-	    //	alert("동일 제품이 존재합니다. 수량을 조절해주십시요.")
-	   // }
-	    
-
+	if($('table1').children()){
+		document.getElementById('myHiddenForm').action="/productpayment";
+		document.myHiddenForm.submit();
+	}else{
+		alert("상품을 선택해주세요.");
+	}
 	
 }
+
+
+
+
+
 
 function count1(name)  {
 	   
@@ -294,7 +175,7 @@ function count2(name)  {
 function deleteRow(btndel,name){
 	var b_Land = ("b_Land" + name);
 	var b_Totalprice = ("b_Totalprice" + name);
-	alert(name);
+	
 	
     if (typeof(btndel) == "object") {
         $(btndel).closest("tr").remove();
@@ -309,6 +190,9 @@ function deleteRow(btndel,name){
 			
 		if(totalRowCnt<=2){
 			$('#cartlisttable').css("display","none");
+			
+			
+			document.getElementById("totalproduct").innerText = "";
 			document.getElementById("totalmanpay").innerText = "";
 			document.getElementById("total").innerText = "";
 		}else{
@@ -320,10 +204,17 @@ function deleteRow(btndel,name){
 			var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 			alert("11");
 			var cn1 = cn1 +'원';
+			var totalproduct = (${oneproduct.p_Landprice} * a1);
+			var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			var c3 = c3 +'원';
 			
 			
-			document.getElementById("totalmanpay").innerText = "인건비"+cn1;
-			document.getElementById("total").innerText = "총 가격 "+((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
+			document.getElementById("totalproduct").innerHTML = c3;
+			
+			document.getElementById("totalmanpay").innerText = cn1;
+			document.getElementById("total").innerText = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
+			document.getElementById("totaltable").style.display = "";
+			
 		}
 		
 		
@@ -340,8 +231,195 @@ function check(){
 	
 }
 
+
+function listChange(){
+	$('#iniamout').val('1');
+}
+
+
+//아래 댓글임
+
+function qnainsert(page){
+	var uid = '<%=(MemberBean)session.getAttribute("member")%>';
+	var fid = '<%=(FarmerBean)session.getAttribute("farmer")%>';
+	var aid = '<%=(AdminBean)session.getAttribute("admin")%>';
+	if((uid == "null") &&(fid == "null")&&(aid == "null")){
+		alert("로그인 후 댓글을 달 수 있습니다.");
+		
+	}else{
+		var content = document.getElementById("c_Content").value;
+		var bean = {
+					"c_No" : ${p_No },
+					"c_Content" : content,
+					"page" : page
+					}
+		var urlpath = "/productdetailinsertqna";
+		ajax(urlpath,bean);
+	}
+}
+
+
+function pagebutton(pagenumber){
+	nowpage = pagenumber;
+	var bean = {
+				"c_No" : ${p_No},
+				"page" : pagenumber
+				}
+	var urlpath = "/productdetailpaging";
+	ajax(urlpath,bean);
+}
+
+function qnaupdateexit(){
+	
+	var bean = {
+				"c_No" : ${p_No},
+				"page" : nowpage
+				}
+	var urlpath = "/productdetailpaging";
+	ajax(urlpath,bean);
+	
+}
+
+function qnaupdate(c_seq){
+	
+	var content = document.getElementById("c_Contentupdate").value;
+	var bean = {
+			"c_Seq": c_seq,
+			"c_No" : ${p_No},
+			"c_Content" : content,
+			"page" : nowpage
+			}
+	var urlpath = "/productdetailqnaupdate";
+	ajax(urlpath,bean);
+	
+}
+
+
+function qnadeletebutton(c_seq){
+	var content = "삭제된 댓글입니다.";
+	var c_Id = "삭제";
+	var bean = {
+			"c_Seq": c_seq,
+			"c_Id" : c_Id,
+			"c_No" : ${p_No},
+			"c_Content" : content,
+			"page" : nowpage
+			}
+	var urlpath = "/productdetailqnadelete";
+	ajax(urlpath,bean);
+	
+}
+
+
+function subqnainsert(number){
+	var content = document.getElementById("c_Content2").value;
+	var bean = {
+			"c_No" : ${p_No},
+			"page" : nowpage,
+			"c_Content" : content,
+			"c_Seq": number
+			}
+	
+	var urlpath = "/productdetailsubqnainsert";
+	ajax(urlpath,bean);
+	
+	
+}
+	
+function ajax(urlpath,bean){
+	
+	$.ajax({
+		type : "post", //요청 메소드 방식
+		url : urlpath,
+		data : bean,
+		success : function(result) {//성공시 동작하는 파트
+				var qnalist = result.qnalist;
+				var page = result.pagebeen;
+				var pagesystem = document.getElementById("pagesystem");
+				var a = "";
+					for(var i =0; i < qnalist.length; i++){
+					a +="<table style='width:100%'><tr>";
+					if(qnalist[i].c_Subno > 0){
+						a +="<td style='width:80%;padding-left: 20px;'>";
+						a +="<span style='font-size:20px'>└</span>"+qnalist[i].c_Content+"<br></td>";
+					}else{
+						a +="<td style='width:80%'>"+qnalist[i].c_Content +"<br></td>";
+						
+					}
+					a +="<td  style='width:20%'>";
+					a +=qnalist[i].c_Id+"<br>"+qnalist[i].c_Date+"<br></td><tr></tr><td>";
+					if(qnalist[i].c_Subno==0){
+						a +="<input name ='"+qnalist[i].c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton('"+qnalist[i].c_Seq+"')' />";
+					}
+					
+					
+					
+					a+="</td><td><input type='button' value='수정' onclick='updatebutton('"+qnalist[i].c_Seq+"')' /><input type='button' value='삭제' onclick='qnadeletebutton('"+qnalist[i].c_Seq+"')' />";
+					a+="</td></tr></table><div><hr/></div>";
+					
+					
+					
+				}
+					document.getElementById("qnatalbe").innerHTML=a;
+					
+					var b="";
+					if(page.pro == true){//페이징 처리 부분
+						b += "<a id = '"+page.pagestart+"-1 ' style='cursor:pointer' onclick= 'pagebutton("+page.pagestart+" -1 )' >이전 </a>";
+					}
+					var i = page.pagestart;
+					for(i; i < page.pageend+1; i++){
+						b += "<a id = 'page"+i+"' style='cursor:pointer' onclick= 'pagebutton("+i+")' >"+i+"</a>";;
+					}
+					if(page.post == true){
+						b += "<a id = '"+page.pageend+"+1 ' style='cursor:pointer' onclick= 'pagebutton("+page.pageend+" +1 )' >다음 </a>";
+					}
+					pagesystem.innerHTML = b;
+			
+			},
+			error : function(a, b, c) {
+				//통신 실패시 발생하는 함수(콜백)
+				alert("a:" + a + "b:" + b + "c:" + c);
+			}
+		});
+	
+}	
+	
+	
+	
+
+
+
 </script>
 <style>
+
+.product__pagination a, .blog__pagination a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #b2b2b2;
+    font-size: 14px;
+    color: #b2b2b2;
+    font-weight: 700;
+    line-height: 28px;
+    text-align: center;
+    margin-right: 16px;
+    -webkit-transition: all, 0.3s;
+    -moz-transition: all, 0.3s;
+    -ms-transition: all, 0.3s;
+    -o-transition: all, 0.3s;
+    transition: all, 0.3s;
+}
+.product__pagination, .blog__pagination {
+    padding-top: 10px;
+}
+
+.product__pagination a:hover, .blog__pagination a:hover {
+    background: #7fad39;
+    border-color: #7fad39;
+    color: #ffffff;
+}
+
+
 
 .product__details__pic__item--large {
 	position: relative;
@@ -360,8 +438,6 @@ function check(){
 }
 
 .mybtn {
-	width: 150px;
-	height: 40px;
 	padding: 0;
 	display: inline;
 	border-radius: 4px;
@@ -371,9 +447,24 @@ function check(){
 	border: solid 0.5px #212529;
 	transition: all 0.5s ease-in-out 0s;
 }
-
 .mybtn:hover {
 	background: #4CAF00;
+	color: #fff;
+	text-decoration: none;
+}
+
+.mybtn2 {
+	padding: 0;
+	display: inline;
+	border-radius: 4px;
+	background: #FF0000;
+	color: #fff;
+	margin-top: 20px;
+	border: solid 0.5px #212529;
+	transition: all 0.5s ease-in-out 0s;
+}
+.mybtn2:hover {
+	background: #C40000;
 	color: #fff;
 	text-decoration: none;
 }
@@ -408,6 +499,43 @@ i.fa-plus-circle:active{
 i.fa-plus-circle{
 	color : green;
 }
+
+.owl-item img{
+
+height:60px;
+
+}
+
+
+a.sidenav{
+	color: #FFFFFF;
+	font-size: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-transform: uppercase;
+}
+
+a.sidenav:hover, focus {
+    color: yellow;
+}
+
+.owl-carousel .owl-item img{
+	width:115%;
+}
+
+
+
+<!--메뉴바 -->
+
+
+#header{width: 100%; height:600px; line-height: 600px; font-size: 60px; background:red; transition: background 0.6s; text-align: center;}
+#lnb.fixed{position: fixed; left: 0; top: 0; width: 100%; z-index:99;}
+#lnb ul{font-size:0; line-height: 0; background: #4e9525;}
+#lnb li{display: inline-block; vertical-align: top; padding: 20px 0; font-size: 25px; text-align: center;}
+#container{width:100%; height:1500px; line-height: 1500px; font-size: 60px; background: blue; text-align: center;}
+
+
+
 
 </style>
 
@@ -455,15 +583,32 @@ ul {
 	padding-left: 0px;
 }
 
+td .mybtn{
+	width: 100pt;
+}
 
+@media screen and (max-width: 768px) {
+	div.select{
+	width: 250px;
+	}
+	.onlyNumber{
+	  width: 50px;
+	}
+	td{
+	font-size: 90%
+	}
+	td .mybtn{
+	width: 80pt;
+	}
+
+}
 
 
 </style>
 
 <script>
-
-	
 			$(document).ready(function () {
+				var lnb = $("#lnb").offset().top;
 				  $("div.select > a").click(function () {
 					  $(this).next("ul").toggle();
 					  $(this).parent("div.select").css("overflow","auto");
@@ -488,6 +633,69 @@ ul {
 					    //$(this).prependTo($(this).parent());
 					    //overflow: auto; height: 400px;
 				});
+				
+				$("#selectproduct").click(function() {
+				
+				
+					var product = $('#productname').text();//선택 작물 리스트 값 저장.
+					var amout = document.getElementById('iniamout').value;//소비자 선택 값.
+					var rowid = "product"+product;
+					var pnum = "pnum"+product;
+					var total = "total"+product;
+					
+					 var oneprice = ${oneproduct.p_Landprice} * amout;
+					 var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+					 var cn1 = cn1 +'원';
+					
+					 if(!(document.getElementById(rowid))){
+							var text="";	
+								text += document.getElementById('table1').innerHTML
+							
+							    text += '<table id="'+rowid+'"style="width: 100%;">';
+								text += '<tr><td>'+product+ '</td><td></td></tr>' ;
+								text += '<tr><td><i class="fas fa-minus-circle" style="font-size:24px; vertical-align: middle;"></i>';
+								text += '<input class="onlyNumber" type=text min=1  name=productamout value='+amout+' size=10>';
+								text += '<i class="fas fa-plus-circle" style="font-size:24px; vertical-align: middle;"></i>';	
+								text += '</td><td>'+cn1+'</td>';
+								text += '<td><i class="fas fa-times" style="vertical-align: middle;"></i></td></tr></table>';
+								document.getElementById('table1').innerHTML=text;
+								var size = document.getElementsByName("productamout").length;
+								var a1 = 0;
+								
+									for(var i = 0; i < size; i++){				
+										a2 = document.getElementsByName("productamout")[i].value;
+										a1 = parseInt(a2) + parseInt(a1);
+									}
+									
+									var oneprice = (${oneproduct.p_Manpay} * a1);
+									var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+									var cn1 = cn1 +'원';
+									
+									var totalprice = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
+									var cn2 = totalprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+									var cn2 = cn2 +'원';
+									var totalproduct = (${oneproduct.p_Landprice} * a1);
+									var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+									var c3 = c3 +'원';
+									
+									
+									document.getElementById("totalproduct").innerHTML = c3;
+									document.getElementById("totalmanpay").innerHTML = cn1;
+									document.getElementById("total").innerHTML = cn2;
+									document.getElementById("totaltable").style.display = "";
+									//아래 값 전달하기.
+									var b_Pno = ("b_Pno" + product);
+									var b_Id = ("b_Id" + product);
+									var b_Land = ("b_Land" + product);
+									var b_Totalprice = ("b_Totalprice" + product);
+									document.getElementById(b_Land).value= amout;
+									document.getElementById(b_Totalprice).value= totalprice;
+					 }else{
+						 alert("동일 제품이 존재합니다. 수량을 조절해주십시요.")
+					 }
+					 lnb = $("#lnb").offset().top;
+				 });
+				
 			  $(document).on("keyup","td > .onlyNumber",function (event){//테이블 안에 input 값 처리하기.
 			        var str;
 			        if(event.keyCode != 8){
@@ -516,7 +724,29 @@ ul {
 			        var oneprice = ${oneproduct.p_Landprice} * number;
 					var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 					var cn1 = cn1 +'원';
-					$(this).parent().next().html(cn1);
+					$(this).parent().next().html(cn1);//수정위치지워라.
+					  var size = document.getElementsByName("productamout").length;
+					  var a1 = "0";
+					  for(var i = 0; i < size; i++){				
+							a2 = document.getElementsByName("productamout")[i].value;
+							a1 = parseInt(a2) + parseInt(a1);
+						}
+					    oneprice = (${oneproduct.p_Manpay} * a1);
+						 cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+						 cn1 = cn1 +'원';
+						var totalprice = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
+						 cn2 = totalprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+						 cn2 = cn2 +'원';
+					
+						if(size>0){
+							var totalproduct = (${oneproduct.p_Landprice} * a1);
+							var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+							var c3 = c3 +'원';
+							document.getElementById("totalproduct").innerHTML = c3;
+							document.getElementById("totalmanpay").innerHTML = cn1;
+							document.getElementById("total").innerHTML = cn2;
+							document.getElementById("totaltable").style.display = "";
+						}
 			    });
 			   
 			   $(document).on("click","div > input",function (){//테이블 안에 input 값 처리하기.
@@ -560,8 +790,16 @@ ul {
 						 cn2 = cn2 +'원';
 					
 						if(size>0){
-							document.getElementById("totalmanpay").innerHTML = "인건비<br/>"+cn1;
-							document.getElementById("total").innerHTML = "총 가격<br/>"+cn2;
+							var totalproduct = (${oneproduct.p_Landprice} * a1);
+							var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+							var c3 = c3 +'원';
+							
+							
+							document.getElementById("totalproduct").innerHTML = c3;
+							document.getElementById("totalmanpay").innerHTML = cn1;
+							document.getElementById("total").innerHTML = cn2;
+							document.getElementById("totaltable").style.display = "";
+							  
 						}
 						
 						
@@ -596,8 +834,15 @@ ul {
 					 cn2 = cn2 +'원';
 				
 					if(size>0){
-						document.getElementById("totalmanpay").innerHTML = "인건비<br/>"+cn1;
-						document.getElementById("total").innerHTML = "총 가격<br/>"+cn2;
+						var totalproduct = (${oneproduct.p_Landprice} * a1);
+						var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+						var c3 = c3 +'원';
+						
+						
+						document.getElementById("totalproduct").innerHTML = c3;
+						document.getElementById("totalmanpay").innerHTML = cn1;
+						document.getElementById("total").innerHTML = cn2;
+						document.getElementById("totaltable").style.display = "";
 					}
 				  
 				  
@@ -605,6 +850,7 @@ ul {
 		    	
 		    	
 		    	$(document).on("click",'.fa-times',function () {
+		    		
 					  $(this).parent().parent().parent().parent().remove();
 					  var size = document.getElementsByName("productamout").length;
 					  var a1 = "0";
@@ -621,22 +867,97 @@ ul {
 						var cn2 = cn2 +'원';
 						
 						if(size>0){
-							document.getElementById("totalmanpay").innerHTML = "인건비<br/>"+cn1;
-							document.getElementById("total").innerHTML = "총 가격<br/>"+cn2;
+							var totalproduct = (${oneproduct.p_Landprice} * a1);
+							var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+							var c3 = c3 +'원';
+							
+							
+							document.getElementById("totalproduct").innerHTML = c3;
+							document.getElementById("totalmanpay").innerHTML = cn1;
+							document.getElementById("total").innerHTML = cn2;
+							document.getElementById("totaltable").style.display = "";
 						}else{
 							document.getElementById("totalmanpay").innerHTML = "";
 							document.getElementById("total").innerHTML = "";
+							document.getElementById("totaltable").style.display = "none";
 						}
-					  
-					  
-					  
+						lnb = $("#lnb").offset().top;
 				});
+		    	
+		    	$(document).on("click",'.qnasubbutton',function qnasubbutton() {
+		    		var testid = $(this).parent().parent().parent().parent().next().children().next();
+		    		
+		    		 if( ($("#subqna").length > 0)&&(testid.length) ){
+		    			 $("#subqna").parent().html("<hr>");
+		    		 }else if(($("#subqna").length > 0)){
+		    			 $("#subqna").parent().html("<hr>");
+		    			 var name = $(this).attr('name');
+			    		 var divtext = $(this).parent().parent().parent().parent().next();
+			    		 var innertext ="";
+			    		 innertext +="<hr><table id='subqna'><tr><td colspan='1'><label>댓글 내용</label></td>"; 
+			    		 innertext +="<td><textarea rows='2' cols='150' class='form-control' id='c_Content2' name='c_Content2' placeholder='* 내용을 입력하세요.' required>";
+			    		 innertext +="</textarea></td></tr><tr>";
+			    		 innertext +="<td><input id='qnainsert' name='"+name+"' type='submit' class='btn btn-dark' value='댓글 작성' onclick='subqnainsert(this.name)'>&nbsp;&nbsp;</td>";
+			    		 innertext +="</tr></table><hr>";
+			    		 divtext.html(innertext);
+		    		 }else{
+		    			 var name = $(this).attr('name');
+			    		 var divtext = $(this).parent().parent().parent().parent().next();
+			    		 var innertext ="";
+			    		 innertext +="<hr><table id='subqna'><tr><td colspan='1'><label>댓글 내용</label></td>"; 
+			    		 innertext +="<td><textarea rows='2' cols='150' class='form-control' id='c_Content2' name='c_Content2' placeholder='* 내용을 입력하세요.' required>";
+			    		 innertext +="</textarea></td></tr><tr>";
+			    		 innertext +="<td><input id='qnainsert' name='"+name+"' type='submit' class='btn btn-dark' value='댓글 작성' onclick='subqnainsert(this.name)'>&nbsp;&nbsp;</td>";
+			    		 innertext +="</tr></table><hr>";
+			    		 divtext.html(innertext);
+		    		 }
+		    	});	
+		    	
+		    			
+		    	$(document).on("click",'.updatebutton',function updatebutton() {
+		    		
+			    		 if( ($("#subqna").length > 0)){
+			    			 $("#subqna").parent().html("<hr>");
+			    		 }
+		    			var name = $(this).attr('name');
+		    			var updatetr = $(this).parent().parent().parent();
+		    			var updatetext = "";
+		    			updatetext +="<tr><td colspan='1'><label>댓글 내용</label></td>";
+		    			updatetext +="<td><textarea rows='2' cols='150' class='form-control' id='c_Contentupdate' name='c_Contentupdate' placeholder='* 내용을 입력하세요.' required>";
+		    			updatetext +="</textarea></td></tr><tr>";
+		    			updatetext +="<td><input id='qnaupdate' name='"+name+"' type='button' value='수정완료' onclick='qnaupdate(this.name)'></td>;"
+		    			updatetext +="<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id='qnaupdateexit' name='"+name+"' type='button' value='수정취소' onclick='qnaupdateexit(this.name)'></td></tr>"
+		    			updatetr.html(updatetext);
+		    	
+		    	});
+		    	
+    		
+	    			
+		    			
+		    	
+		        $(window).scroll(function() {
+		          var window = $(this).scrollTop();
+		          var lnbcenter = $("#lnbcenter").offset().top;
+		          if(lnbcenter <= window) {
+		        	  
+		            $("#lnb").addClass("fixed");
+		          } else {
+		            $("#lnb").removeClass("fixed");
+		          }
+		        })
+		    	
 	});
-
+			
+			
+			
 	</script>
 
 </head>
 <body>
+<%	MemberBean member = ((MemberBean)session.getAttribute("member"));
+	FarmerBean farmer = ((FarmerBean)session.getAttribute("farmer"));
+	AdminBean admin = ((AdminBean)session.getAttribute("admin"));
+%>					
 
 	<div class="container pt-5 pb-4">
 		<div class="row justify-content-between">
@@ -701,23 +1022,29 @@ ul {
 		<div class="container">
 			<div class="row">
 				<!--승인 여부 해당 파트 관리자만 보이게 만들어야됨. 차후 수정 예정.-->
-				<div align="right" class="col-lg-12" id="productupdate">
-					<input type="button" value="수정" onclick="p" />
-				</div>
-				<div align="right" class="col-lg-12" id="productaccept">
-					<c:choose>
-						<c:when test="${oneproduct.p_Accept eq 'Y'}">
-							승인처리상태 <input name='N' type="button" value="미승인처리"
-								onclick="productaccept('N')" />
-						</c:when>
-						<c:otherwise>
-						미승인처리상태  <input name='Y' type="button" value="승인처리"
-								onclick="productaccept('Y')" />
+				
+					<c:if test="${not empty farmer || not empty admin}">
 
-						</c:otherwise>
-					</c:choose>
-				</div>
 
+						<div align="right" class="col-lg-12" id="productupdate">
+							<input type="button" value="수정" onclick="p" />
+						</div>
+						
+						<div align="right" class="col-lg-12" id="productaccept">
+							<c:choose>
+								<c:when test="${oneproduct.p_Accept eq 'Y'}">
+									승인처리상태 <input style="width: 60px;" class='mybtn' name='N' type="button" value="승인"
+										onclick="productaccept('N')" />
+								</c:when>
+								<c:otherwise>
+								미승인처리상태  <input style="width: 60px;" class='mybtn2' name='Y' type="button" value="미승인"
+										onclick="productaccept('Y')" />
+		
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</c:if>
+				
 				<div class="col-lg-6 col-md-6" id="maindiv">
 					<div class="product__details__pic">
 						<div class="product__details__pic__item">
@@ -731,22 +1058,26 @@ ul {
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
-								style="cursor: pointer" onclick="selectimg(this.name)"> <img
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
-								style="cursor: pointer" onclick="selectimg(this.name)"> <img
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
-								style="cursor: pointer" onclick="selectimg(this.name)"> <img
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
-								style="cursor: pointer" onclick="selectimg(this.name)"> <img
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
 								alt=""
@@ -760,12 +1091,10 @@ ul {
 					<div class="product__details__text">
 						<h2>${oneproduct.p_Title}</h2>
 						<hr>
-						<div class="product__details__rating">
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-								class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-								class="fa fa-star-half-o"></i> <span>(18 reviews)</span>
-						</div>
-						
+						<h3>평점 : ${f_rate}</h3>
+						<hr>
+						<p>${oneproduct.p_Content}</p>
+						<hr>
 						<div>
 							<h4>
 								1평 작물가 :
@@ -783,18 +1112,17 @@ ul {
 							</h4>
 						</div>
 						<hr>
-						<p>${oneproduct.p_Content}</p>
+						
 
 						<div>
 
 							<!-- 상품 리스트 선택 -->
 
 							<div class="select"
-								style="position: relative; line-height: 35px; width: 330px">
+								style="position: relative; line-height: 35px; width: 250px">
 								<a href="#" id="aaa" onClick="test()"> <img height="50px"
 									width="50px" src="/resources/product/img/감자.png"><span
 									id="productname">감자</span></a>
-
 								<ul>
 									<li onClick="listChange()"><img height="50px" width="50px"
 										src="/resources/product/img/감자.png" />감자</li>
@@ -834,11 +1162,9 @@ ul {
 
 						<form>
 
-							<i class="fas fa-minus-circle" style='font-size:24px; vertical-align: middle;'></i> 
-							<input class="onlyNumber" id="iniamout" type=text min=1  name=amount value=1 size=10> 
-							<i class="fas fa-plus-circle" style='font-size:24px; vertical-align: middle;'></i>
-							<input type=button class="choicebutton" value="선택"
-								onClick="selectproduct()">
+							<i class="fas fa-minus-circle" style='font-size:24px; vertical-align: middle;'>
+							</i><input class="onlyNumber" id="iniamout" type=text min=1  name=amount value=1 size=10><i class="fas fa-plus-circle" style='font-size:24px; vertical-align: middle;'></i>
+							<input id="selectproduct" style="width: 50px;" type=button class="mybtn" value="선택" onClick="selectproduct()">
 						</form>
 
 						<ol id="productbasket" style="display:none;">
@@ -853,23 +1179,42 @@ ul {
 						
 							<div id="table1" class="table1">
 							</div>
-					    <table style="width: 100%;">
+						<br>
+					    <table id="totaltable" style="width: 100%;display: none; table-layout:fixed;">
+					    <tr style="border: 0.1px;border-top: solid #9e9c9c;">
+						    <td style="width:30%; text-align: left;font-size: 16px;">
+							<span>구입작물</span>
+							</td>
+							<td style="width:70%;text-align:right">
+							<span style="font-size: 16px;" id="totalproduct"></span>
+							</td>
+						</tr>
 					    
 					    <tr>
-					    <td>
-					    <div style="text-align: right; font-size: 24px;" id="totalmanpay"></div>
-						<div style="text-align: right; font-size: 24px;" id="total"></div>
-						</td>
+						    <td style="text-align: left;font-size: 16px;">
+							<span>인건비</span>
+							</td>
+							<td style="text-align:right">
+							<span style=" font-size: 16px;" id="totalmanpay"></span>
+							</td>
+						</tr>
+						<tr style="border: 0.1px;border-top: solid #9e9c9c;">
+							<td style="text-align: left;font-size: 24px;">
+							<span>총 가격</span>
+							</td>
+							<td style="text-align:right">
+							<span style="font-size: 24px;" id="total"></span>
+							</td>
 						</tr>
 						 <tr>
 					    <td>
 						<button type="button" class="mybtn"
-							style="width: 100pt; cursor: pointer;" onClick="basket()"
+							style=" cursor: pointer;" onClick="basket()"
 							value="장바구니">장바구니</button>
-						&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</td>
+						<td style="text-align:right">
 						<button type="button" class="mybtn"
-							style="width: 100pt; cursor: pointer;" type="button"
+							style=" cursor: pointer;" type="button"
 							onClick="payment()" value="결제">결제</button>
 						</td>
 						</tr>	
@@ -878,9 +1223,8 @@ ul {
                     <input type="button" onClick="document.myHiddenForm.submit()" value="장바구니"/>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
                     <input type="button" onClick="document.myHiddenForm2.submit()" value="결제"/>
                      -->
-
 					</div>
-					
+					<div id="lnbposition"></div>
 					
 					<form:form commandName="basketbean" id="myHiddenForm"
 							name="myHiddenForm" action="/productbasketchoice" method="post">
@@ -912,24 +1256,26 @@ ul {
 							</c:forTokens>
 
 						</form:form>
+						
 				</div>
-
-
-
+		</div>
+		
+	</div>
+				<!-- 메뉴바?? -->
+				<div id="lnbcenter"></div>
+				<div id="lnb" style="text-align: center;">
+				   <ul>
+				     <li><a href="#lnbposition" class="sidenav">설명2</a></li>
+				     <li><a href="#" class="sidenav">덧글</a></li>
+				   </ul>
+				 </div>
+				 <br><br>
+		<div class="container">
+			<div class="row">				 
 				<div class="col-lg-12">
 					<div class="product__details__tab">
-						<ul class="nav nav-tabs" role="tablist">
-							<li class="nav-item"><a class="nav-link active"
-								data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">Description</a>
-							</li>
-							<li class="nav-item"><a class="nav-link" data-toggle="tab"
-								href="#tabs-2" role="tab" aria-selected="false">Information</a>
-							</li>
-							<li class="nav-item"><a class="nav-link" data-toggle="tab"
-								href="#tabs-3" role="tab" aria-selected="false">Reviews <span>(1)</span></a>
-							</li>
-						</ul>
-						<div class="tab-content">
+						
+						
 							<div class="tab-pane active" id="tabs-1" role="tabpanel">
 								<div class="product__details__tab__desc"
 									style="text-align: center;">
@@ -969,83 +1315,94 @@ ul {
 
 								</div>
 							</div>
-							<div class="tab-pane" id="tabs-2" role="tabpanel">
-								<div class="product__details__tab__desc">
-									<h6>Products Infomation</h6>
-									<p>Vestibulum ac diam sit amet quam vehicula elementum sed
-										sit amet dui. Pellentesque in ipsum id orci porta dapibus.
-										Proin eget tortor risus. Vivamus suscipit tortor eget felis
-										porttitor volutpat. Vestibulum ac diam sit amet quam vehicula
-										elementum sed sit amet dui. Donec rutrum congue leo eget
-										malesuada. Vivamus suscipit tortor eget felis porttitor
-										volutpat. Curabitur arcu erat, accumsan id imperdiet et,
-										porttitor at sem. Praesent sapien massa, convallis a
-										pellentesque nec, egestas non nisi. Vestibulum ac diam sit
-										amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-										ipsum primis in faucibus orci luctus et ultrices posuere
-										cubilia Curae; Donec velit neque, auctor sit amet aliquam vel,
-										ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-									<p>Praesent sapien massa, convallis a pellentesque nec,
-										egestas non nisi. Lorem ipsum dolor sit amet, consectetur
-										adipiscing elit. Mauris blandit aliquet elit, eget tincidunt
-										nibh pulvinar a. Cras ultricies ligula sed magna dictum porta.
-										Cras ultricies ligula sed magna dictum porta. Sed porttitor
-										lectus nibh. Mauris blandit aliquet elit, eget tincidunt nibh
-										pulvinar a.</p>
-								</div>
-							</div>
+							<hr/>
 							<div class="tab-pane" id="tabs-3" role="tabpanel">
-								<div class="product__details__tab__desc">
-
-
-
-
-									<h6>댓 글</h6>
+									<div class="qnatalbe" id="qnatalbe">
+										
+										
+											<c:forEach var="q" items="${qnalist }" varStatus="status">
+												<table style="width:100%">
+													<tr>
+														<c:choose>
+															<c:when test="${q.c_Subno > 0}">
+																<td style="width:80%;padding-left: 20px;">
+																	<span style="font-size:20px">└</span>
+																	${q.c_Content }
+																	<br>
+																</td>
+   															 </c:when>
+   															 <c:otherwise>
+   															 	<td style="width:80%">
+																	${q.c_Content }
+																	<br>
+																</td>
+   															 </c:otherwise>
+														</c:choose>
+														<td  style="width:20%">
+														${q.c_Id }<br>
+														${q.c_Date }<br>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<c:if test="${(q.c_Subno == 0 && (not empty farmer || not empty admin))&&q.c_Id !='삭제'}">
+																<input name="${q.c_Seq}" class="qnasubbutton" type="button" value="답글" onclick="qnasubbutton('${q.c_Seq}')" />
+															</c:if>
+														</td>
+														<td>
+															<c:if test="${(not empty farmer || not empty admin ||(not empty member && member.m_Id == q.c_Id))&&q.c_Id !='삭제'}">
+																<input name="${q.c_Seq}" class="updatebutton" type="button" value="수정" onclick="updatebutton('${q.c_Seq}')" />
+																<input name="${q.c_Seq}" class="qnadeletebutton" type="button" value="삭제" onclick="qnadeletebutton('${q.c_Seq}')" />
+															</c:if>
+														</td>
+													</tr>
+												</table>
+												<div>
+													<hr/>
+												</div>							                        
+					                       </c:forEach> 
+										
+										
+										
+									</div>
+									
+								
+										<div align="center" class="product__pagination" id="pagesystem">
+	                    
+						                	<c:if test="${pagebeen.pro eq 'true' }">
+											    <a id = "page${pagebeen.pagestart -1}" style="cursor:pointer" onclick="pagebutton(${pagebeen.pagestart -1})">이전 </a>
+											</c:if>	  
+					
+											<c:forEach var="i" begin="${pagebeen.pagestart}" end="${pagebeen.pageend}" step="1">
+												<a id = "page${i}" style="cursor:pointer" onclick="pagebutton(${i })">${i }</a>  
+											</c:forEach>    
+										    	<c:if test="${pagebeen.post eq 'true'}">
+											    <a id = "page${pagebeen.pageend +1}" style="cursor:pointer" onclick="pagebutton(${pagebeen.pageend +1})">다음 </a>
+											</c:if>
+											
+					                    </div>
+						
 									<hr>
-									<form:form commandName="productQna" action="/productqnainsert"
-										method="post">
 										<table>
-											<tr>
-												<td colspan="1" style="width: 20%;"><label>작성자</label></td>
-												<td colspan="3"><input type="text"
-													style="text-align: left;" name="p_Id"
-													placeholder="* 이름을 입력하세요." maxlength="50" required
-													autofocus></td>
-											</tr>
 											<tr>
 												<td colspan="1"><label>댓글 내용</label></td>
 												<td><textarea rows="2" cols="150" class="form-control"
-														name="p_Content" placeholder="* 내용을 입력하세요." required></textarea></td>
+														id="c_Content" name="c_Content" placeholder="* 내용을 입력하세요." required></textarea></td>
 											</tr>
 											<tr>
-											<td><input type="submit" class="btn btn-dark" value="댓글 작성">&nbsp;&nbsp;</td>
+											<td><input id="qnainsert" name="1" type="submit" class="btn btn-dark" value="댓글 작성" onclick="qnainsert(this.name)">&nbsp;&nbsp;</td>
 											</tr>
 										</table>
-									</form:form>
-								</div>
 								<hr>
 								<br>
-								<c:forEach var="c" items="${productQnalist}">
-									<table>
-
-										<td class="content">${c.c_Nd}</td>
-										<td class="content">${c.c_Id}</td>
-										<td class="content">${c.c_Title}</td>
-										<td class="content">${c.c_Date}</td>
-									</table>
-
-								</c:forEach>
-
-								<section id="emptyArea">등록된 댓글이 없습니다.</section>
-
 							</div>
 						</div>
-					</div>
+					
 				</div>
+				
 			</div>
 		</div>
-		</div>
-		</div>
+		
 	</section>
 
 
