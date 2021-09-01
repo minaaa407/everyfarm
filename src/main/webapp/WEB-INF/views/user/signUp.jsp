@@ -50,15 +50,18 @@ label.error {
 				</div>
 				<div class="signup-form">
 					<form:form method="POST" commandName="memberBean"
-						class="register-form" action="/sign" onsubmit="return check()">
+						class="register-form" id="register-form" action="/sign">
 						<div class="form-row">
 							<div class="form-group">
 								<div class="form-input">
-									<label for="m_Id" class="required">아이디</label> <input
-										type="email" name="m_Id" id="m_Id" placeholder="ID"
+									<label for="m_Id" class="required">아이디</label>
+									<form:input type="email" path="m_Id" name="m_Id" id="m_Id"
+										placeholder="ID"
 										onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9!@#$%^&*()_-+=~?:;`|/.]/gi,'');"
-										required="required" /> <span class="id_input_re_1">사용가능한
-										아이디입니다.</span><span class="id_input_re_2">아이디가 이미 존재합니다.</span> <br>
+										required="required" />
+									<form:errors path="m_Id" cssClass="error" />
+									<span class="id_input_re_1">사용가능한 아이디입니다.</span><span
+										class="id_input_re_2">아이디가 이미 존재합니다.</span> <br>
 									<button id="mailNum" class="mailNum" onclick="mail()">인증번호
 										발급</button>
 								</div>
@@ -67,54 +70,54 @@ label.error {
 									<label for="e_Num" class="required">인증번호</label> <input
 										type="text" name="e_Num" id="e_Num"
 										onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-										maxlength="6" required />
+										maxlength="6" required /> <br>
+									<button type="button" class="w-100 btn btn-primary btn-lg"
+										style="padding-left: 9px; font-size: 13px"
+										onclick="mailCheck()" id="mailNum2">인증번호 확인</button>
 								</div>
-								<button type="button" class="w-100 btn btn-primary btn-lg"
-									style="padding-left: 9px; font-size: 13px"
-									onclick="mailCheck()" id="mailNum2">인증번호 확인</button>
 								<div class="form-input has-feedback">
-
 									<label for="m_Pw" class="required">비밀번호</label>
 									<div>
-										<input type="password" name="m_Pw" id="m_Pw"
+										<form:input type="password" path="m_Pw" name="m_Pw" id="m_Pw"
 											class="form-control" placeholder="PASSWORD"
 											pattern="^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_-+=[]{}~?:;`|/]).{8,20}$"
-											maxlength="20" required />
+											maxlength="20" required="required" />
+										<form:errors path="m_Pw" cssClass="error" />
 									</div>
 								</div>
 
 								<div class="form-input has-feedback">
 									<div>
-										<label for="m_Pw" class="required">비밀번호 확인</label> <input
-											type="password" class="form-control" id="txtPasswordConfirm"
-											name="txtPasswordConfirm" placeholder="PASSWORD" required />
+										<label for="m_Pw2" class="required">비밀번호 확인</label> <input
+											type="password" class="form-control" id="m_Pw2" name="m_Pw2"
+											placeholder="PASSWORD" required />
 									</div>
-									<span class="glyphicon glyphicon-ok form-control-feedback"></span>
-								</div>
-								<div class="col-12">
 									<div class="alert alert-success" id="alert-success">비밀번호가
 										일치합니다.</div>
-								</div>
-								<div class="col-12">
 									<div class="alert alert-danger" id="alert-danger">비밀번호가
 										일치하지 않습니다.</div>
 								</div>
 								<div class="form-input">
-									<label for="m_Name" class="required">이름</label> <input
-										type="text" name="m_Name" id="m_Name" placeholder="NAME"
-										onKeyup="this.value=this.value.replace(/[^a-zA-Zㄱ-힣0-9]/gi,'');"
+									<label for="m_Name" class="required">이름</label>
+									<form:input type="text" path="m_Name" name="m_Name" id="m_Name"
+										placeholder="NAME"
+										onKeyup="this.value=this.value.replace(/[^a-zA-Zㄱ-힣]/gi,'');"
 										required="required" />
+									<form:errors path="m_Name" cssClass="error" />
 								</div>
 								<div class="form-input">
-									<label for="m_Birth" class="required">생년월일</label> <input
-										type="date" name="m_Birth" required="required" />
+									<label for="m_Birth" class="required">생년월일</label> input
+									<form:input type="date" path="m_Birth" name="m_Birth"
+										id="txtDate" required="required" />
+									<form:errors path="m_Birth" cssClass="error" />
 								</div>
 								<div class="form-input">
-									<label for="m_Tel" class="required">휴대전화</label> <input
-										type="tel" name="m_Tel" id="m_Tel"
+									<label for="m_Tel" class="required">휴대전화</label>
+									<form:input type="tel" path="m_Tel" name="m_Tel" id="m_Tel"
 										onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
 										maxlength="11" placeholder="ex)01012345678"
 										required="required" />
+									<form:errors path="m_Tel" cssClass="error" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -133,8 +136,8 @@ label.error {
 						</div>
 						<div class="form-submit">
 							<input type="submit" value="가입하기" class="submit" id="submit"
-								name="submit" /> <input type="button" value="취소" class="submit"
-								id="reset" name="reset" />
+								name="submit" /> <a href="/login"><input type="button"
+								value="취소" class="submit" id="reset" name="reset" /></a>
 						</div>
 					</form:form>
 				</div>
@@ -227,12 +230,18 @@ label.error {
 
 		});
 
+		$(function() {
+			$('#mailNum2').hide();
+		});
+
 		function mail() {
 			var mail = {
 				m_Id : $("#m_Id").val()
 			}
 			var code = "";
-			var checkBox = $(".e_Num");
+			var num = {
+				e_Num : $("#e_Num").val()
+			}
 
 			if (mail == "") {
 				alert("이메일을 작성해주세요.");
@@ -241,18 +250,23 @@ label.error {
 				$.ajax({
 					type : "post", //요청 메소드 방식
 					url : "/checkMail",
-					data : mail,
+					data : {
+						"m_Id" : mail,
+						"e_Num" : num
+					},
 					dataType : 'json', //서버가 요청 URL을 통해서 응답하는 내용의 타입
 					success : function(result) {
 						if (result.error == true) {
-							checkBox.attr("disabled", false);
-							checkBox.val('');
+							num.attr("disabled", false);
+							num.val('');
 							$("#alert-success-email").hide();
 							$("#alert-danger-email").hide();
 							code = result;
-							alert("성공");
+							alert("작성하신 메일로 인증번호를 전송했습니다. 확인해주세요.");
+							$('#e_Num').hide();
+							$('#mailNum2').show();
 						} else {
-							alert("실패");
+							alert("인증번호 전송에 실패하였습니다. 작성하신 이메일을 다시 확인 바랍니다.");
 						}
 					},
 					error : function(a, b, c) {
@@ -280,8 +294,8 @@ label.error {
 						type : "POST", //요청 메소드 방식
 						url : "/mailNum",
 						data : {
-							"mailCheck" : mailCheck,
-							"id" : id
+							"e_Num" : mailCheck,
+							"m_Id" : id
 						},
 						dataType : 'json', //서버가 요청 URL을 통해서 응답하는 내용의 타입
 						success : function(result) {
@@ -302,7 +316,44 @@ label.error {
 						}
 					});
 				});
+
+		$(function() {
+			$("#alert-success").hide();
+			$("#alert-danger").hide();
+			$("input").keyup(function() {
+				var pwd1 = $("#m_Pw").val();
+				var pwd2 = $("#m_Pw2").val();
+				if (pwd1 != "" || pwd2 != "") {
+					if (pwd1 == pwd2) {
+						$("#alert-success").show();
+						$("#alert-danger").hide();
+						$("#submit").removeAttr("disabled");
+					} else {
+						$("#alert-success").hide();
+						$("#alert-danger").show();
+						$("#submit").attr("disabled", "disabled");
+					}
+				}
+			});
+		});
+
+		$(function() {
+			var dtToday = new Date();
+
+			var month = dtToday.getMonth() + 1;
+			var day = dtToday.getDate();
+			var year = dtToday.getFullYear();
+
+			if (month < 10)
+				month = '0' + month.toString();
+			if (day < 10)
+				day = '0' + day.toString();
+
+			var maxDate = year + '-' + month + '-' + day;
+			$('#txtDate').attr('max', maxDate);
+		});
 	</script>
+
 
 
 	<!-- JS -->

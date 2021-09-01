@@ -128,8 +128,11 @@
 		  </select>
 		  
 	<!-- 듄 payment에 이용 -->
-
-
-
+	
+	<!-- index -->
+	<select id="viewList" resultType="kr.co.everyfarm.product.ProductBean">
+	select * from product order by p_View desc limit 3;
+	</select>
+	<!-- index -->
 
 </mapper>

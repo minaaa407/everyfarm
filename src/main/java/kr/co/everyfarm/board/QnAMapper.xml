@@ -4,124 +4,170 @@
 
 <mapper namespace="kr.co.everyfarm.board.QnADAO">
 
-   	<select id ="list" resultType="kr.co.everyfarm.board.QnABean">
+	<select id="list" resultType="kr.co.everyfarm.board.QnABean">
   		<![CDATA[
    		 SELECT * FROM qna order by q_no desc
    		]]>
-  	</select>
-  
-   	<select id ="productQlist" resultType="kr.co.everyfarm.board.QnABean">
-   		 SELECT * FROM qnatofarmer order by q_no desc
-  	</select> <!-- q_img -->
-  	
-  	<select id ="adminQlist" resultType="kr.co.everyfarm.board.QnAadminBean">
-   		 SELECT * FROM qnatoadmin order by qa_no desc
-  	</select>
-  
-  	<select id ="productPnoTitleList" resultType="kr.co.everyfarm.board.QnABean">
-   		 SELECT p_No as q_pno, p_Title as q_Ptitle FROM product where p_Accept='Y'
-  	</select>
-  	
-  	<select id ="productTitle" parameterType="int" resultType="String">
-   		 SELECT p_Title FROM product where p_no=#{pno}
-  	</select>
-  	
-  	<select id="productMylist" parameterType="kr.co.everyfarm.user.MemberBean" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qnatofarmer where q_Id=#{m_Id} order by q_no desc
 	</select>
-	
-	<select id="adminMylist" parameterType="kr.co.everyfarm.user.MemberBean" resultType="kr.co.everyfarm.board.QnAadminBean">
-		select * from qnatoadmin where qa_Id=#{m_Id} order by qa_no desc
+
+	<select resultType="kr.co.everyfarm.board.QnABean"
+		id="myQnAtoFar">SELECT * FROM qnatofarmer WHERE q_Id=#{m_Id} order by q_no desc
 	</select>
-	
-	<select id="modifyrecord" parameterType="int" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qnatofarmer where q_No=#{no} 
+
+	<select id="productQlist"
+		resultType="kr.co.everyfarm.board.QnABean">
+		SELECT * FROM qnatofarmer order by q_no desc
+	</select> <!-- q_img -->
+
+	<select id="adminQlist"
+		resultType="kr.co.everyfarm.board.QnAadminBean">
+		SELECT * FROM qnatoadmin order by qa_no desc
 	</select>
-	
-	<select id="modifyAdrecord" parameterType="int" resultType="kr.co.everyfarm.board.QnAadminBean">
-		select * from qnatoadmin where qa_No=#{no} 
+
+	<select id="productPnoTitleList"
+		resultType="kr.co.everyfarm.board.QnABean">
+		SELECT p_No as q_pno, p_Title as q_Ptitle FROM product where p_Accept='Y'
 	</select>
-	
-	
-	<select id="adminWriteO" resultType="kr.co.everyfarm.board.QnABean">
+
+	<select id="productTitle" parameterType="int"
+		resultType="String">
+		SELECT p_Title FROM product where p_no=#{pno}
+	</select>
+
+	<select id="productMylist"
+		parameterType="kr.co.everyfarm.user.MemberBean"
+		resultType="kr.co.everyfarm.board.QnABean">
+		select * from qnatofarmer where q_Id=#{m_Id} order by q_no
+		desc
+	</select>
+
+	<select id="adminMylist"
+		parameterType="kr.co.everyfarm.user.MemberBean"
+		resultType="kr.co.everyfarm.board.QnAadminBean">
+		select * from qnatoadmin where qa_Id=#{m_Id} order by qa_no
+		desc
+	</select>
+
+	<select id="modifyrecord" parameterType="int"
+		resultType="kr.co.everyfarm.board.QnABean">
+		select * from qnatofarmer where q_No=#{no}
+	</select>
+
+	<select id="modifyAdrecord" parameterType="int"
+		resultType="kr.co.everyfarm.board.QnAadminBean">
+		select * from qnatoadmin where qa_No=#{no}
+	</select>
+
+
+	<select id="adminWriteO"
+		resultType="kr.co.everyfarm.board.QnABean">
 		select * from qna where q_answer=1 order by q_no desc
 	</select>
-	
-	<select id="adminWriteX" resultType="kr.co.everyfarm.board.QnABean">
+
+	<select id="adminWriteX"
+		resultType="kr.co.everyfarm.board.QnABean">
 		select * from qna where q_answer=0 order by q_no desc
 	</select>
-	
-	<select id="searchall" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qna where q_Content LIKE CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE CONCAT('%',#{q_Content},'%') 
-		or q_Title LIKE CONCAT('%',#{q_Content},'%') or q_Id LIKE CONCAT('%',#{q_Content},'%') order by q_no desc
+
+	<select id="searchall"
+		parameterType="kr.co.everyfarm.board.QnABean"
+		resultType="kr.co.everyfarm.board.QnABean">
+		select * from qna where q_Content LIKE
+		CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE
+		CONCAT('%',#{q_Content},'%')
+		or q_Title LIKE CONCAT('%',#{q_Content},'%') or q_Id LIKE
+		CONCAT('%',#{q_Content},'%') order by q_no desc
 	</select>
-	
-	<select id="searchId" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qna where q_Id LIKE CONCAT('%',#{q_Content},'%') order by q_no desc
+
+	<select id="searchId"
+		parameterType="kr.co.everyfarm.board.QnABean"
+		resultType="kr.co.everyfarm.board.QnABean">
+		select * from qna where q_Id LIKE
+		CONCAT('%',#{q_Content},'%') order by q_no desc
 	</select>
-	
-	<select id="searchEach" parameterType="kr.co.everyfarm.board.QnABean" resultType="kr.co.everyfarm.board.QnABean">
-		select * from qna where (q_Content LIKE CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE CONCAT('%',#{q_Content},'%')
-		or q_Title LIKE CONCAT('%',#{q_Content},'%')) and q_About=#{q_About} order by q_no desc
+
+	<select id="searchEach"
+		parameterType="kr.co.everyfarm.board.QnABean"
+		resultType="kr.co.everyfarm.board.QnABean">
+		select * from qna where (q_Content LIKE
+		CONCAT('%',#{q_Content},'%') or q_Magcontent LIKE
+		CONCAT('%',#{q_Content},'%')
+		or q_Title LIKE
+		CONCAT('%',#{q_Content},'%')) and q_About=#{q_About} order by q_no
+		desc
 	</select>
-	
-	<insert id="insert" parameterType="kr.co.everyfarm.board.QnABean">
-		insert into qnatofarmer (q_Id, q_Title, q_Pno, q_Ptitle, q_Content, q_Secret)
-		values (#{q_Id}, #{q_Title}, #{q_Pno}, #{q_Ptitle}, #{q_Content}, #{q_Secret})
+
+	<insert id="insert"
+		parameterType="kr.co.everyfarm.board.QnABean">
+		insert into qnatofarmer (q_Id, q_Title, q_Pno, q_Ptitle,
+		q_Content, q_Secret)
+		values (#{q_Id}, #{q_Title}, #{q_Pno},
+		#{q_Ptitle}, #{q_Content}, #{q_Secret})
 	</insert>   <!-- q_Img -->
-	
-	<insert id="insertAdmin" parameterType="kr.co.everyfarm.board.QnAadminBean">
-		insert into qnatoadmin (qa_Id, qa_Title, qa_Content, qa_Secret)
+
+	<insert id="insertAdmin"
+		parameterType="kr.co.everyfarm.board.QnAadminBean">
+		insert into qnatoadmin (qa_Id, qa_Title, qa_Content,
+		qa_Secret)
 		values (#{qa_Id}, #{qa_Title}, #{qa_Content}, #{qa_Secret})
 	</insert>   <!-- qa_Img -->
-	
-	<update id="update" parameterType="kr.co.everyfarm.board.QnABean">
-		update qnatofarmer set q_Title=#{q_Title}, q_Content=#{q_Content}, q_Secret=#{q_Secret},
-		q_pno=#{q_Pno}, q_ptitle=#{q_Ptitle} where q_No=#{q_No}
+
+	<update id="update"
+		parameterType="kr.co.everyfarm.board.QnABean">
+		update qnatofarmer set q_Title=#{q_Title},
+		q_Content=#{q_Content}, q_Secret=#{q_Secret},
+		q_pno=#{q_Pno},
+		q_ptitle=#{q_Ptitle} where q_No=#{q_No}
 	</update>  <!-- q_Img -->
-	
-	<update id="updateAdmin" parameterType="kr.co.everyfarm.board.QnAadminBean">
-		update qnatoadmin set qa_Title=#{qa_Title}, qa_Content=#{qa_Content}, qa_Secret=#{qa_Secret} where qa_No=#{qa_No}
+
+	<update id="updateAdmin"
+		parameterType="kr.co.everyfarm.board.QnAadminBean">
+		update qnatoadmin set qa_Title=#{qa_Title},
+		qa_Content=#{qa_Content}, qa_Secret=#{qa_Secret} where qa_No=#{qa_No}
 	</update>  <!-- qa_Img -->
-	
-	<update id="adminWrite" parameterType="kr.co.everyfarm.board.QnABean">
-		update qna set q_answer=1, q_magdate=now(), q_magcontent =#{q_Magcontent} where q_No=#{q_No}
+
+	<update id="adminWrite"
+		parameterType="kr.co.everyfarm.board.QnABean">
+		update qna set q_answer=1, q_magdate=now(), q_magcontent
+		=#{q_Magcontent} where q_No=#{q_No}
 	</update>
-	
+
 	<delete id="delete" parameterType="int">
-		delete from qnatofarmer where q_No=#{no}
+		delete from qnatofarmer where
+		q_No=#{no}
 	</delete>
-	
+
 	<delete id="deleteAdmin" parameterType="int">
-		delete from qnatoadmin where qa_No=#{no}
+		delete from qnatoadmin
+		where qa_No=#{no}
 	</delete>
-	
-<!-- farmer	 -->
-	<select id ="productByfarmer" resultType="kr.co.everyfarm.board.QnABean">
-   		 SELECT p_No as q_Pno FROM product where p_Id=#{f_Id}
-  	</select> 
-  	
-	<select id ="productQlistFarmer" parameterType="java.util.List" resultType="kr.co.everyfarm.board.QnABean">
-   		 SELECT * FROM qnatofarmer where q_Pno IN (
-		  <foreach collection="list" item="pnoList" index="index" separator=",">
-           #{pnoList.q_Pno}
-          </foreach>
+
+	<!-- farmer -->
+	<select id="productByfarmer"
+		resultType="kr.co.everyfarm.board.QnABean">
+		SELECT p_No as q_Pno FROM product where p_Id=#{f_Id}
+	</select>
+
+	<select id="productQlistFarmer" parameterType="java.util.List"
+		resultType="kr.co.everyfarm.board.QnABean">
+		SELECT * FROM qnatofarmer where q_Pno IN (
+		<foreach collection="list" item="pnoList" index="index"
+			separator=",">
+			#{pnoList.q_Pno}
+		</foreach>
 		) order by q_no desc
-  	</select> <!-- q_img -->
-  	
-    <update id="farmerWrite" parameterType="kr.co.everyfarm.board.QnABean">
-		update qnatofarmer set q_answer=1, q_magdate=now(), q_Pid=#{q_Pid}, q_magcontent =#{q_Magcontent} where q_No=#{q_No}
+	</select> <!-- q_img -->
+
+	<update id="farmerWrite"
+		parameterType="kr.co.everyfarm.board.QnABean">
+		update qnatofarmer set q_answer=1, q_magdate=now(),
+		q_Pid=#{q_Pid}, q_magcontent =#{q_Magcontent} where q_No=#{q_No}
 	</update>
-  	
-  	<!-- <delete id="delete" parameterType="java.util.List">
-		delete from basket
-		where b_no IN (
-		  <foreach collection="list" item="deletenolist" index="index" separator=",">
-            ${deletenolist}
-          </foreach>
-		) 
-	</delete> -->
-	
-	
-<!--   q_Img, #{q_Img}, -->
+
+	<!-- <delete id="delete" parameterType="java.util.List"> delete from basket 
+		where b_no IN ( <foreach collection="list" item="deletenolist" index="index" 
+		separator=","> ${deletenolist} </foreach> ) </delete> -->
+
+
+	<!-- q_Img, #{q_Img}, -->
 </mapper>
