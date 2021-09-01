@@ -34,12 +34,12 @@
 						<button type="submit" class="login-form-btn">Login</button>
 					</div>
 					<div class="text-center p-t-1">
-						<a href="/farmer/findId" class="txt2">아이디 찾기</a> <span
-							class="txt1-1">/</span> <a href="/farmer/findPw" class="txt2">비밀번호
+						<a href="/farmerFindId" class="txt2">아이디 찾기</a> <span
+							class="txt1-1">/</span> <a href="/farmerFindPw" class="txt2">비밀번호
 							찾기</a>
 					</div>
 					<div class="text-center p-t-2">
-						<a href="/farmer/sign" class="txt2">계정이 없으신가요?<i
+						<a href="/farmerSign" class="txt2">계정이 없으신가요?<i
 							class="fa fa-long-arrow-right " aria-hidden="true"></i></a>
 					</div>
 				</form>

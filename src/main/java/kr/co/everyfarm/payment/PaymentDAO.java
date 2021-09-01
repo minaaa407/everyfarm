@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.co.everyfarm.product.PageBeen;
+import kr.co.everyfarm.product.ProductBean;
 
 public interface PaymentDAO {
 	public List<PaymentBean> paylist();
@@ -26,10 +27,11 @@ public interface PaymentDAO {
 
 	public Integer getinfo(int p_No);
 
-	public List<PaymentBean> mypaylist();
-	
+	public List<PaymentBean> mypaylist(String m_Id);
 	
 	// modal test
 	public PaymentBean getSearchData(PaymentBean paymentbean);
+	
+	List<PaymentBean> seedList();
 
 }

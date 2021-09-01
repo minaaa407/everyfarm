@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -45,6 +46,18 @@ public class BoardConrtroller {
 		
 		return "board/qnalist";
 	}
+	
+	@RequestMapping(value = "/myQnA")
+	public String getQnAMylist2(Model model, HttpServletRequest request, HttpSession session) {
+
+		MemberBean member = (MemberBean) session.getAttribute("member");
+		String m_Id = member.getM_Id();
+		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
+		List<QnABean> myQnAFar = dao.myQnAtoFar(m_Id);
+		model.addAttribute("qnaToFar", myQnAFar);
+		return "user/myQnA";
+	}
+
 	
 //	@RequestMapping(value = "/qnalist")
 //	public String getQnAList(Model model, HttpServletRequest request) {

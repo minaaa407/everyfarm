@@ -20,6 +20,8 @@ public interface QnADAO {
 //	
 //	public List<String> titleList();
 	
+	public List<QnABean> myQnAtoFar(String m_Id);
+	
 	
 	public List<QnABean> productPnoTitleList();
 	

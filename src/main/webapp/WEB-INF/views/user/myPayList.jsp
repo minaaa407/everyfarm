@@ -98,12 +98,12 @@ hr{
 											href="" onclick="return false;"><i
 												class="fa fa-clock-o"> </i> 내가 쓴 게시글 <span class="arrow"></span></a></li>
 										<ul class="sub-menu collapse" id="products">
-											<li><a href="/myQnA?=m_Id${member.m_Id}">QnA</a></li>
+											<li><a href="/myQnA">QnA</a></li>
 											<li><a href="/myReview">리뷰게시판</a></li>
 											<li><a href="#">추가할공간</a></li>
 											<li><a href="#">추가할공간</a></li>
 										</ul>
-										<li class="active"><a href="/myPayList?m_Id=${member.m_Id}"> <i
+										<li class="active"><a href="/myPayList"> <i
 												class="fa fa-credit-card"></i> 결제 내역
 										</a></li>
 									</ul>
@@ -122,7 +122,6 @@ hr{
 										<th scope="col">평수 &nbsp;&nbsp;&nbsp;</th>
 										<th scope="col">품종&nbsp;&nbsp;&nbsp;</th>
 										<th scope="col">금액&nbsp;&nbsp;&nbsp;</th>
-										<th scope="col">결제방식&nbsp;&nbsp;&nbsp;</th>
 										<th scope="col">결제날짜&nbsp;&nbsp;&nbsp;</th>
 									</tr>
 								</thead>
@@ -142,7 +141,6 @@ hr{
 													<td scope="col">${pay.pay_Land}평&nbsp;&nbsp;&nbsp;</td>
 													<td scope="col">${pay.pay_Seed}&nbsp;&nbsp;&nbsp;</td>
 													<td scope="col">${pay.pay_Totalprice}&nbsp;&nbsp;&nbsp;</td>
-													<td scope="col">${pay.pay_Method}&nbsp;&nbsp;&nbsp;</td>
 													<td scope="col"><c:out value="${pay_Date}" />&nbsp;&nbsp;&nbsp;
 													</td>
 												</tr>
