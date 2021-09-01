@@ -37,16 +37,6 @@ public class PaymentBean {
 	}
 
 
-	public String getPay_Method() {
-		return pay_Method;
-	}
-
-
-	public void setPay_Method(String pay_Method) {
-		this.pay_Method = pay_Method;
-	}
-
-
 	public String getPay_Seed() {
 		return pay_Seed;
 	}
@@ -209,15 +199,13 @@ public class PaymentBean {
 
 	@Override
 	public String toString() {
-		return "PaymentBean [pay_Id=" + pay_Id + ", pay_Method=" + pay_Method + ", pay_Seed=" + pay_Seed
-				+ ", pay_Deliverymemo=" + pay_Deliverymemo + ", pay_Land=" + pay_Land + ", pay_No=" + pay_No
-				+ ", pay_Orderno=" + pay_Orderno + ", pay_Totalprice=" + pay_Totalprice + ", pay_Date=" + pay_Date
-				+ ", pay_Address=" + pay_Address + ", pay_Name=" + pay_Name + ", pay_Tel=" + pay_Tel + ", pay_Email="
-				+ pay_Email + ", p_Id=" + p_Id + ", p_No=" + p_No + ", p_Title=" + p_Title + ", p_Img=" + p_Img
-				+ ", paymentbeanList=" + paymentbeanList + "]";
+		return "PaymentBean [pay_Id=" + pay_Id + ", pay_Seed=" + pay_Seed + ", pay_Deliverymemo=" + pay_Deliverymemo
+				+ ", pay_Land=" + pay_Land + ", pay_No=" + pay_No + ", pay_Orderno=" + pay_Orderno + ", pay_Totalprice="
+				+ pay_Totalprice + ", pay_Date=" + pay_Date + ", pay_Address=" + pay_Address + ", pay_Name=" + pay_Name
+				+ ", pay_Tel=" + pay_Tel + ", pay_Email=" + pay_Email + ", p_Id=" + p_Id + ", p_No=" + p_No
+				+ ", p_Title=" + p_Title + ", p_Img=" + p_Img + ", paymentbeanList=" + paymentbeanList + "]";
 	}
-	
-	
-	
+
+
 	
 }

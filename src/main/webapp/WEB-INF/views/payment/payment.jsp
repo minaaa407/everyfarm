@@ -225,8 +225,8 @@ margin-bottom:10px;
 						
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Name" id="pay_Name" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Tel" id="pay_Tel" value=""/>
-						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Ema0il" id="pay_Email" value=""/>
-						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="dm" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Email" id="pay_Email" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="pay_Deliverymemo" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }"/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}"/>
@@ -262,10 +262,13 @@ margin-bottom:10px;
 						<c:set var="price" value="${ landprice + manpay + delivery }" />
 						<c:set var="price2" value="${ landprice + manpay }" />
 						
+						
+						
+						
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Name" id="pay_Name" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Tel" id="pay_Tel" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Email" id="pay_Email" value=""/>
-						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="dm" value=""/>
+						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Deliverymemo" id="pay_Deliverymemo" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Address" id="Ad" value=""/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_No" value="${p.b_Pno }"/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}"/>
@@ -340,7 +343,7 @@ margin-bottom:10px;
 				</tr>
 				<tr>
 					<th scope="row" class="th">받으시는 분<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
-					<td><input id="Name" name="Name" class="inputTypeText" size="15" 
+					<td><input id="Name1" name="Name1" class="inputTypeText" size="15" 
 					value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Zㄱ-힣0-9]/gi,'');" required="required"/></td>
 				</tr>
 				<tr>
@@ -402,7 +405,7 @@ margin-bottom:10px;
 				</th>
 
                     <td>
-                        <textarea id="pay_Deliverymemo" name="pay_Deliverymemo" maxlength="255" cols="70" ></textarea> 
+                        <textarea id="dm" name="dm" maxlength="255" cols="70" ></textarea> 
                         <div class="message displaynone"></div>
                         <select id="memo" name="memo" onChange="memo1()">
 		                        <option value="">배송 시 요청사항을 선택해주세요</option>
@@ -433,9 +436,41 @@ margin-bottom:10px;
 	<script>
 	
 function submit() {
-		if(document.getElementById("Name").value == "") {
+	
+	
+	// 주소
+			var address1 = document.getElementById('postcode').value;
+			var address2 = document.getElementById('raddr1').value;
+			var address3 = document.getElementById('raddr2').value;
+			var address = address2 + ', ' + address3 + ' (' + address1 + ')';
+			document.getElementById('Ad').value=address;
+			alert(address + 2);
+	
+	const payname = document.getElementById('Name1').value;
+	document.getElementById('pay_Name').value = payname;
+	alert(payname + 1);
+	console.log(payname);
+	
+	const paytel = document.getElementById('tel').value;
+	const paytel1 = document.getElementById('tel1').value;
+	const paytel2 = document.getElementById('tel2').value;
+	const paytelmix = paytel + paytel1 + paytel2;
+	document.getElementById('pay_Tel').value = paytelmix;
+	alert(paytelmix + 2);
+	console.log(paytelmix);
+	
+	const payemail1 = document.getElementById('mail1').value;
+	const payemail2 = document.getElementById('mail2').value;
+	const payemail = mail1 + '@' + mail2;
+	document.getElementById('pay_Email').value = payemail;
+	alert(payemail + 3);
+	console.log(payemail);
+	
+	document.getElementById('pay_Deliverymemo').value=document.getElementById('dm').value;
+	
+		if(document.getElementById('Name1').value == "") {
 			alert("받으시는 분의 이름을 입력해주세요.");
-			document.getElementById('Name').focus();
+			document.getElementById('Name1').focus();
 		} else if(document.getElementById('postcode').value == "") {
 			alert("주소를 입력해주세요.");
 		} else if(document.getElementById('tel').value == "") {
@@ -462,20 +497,11 @@ function submit() {
 		
 		
 		// 구매동의 체크박스
-			// 주소
-			var address1 = document.getElementById('postcode').value;
-			var address2 = document.getElementById('raddr1').value;
-			var address3 = document.getElementById('raddr2').value;
-			var address = address1 + address2 + address3;
-			document.getElementById('Ad').value=address;
 			
-			const payname = document.getElementById('Name').value;
-			document.getElementById('Pay_Name').value = payname;
-			const paytel = document.getElementById('Name').value;
-			document.getElementById('Pay_Name').value = payname;
-			const payname = document.getElementById('Name').value;
-			document.getElementById('Pay_Name').value = payname;
 	
+			
+			
+			
 	
 var check = 0;
 var allcheck = $("input:checkbox[id='list0']").length;
@@ -544,12 +570,7 @@ function checkdelete() {
 	document.getElementById('postcode').value = lastpost;
 	document.getElementById('raddr1').value = firstpost;
 	
-	// 전화번호
-	var tel = '${fn:substring(Member.m_Tel,0,3) }';
-	var tel1 = '${fn:substring(Member.m_Tel,3,7) }';
-	var tel2 = '${fn:substring(Member.m_Tel,7,11) }';
 	
-	document.getElementById('pay_Tel').value = '${tel tel1 tel2}'
 	// 이메일
 	
 	var email = '${Member.m_Id }';
@@ -564,13 +585,18 @@ function checkdelete() {
 	var mail2 = document.getElementById('mail2').value;
 	console.log(mail1 + mail2);
 	
+	// 전화번호
+	var tel = '${fn:substring(Member.m_Tel,0,3) }';
+	var tel1 = '${fn:substring(Member.m_Tel,3,7) }';
+	var tel2 = '${fn:substring(Member.m_Tel,7,11) }';
+	
 	$(document).ready(function(){
 		var name = '${Member.m_Name }';
 		var empty = '';
 		$("input:radio[id=sameaddr]").prop("checked", true); // 사용자동일에 체크되어있음
 		if($("input:radio[id=sameaddr]").is(":checked")) {       // 사용자동일에 체크되어있으면 실행
 			$("input:radio[id=otheraddr]").prop("checked", false);  // 새로운배송지에 체크 해제
-			$('#Name').val(name);       $('#Name').prop('disabled', true);
+			$('#Name1').val(name);       $('#Name1').prop('disabled', true);
 			$('#postcode').val(lastpost); $('#postcode').prop('disabled', true);  
 			$('#raddr1').val(firstpost);  $('#raddr1').prop('disabled', true);
 			$('#raddr2').val(firstpost);  $('#raddr2').prop('disabled', true);
@@ -579,6 +605,7 @@ function checkdelete() {
 			$('#tel2').val(tel2);		  $('#tel2').prop('disabled', true);
 			$('#mail1').val(mail1);  	  $('#mail1').prop('disabled', true);
 			$('#mail2').val(mail2);		  $('#mail2').prop('disabled', true);
+			$('#dm').val(empty);		  $('#dm').prop('disabled', false); 		$('#memo option:eq(0)').prop('selected', true);
 			$('#mail').hide();
 			$('#zipcode').hide();
 			console.log(name);
@@ -591,7 +618,7 @@ function checkdelete() {
 		 var empty = '';
 	      $("input:radio[id=otheraddr]").click(function(){
 	    	  $("input:radio[id=sameaddr]").prop("checked", false);
-	    	  $('#Name').val(empty);     $('#Name').prop('disabled', false);
+	    	  $('#Name1').val(empty);     $('#Name1').prop('disabled', false);
 	    	  $('#postcode').val(empty); $('#postcode').prop('disabled', true);
 			  $('#raddr1').val(empty);	 $('#raddr1').prop('disabled', true);
 			  $('#raddr2').val(empty);	 $('#raddr2').prop('disabled', false);
@@ -600,7 +627,8 @@ function checkdelete() {
 			  $('#tel2').val(empty);	 $('#tel2').prop('disabled', false);
 			  $('#mail1').val(empty);	 $('#mail1').prop('disabled', false);
 			  $('#mail2').val(empty);	 $('#mail2').prop('disabled', false);
-			  $("#mail").show();		
+			  $('#dm').val(empty);		 $('#dm').prop('disabled', false); 		$('#memo option:eq(0)').prop('selected', true);
+			  $("#mail").show();		 
 			  $('#zipcode').show();		
 	    	  console.log(empty + "empty");
 	    	  
@@ -621,7 +649,7 @@ function checkdelete() {
 	    		 $("#mail option:eq(10)").prop("selected", true);
 	    		  
 	    	  });
-	    	  $("#pay_Deliverymemo").on("keypress", function() {
+	    	  $("#dm").on("keypress", function() {
 		    		 $("#memo option:eq(6)").prop("selected", true);
 	    	  });
 	    	});
@@ -629,9 +657,10 @@ function checkdelete() {
 	// 사용자 동일에 체크할 경우
 	 $(function(){
 		 var name = '${Member.m_Name }';
+		 var empty = '';
 	      $("input:radio[id=sameaddr]").click(function(){
 	    	  $("input:radio[id=otheraddr]").prop("checked", false);
-	    	  $('#Name').val(name);          $('#Name').prop('disabled', true);
+	    	  $('#Name1').val(name);          $('#Name1').prop('disabled', true);
 	    	  $('#postcode').val(lastpost);	 $('#postcode').prop('disabled', true);
 			  $('#raddr1').val(firstpost);	 $('#raddr1').prop('disabled', true);
 			  $('#raddr2').val(firstpost);	 $('#raddr2').prop('disabled', true);
@@ -640,11 +669,12 @@ function checkdelete() {
 			  $('#tel2').val(tel2);			 $('#tel2').prop('disabled', true);
 			  $('#mail1').val(mail1);		 $('#mail1').prop('disabled', true);
 			  $('#mail2').val(mail2);		 $('#mail2').prop('disabled', true);
+			  $('#dm').val(empty);		 $('#dm').prop('disabled', false); 		$('#memo option:eq(0)').prop('selected', true);
 			  $("#mail").hide();
 			  $('#zipcode').hide();
 	    	  console.log(name);
 	      });
-	      $("#pay_Deliverymemo").on("keypress", function() {
+	      $("#dm").on("keypress", function() {
 	    		 $("#memo option:eq(6)").prop("selected", true);
 	 	  });
 	});
@@ -653,20 +683,19 @@ function checkdelete() {
 	// 셀렉트 박스 배송메시지
 	$("#memo").on("change", function() {
 	    var $select = $(this);
-	    $("#pay_Deliverymemo").val(function(i, val) {
+	    $("#dm").val(function(i, val) {
 	        return val = $select.val();
 	    });
 	    if ($select.val() == "") {
-		  	$("#pay_Deliverymemo").prop("disabled", false);
+		  	$("#dm").prop("disabled", false);
 		  	} else {
-		  	$("#pay_Deliverymemo").prop("disabled", true);	
+		  	$("#dm").prop("disabled", true);	
 		  	}
 	});
 	
 	// 배송메시지 id값 dm에다 전달
 	function memo1(){
-		document.getElementById('pay_Deliverymemo').value=document.getElementById('memo').value;
-		document.getElementById('dm').value=document.getElementById('pay_Deliverymemo').value;
+		document.getElementById('dm').value=document.getElementById('memo').value;
 		
 	}
 	

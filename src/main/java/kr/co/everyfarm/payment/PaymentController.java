@@ -133,7 +133,20 @@ public class PaymentController {
 	      PaymentDAO paydao = sqlSessionTemplate.getMapper(PaymentDAO.class);
 	      payInformationSave.clear();
 	      int totalprice=0;
+	      String payaddress = PaymentBean.getPaymentbeanList().get(0).getPay_Address();
+	      String payname = PaymentBean.getPaymentbeanList().get(0).getPay_Name();
+	      String paytel = PaymentBean.getPaymentbeanList().get(0).getPay_Tel();
+	      String payemail = PaymentBean.getPaymentbeanList().get(0).getPay_Email();
+	      String paydeliverymemo = PaymentBean.getPaymentbeanList().get(0).getPay_Deliverymemo();
+	      
+	      
 	      for(int i = 0; i < PaymentBean.getPaymentbeanList().size(); i++) {
+	    	  PaymentBean.getPaymentbeanList().get(i).setPay_Address(payaddress);
+	    	  PaymentBean.getPaymentbeanList().get(i).setPay_Name(payname);
+	    	  PaymentBean.getPaymentbeanList().get(i).setPay_Tel(paytel);
+	    	  PaymentBean.getPaymentbeanList().get(i).setPay_Email(payemail);
+	    	  PaymentBean.getPaymentbeanList().get(i).setPay_Deliverymemo(paydeliverymemo);
+	    	  
 	         payInformationSave.add(PaymentBean.getPaymentbeanList().get(i));
 	         System.out.println(PaymentBean.getPaymentbeanList().get(i));
 	         int price = PaymentBean.getPaymentbeanList().get(i).getPay_Totalprice();
