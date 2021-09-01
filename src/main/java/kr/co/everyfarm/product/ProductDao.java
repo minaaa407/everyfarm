@@ -25,7 +25,9 @@ public interface ProductDao {
 	public int updateaccept(ProductBean product);
 	public int viewpno(int p_No);
 	public int updateview(ProductBean product);
+	
 
+	List<ProductBean> viewList();
 	
 	
 	public ProductBean productinfo(String p_No);

@@ -88,7 +88,7 @@
 		
 		<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="maxUploadSize" value="100000" />
+		<beans:property name="maxUploadSize" value="10000000" />
 	</beans:bean>
 
 </beans:beans>

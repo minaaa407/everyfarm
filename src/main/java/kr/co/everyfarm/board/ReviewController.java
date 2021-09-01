@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +19,15 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.everyfarm.farmer.FarmerBean;
+import kr.co.everyfarm.farmer.FarmerDAO;
+import kr.co.everyfarm.payment.PaymentBean;
+import kr.co.everyfarm.payment.PaymentDAO;
 import kr.co.everyfarm.user.MemberBean;
 
 @Controller
@@ -39,14 +47,35 @@ public class ReviewController {
 		
 	}
 	@RequestMapping("/reviewWrite")
-	public String getReviewWrite(HttpSession session) {
+	public String getReviewWrite(HttpSession session, PaymentBean paymentbean,Model model, FarmerBean farmerBean) {
+		MemberBean member = (MemberBean) session.getAttribute("member");
+		String m_Id = member.getM_Id();
+		
+		PaymentDAO pDao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		List<PaymentBean> myPay = pDao.mypaylist(m_Id);
+		model.addAttribute("myPayList", myPay);
 		return "board/reviewWrite";
 	}
 	@RequestMapping(value = "/reviewInsert", method = RequestMethod.POST)
-	public String Reviewinsert(ReviewBean reviewBean){
+	public String Reviewinsert(ReviewBean reviewBean,@RequestParam("rev_Rate")Float rev_Rate,@RequestParam("pay_No")Float pay_No,FarmerBean farmerBean){
+	
+	Map<Float, Object> map = new HashMap<>();
+	map.put(rev_Rate, rev_Rate);
+	map.put(pay_No, Math.round(pay_No));
+	FarmerDAO fdao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 	ReviewDAO dao = sqlSessionTemplate.getMapper(ReviewDAO.class);
+	
+	fdao.myRate(farmerBean);
 	int n = dao.insert(reviewBean);
 	return "redirect:/reviewList";
+	}
+	
+	@RequestMapping(value = "/replyWrite", method = RequestMethod.POST)
+	public String Replyinsert(ReviewReplyBean reviewReplyBean) {
+		ReviewDAO rdao = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		rdao.replyInsert(reviewReplyBean);
+		
+		return "redirect:/reviewDetail?rev_No="+reviewReplyBean.getRev_No();
 	}
 	
 	@RequestMapping(value = "/reviewUpdate", method = RequestMethod.GET)
@@ -77,11 +106,14 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("/reviewDetail")
-	public String reviewDetail(ReviewBean reviewBean,Model model) {
-		
+	public String reviewDetail(ReviewBean reviewBean,ReviewReplyBean reviewReplyBean,Model model,@RequestParam("rev_No") int rev_No) {
 		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		revDAO.ReadCount(reviewBean);
+		
+		List<ReviewReplyBean> list = revDAO.reply(rev_No);
+		System.out.println(rev_No);
 		ReviewBean revVO = revDAO.revDetail(reviewBean);
+		model.addAttribute("repList", list);
 		model.addAttribute("revList", revVO);
 		
 		return "board/reviewDetail";

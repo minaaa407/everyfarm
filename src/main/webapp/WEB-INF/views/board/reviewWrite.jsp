@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +25,70 @@
 <link rel="stylesheet" href="resources/review/style.css">
 
 
+<style type="text/css">
+/* 부트스트랩 자체 CSS때문에  th 위치 재 조정한거 삭제 X */
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	vertical-align: middle;
+}
+/* 제목  CSS*/
+.tit {
+	margin-top: 50px;
+}
+/* 작성 폼 CSS */
+.form- {
+	margin-top: 10px;
+	border-top: 1px solid #000;
+}
 
+th {
+	text-align: center;
+	padding-left: 30px;
+	font-size: 14px;
+	font-weight: normal;
+	background: #f8f8f8;
+	vertical-align: inherit;
+}
+
+td {
+	text-align: center;
+	background: white;
+}
+
+input {
+	padding: 0 0 0 5px;
+	background: white;
+}
+
+.btn {
+	color: #fff;
+	text-align: center;
+	border: 1px solid #231f20;
+	background: #231f20;
+	padding: 5px 10%;
+	transition: background, color 1s;
+}
+
+.btn:hover {
+	color: #000;
+	background: #fff;
+}
+
+.btn2 {
+	border-radius: 4.7px;
+	color: #000;
+	text-align: center;
+	border: 1px solid #231f20;
+	background: #fff;
+	padding: 5px 10%;
+	transition: background, color 1s;
+}
+.btn2:hover {
+	border-radius: 4.7px;
+	color: #fff;
+	background: #000;
+}
+</style>
 <title>EVERY FARM</title>
 </head>
 <body>
@@ -32,66 +96,84 @@
 
 	<div class="row">
 		<div class="col-md-2"></div>
-		<div class="col-md-8">
-			<h2 class="text-center">게시글 쓰기</h2>
-			<form action="/reviewInsert" method="post" id="frm">
+		<div class="col-md-8 tit">
+			<h3>구매후기</h3>
+			<div class="form-">
+				<form action="/reviewInsert" method="post" id="frm">
+					<input type="hidden" value="${member.m_Id}" class="form-control"
+						name="rev_Id" readonly>
+
+					<table class="table table-striped">
+						<colgroup>
+							<col width="15%">
+							<col width="50%">
+							<col width="15%">
+							<col width="*">
+						</colgroup>
+						<tr>
+							<th><div>작성자</div></th>
+							<td><input type="text" value="${member.m_Name}"
+								class="form-control" name="rev_Name" readonly></td>
+							<th><div>상품</div></th>
+							<td><select required="required" name="pay_No">
+									<option value="">상품번호를 선택해주세요.</option>
+									<c:forEach items="${myPayList}" var="mp">
+										<option><c:out value="${mp.pay_No}"></c:out></option>
+									</c:forEach>
+							</select></td>
+						</tr>
+						<tr>
+							<th><div>제목</div></th>
+							<td><input type="text" id="title" name="rev_Title"
+								class="form-control"></td>
+						</tr>
+						<tr>
+							<th><div>별점</div></th>
+							<td>
+								<fieldset class="rating">
+									<input type="radio" id="star5" name="rev_Rate" value="5"
+										readonly="readonly" /><label class="full" for="star5"></label>
+									<input type="radio" id="star4half" name="rev_Rate" value="4.5" /><label
+										class="half" for="star4half"></label> <input type="radio"
+										id="star4" name="rev_Rate" value="4" /><label class="full"
+										for="star4"></label> <input type="radio" id="star3half"
+										name="rev_Rate" value="3.5" /><label class="half"
+										for="star3half"></label> <input type="radio" id="star3"
+										name="rev_Rate" value="3" /><label class="full" for="star3"></label>
+									<input type="radio" id="star2half" name="rev_Rate" value="2.5" /><label
+										class="half" for="star2half"></label> <input type="radio"
+										id="star2" name="rev_Rate" value="2" /><label class="full"
+										for="star2"></label> <input type="radio" id="star1half"
+										name="rev_Rate" value="1.5" /><label class="half"
+										for="star1half"></label> <input type="radio" id="star1"
+										name="rev_Rate" value="1" /><label class="full" for="star1"></label>
+									<input type="radio" id="starhalf" name="rev_Rate" value="0.5" /><label
+										class="half" for="starhalf"></label>
+								</fieldset>
+							</td>
+						</tr>
 
 
-				<table class="table table-striped">
-					<tr>
-						<td>작성자</td>
-						<td><input type="text" value="${member.m_Name}"
-							class="form-control" name="rev_Name" readonly></td>
-						<td><input type="hidden" value="${member.m_Id}"
-							class="form-control" name="rev_Id" readonly></td>
-					</tr>
-					<tr>
-						<td>제목</td>
-						<td><input type="text" id="title" name="rev_Title"
-							class="form-control"></td>
-					</tr>
-					<tr>
-						<td>별점</td>
-						<td>
-							<fieldset class="rating">
-								<input type="radio" id="star5" name="rev_Rate" value="5"
-									readonly="readonly" /><label class="full" for="star5"></label>
-								<input type="radio" id="star4half" name="rev_Rate" value="4.5" /><label
-									class="half" for="star4half"></label> <input type="radio"
-									id="star4" name="rev_Rate" value="4" /><label class="full"
-									for="star4"></label> <input type="radio" id="star3half"
-									name="rev_Rate" value="3.5" /><label class="half"
-									for="star3half"></label> <input type="radio" id="star3"
-									name="rev_Rate" value="3" /><label class="full" for="star3"></label>
-								<input type="radio" id="star2half" name="rev_Rate" value="2.5" /><label
-									class="half" for="star2half"></label> <input type="radio"
-									id="star2" name="rev_Rate" value="2" /><label class="full"
-									for="star2"></label> <input type="radio" id="star1half"
-									name="rev_Rate" value="1.5" /><label class="half"
-									for="star1half"></label> <input type="radio" id="star1"
-									name="rev_Rate" value="1" /><label class="full" for="star1"></label>
-								<input type="radio" id="starhalf" name="rev_Rate" value="0.5" /><label
-									class="half" for="starhalf"></label>
-							</fieldset>
-						</td>
-					</tr>
+						<tr>
+							<th><div>내용</div></th>
+							<td colspan="3"><textarea rows="10" cols="30" id="ir1"
+									name="rev_Cont" style="width: 100%;"></textarea></td>
+						</tr>
+						<tr>
+							<th><div>파일</div></th>
+						</tr>
+						<tr>
 
+							<td colspan="2" class="text-center"><input type="submit"
+								id="save" value="확인" class="btn"> <input type="reset"
+								value="다시작성" class="btn">
+								<button type="button" class="btn2"
+									onclick="location.href='/reviewList'">게시글 목록</button></td>
+						</tr>
 
-					<tr>
-						<td>글내용</td>
-						<td> <textarea rows="10" cols="30" id="ir1" name="rev_Cont" style="width: 100%;"></textarea></td>
-					</tr>
-					<tr>
-
-						<td colspan="2" class="text-center"><input type="submit" id="save"
-							value="확인" class="btn btn-success"> <input type="reset"
-							value="다시작성" class="btn btn-warning">
-							<button type="button" class="btn btn-primary"
-								onclick="location.href='/reviewList'">게시글 목록</button></td>
-					</tr>
-
-				</table>
-			</form>
+					</table>
+				</form>
+			</div>
 		</div>
 	</div>
 	<script
@@ -112,6 +194,7 @@
 
 	<script type="text/javascript">
 		var oEditors = [];
+
 		$(function() {
 			nhn.husky.EZCreator.createInIFrame({
 				oAppRef : oEditors,
@@ -126,6 +209,7 @@
 					// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
 					bUseModeChanger : true,
 					fOnBeforeUnload : function() {
+
 					}
 				},
 				fOnAppLoad : function() {
@@ -135,14 +219,15 @@
 				},
 				fCreator : "createSEditor2"
 			});
-			
-			 //전송버튼
-		    $("#save").click(function(){
-		        //id가 smarteditor인 textarea에 에디터에서 대입
-		        obj.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
-		        //폼 submit
-		        $("#frm").submit();
-		    })
+
+			//전송버튼
+			$("#save").click(function() {
+				//id가 smarteditor인 textarea에 에디터에서 대입
+				obj.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+				//폼 submit
+				$("#frm").submit();
+			})
+
 		});
 	</script>
 	<!--  

@@ -61,7 +61,7 @@
 						session.setAttribute("state", state);
 					%>
 					<a href="<%=apiURL%>"><img height="50"
-						src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
+						src="/resources/img/naverlogin.png" /></a>
 
 					<div class="text-center p-t-1">
 						<a href="/findId" class="txt2">아이디 찾기</a> <span class="txt1-1">/</span>

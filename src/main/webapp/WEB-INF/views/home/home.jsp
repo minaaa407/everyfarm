@@ -46,18 +46,6 @@
 						<div class="col-md-6 text-center">
 							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
 						</div>
-						<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
-							<form action="#" class="searchform order-lg-last">
-								<div class="form-group d-flex">
-									<input type="text" class="form-control pl-3"
-										placeholder="Search">
-									<button type="submit" placeholder=""
-										class="form-control search">
-										<span class="fa fa-search"></span>
-									</button>
-								</div>
-							</form>
-						</div>
 						<div class="col-md-6 col-lg">
 							<select name="page" onchange="location.href=this.value">
 								<option value="#">홈페이지</option>
@@ -98,11 +86,9 @@
 					<ul class="navbar-nav m-auto">
 						<li class="nav-item active"><a href="index.jsp"
 							class="nav-link">Home</a></li>
-
 						<li class="nav-item"><a href="/productlist" class="nav-link">농장</a></li>
-
 						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="/qnalist/product" class="nav-link">Q&A</a></li>
+						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
 					</ul>
 				</div>
 			</div>
@@ -136,8 +122,8 @@
 		<div class="container">
 			<div class="row justify-content-center mb-5 pt-5">
 				<div class="col-md-7 heading-section text-center ftco-animate">
-					<span class="subheading">BEST FARMER</span>
-					<h2 class="mb-4">FARMER</h2>
+					<span class="subheading">FARMER</span>
+					<h2 class="mb-4">BEST FARMER</h2>
 				</div>
 			</div>
 			<div class="services-wrap px-4">
@@ -203,7 +189,7 @@
 					<div
 						class="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-end"
 						style="background-image: url(resources/index/images/about.jpg);">
-						<a href="https://vimeo.com/45830194"
+						<a href="https://www.youtube.com/watch?v=Vu1LCN8RcjU"
 							class="icon-video popup-vimeo d-flex justify-content-center align-items-center">
 							<span class="icon-play"></span>
 						</a>
@@ -213,35 +199,20 @@
 					<div class="row justify-content-start py-5">
 						<div class="col-md-12 heading-section ftco-animate">
 							<span class="subheading">Welcome to EVERY FARM</span>
-							<h2 class="mb-4">Welcome to EVERY FARM Company</h2>
-							<p>인기 농작물</p>
+							<h2 class="mb-4">BEST SEED</h2>
 							<div class="services-wrap">
-								<a href="#" class="services-list">배추
-									<div
-										class="btn-custom d-flex align-items-center justify-content-center">
-										<span class="ion-ios-arrow-round-forward"></span>
-									</div>
-								</a> <a href="#" class="services-list">마늘
-									<div
-										class="btn-custom d-flex align-items-center justify-content-center">
-										<span class="ion-ios-arrow-round-forward"></span>
-									</div>
-								</a> <a href="#" class="services-list">호박
-									<div
-										class="btn-custom d-flex align-items-center justify-content-center">
-										<span class="ion-ios-arrow-round-forward"></span>
-									</div>
-								</a> <a href="#" class="services-list">고구마
-									<div
-										class="btn-custom d-flex align-items-center justify-content-center">
-										<span class="ion-ios-arrow-round-forward"></span>
-									</div>
-								</a> <a href="#" class="services-list">벼
-									<div
-										class="btn-custom d-flex align-items-center justify-content-center">
-										<span class="ion-ios-arrow-round-forward"></span>
-									</div>
-								</a>
+								<c:choose>
+									<c:when test="${empty payView}">
+										<div>
+											<p class="services-list">상품이 존재하지 않습니다.</p>
+										</div>
+									</c:when>
+									<c:when test="${!empty payView}">
+										<c:forEach var="payView" items="${payView}">
+											<p class="services-list">${ payView.pay_Seed}</p>
+										</c:forEach>
+									</c:when>
+								</c:choose>
 							</div>
 						</div>
 					</div>
@@ -254,8 +225,8 @@
 		<div class="container">
 			<div class="row justify-content-center mb-5">
 				<div class="col-md-10 text-center heading-section ftco-animate">
-					<span class="subheading">BEST PRODUCT</span>
-					<h2 class="mb-4">배추</h2>
+					<span class="subheading">PRODUCT</span>
+					<h2 class="mb-4">BEST PRODUCT</h2>
 				</div>
 			</div>
 			<div class="row">
@@ -263,62 +234,25 @@
 					<div class="carousel-seasonal owl-carousel ftco-owl">
 						<div class="item">
 							<div class="wrap">
-								<div
-									class="seasonal img d-flex align-items-center justify-content-center"
-									style="background-image: url(resources/index/images/seasonal-1.jpg);">
-								</div>
-								<div class="text text-center px-4">
-									<h3>
-										<a href="#">5평 어쩌구</a>
-									</h3>
-									<p>Far far away, behind the word mountains, far from the
-										countries Vokalia and Consonantia, there live the blind texts.</p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="wrap">
-								<div
-									class="seasonal img d-flex align-items-center justify-content-center"
-									style="background-image: url(resources/index/images/seasonal-2.jpg);">
-								</div>
-								<div class="text text-center px-4">
-									<h3>
-										<a href="#">Summer</a>
-									</h3>
-									<p>Far far away, behind the word mountains, far from the
-										countries Vokalia and Consonantia, there live the blind texts.</p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="wrap">
-								<div
-									class="seasonal img d-flex align-items-center justify-content-center"
-									style="background-image: url(resources/index/images/seasonal-3.jpg);">
-								</div>
-								<div class="text text-center px-4">
-									<h3>
-										<a href="#">Winter</a>
-									</h3>
-									<p>Far far away, behind the word mountains, far from the
-										countries Vokalia and Consonantia, there live the blind texts.</p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="wrap">
-								<div
-									class="seasonal img d-flex align-items-center justify-content-center"
-									style="background-image: url(resources/index/images/seasonal-4.jpg);">
-								</div>
-								<div class="text text-center px-4">
-									<h3>
-										<a href="#">Fall</a>
-									</h3>
-									<p>Far far away, behind the word mountains, far from the
-										countries Vokalia and Consonantia, there live the blind texts.</p>
-								</div>
+								<c:choose>
+									<c:when test="${empty proView}">
+										<div>
+											<p align="center">상품이 존재하지 않습니다.</p>
+										</div>
+									</c:when>
+									<c:when test="${!empty proView}">
+										<c:forEach var="proView" items="${proView}">
+											<div
+												class="seasonal img d-flex align-items-center justify-content-center"
+												style="background-image: ${proView.p_Img};"></div>
+											<div class="text text-center px-4">
+												<h3>
+													<a href="/productdetail?productno=${proView.p_No}">${proView.p_Title}</a>
+												</h3>
+											</div>
+										</c:forEach>
+									</c:when>
+								</c:choose>
 							</div>
 						</div>
 					</div>
@@ -336,79 +270,34 @@
 			</div>
 			<div class="row d-flex">
 				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry justify-content-end">
-						<a href="blog-single.html" class="block-20"
-							style="background-image: url('resources/index/images/image_1.jpg');">
-						</a>
-						<div class="text p-4 float-right d-block">
-							<div class="topper d-flex align-items-center">
-								<div class="one py-2 pl-3 pr-1 align-self-stretch">
-									<span class="day">24</span>
-								</div>
-								<div class="two pl-0 pr-3 py-2 align-self-stretch">
-									<span class="yr">2020</span> <span class="mos">January</span>
-								</div>
+					<c:choose>
+						<c:when test="${empty revView}">
+							<div>
+								<p align="center">상품이 존재하지 않습니다.</p>
 							</div>
-							<h3 class="heading mb-0">
-								<a href="#">All you want to know about industrial laws</a>
-							</h3>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
-							<p>
-								<a href="#" class="btn btn-primary">Read more</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry justify-content-end">
-						<a href="blog-single.html" class="block-20"
-							style="background-image: url('resources/index/images/image_2.jpg');">
-						</a>
-						<div class="text p-4 float-right d-block">
-							<div class="topper d-flex align-items-center">
-								<div class="one py-2 pl-3 pr-1 align-self-stretch">
-									<span class="day">24</span>
+						</c:when>
+						<c:when test="${!empty revView}">
+							<c:forEach var="revView" items="${revView}">
+								<div class="blog-entry justify-content-end">
+
+									<a href="blog-single.html" class="block-20"
+										style="background-image: url('resources/index/images/image_1.jpg');">
+									</a>
+
+									<div class="text p-4 float-right d-block">
+										<h3 class="heading mb-0">
+											<a href="/reviewDetail?rev_No=${revView.rev_No}">${revView.rev_Title}</a>
+										</h3>
+										<p>${revView.rev_Name}</p>
+										<p>
+											<a href="/reviewDetail?rev_No=${revView.rev_No}"
+												class="btn btn-primary">Read more</a>
+										</p>
+									</div>
 								</div>
-								<div class="two pl-0 pr-3 py-2 align-self-stretch">
-									<span class="yr">2020</span> <span class="mos">January</span>
-								</div>
-							</div>
-							<h3 class="heading mb-0">
-								<a href="#">All you want to know about industrial laws</a>
-							</h3>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
-							<p>
-								<a href="#" class="btn btn-primary">Read more</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry justify-content-end">
-						<a href="blog-single.html" class="block-20"
-							style="background-image: url('resources/index/images/image_3.jpg');">
-						</a>
-						<div class="text p-4 float-right d-block">
-							<div class="topper d-flex align-items-center">
-								<div class="one py-2 pl-3 pr-1 align-self-stretch">
-									<span class="day">24</span>
-								</div>
-								<div class="two pl-0 pr-3 py-2 align-self-stretch">
-									<span class="yr">2020</span> <span class="mos">January</span>
-								</div>
-							</div>
-							<h3 class="heading mb-0">
-								<a href="#">All you want to know about industrial laws</a>
-							</h3>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
-							<p>
-								<a href="#" class="btn btn-primary">Read more</a>
-							</p>
-						</div>
-					</div>
+							</c:forEach>
+						</c:when>
+					</c:choose>
 				</div>
 			</div>
 		</div>
