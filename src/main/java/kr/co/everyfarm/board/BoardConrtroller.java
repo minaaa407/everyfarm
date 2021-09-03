@@ -118,46 +118,10 @@ public class BoardConrtroller {
 
 	
 	
-//	@RequestMapping("/qnawrite/{var}")
-//	public String getQnAWrite(Model model, HttpServletRequest request) {
-//		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-//		return "board/qnawrite";
-//	}
 
-//	import org.hibernate.validator.constraints.NotEmpty; @NotEmpty(message="필수 입력 항목입니다.")
-/*	@RequestMapping(value = "/qnainsert", method = RequestMethod.POST)
-	@ResponseBody
-	public String getQnAInsert(@ModelAttribute @Valid QnABean qna, Model model, HttpServletRequest request, HttpServletResponse response,
-			BindingResult result) throws IOException {
-		if(result.hasErrors()) {
-			return "board/qnawrite";
-		}
-		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-		response.setContentType("text/html;charset=UTF-8");
-		System.out.println("BoardConrtroller insert : "+qna.getQ_Title());
-		System.out.println("BoardConrtroller insert : "+qna.getQ_Id());
-		
-//		MultipartFile img = qna.getQ_Img();
-//		if(!img.isEmpty()) {
-//			String fileName = img.getOriginalFilename();
-//			img.transferTo(new File("D:/upload/" + fileName));
-//		}
-		
-		int n = dao.insert(qna);
-		if(n>0) {
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('글이 등록되었습니다.'); location.href='/qnalist';</script>");
-			out.close();
-		}else {
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('글 등록에 실패하였습니다.'); location.href='/qnalist';</script>");
-			out.close();
-		}
-		return "redirect:/qnalist";
 		 
 		 
-	}*/
+
 	
 
 	
@@ -324,73 +288,6 @@ public class BoardConrtroller {
 
 
 	
-	
-//	@RequestMapping(value = "/qnawriteadmin")
-//	public String getQnAadminWrite(@ModelAttribute QnABean qna, Model model, HttpServletRequest request) {
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		int adminwrite = dao.adminWrite(qna);
-//		String referer = request.getHeader("Referer");
-//		if(referer.contains("search")) {
-//			return "redirect:/qnalistadmin";
-//		}else {
-//			return "redirect:"+ referer;
-//		}
-//	}
-//	
-//	@RequestMapping(value = "/qnaWriteUpdateAdmin")
-//	public String getQnAadminWriteUpdate(@ModelAttribute QnABean qna, Model model, HttpServletRequest request) {
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		int adminwriteupdate = dao.adminWrite(qna);
-//		String referer = request.getHeader("Referer");
-//		if(referer.contains("search")) {
-//			return "redirect:/qnalistadmin"; 
-//		}else {
-//			return "redirect:"+ referer;
-//		}
-//	}
-//	
-//	@RequestMapping(value = "/qnawriteOadmin")
-//	public String getQnAWriteO(Model model, HttpServletRequest request) {
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		List<QnABean> qnalistadmin = dao.adminWriteO();
-//		model.addAttribute("qnalistadmin", qnalistadmin);
-//		return "board/qnaAdminList";
-//	}
-//	
-//	@RequestMapping(value = "/qnawriteXadmin")
-//	public String getQnAWriteX(Model model, HttpServletRequest request) {
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		List<QnABean> qnalistadmin = dao.adminWriteX();
-//		model.addAttribute("qnalistadmin", qnalistadmin);
-//		return "board/qnaAdminList";
-//	}
-	
-	
-//	@RequestMapping(value = "/qnalist")
-//	public String boardddList(PagingBean vo, Model model, HttpServletRequest request
-//			, @RequestParam(value="nowPage", required=false)String nowPage
-//			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
-//		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		
-//		
-//		int total = dao.countBoard();
-//		if (nowPage == null && cntPerPage == null) {
-//			nowPage = "1";
-//			cntPerPage = "10";
-//		} else if (nowPage == null) {
-//			nowPage = "1";
-//		} else if (cntPerPage == null) { 
-//			cntPerPage = "10";
-//		}
-//		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-//		model.addAttribute("paging", vo);
-//		/* model.addAttribute("viewAll", boardService.selectBoard(vo)); */
-//		List<QnABean> productQlist = dao.selectBoard(vo);
-//		System.out.println("productQlist : " + productQlist);
-//		model.addAttribute("productQlist", productQlist);
-//		return "board/qnalist";
-//	}
 	
 	@RequestMapping(value = "/searchqna")
 	public String getQnASearch(PagingBean vo, @RequestParam String searchBox, @RequestParam String searchText, 
