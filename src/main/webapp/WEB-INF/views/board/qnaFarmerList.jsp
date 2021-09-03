@@ -40,13 +40,16 @@
                       <div class="col-lg-10 col-md-10">
                       	<c:choose>   
                  			<c:when test = "${empty productQlist}">
+                 				<div class="breadcrumb__text">
+                                	<h2><span>QnA </span>게시판</h2>
+                           		</div>
                  			</c:when>
                  			<c:when test = "${productQlist != null}">
                       
                          	<div class="breadcrumb__text">
-                                <h2><span>상품 문의 </span>게시판</h2>
+                                <h2><span>QnA </span>게시판</h2>
                                 <div class="breadcrumb__option">
-                                   <form action="searchqna" method="post">
+                                   <form action="farmerQnasearch" method="post">
          								<select name="searchBox"> <!-- style="padding: 7px 11px;" -->
               								<option value="all">전체 검색</option>
               								<option value="pno">상품번호</option>
@@ -62,6 +65,7 @@
               								<option value="o">답글 O</option>
              								<option value="x">답글 X</option>
             							</select> 
+            							<button type="submit" class="btn btn-primary">검색</button>
             						</form>
         							  <!-- <a href="#">Home</a>
                                    	  <span>Recipes</span> -->
@@ -86,7 +90,11 @@
                      </c:choose> --%>
                      
            <%--  <c:when test = "${empty qnamylist}">   --%>            
-                       
+				<c:choose>   
+                 	<c:when test = "${empty productQlist}">
+                 		<div>내역이 없습니다.</div>
+                 	</c:when>
+                 	<c:when test = "${productQlist != null}">
                       <c:forEach items="${productQlist }" var="q">
                       	<c:set var="i" value="${i+1}"/> 
                             <div class="categories__list__post__item">
@@ -152,7 +160,7 @@
                            									<input type="text" name="q_Pid" value="<%=farmer.getF_Id()%>" readonly>
                             								<input type="hidden" name="q_No" value="${q.q_No}">
                         								</div>
-                        									<textarea id="q_magcontent" name="q_Magcontent">${q.q_Magcontent}</textarea>
+                        									<textarea required id="q_magcontent" name="q_Magcontent">${q.q_Magcontent}</textarea>
                												<button type="submit" class="site-btn">답글 수정하기</button>
                          	
                    									</form>
@@ -169,7 +177,7 @@
                            							<input type="text" name="q_Pid" value="<%=farmer.getF_Id()%>" readonly>
                                						<input type="hidden" name="q_No" value="${q.q_No}">
                                					</div>
-                        	   						<textarea id="q_magcontent" name="q_Magcontent"></textarea>
+                        	   						<textarea required id="q_magcontent" name="q_Magcontent"></textarea>
                				   						<button type="submit" class="site-btn">답글 등록하기</button>
 					                         </form>
 								      </div> 
@@ -183,13 +191,49 @@
                    
                    <br>
               
-                   </c:forEach>
+                   		</c:forEach>
+                   	  </c:when>
+                   </c:choose>
   				</div>
               </div>
-            </div>
-          </div>
-       </div>
-   </section>
+			</div>
+		</div>
+	</div>
+</section>
+   
+   <div style="display: block; text-align: center;">		
+		<c:choose>
+   			<c:when test="${paging.startPage != 1 && paging.q_Content != null}">	
+   				<a href="/farmerQnasearch?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}"">&lt;</a>
+   			</c:when>
+			<c:when test="${paging.startPage != 1 && empty paging.q_Content}">	
+				<a href="/farmerQnaList?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
+			</c:when>
+		</c:choose>
+		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+			<c:choose>
+				<c:when test="${p == paging.nowPage }">
+					<b>${p }</b>
+				</c:when>
+				<c:when test="${p != paging.nowPage && paging.q_Content != null}">
+					<a href="/farmerQnasearch?nowPage=${p }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}">${p }</a>
+				</c:when>
+				<c:when test="${p != paging.nowPage && empty paging.q_Content}">
+					<a href="/farmerQnaList?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a>
+				</c:when>
+			</c:choose>
+		</c:forEach>
+		<c:choose>
+			<c:when test="${paging.endPage != paging.lastPage && paging.q_Content != null}">
+				<a href="/farmerQnasearch?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}">&gt;</a>
+			</c:when>
+			<c:when test="${paging.endPage != paging.lastPage && empty paging.q_Content}">
+		<%-- <c:if test="${paging.endPage != paging.lastPage}"> --%>
+				<a href="/farmerQnaList?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&gt;</a>
+			</c:when>
+		</c:choose>
+		
+	</div>
    
 <script type="text/javascript">
 

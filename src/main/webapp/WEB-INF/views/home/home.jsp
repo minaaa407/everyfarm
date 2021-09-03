@@ -30,6 +30,11 @@
 <link rel="stylesheet" href="resources/index/css/flaticon.css">
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+	crossorigin="anonymous">
 </head>
 <body>
 	<!-- Start Header -->
@@ -52,6 +57,14 @@
 									</button>
 								</div>
 							</form>
+						</div>
+						<div class="col-md-6 col-lg">
+							<select name="page" onchange="location.href=this.value">
+								<option value="#">홈페이지</option>
+								<option value="/home">USER</option>
+								<option value="/farmerLogin">FARMER</option>
+								<option value="/adminLogin">ADMIN</option>
+							</select>
 						</div>
 						<div>
 							<c:choose>
@@ -85,12 +98,11 @@
 					<ul class="navbar-nav m-auto">
 						<li class="nav-item active"><a href="index.jsp"
 							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="services.html" class="nav-link">농장
-								등록</a></li>
+
+						<li class="nav-item"><a href="/productlist" class="nav-link">농장</a></li>
+
 						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="blog.html" class="nav-link">Q&A</a></li>
-						<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+						<li class="nav-item"><a href="/qnalist/product" class="nav-link">Q&A</a></li>
 					</ul>
 				</div>
 			</div>
@@ -110,9 +122,9 @@
 				<div class="col-md-6 ftco-animate">
 					<h2 class="subheading">Welcome to EVERY FARM</h2>
 					<h1>농장 신청</h1>
-					<p class="mb-4">Let us work on your yard</p>
+					<p class="mb-4">내 손안의 농장</p>
 					<p>
-						<a href="#" class="btn btn-primary mr-md-4 py-2 px-4">Learn
+						<a href="/productlist" class="btn btn-primary mr-md-4 py-2 px-4">Learn
 							more <span class="ion-ios-arrow-forward"></span>
 						</a>
 					</p>
@@ -408,18 +420,18 @@
 				<div class="col-md-6 col-lg">
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="logo">
-							<a href="#">EVERY <span>FARM</span></a>
+							<a href="/home">EVERY <span>FARM</span></a>
 						</h2>
 						<p>Far far away, behind the word mountains, far from the
 							countries Vokalia and Consonantia, there live the blind texts.</p>
 						<ul
 							class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-instagram"></span></a></li>
+							<li class="ftco-animate"><a href="/home"><span
+									class="fas fa-users"></span></a></li>
+							<li class="ftco-animate"><a href="/farmerLogin"><span
+									class="fas fa-tractor"></span></a></li>
+							<li class="ftco-animate"><a href="/adminLogin"><span
+									class="fas fa-users-cog"></span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -427,16 +439,12 @@
 					<div class="ftco-footer-widget mb-4 ml-md-5">
 						<h2 class="ftco-heading-2">Services</h2>
 						<ul class="list-unstyled">
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Garden Care</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Lawn mowing</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Lawn Care</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Gutter Cleaning</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>New Lawn Installation</a></li>
+							<li><a href="/productlist" class="py-1 d-block"><span
+									class="ion-ios-arrow-forward mr-3"></span>농 장 목 록</a></li>
+							<li><a href="/reviewList" class="py-1 d-block"><span
+									class="ion-ios-arrow-forward mr-3"></span>REVIEW</a></li>
+							<li><a href="/qnalist/product" class="py-1 d-block"><span
+									class="ion-ios-arrow-forward mr-3"></span>Q & A</a></li>
 						</ul>
 					</div>
 				</div>
@@ -446,29 +454,12 @@
 						<div class="block-23 mb-3">
 							<ul>
 								<li><span class="icon icon-map-marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
-								<li><a href="#"><span class="icon icon-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
-								<li><a href="#"><span class="icon icon-envelope"></span><span
-										class="text">info@yourdomain.com</span></a></li>
+									class="text">서울특별시 금천구 가산동 426-5 월드 메르디앙 벤처 센터 2 차 410 호</span></li>
+								<li><a href="tel://1234567890"><span
+										class="icon icon-phone"></span><span class="text">010-1234-5678</span></a></li>
+								<li><a href="mailto:alsdk9458@gmail.com"><span
+										class="icon icon-envelope"></span><span class="text">alsdk9458@gmail.com</span></a></li>
 							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Business Hours</h2>
-						<div class="opening-hours">
-							<h4>Opening Days:</h4>
-							<p class="pl-3">
-								<span>Monday â Friday : 9am to 20 pm</span> <span>Saturday
-									: 9am to 17 pm</span>
-							</p>
-							<h4>Vacations:</h4>
-							<p class="pl-3">
-								<span>All Sunday Days</span> <span>All Official Holidays</span>
-							</p>
 						</div>
 					</div>
 				</div>
@@ -502,7 +493,6 @@
 			<circle class="path" cx="24" cy="24" r="22" fill="none"
 				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
 	</div>
-
 
 	<script src="resources/index/js/jquery.min.js"></script>
 	<script src="resources/index/js/jquery-migrate-3.0.1.min.js"></script>

@@ -6,7 +6,7 @@
 <mapper namespace="kr.co.everyfarm.basket.BasketDAO">
 
 	<select id="listAll" parameterType="kr.co.everyfarm.user.MemberBean" resultType="kr.co.everyfarm.basket.BasketBean">
-		select basket.b_id, basket.b_no, basket.b_pno, basket.b_Land, product.p_Img, product.p_Title, product.p_Manpay, product.p_Landprice, product.p_Landavailable, product.p_Accept, basket.b_seed, basket.b_Totalprice 
+		select basket.b_id, basket.b_no, basket.b_pno, basket.b_Land, product.p_Img, product.p_Title, product.p_Manpay, product.p_Landprice, product.p_Accept, basket.b_seed, basket.b_Totalprice 
 		from basket, product where basket.b_Id=#{m_Id} and basket.b_pno=product.p_no order by b_no desc
 	</select>
 
@@ -18,16 +18,8 @@
 	    SELECT m_id, m_name, m_tel, m_addr FROM member where m_id = #{m_Id};
 	</select>
 	
-<!-- 	<select id ="getAvailable" parameterType="java.util.List" resultType="kr.co.everyfarm.basket.BasketBean">
-	    SELECT p_Title, p_Landavailable, p_no as b_pno from product where p_No IN (
-		  <foreach collection="list" item="basketPnoTotal" index="index" separator=",">
-            ${basketPnoTotal}
-          </foreach>
-          )
-	</select> -->
-	
 	<select id ="getAvailable" parameterType="int" resultType="kr.co.everyfarm.basket.BasketBean">
-	    SELECT p_Title, p_Landavailable, p_no as b_pno from product where p_No=#{pno}
+	    SELECT p_Title, p_no as b_pno from product where p_No=#{pno}
 	</select>
 	
 	<select id="getSeed" parameterType="java.util.ArrayList" resultType="hashmap">
@@ -37,14 +29,6 @@
           </foreach>
 		) 
 	</select>
-	
-<!-- 	<select id ="selectBasketLandTotal" parameterType="int" resultType="int">
-	    SELECT sum(b_Land) FROM basket where b_pno = #{pno}
-	</select>
-	
-	<select id ="selectProductAble" parameterType="int" resultType="int">
-	    SELECT p_Landavailable FROM product where p_No = #{pno}
-	</select> -->
 	
 	<update id="update" parameterType="kr.co.everyfarm.basket.BasketBean">
 		update basket set b_land=#{b_Land}, b_totalprice=#{b_Totalprice}
@@ -69,29 +53,7 @@
 	</delete>
 	
 	<delete id="deleteZeroBasket" parameterType="kr.co.everyfarm.user.MemberBean" >
-		delete from basket where b_Id=#{m_Id} and b_pno in (select p_no from product where p_Landavailable=0 or p_Accept='N');
+		delete from basket where b_Id=#{m_Id} and b_pno in (select p_no from product where p_Accept='N');
 	</delete>
-	
-<!-- 	<select id="pnoList" parameterType="kr.co.everyfarm.user.MemberVO, " resultType="String">
-		select b_Seedcount from basket where b_Id=#{m_Id} and b_Pno=#{}
-	</select> -->
 
-	<!-- <insert id="insert" parameterType="org.sp.mybatis.Emp">
-		insert into emp2 (empno, ename, deptno, job, sal)
-		values (#{empno}, #{ename}, #{deptno},	#{job}, #{sal})
-	</insert>
-
-	<select id="info" resultType="org.sp.mybatis.Emp">
-		select * from emp2 
-		where empno=#{empno}
-	</select>
-
-	<update id="update" parameterType="org.sp.mybatis.Emp">
-		update emp2 set	deptno=#{deptno}, sal=#{sal}
-		where empno=#{empno}
-	</update>
-
-	 -->
-	
-	
 </mapper>

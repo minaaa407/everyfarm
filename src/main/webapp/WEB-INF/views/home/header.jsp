@@ -18,18 +18,18 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="resources/index/css/animate.css">
+<link rel="stylesheet" href="/resources/index/css/animate.css">
 
-<link rel="stylesheet" href="resources/index/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/resources/index/css/owl.carousel.min.css">
 <link rel="stylesheet"
 	href="resources/index/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="resources/index/css/magnific-popup.css">
+<link rel="stylesheet" href="/resources/index/css/magnific-popup.css">
 
-<link rel="stylesheet" href="resources/index/css/ionicons.min.css">
+<link rel="stylesheet" href="/resources/index/css/ionicons.min.css">
 
-<link rel="stylesheet" href="resources/index/css/flaticon.css">
-<link rel="stylesheet" href="resources/index/css/icomoon.css">
-<link rel="stylesheet" href="resources/index/css/style.css">
+<link rel="stylesheet" href="/resources/index/css/flaticon.css">
+<link rel="stylesheet" href="/resources/index/css/icomoon.css">
+<link rel="stylesheet" href="/resources/index/css/style.css">
 </head>
 <body>
 	<!-- Start Header -->
@@ -108,20 +108,20 @@
 	</div>
 
 
-	<script src="resources/index/js/jquery.min.js"></script>
-	<script src="resources/index/js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="resources/index/js/popper.min.js"></script>
-	<script src="resources/index/js/bootstrap.min.js"></script>
-	<script src="resources/index/js/jquery.easing.1.3.js"></script>
-	<script src="resources/index/js/jquery.waypoints.min.js"></script>
-	<script src="resources/index/js/jquery.stellar.min.js"></script>
-	<script src="resources/index/js/owl.carousel.min.js"></script>
-	<script src="resources/index/js/jquery.magnific-popup.min.js"></script>
-	<script src="resources/index/js/scrollax.min.js"></script>
+	<script src="/resources/index/js/jquery.min.js"></script>
+	<script src="/resources/index/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/resources/index/js/popper.min.js"></script>
+	<script src="/resources/index/js/bootstrap.min.js"></script>
+	<script src="/resources/index/js/jquery.easing.1.3.js"></script>
+	<script src="/resources/index/js/jquery.waypoints.min.js"></script>
+	<script src="/resources/index/js/jquery.stellar.min.js"></script>
+	<script src="/resources/index/js/owl.carousel.min.js"></script>
+	<script src="/resources/index/js/jquery.magnific-popup.min.js"></script>
+	<script src="/resources/index/js/scrollax.min.js"></script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="resources/index/js/google-map.js"></script>
-	<script src="resources/index/js/main.js"></script>
+	<script src="/resources/index/js/google-map.js"></script>
+	<script src="/resources/index/js/main.js"></script>
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async
