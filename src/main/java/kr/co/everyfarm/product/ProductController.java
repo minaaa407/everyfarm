@@ -210,6 +210,8 @@ public class ProductController {
 
 	}
 	
+	
+	
 	@RequestMapping(value = "/productdetailinsertqna")
 	@ResponseBody
 	public Map<String, Object> insertproductqna(@RequestParam("c_No") String c_No,

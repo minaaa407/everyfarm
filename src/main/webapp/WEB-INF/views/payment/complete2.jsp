@@ -53,44 +53,6 @@
 <%-- <footer>
 <jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </footer>	 --%>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<script>
-$(function(){
-	/* 	alert($("#pay_Name").val());
-		alert($("#pay_Email").val());
-		alert($("#pay_Totalprice").val());
-		alert($("#pay_Orderno").val()); */
-		$.ajax({
-			url : "/sendmessage2",
-			type : "POST",
-			dataType: "json", 
-			data : {
-				pay_Name : '권형준',
-				pay_Email : 'rjarorgudwns@naver.com',
-				pay_Totalprice : '1000',
-				pay_Orderno : '40'
-			},
-			success : function(result) {
-				if(result.error == false){
-				alert("해당아이디는 존재하지 않습니다.");
-				
-					location.href=result.url;
-				}else{
-					alert("인증번호를 메일로 전송했습니다.");
-					location.href="/paycomplete2";
-				}
-			},
-			error : function(a, b, c) {
-				//통신 실패시 발생하는 함수(콜백)
-				alert("a:" + a + "b:" + b + "c:" + c);
-			}
-		})
-})
-
-</script>
 	
 </body>
 </html>

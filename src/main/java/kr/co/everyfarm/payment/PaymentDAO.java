@@ -14,6 +14,7 @@ public interface PaymentDAO {
 	public List<PaymentBean> farmerpaylistserachpageing(PageBeen pagebeen);
 	public List<PaymentBean> farmerpaylistserachpageingcount(PageBeen pagebeen);
 
+	public List<PaymentBean> sendmessage(int pay_orderno);
 	
 	public int payinsert(PaymentBean payment);
 

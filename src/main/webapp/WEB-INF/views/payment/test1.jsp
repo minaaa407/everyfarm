@@ -14,6 +14,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	
 <script>
    	$(function(){
 		var IMP = window.IMP; // 생략가능
@@ -35,10 +37,11 @@
 			if ( rsp.success ) { // 성공시
 			      var msg = '결제가 완료되었습니다.';
 			      location.href = "/paycomplete";
+			      
 			   } else { // 실패시
 			      var msg = '결제에 실패하였습니다. 결제를 다시 진행해주세요.';
 			      alert(msg);
-			      location.href = "/payfail";
+			      location.href = "/payfailed";
 			   }
 			});
 		}); 
