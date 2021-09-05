@@ -2,6 +2,7 @@ package kr.co.everyfarm.payment;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -99,22 +100,6 @@ public class PaymentController {
 	}
 	
 	
-//	@RequestMapping(value = "/sendmessage2")
-//	@ResponseBody
-//	public Map<String, Object> insertproductqna(@RequestParam String pay_Name, @RequestParam String pay_Email,
-//			@RequestParam String pay_Totalprice, @RequestParam String pay_Orderno ){
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		
-//		System.out.println("111111111");
-//		return map;
-//	}
-	
-	@RequestMapping(value = "/paycomplete2", method = RequestMethod.GET)
-	public String paycomplete1() {
-		return "/payment/complete2";
-	}
-	
-	
 	// 결제 성공시 관련정보 이메일전송 
 		@RequestMapping(value = "/sendmessage2")
 		@ResponseBody
@@ -180,6 +165,9 @@ public class PaymentController {
 	
 				System.out.println(13);
 				map.put("error", true);
+				System.out.println("paycomplete  payInformationSave : " + payInformationSave);
+				payInformationSave.clear();
+				System.out.println("paycomplete  payInformationSave : " + payInformationSave);
 			}
 			return map;
 		}
@@ -219,7 +207,6 @@ public class PaymentController {
 	         returnUrl = "payment/complete";
 	      }
 	      
-	      payInformationSave.clear();
 	      System.out.println("paycomplete  payInformationSave : " + payInformationSave);
 	      System.out.println("-----페이컴플릿 끝-----");
 	      return returnUrl;
@@ -236,7 +223,7 @@ public class PaymentController {
 	
 	   @RequestMapping(value = "/pay")
 	   public String kakaoPay(Model model, @ModelAttribute("payment") PaymentBean PaymentBean) {
-	         
+	         System.out.println("-----페이 시작------");
 	      PaymentDAO paydao = sqlSessionTemplate.getMapper(PaymentDAO.class);
 	      payInformationSave.clear();
 	      int totalprice=0;
@@ -267,6 +254,7 @@ public class PaymentController {
 	      	model.addAttribute("payname", payname);
 	      	
 	      System.out.println("payInformationSave2 = " + payInformationSave);
+	      System.out.println("-----페이 끝------");
 	      return "payment/test1";
 	      
 	   }
@@ -309,21 +297,31 @@ public class PaymentController {
 		return "payment/farmerPaymentList";
 	}
 	
-	@RequestMapping(value = "/adminPayListDelete/{Orderno}")
-	public String adminPayListDelete(@PathVariable int Orderno, Model model) {
+	@RequestMapping(value = "/adminPayListDelete")
+	public String adminPayListDelete(@RequestParam String[] payno, PaymentBean paymentbean, Model model, HttpServletRequest request) {
+		System.out.println("---- 어드민페이리스트딜리트 시작-----");
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
-		int payListDelete = dao.paydelete(Orderno);
-		System.out.println(payListDelete);
+		
+		for(int i=0 ; i<payno.length; i++) {
+			System.out.println("payno = " + payno[i]);
+		}
+		
+		List<String> deletelist = Arrays.asList(payno);
+		System.out.println("deletelist = "+ deletelist);
+		int delete = dao.paydelete(deletelist);
+		
+		System.out.println("delete = " + delete);
+		System.out.println("---- 어드민페이리스트딜리트 끝-----");
 		return "redirect:/adminPaymentList";
 	}
 	
-	@RequestMapping(value = "/farmerPayListDelete/{Orderno}")
-	public String farmerPayListDelete(@PathVariable int Orderno, Model model) {
-		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
-		int payListDelete = dao.paydelete(Orderno);
-		System.out.println(payListDelete);
-		return "redirect:/farmerPaymentList";
-	}
+//	@RequestMapping(value = "/farmerPayListDelete/{Orderno}")
+//	public String farmerPayListDelete(@PathVariable int Orderno, Model model) {
+//		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+//		int payListDelete = dao.paydelete(Orderno);
+//		System.out.println(payListDelete);
+//		return "redirect:/farmerPaymentList";
+//	}
 
 	@RequestMapping(value = "/adminPaymentListDetail", method = RequestMethod.GET)
 	public String test4() {

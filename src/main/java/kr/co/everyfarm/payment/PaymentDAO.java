@@ -22,7 +22,7 @@ public interface PaymentDAO {
 
 	public int update(PaymentBean payment);
 
-	public int paydelete(int Orderno);
+	public int paydelete(List<String> deletelist);
 
 
 	public Integer getinfo(int p_No);

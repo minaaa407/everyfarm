@@ -64,10 +64,12 @@
 		pay_orderno=#{pay_Orderno}
 	</select>
 
-	<delete id="paydelete" parameterType="int">
-		<![CDATA[
-		delete from payment where pay_OrderNo=#{pay_Orderno}
-		]]>
+	<delete id="paydelete" parameterType="java.util.List">
+		delete from payment 
+		where pay_OrderNo IN ( 
+		<foreach collection="list" item="deletelist" index="index" separator=",">
+            ${deletelist}
+        </foreach> )
 	</delete>
 
 
