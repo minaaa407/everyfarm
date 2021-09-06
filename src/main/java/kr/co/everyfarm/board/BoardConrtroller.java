@@ -1,12 +1,13 @@
 package kr.co.everyfarm.board;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.user.MemberBean;
@@ -72,36 +74,28 @@ public class BoardConrtroller {
 		return "board/qnalist";
 	}
 	
-	@RequestMapping(value = "/myQnA")
-	public String getQnAMylist2(Model model, HttpServletRequest request, HttpSession session) {
-
-		MemberBean member = (MemberBean) session.getAttribute("member");
-		String m_Id = member.getM_Id();
-		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-		List<QnABean> myQnAFar = dao.myQnAtoFar(m_Id);
-		model.addAttribute("qnaToFar", myQnAFar);
-		return "user/myQnA";
-	}
-
-
-	
-//	@RequestMapping(value = "/qnalist")
-//	public String getQnAList(Model model, HttpServletRequest request) {
-//		
-//		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		List<QnABean> qnalist = dao.list();
-//		model.addAttribute("qnalist", qnalist);
-//		return "board/qnalist";
-//	}
 	
 	@RequestMapping(value = "/qnamylist")
-	public String getQnAMylist( Model model, HttpServletRequest request) {
+	public String getQnAMylist(PagingBean vo, Model model, HttpServletRequest request
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
 		
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-	
-		List<QnABean> productMylist = dao.productMylist(member);
+		int total = dao.countMyqna(member);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		vo.setF_Id(member.getM_Id());
+		model.addAttribute("paging", vo);
+		dao.rownum();
+		List<QnABean> productMylist = dao.productMylist(vo);
 		System.out.println("productMylist" + productMylist);
 		model.addAttribute("productQlist", productMylist);
 	
@@ -124,53 +118,18 @@ public class BoardConrtroller {
 
 	
 	
-//	@RequestMapping("/qnawrite/{var}")
-//	public String getQnAWrite(Model model, HttpServletRequest request) {
-//		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-//		return "board/qnawrite";
-//	}
 
-//	import org.hibernate.validator.constraints.NotEmpty; @NotEmpty(message="필수 입력 항목입니다.")
-/*	@RequestMapping(value = "/qnainsert", method = RequestMethod.POST)
-	@ResponseBody
-	public String getQnAInsert(@ModelAttribute @Valid QnABean qna, Model model, HttpServletRequest request, HttpServletResponse response,
-			BindingResult result) throws IOException {
-		if(result.hasErrors()) {
-			return "board/qnawrite";
-		}
-		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-		response.setContentType("text/html;charset=UTF-8");
-		System.out.println("BoardConrtroller insert : "+qna.getQ_Title());
-		System.out.println("BoardConrtroller insert : "+qna.getQ_Id());
-		
-//		MultipartFile img = qna.getQ_Img();
-//		if(!img.isEmpty()) {
-//			String fileName = img.getOriginalFilename();
-//			img.transferTo(new File("D:/upload/" + fileName));
-//		}
-		
-		int n = dao.insert(qna);
-		if(n>0) {
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('글이 등록되었습니다.'); location.href='/qnalist';</script>");
-			out.close();
-		}else {
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('글 등록에 실패하였습니다.'); location.href='/qnalist';</script>");
-			out.close();
-		}
-		return "redirect:/qnalist";
 		 
 		 
-	}*/
+
 	
 
 	
 	
 	
 	@RequestMapping(value = "/qnainsert", method = RequestMethod.POST)
-	public String getQnApdInsert( @ModelAttribute("qna") @Valid QnABean qna, BindingResult result, Model model, 
+	public String getQnApdInsert( @ModelAttribute("qna") @Valid QnABean qna, BindingResult result, 
+			@RequestParam(value = "img", required = false) MultipartFile img, Model model, 
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
@@ -189,16 +148,63 @@ public class BoardConrtroller {
 //			String fileName = img.getOriginalFilename();
 //			img.transferTo(new File("D:/upload/" + fileName));
 //		}
-
+		qna.setQ_Img(img.getOriginalFilename());
+		
 		int pno = qna.getQ_Pno();
 		String title = dao.productTitle(pno);
+		String pid = dao.productId(pno);
 		qna.setQ_Ptitle(title);
+		qna.setQ_Pid(pid);
 		int n = dao.insert(qna);
+		int qnomax = dao.qnomax();
+		System.out.println("qnomax: " + qnomax);
+		String path = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\"
+				+ "tmp0\\wtpwebapps\\everyfarm\\resources\\upload\\qna\\" + qnomax + "\\";
+		ServletContext servletContext = request.getSession().getServletContext();
+		String realPath = servletContext.getRealPath("/resource");
+		realPath = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\everyfarm\\resource";
+		String mPath = "\\src\\main\\webapp\\resources\\upload\\qna\\" + qnomax + "\\";
+		int aa = realPath.indexOf("\\.");
+		String pre = realPath.substring(0, aa);
+		String savePath = pre + "\\everyfarm" + mPath;
+		path = savePath;
+
+		File Folder = new File(path);
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		} else {
+			System.out.println("이미 폴더가 생성되어 있습니다.");
+		}
+
+		String safeFile="";
+		String originFileName="";
+		long fileSize = 0;
+
+	
+		originFileName = img.getOriginalFilename(); // 원본 파일 명
+		fileSize = img.getSize(); // 파일 사이즈
+		safeFile = path + originFileName;
+		try {
+			if (fileSize > 10) { /* 100 */
+					img.transferTo(new File(safeFile));
+			}
+
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		if(n>0) {
 			returnUrl = "redirect:/qnalist";
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('글이 등록되었습니다.'); location.href='/qnalist';</script>");
+			
 			out.close();
 		}else {
 			returnUrl = "redirect:/qnawrite";
@@ -237,17 +243,100 @@ public class BoardConrtroller {
 	
 	
 	@RequestMapping(value = "/qnaupdate")
-	public void getQnAUpdate(@ModelAttribute QnABean qna, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void getQnAUpdate(@ModelAttribute("qna") @Valid QnABean qna, BindingResult result, 
+			@RequestParam(value = "img", required = false) MultipartFile img, Model model, 
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
 		response.setContentType("text/html;charset=UTF-8");
 		
+		System.out.println("BoardConrtroller insert : "+qna.getQ_Title());
+		System.out.println("BoardConrtroller insert : "+qna.getQ_Id());
+		String returnUrl = "";
+		
+		System.out.println("***  "+img);
+		
+		if(img.isEmpty() == false) {
+		qna.setQ_Img(img.getOriginalFilename());
+		System.out.println("이미지가 널이 아닐때 qna에 set, 기존 파일이면 들어오면 안됨");
+		}
+		
 		int pno = qna.getQ_Pno();
 		String title = dao.productTitle(pno);
+		String pid = dao.productId(pno);
 		qna.setQ_Ptitle(title);
-		
-		
+		qna.setQ_Pid(pid);
 		int qnaupdate = dao.update(qna);
+		       
+		if(img.isEmpty() == false) {
+			
+			int qno = qna.getQ_No();
+			System.out.println("qno: " + qno);
+			String path = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\"
+					+ "tmp0\\wtpwebapps\\everyfarm\\resources\\upload\\qna\\" + qno + "\\";
+			ServletContext servletContext = request.getSession().getServletContext();
+			String realPath = servletContext.getRealPath("/resource");
+			realPath = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\everyfarm\\resource";
+			String mPath = "\\src\\main\\webapp\\resources\\upload\\qna\\" + qno + "\\";
+			int aa = realPath.indexOf("\\.");
+			String pre = realPath.substring(0, aa);
+			String savePath = pre + "\\everyfarm" + mPath;
+			path = savePath;
+			
+			
+			File folder = new File(path);
+			try {
+			    while(folder.exists()) {
+				File[] folder_list = folder.listFiles(); //파일리스트 얻어오기
+						
+					for (int j = 0; j < folder_list.length; j++) {
+						folder_list[j].delete(); //파일 삭제 
+						System.out.println("파일이 삭제되었습니다.");
+					}
+						
+					if(folder_list.length == 0 && folder.isDirectory()){ 
+						folder.delete(); //대상폴더 삭제
+						System.out.println("폴더가 삭제되었습니다.");
+					}
+		       }
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+			
+			File Folder = new File(path);
+			if (!Folder.exists()) {
+				try {
+					Folder.mkdir(); // 폴더 생성합니다.
+					System.out.println("폴더가 생성되었습니다.");
+				} catch (Exception e) {
+					e.getStackTrace();
+				}
+			} else {
+				System.out.println("이미 폴더가 생성되어 있습니다.");
+			}
+
+			String safeFile="";
+			String originFileName="";
+			long fileSize = 0;
+
+	
+			originFileName = img.getOriginalFilename(); // 원본 파일 명
+			fileSize = img.getSize(); // 파일 사이즈
+			safeFile = path + originFileName;
+			try {
+				if (fileSize > 10) { /* 100 */
+					img.transferTo(new File(safeFile));
+				}
+
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+		}
+		
+		
 		if(qnaupdate>0) {
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('글이 수정되었습니다.'); location.href='/qnalist';</script>");
@@ -282,80 +371,36 @@ public class BoardConrtroller {
 
 	
 	
-//	@RequestMapping(value = "/qnawriteadmin")
-//	public String getQnAadminWrite(@ModelAttribute QnABean qna, Model model, HttpServletRequest request) {
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		int adminwrite = dao.adminWrite(qna);
-//		String referer = request.getHeader("Referer");
-//		if(referer.contains("search")) {
-//			return "redirect:/qnalistadmin";
-//		}else {
-//			return "redirect:"+ referer;
-//		}
-//	}
-//	
-//	@RequestMapping(value = "/qnaWriteUpdateAdmin")
-//	public String getQnAadminWriteUpdate(@ModelAttribute QnABean qna, Model model, HttpServletRequest request) {
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		int adminwriteupdate = dao.adminWrite(qna);
-//		String referer = request.getHeader("Referer");
-//		if(referer.contains("search")) {
-//			return "redirect:/qnalistadmin"; 
-//		}else {
-//			return "redirect:"+ referer;
-//		}
-//	}
-//	
-//	@RequestMapping(value = "/qnawriteOadmin")
-//	public String getQnAWriteO(Model model, HttpServletRequest request) {
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		List<QnABean> qnalistadmin = dao.adminWriteO();
-//		model.addAttribute("qnalistadmin", qnalistadmin);
-//		return "board/qnaAdminList";
-//	}
-//	
-//	@RequestMapping(value = "/qnawriteXadmin")
-//	public String getQnAWriteX(Model model, HttpServletRequest request) {
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		List<QnABean> qnalistadmin = dao.adminWriteX();
-//		model.addAttribute("qnalistadmin", qnalistadmin);
-//		return "board/qnaAdminList";
-//	}
-	
-	
-//	@RequestMapping(value = "/qnalist")
-//	public String boardddList(PagingBean vo, Model model, HttpServletRequest request
-//			, @RequestParam(value="nowPage", required=false)String nowPage
-//			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
-//		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		
-//		
-//		int total = dao.countBoard();
-//		if (nowPage == null && cntPerPage == null) {
-//			nowPage = "1";
-//			cntPerPage = "10";
-//		} else if (nowPage == null) {
-//			nowPage = "1";
-//		} else if (cntPerPage == null) { 
-//			cntPerPage = "10";
-//		}
-//		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-//		model.addAttribute("paging", vo);
-//		/* model.addAttribute("viewAll", boardService.selectBoard(vo)); */
-//		List<QnABean> productQlist = dao.selectBoard(vo);
-//		System.out.println("productQlist : " + productQlist);
-//		model.addAttribute("productQlist", productQlist);
-//		return "board/qnalist";
-//	}
-	
 	@RequestMapping(value = "/searchqna")
 	public String getQnASearch(PagingBean vo, @RequestParam String searchBox, @RequestParam String searchText, 
-			@RequestParam String searchAnswer, @RequestParam(value="nowPage", required=false)String nowPage,
+			@RequestParam(required=false) String searchAnswer, @RequestParam(value="nowPage", required=false)String nowPage,
 			@RequestParam(value="cntPerPage", required=false)String cntPerPage, QnABean qna, Model model, HttpServletRequest request) {
 			
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-		int total = dao.countBoard();
+		int total = 0;
+		if(searchAnswer.equals("o")) {
+			qna.setQ_Answer(true);
+		} else if(searchAnswer.equals("x")) {
+			qna.setQ_Answer(false);
+		}
+		qna.setQ_Content(searchText);
+		if(searchBox.equals("all")) {
+			List<QnABean> qnalist = dao.searchall(qna);
+			total = qnalist.size();
+		}else if(searchBox.equals("pno")){
+			List<QnABean> qnalist = dao.searchpno(qna);
+			total = qnalist.size();
+		}else if(searchBox.equals("ptitle")){
+			List<QnABean> qnalist = dao.searchptitle(qna);
+			total = qnalist.size();
+		}else if(searchBox.equals("content")){
+			List<QnABean> qnalist = dao.searchcontent(qna);
+			total = qnalist.size();
+		}else if(searchBox.equals("id")){
+			List<QnABean> qnalist = dao.searchId(qna);
+			total = qnalist.size();
+		}
+		
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "10";
@@ -364,92 +409,186 @@ public class BoardConrtroller {
 		} else if (cntPerPage == null) { 
 			cntPerPage = "10";
 		}
+		
 		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		model.addAttribute("paging", vo);
-		
-		
-		qna.setQ_Content(searchText);
-		if(searchAnswer.equals("o")) {
-			qna.setQ_Answer(true);
-		} else if(searchAnswer.equals("x")) {
-			qna.setQ_Answer(false);
+		vo.setQ_Ptitle(searchBox);
+		vo.setQ_Content(searchText);
+		if(searchAnswer.equals("o") || searchAnswer.equals("true")) {
+			vo.setQ_Answer(true);
+		} else if(searchAnswer.equals("x") || searchAnswer.equals("false")) {
+			vo.setQ_Answer(false);
 		}
+
 		if(searchBox.equals("all")) {
-			List<QnABean> qnalist = dao.searchall(qna);
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchAllPaging(vo);
 			model.addAttribute("productQlist", qnalist);
 		}else if(searchBox.equals("pno")){
-			List<QnABean> qnalist = dao.searchpno(qna);
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchPnoPaging(vo);
 			model.addAttribute("productQlist", qnalist);
 		}else if(searchBox.equals("ptitle")){
-			List<QnABean> qnalist = dao.searchptitle(qna);
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchPtitlePaging(vo);
 			model.addAttribute("productQlist", qnalist);
 		}else if(searchBox.equals("content")){
-			List<QnABean> qnalist = dao.searchcontent(qna);
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchContentPaging(vo);
 			model.addAttribute("productQlist", qnalist);
 		}else if(searchBox.equals("id")){
-			List<QnABean> qnalist = dao.searchId(qna);
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchIdPaging(vo);
 			model.addAttribute("productQlist", qnalist);
 		}
+		model.addAttribute("paging", vo);
 		return "board/qnalist";
 	}
 	
 	@RequestMapping(value = "/farmerQnasearch")
-	public String getQnAfarmerSearch(@RequestParam String searchBox, @RequestParam String searchText, @RequestParam String searchAnswer,
-			QnABean qna, Model model, HttpServletRequest request) {
-			
+	public String getQnAfarmerSearch(PagingBean vo, @RequestParam String searchBox, @RequestParam String searchText, 
+			@RequestParam(required=false) String searchAnswer, @RequestParam(value="nowPage", required=false)String nowPage,
+			@RequestParam(value="cntPerPage", required=false)String cntPerPage, QnABean qna, Model model, HttpServletRequest request) {
+		System.out.println("1");
+		FarmerBean farmer  = (FarmerBean) request.getSession().getAttribute("farmer");
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-		qna.setQ_Content(searchText);
+		int total = 0;
 		if(searchAnswer.equals("o")) {
 			qna.setQ_Answer(true);
 		} else if(searchAnswer.equals("x")) {
 			qna.setQ_Answer(false);
 		}
+		qna.setQ_Content(searchText);
+		qna.setQ_Pid(farmer.getF_Id());
 		if(searchBox.equals("all")) {
-			List<QnABean> qnalist = dao.searchall(qna);
+			List<QnABean> qnalist = dao.searchallfarmer(qna);
+			total = qnalist.size();
+		}else if(searchBox.equals("pno")){
+			List<QnABean> qnalist = dao.searchpnofarmer(qna);
+			total = qnalist.size();
+		}else if(searchBox.equals("ptitle")){
+			List<QnABean> qnalist = dao.searchptitlefarmer(qna);
+			total = qnalist.size();
+		}else if(searchBox.equals("content")){
+			List<QnABean> qnalist = dao.searchcontentfarmer(qna);
+			total = qnalist.size();
+		}else if(searchBox.equals("id")){
+			List<QnABean> qnalist = dao.searchIdfarmer(qna);
+			total = qnalist.size();
+		}
+		
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		
+		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		vo.setQ_Ptitle(searchBox);
+		vo.setQ_Content(searchText);
+		vo.setF_Id(farmer.getF_Id());
+		if(searchAnswer.equals("o") || searchAnswer.equals("true")) {
+			vo.setQ_Answer(true);
+		} else if(searchAnswer.equals("x") || searchAnswer.equals("false")) {
+			vo.setQ_Answer(false);
+		}
+
+		if(searchBox.equals("all")) {
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchAllPagingfarmer(vo);
 			model.addAttribute("productQlist", qnalist);
 		}else if(searchBox.equals("pno")){
-			List<QnABean> qnalist = dao.searchpno(qna);
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchPnoPagingfarmer(vo);
 			model.addAttribute("productQlist", qnalist);
 		}else if(searchBox.equals("ptitle")){
-			List<QnABean> qnalist = dao.searchptitle(qna);
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchPtitlePagingfarmer(vo);
 			model.addAttribute("productQlist", qnalist);
 		}else if(searchBox.equals("content")){
-			List<QnABean> qnalist = dao.searchcontent(qna);
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchContentPagingfarmer(vo);
 			model.addAttribute("productQlist", qnalist);
 		}else if(searchBox.equals("id")){
-			List<QnABean> qnalist = dao.searchId(qna);
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchIdPagingfarmer(vo);
 			model.addAttribute("productQlist", qnalist);
 		}
+		model.addAttribute("paging", vo);
 		return "board/qnaFarmerList";
 	}
 	
 	@RequestMapping(value = "/adminQnasearch")
-	public String getQnAadminSearch(@RequestParam String searchBox, @RequestParam String searchText, @RequestParam String searchAnswer,
-			QnABean qna, Model model, HttpServletRequest request) {
-			
+	public String getQnAadminSearch(PagingBean vo, @RequestParam String searchBox, @RequestParam String searchText, 
+			@RequestParam(required=false) String searchAnswer, @RequestParam(value="nowPage", required=false)String nowPage,
+			@RequestParam(value="cntPerPage", required=false)String cntPerPage, QnABean qna, Model model, HttpServletRequest request) {
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-		qna.setQ_Content(searchText);
+		int total = 0;
 		if(searchAnswer.equals("o")) {
 			qna.setQ_Answer(true);
 		} else if(searchAnswer.equals("x")) {
 			qna.setQ_Answer(false);
 		}
+		qna.setQ_Content(searchText);
 		if(searchBox.equals("all")) {
 			List<QnABean> qnalist = dao.searchall(qna);
-			model.addAttribute("productQlist", qnalist);
+			total = qnalist.size();
 		}else if(searchBox.equals("pno")){
 			List<QnABean> qnalist = dao.searchpno(qna);
-			model.addAttribute("productQlist", qnalist);
+			total = qnalist.size();
 		}else if(searchBox.equals("ptitle")){
 			List<QnABean> qnalist = dao.searchptitle(qna);
-			model.addAttribute("productQlist", qnalist);
+			total = qnalist.size();
 		}else if(searchBox.equals("content")){
 			List<QnABean> qnalist = dao.searchcontent(qna);
-			model.addAttribute("productQlist", qnalist);
+			total = qnalist.size();
 		}else if(searchBox.equals("id")){
 			List<QnABean> qnalist = dao.searchId(qna);
+			total = qnalist.size();
+		}
+		
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		
+		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		vo.setQ_Ptitle(searchBox);
+		vo.setQ_Content(searchText);
+		if(searchAnswer.equals("o") || searchAnswer.equals("true")) {
+			vo.setQ_Answer(true);
+		} else if(searchAnswer.equals("x") || searchAnswer.equals("false")) {
+			vo.setQ_Answer(false);
+		}
+
+		if(searchBox.equals("all")) {
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchAllPaging(vo);
+			model.addAttribute("productQlist", qnalist);
+		}else if(searchBox.equals("pno")){
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchPnoPaging(vo);
+			model.addAttribute("productQlist", qnalist);
+		}else if(searchBox.equals("ptitle")){
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchPtitlePaging(vo);
+			model.addAttribute("productQlist", qnalist);
+		}else if(searchBox.equals("content")){
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchContentPaging(vo);
+			model.addAttribute("productQlist", qnalist);
+		}else if(searchBox.equals("id")){
+			dao.rownum();
+			List<QnABean> qnalist = dao.searchIdPaging(vo);
 			model.addAttribute("productQlist", qnalist);
 		}
+		model.addAttribute("paging", vo);
 		return "board/qnaAdminList";
 	}
 	
@@ -516,18 +655,60 @@ public class BoardConrtroller {
 		
 ////farmer
 	
+//	@RequestMapping(value = "/qnalist")
+//	public String boardfeeList(PagingBean vo, Model model, HttpServletRequest request
+//			, @RequestParam(value="nowPage", required=false)String nowPage
+//			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
+//		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
+//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
+//		
+//		
+//		int total = dao.countBoard();
+//		if (nowPage == null && cntPerPage == null) {
+//			nowPage = "1";
+//			cntPerPage = "10";
+//		} else if (nowPage == null) {
+//			nowPage = "1";
+//		} else if (cntPerPage == null) { 
+//			cntPerPage = "10";
+//		}
+//		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+//		model.addAttribute("paging", vo);
+//		/* model.addAttribute("viewAll", boardService.selectBoard(vo)); */
+//		List<QnABean> productQlist = dao.selectBoard(vo);
+//		System.out.println("productQlist : " + productQlist);
+//		model.addAttribute("productQlist", productQlist);
+//		return "board/qnalist";
+//	}
+	
 	@RequestMapping(value = "/farmerQnaList")
-	public String getQnAfarmerList(Model model, HttpServletRequest request) {
+	public String getQnAfarmerList(PagingBean vo, Model model, HttpServletRequest request
+		, @RequestParam(value="nowPage", required=false)String nowPage
+		, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
 		FarmerBean farmer  = (FarmerBean) request.getSession().getAttribute("farmer");
+		
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
 		
-		System.out.println("1" + farmer.getF_Id());
-		List<QnABean> pnoList = dao.productByfarmer(farmer);
+
+		int total = dao.countfarmerQnaList(farmer);
 		
-		System.out.println("pnoList : " +pnoList);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		vo.setF_Id(farmer.getF_Id());
+		model.addAttribute("paging", vo);
 		
-		List<QnABean> productQlist = dao.productQlistFarmer(pnoList);
-		System.out.println("productQlist" + productQlist);
+		dao.rownum();
+		
+//		List<QnABean> pnoList = dao.productByfarmer(vo);
+//		List<QnABean> productQlist = dao.productQlistFarmer(pnoList);
+		List<QnABean> productQlist = dao.productQlistFarmer(vo);
 		model.addAttribute("productQlist", productQlist);
 
 		return "board/qnaFarmerList";
@@ -580,11 +761,26 @@ public class BoardConrtroller {
 //		
 //		return "board/qnalist";
 //	}
+
+	
 	
 	@RequestMapping(value = "/adminQnaList")
-	public String getQnAadminlist(Model model, HttpServletRequest request) {
+	public String getQnAadminlist(PagingBean vo, Model model, HttpServletRequest request
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-		List<QnABean> productQlist = dao.productQlist();
+		int total = dao.countBoard();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "10";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "10";
+		}
+		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("paging", vo);
+		List<QnABean> productQlist = dao.selectBoard(vo);
 		model.addAttribute("productQlist", productQlist);
 		return "board/qnaAdminList";
 	}

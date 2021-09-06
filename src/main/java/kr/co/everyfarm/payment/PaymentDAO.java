@@ -14,14 +14,13 @@ public interface PaymentDAO {
 	public List<PaymentBean> farmerpaylistserachpageing(PageBeen pagebeen);
 	public List<PaymentBean> farmerpaylistserachpageingcount(PageBeen pagebeen);
 
+	public List<PaymentBean> sendmessage(int pay_orderno);
 	
 	public int payinsert(PaymentBean payment);
 
-	// public int landupdate(@Param("FinalAvailableLand") int FinalAvailableLand, @Param("P_Id") int P_Id);
-
 	public int update(PaymentBean payment);
 
-	public int paydelete(int Orderno);
+	public int paydelete(List<String> deletelist);
 
 
 	public Integer getinfo(int p_No);

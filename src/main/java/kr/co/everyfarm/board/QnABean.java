@@ -1,9 +1,9 @@
 package kr.co.everyfarm.board;
 
-import java.util.Date;
+import java.sql.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class QnABean {
 
@@ -13,12 +13,15 @@ public class QnABean {
 	@NotEmpty(message = "제목을 작성해주세요.")
 	private String q_Title;
 	
-	private MultipartFile q_Img;
+//	private MultipartFile q_Img;
+	private String q_Img;
 	
 	@NotEmpty(message = "내용을 작성해주세요.")
 	private String q_Content;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.s") 
 	private Date q_Date;
+//	private String q_Date;
 	private Boolean q_Secret;
 	private Boolean q_Answer;
 	private int q_Pno;
@@ -26,8 +29,17 @@ public class QnABean {
 	private String q_Pid;
 	private Date q_Magdate;
 	private String q_Magcontent;
+	private String f_Id;
 	
 	
+	
+	
+	public String getF_Id() {
+		return f_Id;
+	}
+	public void setF_Id(String f_Id) {
+		this.f_Id = f_Id;
+	}
 	public int getQ_No() {
 		return q_No;
 	}
@@ -46,19 +58,32 @@ public class QnABean {
 	public void setQ_Title(String q_Title) {
 		this.q_Title = q_Title;
 	}
-	public MultipartFile getQ_Img() {
+	public String getQ_Img() {
 		return q_Img;
 	}
-	public void setQ_Img(MultipartFile q_Img) {
+	public void setQ_Img(String q_Img) {
 		this.q_Img = q_Img;
 	}
+	//	public MultipartFile getQ_Img() {
+//		return q_Img;
+//	}
+//	public void setQ_Img(MultipartFile q_Img) {
+//		this.q_Img = q_Img;
+//	}
 	public String getQ_Content() {
 		return q_Content;
 	}
 	public void setQ_Content(String q_Content) {
 		this.q_Content = q_Content;
 	}
-	public Date getQ_Date() {
+	
+//	public String getQ_Date() {
+//		return q_Date;
+//	}
+//	public void setQ_Date(String q_Date) {
+//		this.q_Date = q_Date;
+//	}
+		public Date getQ_Date() {
 		return q_Date;
 	}
 	public void setQ_Date(Date q_Date) {

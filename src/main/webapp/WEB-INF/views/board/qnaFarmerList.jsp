@@ -32,22 +32,26 @@
  
 
     <!-- Categories Section Begin -->
-    <section class="categories categories-grid spad">
+    <section class="categories categories-grid spad" style="padding-top: 0; background-color: #fafbf9;">
         <div class="categories__post">
             <div class="container">
                 <div class="categories__grid__post">
                     <div class="row">
-                      <div class="col-lg-10 col-md-10">
+                      <div class="col-lg-12 col-md-12">
                       	<c:choose>   
                  			<c:when test = "${empty productQlist}">
+                 				<div class="breadcrumb__text">
+                                	    <h2 style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;"><span>QnA </span>게시판</h2>
+                           		</div>
                  			</c:when>
                  			<c:when test = "${productQlist != null}">
                       
-                         	<div class="breadcrumb__text">
-                                <h2><span>상품 문의 </span>게시판</h2>
+                         	<div class="breadcrumb__text" style="margin-bottom: 10px;">
+                                   <h2 style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;"><span>QnA </span>게시판</h2>
                                 <div class="breadcrumb__option">
+                                  <div style="display: flex; justify-content: space-between;">
                                    <form action="farmerQnasearch" method="post">
-         								<select name="searchBox"> <!-- style="padding: 7px 11px;" -->
+         								<select name="searchBox" style="height: 35px;"> <!-- style="padding: 7px 11px;" -->
               								<option value="all">전체 검색</option>
               								<option value="pno">상품번호</option>
          									<option value="ptitle">상품명</option>
@@ -57,7 +61,7 @@
          								
             							<input type="text" name="searchText">
             							
-            							<select name="searchAnswer"> <!-- style="padding: 7px 11px;" -->
+            							<select name="searchAnswer" style="height: 35px;"> <!-- style="padding: 7px 11px;" -->
               								<option value="all">답글 여부</option>
               								<option value="o">답글 O</option>
              								<option value="x">답글 X</option>
@@ -66,8 +70,11 @@
             						</form>
         							  <!-- <a href="#">Home</a>
                                    	  <span>Recipes</span> -->
-                                   	  <button type="submit" class="site-btn" onClick="location.href='/farmerQnaList'">전체보기</button>
+                                   	 <div style="float: right;">
+                                   	  <button type="submit" class="site-btn" style="border-radius: 5px;" onClick="location.href='/farmerQnaList'">전체보기</button>
+        							</div>
         						</div>
+        					   </div>
                             </div>
                           </c:when>
                        </c:choose>
@@ -86,8 +93,14 @@
                    </c:when>
                      </c:choose> --%>
                      
-           <%--  <c:when test = "${empty qnamylist}">   --%>            
-                       
+           <%--  <c:when test = "${empty qnamylist}">   --%>      
+            <div class="row" style="box-shadow: 0px 2px 10px rgb(0 0 0 / 8%); background-color: white;">
+              <div class="col-lg-12 col-md-12" style="padding-top: 50px;">
+				<c:choose>   
+                 	<c:when test = "${empty productQlist}">
+                 		<div>내역이 없습니다.</div>
+                 	</c:when>
+                 	<c:when test = "${productQlist != null}">
                       <c:forEach items="${productQlist }" var="q">
                       	<c:set var="i" value="${i+1}"/> 
                             <div class="categories__list__post__item">
@@ -184,13 +197,51 @@
                    
                    <br>
               
-                   </c:forEach>
+                   		</c:forEach>
+                   	  </c:when>
+                   </c:choose>
+                   </div>
+                  </div>
   				</div>
               </div>
-            </div>
-          </div>
-       </div>
-   </section>
+			</div>
+		</div>
+	</div>
+</section>
+   
+   <div style="display: block; text-align: center;">		
+		<c:choose>
+   			<c:when test="${paging.startPage != 1 && paging.q_Content != null}">	
+   				<a href="/farmerQnasearch?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}"">&lt;</a>
+   			</c:when>
+			<c:when test="${paging.startPage != 1 && empty paging.q_Content}">	
+				<a href="/farmerQnaList?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
+			</c:when>
+		</c:choose>
+		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+			<c:choose>
+				<c:when test="${p == paging.nowPage }">
+					<b>${p }</b>
+				</c:when>
+				<c:when test="${p != paging.nowPage && paging.q_Content != null}">
+					<a href="/farmerQnasearch?nowPage=${p }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}">${p }</a>
+				</c:when>
+				<c:when test="${p != paging.nowPage && empty paging.q_Content}">
+					<a href="/farmerQnaList?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a>
+				</c:when>
+			</c:choose>
+		</c:forEach>
+		<c:choose>
+			<c:when test="${paging.endPage != paging.lastPage && paging.q_Content != null}">
+				<a href="/farmerQnasearch?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}">&gt;</a>
+			</c:when>
+			<c:when test="${paging.endPage != paging.lastPage && empty paging.q_Content}">
+		<%-- <c:if test="${paging.endPage != paging.lastPage}"> --%>
+				<a href="/farmerQnaList?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&gt;</a>
+			</c:when>
+		</c:choose>
+		
+	</div>
    
 <script type="text/javascript">
 
