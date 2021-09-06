@@ -22,7 +22,7 @@
 
 <link rel="stylesheet" href="/resources/index/css/owl.carousel.min.css">
 <link rel="stylesheet"
-	href="resources/index/css/owl.theme.default.min.css">
+	href="/resources/index/css/owl.theme.default.min.css">
 <link rel="stylesheet" href="/resources/index/css/magnific-popup.css">
 
 <link rel="stylesheet" href="/resources/index/css/ionicons.min.css">

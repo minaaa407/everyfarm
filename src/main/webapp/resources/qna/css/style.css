@@ -187,6 +187,11 @@ ol {
 	padding: 13px 26px 12px;
 	background: #f4952f;
 	border: none;
+	border-radius: 5px;
+	padding-left: 13px;
+	padding-right: 13px;
+	padding-bottom: 10px;
+	padding-top: 10px;
 }
 
 /* Preloder */

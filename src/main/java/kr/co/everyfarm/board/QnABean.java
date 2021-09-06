@@ -1,21 +1,9 @@
 package kr.co.everyfarm.board;
 
-
-
-
-
-
-
-
-
 import java.sql.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-
-
-
-
 
 public class QnABean {
 
@@ -31,7 +19,7 @@ public class QnABean {
 	@NotEmpty(message = "내용을 작성해주세요.")
 	private String q_Content;
 	
-	/* @DateTimeFormat(pattern = "yyyy-MM-dd") */
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.s") 
 	private Date q_Date;
 //	private String q_Date;
 	private Boolean q_Secret;

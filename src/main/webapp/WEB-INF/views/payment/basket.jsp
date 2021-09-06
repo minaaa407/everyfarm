@@ -25,13 +25,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"">
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
+<!-- <link rel="stylesheet" href="/assets/css/style.css"> -->
 
 	
 
 <style type="text/css">
 
-.fix{position:fixed;_position:absolute;width:100%;top:0;z-index:100}
+.fix{position:sticky;_position:absolute;width:100%; top:0;z-index:100}
+/* fixed    max-width: 36.5%;*/
 
 /*  style="width:300px;height:200px;font-size:30px;" */
 
@@ -51,7 +52,7 @@
 }
 
 .shopping-cart.dark{
-	background-color: #f6f6f6;
+	background-color: #fafbf9;  /* #f6f6f6 */
 }
 
 .shopping-cart .content{
@@ -80,7 +81,7 @@
 .shopping-cart .block-heading h2,
 .shopping-cart .block-heading h3 {
 	margin-bottom:1.2rem;
-	color: #3b99e0;
+	color: #8a939a;/*  #3b99e0  */
 	text-align: center;
 }
 
@@ -124,8 +125,8 @@
  }
 
 .shopping-cart .summary{
-	border-top: 2px solid #5ea4f3;
-    background-color: #f7fbff;
+	border-top: 2px solid #1c9242; /* #5ea4f3 */
+    background-color :#fafffbf7; /* #f8fff78a   #f7fbff */
     height: 100%;
     padding: 30px;
 }
@@ -178,6 +179,43 @@
 		text-align: center; 
 	}
 }
+.orderStep {
+	margin-bottom: 50px;
+	margin-top: 50px;
+	text-align: center;
+}
+
+.ulStep {
+    list-style:none;
+    margin:0;
+    padding:0;
+    display: inline-block;
+}
+.order1 {
+    border : 0;
+    float: left;
+    border: 1px solid #E6E6E6;
+    width:250px;
+    height:60px;
+    text-align: center; 
+    display: inline-block;
+    margin: 0;
+    padding: 15px;
+}
+.select {
+	font-weight:bold;
+	background-color:#E6E6E6;
+}	
+
+
+
+.on {
+  position: absolute;
+  bottom: 350px;
+}
+
+	
+
 </style>	
 	
 </head>
@@ -189,42 +227,69 @@
 	 	<section class="shopping-cart dark">
 	 		<div class="container">
 		        <div class="block-heading" style="margin-bottom: 0px;">
-		        	<h2>Shopping Cart</h2> 
+		  <!--       
+		        <div class="orderStep">
+			        <ul class="ulStep">
+						<li class="order1 select">01 - 장바구니</li>
+			            <li class="order1">02 - 주문서작성</li>
+			            <li class="order1">03 - 결제완료</li>
+			        </ul>
+				</div>
+		         -->
+		        
+		        	<h2 style="font-weight: bold;font-size: 40px;margin-top: 20px;margin-bottom: 0px;">장바구니</h2> 
 		        		<c:choose>   
 							<c:when test = "${empty basketList}">  
-							</c:when>
+							</c:when> 
 							<c:when test = "${basketList != null}">
 		        			
 		        			<br><br>
 		        	
 		         			<br>
 		         			
-		         			<input type="button" id="submit" value="선택 삭제" onclick="checkremove();" /> 
-							<input type="button" id="zerodelete" value="장바구니 비우기" onclick="allremove();"/>  
-   				 			<input type="button" id="zerodelete" value="품절 상품 지우기" onclick="zeroremove();"/> 
-   				 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<label>총 <%=count %>개</label> 
+		         			<div class="button3" style = "display: flex; flex-wrap: wrap; margin-top: 0px; margin-bottom: 5px;">
+		         				<input type="button" id="submit" value="선택 삭제" class="btn btn-primary btn-lg btn-block" 
+		         					style="width: 90px; font-size: 16px; padding-left: 10px;" onclick="checkremove();" /> 
+								<input type="button" id="zerodelete" value="장바구니 비우기" class="btn btn-primary btn-lg btn-block" 
+							       style="width: 135px; font-size: 16px; padding-left: 8px; margin-top: 0px; margin-left: 5px;" onclick="allremove();"/>  
+   				 				<input type="button" id="zerodelete" value="품절 상품 지우기" class="btn btn-primary btn-lg btn-block" 
+   				 			       style="width: 135px; font-size: 16px; padding-left: 7px; margin-top: 0px; margin-left: 5px;" onclick="zeroremove();"/> 
+   				 			
+   				 				<%-- <div class="d-none d-sm-block">     
+   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<span>총 <%=count %>개</span>
+							
+								</div> --%>
+							</div>
+							
 							</c:when>
 							</c:choose>
 		       </div>
 		        <div class="content">
 	 				<div class="row">
-	 					<div class="col-7 col-sm-7 col-md-8 col-lg-9">
+	 					<div class="col-6 col-sm-7 col-md-8 col-lg-9">
 	 						<div class="items">
-	 						
+	 							<br>
+								<div class="row">
+									<div class="col-md-3"><input type="checkbox" id="checkall" name="checkall" value="전체 선택"/>  총 <%=count %>개</div>
+									<div class="d-none d-sm-block col-md-3">상품정보</div>
+							<div class="d-none d-sm-block col-md-1" style="text-align: center;">수량
+							</div>
+							<div class="d-none d-sm-block col-md-3" style="text-align: center;">상품가격
+							</div>
+							<div class="d-none d-sm-block col-md-2" style="text-align: center;">배송비
+							</div>
+							
+							</div>
 							
 								
-								
-								
-								<br>
-								
-								<table>
+								<!-- <table>
 								<tr>
 							  <th style="width: 350px; text-align: left";><input type="checkbox" id="checkall" name="checkall" value="전체 선택"/></th>
                               <th style="width: 600px; text-align: center";>상품정보</th>
@@ -232,8 +297,8 @@
                               <th style="width: 370px; text-align: center";>상품 가격</th>
                               <th style="width: 250px; text-align: center";>배송비</th>
                          		 </tr>
-                         		 </table>
-                         		 <hr>
+                         		 </table> -->
+                         		<hr>
                          		 
 							<c:choose>   
 								<c:when test = "${empty basketList}">  
@@ -258,14 +323,15 @@
 																<div><label for="${i-1}"><input type="checkbox" id="${i-1}" name="choose" value="${b.b_No}" onchange="paybox()"/></label></div>
 															</c:otherwise>
 														</c:choose>
-					 									<label><a href="#">${b.p_Img}</a></label>
+					 									<label><a href="/productdetail?productno=${b.b_Pno}"><img src="/resources/upload/product/${b.b_Pno}/${b.p_Img} style="cursor: pointer""
+	                        	 								width="250" height="200" alt="Image ${b.b_Pno}"></a></label>  <%-- ${b.p_Img} --%>
 					 								</div>
 					 								<div class="col-md-9">
 					 									<div class="info">
 						 									<div class="row">
-							 									<div class="col-md-3 product-name">
+							 									<div class="col-md-3 product-name" style="padding-right: 0px;">
 							 										<div class="product-name">
-																		<a href="#">${b.p_Title}</a>
+																		<a href="/productdetail?productno=${b.b_Pno}">${b.p_Title}</a>
 								 						
 								 							
 	<% String[] seed = {"감자", "고구마", "콩", "배추", "양상추", "상추", "수박",  "오이", "토마토",
@@ -344,7 +410,7 @@
  															</label>
  														</div>
 							 						
-							 							<div class="col-md-2 price" style="padding-left: 0px;">
+							 							<div class="col-md-2 price" style="padding-left: 0px; margin-left: 0px;">
 							 								<c:set var = "title" value = "${b.p_Title}"/>
 							 									<label for="${i-1}">
  																<div><span class="value" id="delivery${i-1}">3,000원</span></div>
@@ -361,7 +427,7 @@
 					</c:choose>
 				</div>
 			</div>
-			<div class="col-5 col-sm-5 col-md-4 col-lg-3">
+			<div class="col-6 col-sm-5 col-md-4 col-lg-3">
 			<!-- 	<div class="summary" id="scroll" style="position: absolute; top: -100px; height: 462px; width: 255px;">  
 			 					<h3>선택 합계</h3>
 			 					<div class="summary-item"><span class="text">상품수</span><span class="price" id="choosecount" value="0">0개</span></div>
@@ -370,7 +436,7 @@
 			 					<div class="summary-item"><span class="text">Total</span><span class="price" id="finaltotal" value="0">0원</span></div>
 			 					<button type="submit" form="basket" value="구매하기" onclick="checkbuy();" class="btn btn-primary btn-lg btn-block">구매하기</button>
 			 	</div> -->
-			 		<div class="summary" id="floatMenu" style="top: 130px; height: 420px; width: 255px;">  <!-- position: absolute;  -->
+			 		<div class="summary" id="floatMenu" style="top: 130px; height: 420px;">  <!-- position: absolute;  width: 255px; max-width: 36.5% -->
 			 		
 			 					<h3>선택 합계</h3>
 			 					<div class="summary-item"><span class="text">상품수</span><span class="price" id="choosecount" value="0">0개</span></div>
@@ -702,15 +768,34 @@
 		        /* if(window.pageYOffset >= $('원하는위치의엘리먼트').offset().top){ */  
 		            $("#floatMenu").addClass("fix");  
 		            //위의 if문에 대한 조건 만족시 fix라는 class를 부여함  
-		        }else if($(window).scrollTop() < 800){  
-		        	 $("#floatMenu").removeClass("fix");  
-			            //위의 if문에 대한 조건 아닌경우 fix라는 class를 삭제함  
+		       
 		        }else{
 		        	  $("#floatMenu").removeClass("fix");  
 			            //위의 if문에 대한 조건 아닌경우 fix라는 class를 삭제함  
 		        }
 		    }     
 		);
+	
+/* 	sticky 있어서 필요 없어짐.
+	$(function() {
+
+		  var $w = $(window),
+		    footerHei = $('footer').outerHeight(),
+		    $banner = $('#floatMenu');
+
+		  $w.on('scroll', function() {
+
+		    var sT = $w.scrollTop();
+		    var val = $(document).height() - $w.height() - footerHei + 200;
+
+		    if (sT >= val)
+		        $banner.addClass('on')
+		    else
+		    	$banner.removeClass('on')
+
+		  });
+
+		}); */
 	
 	
 </script>

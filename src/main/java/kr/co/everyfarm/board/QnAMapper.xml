@@ -30,7 +30,7 @@
 	<select id="selectBoard" resultType="kr.co.everyfarm.board.QnABean">
 	 	SELECT *
 			FROM (
-    			SELECT @ROWNUM := @ROWNUM + 1 as rn, q_No, q_Id, q_Title, q_Content, q_Img
+    			SELECT @ROWNUM := @ROWNUM + 1 as rn, q_No, q_Id, q_Title, q_Content, q_Img,
     				q_Date, q_Secret, q_Answer, q_Pno, q_Ptitle, q_Pid, q_Magdate, q_Magcontent  
     				FROM qnatofarmer, (SELECT @ROWNUM :=0) A
    					ORDER BY q_no DESC
@@ -441,8 +441,13 @@
 	</insert>   <!-- qa_Img -->
 	
 	<update id="update" parameterType="kr.co.everyfarm.board.QnABean">
-		update qnatofarmer set q_Title=#{q_Title}, q_Content=#{q_Content}, q_Secret=#{q_Secret},
-		q_pno=#{q_Pno}, q_ptitle=#{q_Ptitle} where q_No=#{q_No}
+		update qnatofarmer set q_Title=#{q_Title}, 
+		<if test="q_Img != null">
+			q_Img=#{q_Img},
+    	</if>
+		q_Content=#{q_Content}, q_Secret=#{q_Secret},
+		q_pno=#{q_Pno}, q_ptitle=#{q_Ptitle} 
+		where q_No=#{q_No}
 	</update>  <!-- q_Img -->
 	
 	<update id="updateAdmin" parameterType="kr.co.everyfarm.board.QnAadminBean">

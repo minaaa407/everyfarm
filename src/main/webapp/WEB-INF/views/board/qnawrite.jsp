@@ -95,12 +95,13 @@ input::placeholder {
     			<form action="/qnaupdate" id="qna" name="qna" method="post" enctype="multipart/form-data">
     				<c:forEach items="${qnamodifyrecord}" var="q">    
 						<table class="table table-striped">
-             				<input type="hidden" name="q_No" value="${q.q_No}" />
+             				
              
              				<tr>
-                				<td>비밀글</td>
-                				<label><td><input type="checkbox" name="q_Secret" value="1" 
-                            		<c:if test="${q.q_Secret eq 'true'}">checked</c:if> ></td></label>
+                				<td>비밀글 <input type="hidden" name="q_No" value="${q.q_No}"/></td>
+                				<td><input type="checkbox" name="q_Secret" value="1" 
+                            		<c:if test="${q.q_Secret eq 'true'}">checked</c:if>/></td>
+                            	
             				</tr>
             				
               				<tr>                                       
@@ -118,18 +119,23 @@ input::placeholder {
 				            
 				            <tr>
                 				<td>제목</td>
-                				<td><input type="text" id="title" name="q_Title" class="form-control" value="${q.q_Title}" required></td>
+                				<td><input type="text" id="title" name="q_Title" class="form-control" value="${q.q_Title}" required/></td>
            				 	</tr>
             
            	 				<tr>
                 				<td>작성자</td>
-                				<td><input type="text" id="q_Id" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly></td>
+                				<td><input type="text" id="q_Id" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly/></td>
             				</tr>
  
-            			<!-- <tr>
-               					<td></td>
-                				<td><input  type="file" name="q_Img" accept="image/gif, image/jpg, image/jpeg, image/png"/></td>
-            				</tr> -->
+            				<tr>
+               					<td>사진</td>
+               					<td><div>기존 파일: ${q.q_Img}</div>
+               					<span>수정할 파일: <input type="file" id="file" name="img" accept="image/*"/></span>
+            					
+    							</td>
+    							
+            				</tr> 
+            				
             				<!-- multiple="multiple" -->
              
             				<tr>
@@ -263,6 +269,8 @@ input::placeholder {
       */
       
     
+      
+      
   </script>
 
 

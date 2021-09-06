@@ -150,7 +150,6 @@ public class BoardConrtroller {
 //		}
 		qna.setQ_Img(img.getOriginalFilename());
 		
-		
 		int pno = qna.getQ_Pno();
 		String title = dao.productTitle(pno);
 		String pid = dao.productId(pno);
@@ -158,6 +157,7 @@ public class BoardConrtroller {
 		qna.setQ_Pid(pid);
 		int n = dao.insert(qna);
 		int qnomax = dao.qnomax();
+		System.out.println("qnomax: " + qnomax);
 		String path = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\"
 				+ "tmp0\\wtpwebapps\\everyfarm\\resources\\upload\\qna\\" + qnomax + "\\";
 		ServletContext servletContext = request.getSession().getServletContext();
@@ -186,26 +186,25 @@ public class BoardConrtroller {
 		long fileSize = 0;
 
 	
-			originFileName = img.getOriginalFilename(); // 원본 파일 명
-			fileSize = img.getSize(); // 파일 사이즈
-			safeFile = path + originFileName;
-			try {
+		originFileName = img.getOriginalFilename(); // 원본 파일 명
+		fileSize = img.getSize(); // 파일 사이즈
+		safeFile = path + originFileName;
+		try {
 			if (fileSize > 10) { /* 100 */
 					img.transferTo(new File(safeFile));
-				}
-
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
-		
 
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		if(n>0) {
 			returnUrl = "redirect:/qnalist";
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('글이 등록되었습니다.'); location.href='/qnalist';</script>");
+			
 			out.close();
 		}else {
 			returnUrl = "redirect:/qnawrite";
@@ -244,17 +243,100 @@ public class BoardConrtroller {
 	
 	
 	@RequestMapping(value = "/qnaupdate")
-	public void getQnAUpdate(@ModelAttribute QnABean qna, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void getQnAUpdate(@ModelAttribute("qna") @Valid QnABean qna, BindingResult result, 
+			@RequestParam(value = "img", required = false) MultipartFile img, Model model, 
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
 		response.setContentType("text/html;charset=UTF-8");
 		
+		System.out.println("BoardConrtroller insert : "+qna.getQ_Title());
+		System.out.println("BoardConrtroller insert : "+qna.getQ_Id());
+		String returnUrl = "";
+		
+		System.out.println("***  "+img);
+		
+		if(img.isEmpty() == false) {
+		qna.setQ_Img(img.getOriginalFilename());
+		System.out.println("이미지가 널이 아닐때 qna에 set, 기존 파일이면 들어오면 안됨");
+		}
+		
 		int pno = qna.getQ_Pno();
 		String title = dao.productTitle(pno);
+		String pid = dao.productId(pno);
 		qna.setQ_Ptitle(title);
-		
-		
+		qna.setQ_Pid(pid);
 		int qnaupdate = dao.update(qna);
+		       
+		if(img.isEmpty() == false) {
+			
+			int qno = qna.getQ_No();
+			System.out.println("qno: " + qno);
+			String path = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\"
+					+ "tmp0\\wtpwebapps\\everyfarm\\resources\\upload\\qna\\" + qno + "\\";
+			ServletContext servletContext = request.getSession().getServletContext();
+			String realPath = servletContext.getRealPath("/resource");
+			realPath = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\everyfarm\\resource";
+			String mPath = "\\src\\main\\webapp\\resources\\upload\\qna\\" + qno + "\\";
+			int aa = realPath.indexOf("\\.");
+			String pre = realPath.substring(0, aa);
+			String savePath = pre + "\\everyfarm" + mPath;
+			path = savePath;
+			
+			
+			File folder = new File(path);
+			try {
+			    while(folder.exists()) {
+				File[] folder_list = folder.listFiles(); //파일리스트 얻어오기
+						
+					for (int j = 0; j < folder_list.length; j++) {
+						folder_list[j].delete(); //파일 삭제 
+						System.out.println("파일이 삭제되었습니다.");
+					}
+						
+					if(folder_list.length == 0 && folder.isDirectory()){ 
+						folder.delete(); //대상폴더 삭제
+						System.out.println("폴더가 삭제되었습니다.");
+					}
+		       }
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+			
+			File Folder = new File(path);
+			if (!Folder.exists()) {
+				try {
+					Folder.mkdir(); // 폴더 생성합니다.
+					System.out.println("폴더가 생성되었습니다.");
+				} catch (Exception e) {
+					e.getStackTrace();
+				}
+			} else {
+				System.out.println("이미 폴더가 생성되어 있습니다.");
+			}
+
+			String safeFile="";
+			String originFileName="";
+			long fileSize = 0;
+
+	
+			originFileName = img.getOriginalFilename(); // 원본 파일 명
+			fileSize = img.getSize(); // 파일 사이즈
+			safeFile = path + originFileName;
+			try {
+				if (fileSize > 10) { /* 100 */
+					img.transferTo(new File(safeFile));
+				}
+
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+		}
+		
+		
 		if(qnaupdate>0) {
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('글이 수정되었습니다.'); location.href='/qnalist';</script>");
