@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.everyfarm.admin.AdminDAO">
+
+	<select id="alogin" resultType="kr.co.everyfarm.admin.AdminBean">
+		select * from admin where a_id =
+		#{a_Id} and a_pw = #{a_Pw}
+	</select>
+
+	<insert id="ajoin"
+		parameterType="kr.co.everyfarm.admin.AdminDAO">
+		insert into admin (a_id, a_pw, a_name, a_Email)
+		Values
+		(#{a_Id}, #{a_Pw}, #{a_Name}, #{a_Email})
+	</insert>
+
+	<update id="upPw">
+		update admin set a_Pw = #{a_Pw} where a_Id = #{a_Id}
+	</update>
+
+	<select id="findId" resultType="kr.co.everyfarm.admin.AdminBean">
+		select * from admin where
+		a_name=#{a_Name} and a_email=#{a_Email}
+	</select>
+
+	<select id="findPw" resultType="kr.co.everyfarm.admin.AdminBean">
+		select * from admin where
+		a_id=#{a_Id} and a_name=#{a_Name} and a_email=#{a_Email}
+	</select>
+
+	<select id="mchart" resultType="kr.co.everyfarm.user.MemberBean">
+		select count(*) from member where
+		date_format(m_Date,'%Y-%m') = date_format(date_add(now(), interval -
+		${i} month),'%Y-%m')
+	</select>
+
+	<select id="fchart"
+		resultType="kr.co.everyfarm.farmer.FarmerBean">
+		select count(*) from farmer where
+		date_format(f_Date,'%Y-%m') = date_format(date_add(now(), interval -
+		${i} month),'%Y-%m')
+	</select>
+
+	<sql id="MpageSearch">
+		<trim prefix="where(" suffix=")" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							m_Id like concat ('%',#{keyword},'%')
+						</when>
+						<when test="type == 'W'.toString()">
+							m_Name like concat ('%',#{keyword},'%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<sql id="FpageSearch">
+		<trim prefix="where(" suffix=")" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							f_Id like concat ('%',#{keyword},'%')
+						</when>
+						<when test="type == 'W'.toString()">
+							f_Name like concat ('%',#{keyword},'%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+	<!-- 맴버 페이징 + 리스트 -->
+	<select id="mlist" resultType="kr.co.everyfarm.user.MemberBean">
+		SELECT * FROM (
+		SELECT m_Id, m_Name, m_Addr, m_Tel, m_Birth, m_Date
+		FROM member
+		<if test="keyword != null">
+			<include refid="MpageSearch"></include>
+		</if>
+		)as T1 ORDER BY m_Date DESC
+		LIMIT #{skip},#{amount}
+	</select>
+
+	<select id="mCount" resultType="int">
+		SELECT COUNT(*) FROM member
+		<if test="keyword != null">
+			<include refid="MpageSearch"></include>
+		</if>
+	</select>
+
+	<!-- 농부 페이징 + 리스트 START -->
+	<select id="flist"
+		resultType="kr.co.everyfarm.farmer.FarmerBean">
+		SELECT * FROM (
+		SELECT f_Id, f_Name, f_Addr, f_Tel, f_Birth, f_Rate,
+		f_Date, f_Auth, f_Sign
+		FROM farmer
+		<if test="keyword != null">
+			<include refid="FpageSearch"></include>
+		</if>
+		)as T1 ORDER BY f_Date DESC
+		LIMIT #{skip},#{amount}
+	</select>
+
+	<select id="fCount" resultType="int">
+		SELECT COUNT(*) FROM farmer
+		<if test="keyword != null">
+			<include refid="FpageSearch"></include>
+		</if>
+	</select>
+	<!-- 농부 페이징 + 리스트 END -->
+
+</mapper>

@@ -147,7 +147,8 @@ public class ReviewController {
 		 //String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장
 		
 		// 내부경로로 저장
-		String contextRoot = new HttpServletRequestWrapper(request).getServletContext().getRealPath("/");
+		String contextRoot = new HttpServletRequestWrapper(request).getSession().getServletContext().getRealPath("/");
+		
 		String fileRoot = contextRoot+"resources/upload/review/";
 		
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
@@ -158,7 +159,7 @@ public class ReviewController {
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("url", "/resources/upload/review/" + review.getRev_Id() + "/" +savedFileName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("url", "/resources/upload/review/" + savedFileName); // contextroot + resources + 저장할 내부 폴더명
 			jsonObject.addProperty("responseCode", "success");
 				
 		} catch (IOException e) {
