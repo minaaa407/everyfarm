@@ -66,7 +66,7 @@ public class ReviewController {
 	@RequestMapping(value = "/reviewInsert", method = RequestMethod.POST)
 	public String Reviewinsert(ReviewBean reviewBean,@RequestParam("rev_Rate")Float rev_Rate,@RequestParam("pay_No")Float pay_No,FarmerBean farmerBean){
 	
-	Map<Float, Object> map = new HashMap<>();
+	Map<Float, Object> map = new HashMap<Float, Object>();
 	map.put(rev_Rate, rev_Rate);
 	map.put(pay_No, Math.round(pay_No));
 	FarmerDAO fdao = sqlSessionTemplate.getMapper(FarmerDAO.class);

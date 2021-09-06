@@ -32,6 +32,9 @@
 <link rel="stylesheet" href="resources/index/css/flaticon.css">
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
+
+
+
 </head>
 <style>
 .top {
@@ -50,10 +53,10 @@ table {
 	line-height: 1.5;
 }
 
-.table th{
-    padding: 0.75rem;
-    /* vertical-align: top; */
-    border-top: 1px solid #dee2e6;
+.table th {
+	padding: 0.75rem;
+	/* vertical-align: top; */
+	border-top: 1px solid #dee2e6;
 }
 
 thead th {
@@ -109,6 +112,9 @@ tbody tr #readc {
 	text-align: center;
 }
 </style>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
 
 <script>
 
@@ -140,6 +146,86 @@ function search(){
 	document.myHiddenForm.submit();
 }
 
+
+function accepty(){
+	var bean = {
+			"selectpage" : 1,
+			"limit" : 10,
+			"where" : "p_Accept",
+			"wherecolumn" : "Y",
+			"page" : pagenumber
+			}
+	var urlpath = "/ProYList";
+	ajax(urlpath,bean);
+	
+}
+
+
+function acceptn(){
+	var bean = {
+			"selectpage" : 1,
+			"limit" : 10,
+			"where" : "p_Accept",
+			"wherecolumn" : "N",
+			"page" : pagenumber
+			}
+	var urlpath = "/ProNList";
+	ajax(urlpath,bean);
+	
+}
+
+
+function ajax(urlpath,bean){
+	
+	$.ajax({
+		type : "post", //요청 메소드 방식
+		url : urlpath,
+		data : bean,
+		success : function(result) {//성공시 동작하는 파트
+				var productlist = result.productlist;
+				var page = result.pagebeen;
+				var a = "";
+						for(var i =0; i < productlist.length; i++){
+							a +="<tr><td class='content'>"+productlist[i].p_No+"</td>";
+							a +="<td class='content'><img id='product"+productlist[i].p_No+"'" ;
+							a +=" src='/resources/upload/product/"+productlist[i].p_No +"/"+productlist[i].p_Img+" ' ";
+							a +=" class='test1' width='90' height='auto' alt='Image "+productlist[i].p_No+"'></td>";
+							a +="<td class='content'>"+productlist[i].p_Id+"</td>";	
+							a +="<td class='content'>"+productlist[i].p_Title+"</td>";	
+							a +="<td class='content'>"+productlist[i].p_Date+"</td>";	
+							a +="<td class='content'>"+productlist[i].p_Accept+"</td>";	
+							a +="<td class='content'><a href='/productdetail?productno="+productlist[i].p_No+"'>상세보기</a></td>";	
+							a +="<td><a href='proRegDetailForm?p_No="+productlist[i].p_No+"'>수정</a></td>";
+							a +="<td><button type='button' class='btn btn-outline-dark' onclick='javascript:proDelete("+productlist[i].p_No+")'>삭제</button></td></tr>";
+						
+						}
+					document.getElementById("tableproduct").innerHTML=a;
+					var pageList = document.getElementById("pageList");
+					
+					var b="";
+					if(page.pro == true){//페이징 처리 부분
+						b += "<a id = '"+page.pagestart+"-1 ' style='cursor:pointer' onclick= 'testbutton("+page.pagestart+" -1 )' >이전 </a>";
+					}
+					var i = page.pagestart;
+					for(i; i < page.pageend+1; i++){
+						b += "<a id = 'page"+i+"' style='cursor:pointer' onclick= 'testbutton("+i+")' >"+i+"</a>";;
+					}
+					if(page.post == true){
+						b += "<a id = '"+page.pageend+"+1 ' style='cursor:pointer' onclick= 'testbutton("+page.pageend+" +1 )' >다음 </a>";
+					}
+					pageList.innerHTML = b;
+					
+	
+			
+			},
+			error : function(a, b, c) {
+				//통신 실패시 발생하는 함수(콜백)
+				alert("a:" + a + "b:" + b + "c:" + c);
+			}
+		});
+	
+}	
+	
 
 </script>
 
@@ -216,19 +302,11 @@ function search(){
 	<h2>상품 리스트</h2>
 	<br>
 	<div id=rezButton class="col-lg-12">
-		<a href="/ProYList" class="btn btn-dark">승인전 </a>
-
-		<%-- <form:form commandName="pagebeenY" name="myHiddenFormY"
-      action="/ProYList" method="post">승인전</form:form> --%>
-
-		<a href="/ProNList" class="btn btn-dark">승인후 </a>
-
-		<%-- <form:form commandName="pagebeenN" name="myHiddenFormN"
-      action="/ProNList" method="post">승인후</form:form> --%>
-
-
-		<a href="/proAdminListForm?" class="btn btn-dark">전체보기 </a>
-	</div><br>
+		<a class="btn btn-dark" onclick="acceptn()">승인전 </a> <a
+			class="btn btn-dark" onclick="accepty()">승인후 </a> <a
+			href="/proAdminListForm?" class="btn btn-dark">전체보기 </a>
+	</div>
+	<br>
 
 	<div class="table" class="col-lg-12">
 		<table>
@@ -241,12 +319,11 @@ function search(){
 					<th>등록날짜</th>
 					<th>승인여부</th>
 					<th>승인</th>
-					<th>수정</th>
-					<th>삭제</th>
+					<th>수정,삭제</th>
 					<th></th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="tableproduct">
 				<c:forEach var="p" items="${productlist}">
 					<tr>
 						<td class="content">${p.p_No}</td>
@@ -260,9 +337,8 @@ function search(){
 						<td class="content">${p.p_Accept}</td>
 						<td class="content"><a
 							href="/productdetail?productno=${p.p_No}">상세보기</a></td>
-						<td><a href="proRegDetailForm?p_No=${p.p_No}">수정</a></td>	
-						
-						<td><button type="button" class="btn btn-outline-dark"
+						<td><a class="btn btn-dark" href="/proRegDetailForm?p_No=${p.p_No}">수정</a>
+						<button type="button" class="btn btn-outline-dark"
 								onclick="javascript:proDelete(${p.p_No})">삭제</button></td>
 					</tr>
 				</c:forEach>
@@ -316,7 +392,6 @@ function search(){
 		<select name="productselect" id="productselect">
 			<option value="p_No">상품번호</option>
 			<option value="p_Id">아이디</option>
-			<option value="p_Land">토지 사이즈</option>
 		</select> <input type="text" name="selectText" id="selectText"> <input
 			type="button" value="검색" onclick="search()">
 	</div>

@@ -18,6 +18,7 @@ public interface ProductDao {
 	
 	public int listcount();
 	public int listacceptcount();
+	public int listacceptncount();
 	public ProductBean info(int productno);
 	public ProductBean onelist(int p_No);
 	public int insert(ProductBean product);
@@ -32,7 +33,6 @@ public interface ProductDao {
 	public float productfrate(int p_No);
 	
 
-	List<ProductBean> viewList();
 	
 	
 	public ProductBean productinfo(String p_No);
