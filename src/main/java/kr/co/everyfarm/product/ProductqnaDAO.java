@@ -18,6 +18,7 @@ public interface ProductqnaDAO {
 	public int listserachcount();
 	public int productqnalistcount(String c_no);
 	public List<ProductqnaBean> productqnalist(PageBeen pagebeen);
+	public ProductqnaBean productqnaone(String c_Seq);
 	public int maxcmainno(String c_no);
 	public int maxcsubno(String c_Seq);
 	public int mainno(String c_Seq);

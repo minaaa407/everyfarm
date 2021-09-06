@@ -66,7 +66,9 @@ integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChi
 //script 전부 다 박살 에정. 방법 없다.
 //여기아래부분 정말로 잘 보존해서 어떻게든 우려먹기는 안되겠네
 //응용해서 처리해보자. 일단 그대로 가져가는건 현재 불가능하다. 코드 잘못짰네. 의존도 겁내 높다. ㅎㅎ
+
 var nowpage= "1";
+var lnb = $("#lnb").offset().top;
 function productaccept(accept) {
 			if(!(accept == 'Y' && ${not empty farmer}) ){
 				var bean = {
@@ -100,16 +102,21 @@ function productaccept(accept) {
 			}else{
 				alert("승인권한이 없습니다.")
 			}
+
 }
+
 function selectimg(name){
+
 	document.getElementById('selectimg').src=name;
 	
 }
+
 function basket(){
 	
 	document.getElementById('myHiddenForm').action="/productbasketchoice";
 	document.myHiddenForm.submit();
 }
+
 function payment(){
 	if($('table1').children()){
 		document.getElementById('myHiddenForm').action="/PaymentInfo";
@@ -119,6 +126,12 @@ function payment(){
 	}
 	
 }
+
+
+
+
+
+
 function count1(name)  {
 	   
 	  var total = "total"+name;
@@ -138,6 +151,7 @@ function count1(name)  {
 	  }
 	  
 }
+
 function count2(name)  {
 	  var b_Land = ("b_Land" + name);
 	  var b_Totalprice = ("b_Totalprice" + name);
@@ -153,6 +167,12 @@ function count2(name)  {
 		  document.getElementById(b_Totalprice).value = (number) * (${oneproduct.p_Landprice});
 	  }
 }
+
+
+
+
+
+
 function deleteRow(btndel,name){
 	var b_Land = ("b_Land" + name);
 	var b_Totalprice = ("b_Totalprice" + name);
@@ -204,16 +224,22 @@ function deleteRow(btndel,name){
     }
     
 }
+
 function check(){
 	document.getElementById("myhiddenform");
 	document.getElementById("myhiddenform").submit();
 	document.myhiddenform.submit();
 	
 }
+
+
 function listChange(){
 	$('#iniamout').val('1');
 }
+
+
 //아래 댓글임
+
 function qnainsert(page){
 	var uid = '<%=(MemberBean)session.getAttribute("member")%>';
 	var fid = '<%=(FarmerBean)session.getAttribute("farmer")%>';
@@ -229,9 +255,11 @@ function qnainsert(page){
 					"page" : page
 					}
 		var urlpath = "/productdetailinsertqna";
+		document.getElementById("c_Content").value="";
 		ajax(urlpath,bean);
 	}
 }
+
 function pagebutton(pagenumber){
 	nowpage = pagenumber;
 	var bean = {
@@ -241,6 +269,7 @@ function pagebutton(pagenumber){
 	var urlpath = "/productdetailpaging";
 	ajax(urlpath,bean);
 }
+
 function qnaupdateexit(){
 	
 	var bean = {
@@ -250,7 +279,9 @@ function qnaupdateexit(){
 	var urlpath = "/productdetailpaging";
 	ajax(urlpath,bean);
 	
+	
 }
+
 function qnaupdate(c_seq){
 	
 	var content = document.getElementById("c_Contentupdate").value;
@@ -264,6 +295,8 @@ function qnaupdate(c_seq){
 	ajax(urlpath,bean);
 	
 }
+
+
 function qnadeletebutton(c_seq){
 	var content = "삭제된 댓글입니다.";
 	var c_Id = "삭제";
@@ -278,6 +311,8 @@ function qnadeletebutton(c_seq){
 	ajax(urlpath,bean);
 	
 }
+
+
 function subqnainsert(number){
 	var content = document.getElementById("c_Content2").value;
 	var bean = {
@@ -292,6 +327,68 @@ function subqnainsert(number){
 	
 	
 }
+
+
+function oneqna(){
+	var number = 1;
+	if($("#qnaupdateexit").length > 0 ){
+		number = $("#qnaupdateexit").attr('name');
+	}
+	
+	var table =$("#qnaupdateexit").parent().parent().parent().parent();
+	var bean = {
+			"c_No" : ${p_No},
+			"page" : nowpage,
+			"c_Seq": number
+			}
+	var urlpath="/productdetailoneqna"
+		$.ajax({
+			type : "post", //요청 메소드 방식
+			url : urlpath,
+			data : bean,
+				success : function(result) {//성공시 동작하는 파트
+						var onelist = result.onelist;		
+						var a = "";
+							
+								a +="<tr>";
+								if(onelist.c_Subno > 0){
+									a +="<td style='width:80%;padding-left: 20px;'>";
+									a +="<span style='font-size:20px'>└</span>"+onelist.c_Content+"<br></td>";
+								}else{
+									a +="<td style='width:80%'>"+onelist.c_Content +"<br></td>";
+									
+								}
+								a +="<td  style='width:20%'>";
+								a +=onelist.c_Id+"<br>"+onelist.c_Date+"<br></td><tr></tr><td>";
+								if( ((onelist.c_Subno==0)&&(${(not empty farmer || not empty admin)}))&&onelist.c_Id !='삭제' ){
+									a +="<input name ='"+onelist.c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton('"+onelist.c_Seq+"')' />";
+								}
+								
+								a+="</td><td>";
+								//뒤로가기 방지&& ${member.m_Id} == qnalist[i].c_Id
+								if( ( ${(not empty farmer || not empty admin)} || ( ${not empty member}  ) ) && (onelist.c_Id !='삭제')  ){
+									var seq= onelist.c_Seq;
+									//a+="<input type='button' value='수정' onclick='updatebutton("+seq+")'/>"
+									//a+="&nbsp;&nbsp;<input type='button' value='삭제' onclick='qnadeletebutton("+seq+")'/>";
+									a+="<input type='button' class='updatebutton' name='"+seq+"' value='수정' onclick='updatebutton()'/>";
+									a+="&nbsp;&nbsp;<input type='button' class='qnadeletebutton' name='"+seq+"' value='삭제' onclick='qnadeletebutton()'/>";
+								}
+								a+="</td></tr>";
+							
+							table.html(a);
+
+				
+				},
+				error : function(a, b, c) {
+					//통신 실패시 발생하는 함수(콜백)
+					alert("a:" + a + "b:" + b + "c:" + c);
+				}
+				
+				
+			});
+	
+}
+
 	
 function ajax(urlpath,bean){
 	
@@ -305,28 +402,32 @@ function ajax(urlpath,bean){
 				var pagesystem = document.getElementById("pagesystem");
 				var a = "";
 					for(var i =0; i < qnalist.length; i++){
-					a +="<table style='width:100%'><tr>";
-					if(qnalist[i].c_Subno > 0){
-						a +="<td style='width:80%;padding-left: 20px;'>";
-						a +="<span style='font-size:20px'>└</span>"+qnalist[i].c_Content+"<br></td>";
-					}else{
-						a +="<td style='width:80%'>"+qnalist[i].c_Content +"<br></td>";
+						a +="<table style='width:100%'><tr>";
+						if(qnalist[i].c_Subno > 0){
+							a +="<td style='width:80%;padding-left: 20px;'>";
+							a +="<span style='font-size:20px'>└</span>"+qnalist[i].c_Content+"<br></td>";
+						}else{
+							a +="<td style='width:80%'>"+qnalist[i].c_Content +"<br></td>";
+							
+						}
+						a +="<td  style='width:20%'>";
+						a +=qnalist[i].c_Id+"<br>"+qnalist[i].c_Date+"<br></td><tr></tr><td>";
+						if( ((qnalist[i].c_Subno==0)&&(${(not empty farmer || not empty admin)}))&&qnalist[i].c_Id !='삭제' ){
+							a +="<input name ='"+qnalist[i].c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton('"+qnalist[i].c_Seq+"')' />";
+						}
 						
+						a+="</td><td>";
+						//뒤로가기 방지&& ${member.m_Id} == qnalist[i].c_Id
+						if( ( ${(not empty farmer || not empty admin)} || ( ${not empty member}  ) ) && (qnalist[i].c_Id !='삭제')  ){
+							var seq= qnalist[i].c_Seq;
+							//a+="<input type='button' value='수정' onclick='updatebutton("+seq+")'/>"
+							//a+="&nbsp;&nbsp;<input type='button' value='삭제' onclick='qnadeletebutton("+seq+")'/>";
+							a+="<input type='button' class='updatebutton' name='"+seq+"' value='수정' onclick='updatebutton()'/>";
+							a+="&nbsp;&nbsp;<input type='button' class='qnadeletebutton' name='"+seq+"' value='삭제' onclick='qnadeletebutton()'/>";
+						}
+						//if( ( ${(not empty farmer || not empty admin)} || ( ${not empty member &&(member.m_Id == qnalist[i].c_Id) }  ) ) && qnalist[i].c_Id !='삭제' ){
+						a+="</td></tr></table><div><hr/></div>";
 					}
-					a +="<td  style='width:20%'>";
-					a +=qnalist[i].c_Id+"<br>"+qnalist[i].c_Date+"<br></td><tr></tr><td>";
-					if(qnalist[i].c_Subno==0){
-						a +="<input name ='"+qnalist[i].c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton('"+qnalist[i].c_Seq+"')' />";
-					}
-					
-					
-					
-					a+="</td><td><input type='button' value='수정' onclick='updatebutton('"+qnalist[i].c_Seq+"')' /><input type='button' value='삭제' onclick='qnadeletebutton('"+qnalist[i].c_Seq+"')' />";
-					a+="</td></tr></table><div><hr/></div>";
-					
-					
-					
-				}
 					document.getElementById("qnatalbe").innerHTML=a;
 					
 					var b="";
@@ -353,8 +454,12 @@ function ajax(urlpath,bean){
 	
 	
 	
+
+
+
 </script>
 <style>
+
 .product__pagination a, .blog__pagination a {
     display: inline-block;
     width: 30px;
@@ -375,11 +480,15 @@ function ajax(urlpath,bean){
 .product__pagination, .blog__pagination {
     padding-top: 10px;
 }
+
 .product__pagination a:hover, .blog__pagination a:hover {
     background: #7fad39;
     border-color: #7fad39;
     color: #ffffff;
 }
+
+
+
 .product__details__pic__item--large {
 	position: relative;
 	top: 0;
@@ -387,6 +496,7 @@ function ajax(urlpath,bean){
 	width: 100%;
 	height: 340px;
 }
+
 .product__details__tab__desc {
 	position: relative;
 	top: 0;
@@ -394,6 +504,7 @@ function ajax(urlpath,bean){
 	width: 100%;
 	height: auto;
 }
+
 .mybtn {
 	padding: 0;
 	display: inline;
@@ -409,6 +520,7 @@ function ajax(urlpath,bean){
 	color: #fff;
 	text-decoration: none;
 }
+
 .mybtn2 {
 	padding: 0;
 	display: inline;
@@ -424,31 +536,82 @@ function ajax(urlpath,bean){
 	color: #fff;
 	text-decoration: none;
 }
+
+.qnasubbutton, .updatebutton, .qnadeletebutton,#qnaupdate,#qnaupdateexit{
+	padding: 0;
+	display: inline;
+	border-radius: 4px;
+	background: #00BC4B;
+	color: #fff;
+	margin-top: 20px;
+	border: solid 0.5px #212529;
+	transition: all 0.5s ease-in-out 0s;
+	width: 60px
+}
+.qnasubbutton:hover, .updatebutton:hover, .qnadeletebutton:hover #qnaupdate:hover, #qnaupdateexit:hover{
+	background: #4CAF00;
+	color: #fff;
+	text-decoration: none;
+	width: 60px
+}
+
+#qnaupdate,#qnaupdateexit{
+	padding: 0;
+	display: inline;
+	border-radius: 4px;
+	background: #00BC4B;
+	color: #fff;
+	margin-top: 20px;
+	border: solid 0.5px #212529;
+	transition: all 0.5s ease-in-out 0s;
+	width: 100px
+}
+#qnaupdate:hover, #qnaupdateexit:hover{
+	background: #4CAF00;
+	color: #fff;
+	text-decoration: none;
+	width: 100px
+}
+
+
+
 .fa, .fab, .fad, .fal, .far, .fas {
 	cursor: pointer;
 	
 }
+
 i.fa-minus-circle:hover{
 	color : #119300;
 }
+
 i.fa-minus-circle:active{
 	color : #21AF23;
 }
+
 i.fa-minus-circle{
 	color : green;
 }
+
+
 i.fa-plus-circle:hover{
 	color : #119300;
 }
+
 i.fa-plus-circle:active{
 	color : #21AF23;
 }
+
 i.fa-plus-circle{
 	color : green;
 }
+
 .owl-item img{
+
 height:60px;
+
 }
+
+
 a.sidenav{
 	color: #FFFFFF;
 	font-size: 14px;
@@ -456,18 +619,29 @@ a.sidenav{
     padding-right: 20px;
     text-transform: uppercase;
 }
+
 a.sidenav:hover, focus {
     color: yellow;
 }
+
 .owl-carousel .owl-item img{
 	width:115%;
 }
+
+
+
 <!--메뉴바 -->
+
+
 #header{width: 100%; height:600px; line-height: 600px; font-size: 60px; background:red; transition: background 0.6s; text-align: center;}
 #lnb.fixed{position: fixed; left: 0; top: 0; width: 100%; z-index:99;}
 #lnb ul{font-size:0; line-height: 0; background: #4e9525;}
 #lnb li{display: inline-block; vertical-align: top; padding: 20px 0; font-size: 25px; text-align: center;}
 #container{width:100%; height:1500px; line-height: 1500px; font-size: 60px; background: blue; text-align: center;}
+
+
+
+
 </style>
 
 
@@ -481,13 +655,16 @@ a.sidenav:hover, focus {
 	border: 1px solid #ccc;
 	padding: 0 8px;
 }
+
 .select  a:after, .select  ul>li:first-child:after {
 	display: block;
 	float: right;
 }
+
 .select  a:after {
 	content: '▼';
 }
+
 .select  ul {
 	position: absolute;
 	width: 100%;
@@ -495,21 +672,26 @@ a.sidenav:hover, focus {
 	background: #fff;
 	display: none;
 }
+
 .select  ul>li {
 	cursor: pointer;
 	padding: 0 8px;
 	border: 1px solid #ccc;
 }
+
 .select  ul>li:first-child:after {
 	content: '▲';
 }
+
 ul {
 	list-style: none;
 	padding-left: 0px;
 }
+
 td .mybtn{
 	width: 100pt;
 }
+
 @media screen and (max-width: 768px) {
 	div.select{
 	width: 250px;
@@ -523,12 +705,15 @@ td .mybtn{
 	td .mybtn{
 	width: 80pt;
 	}
+
 }
+
+
 </style>
 
 <script>
 			$(document).ready(function () {
-				var lnb = $("#lnb").offset().top;
+				lnb = $("#lnb").offset().top;
 				  $("div.select > a").click(function () {
 					  $(this).next("ul").toggle();
 					  $(this).parent("div.select").css("overflow","auto");
@@ -536,6 +721,8 @@ td .mybtn{
 					  $(this).parent("div.select").css("position","absolute");
 					  $(this).parent("div.select").css("z-index","999");
 					  $("#area").css("display","block");
+					  
+				
 					    return false;
 				  });
 		  
@@ -686,7 +873,8 @@ td .mybtn{
 				   var sign = $(this).val();
 					  var number = $(this).siblings('.onlyNumber').val();
 					  number = parseInt(number) + 1;
-					  		
+					  var producttext = $(this).parent().parent().parent().parent().attr('id');
+					  var product="";		
 					  $(this).siblings('.onlyNumber').val(number);
 					  $(this).siblings('.onlyNumber').attr('value',number);
 					  var oneprice = ${oneproduct.p_Landprice} * number;
@@ -708,7 +896,14 @@ td .mybtn{
 						var totalprice = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
 						 cn2 = totalprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 						 cn2 = cn2 +'원';
-					
+						 if(producttext !=null){
+							  product= producttext.substring(7);
+							  var b_Land = ("b_Land" + product);
+						      var b_Totalprice = ("b_Totalprice" + product);
+						      document.getElementById(b_Land).value= number;
+							  document.getElementById(b_Totalprice).value= (number)*(${oneproduct.p_Landprice});
+							  
+						  }
 						if(size>0){
 							var totalproduct = (${oneproduct.p_Landprice} * a1);
 							var c3 = totalproduct.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
@@ -728,10 +923,20 @@ td .mybtn{
 		    	$(document).on("click",'.fa-minus-circle',function () {
 				  var sign = $(this).val();
 				  var number = $(this).siblings('.onlyNumber').val();
-				   
+				  var producttext = $(this).parent().parent().parent().parent().attr('id');
+				  var product="";
+				  
 				  if((number>1)){
 						number = parseInt(number) - 1;
-					}
+						if(producttext !=null){
+							  product= producttext.substring(7);
+							  var b_Land = ("b_Land" + product);
+						      var b_Totalprice = ("b_Totalprice" + product);
+						      document.getElementById(b_Land).value= number;
+							  document.getElementById(b_Totalprice).value= (number)*(${oneproduct.p_Landprice});
+							  
+						 }
+				  }
 				  $(this).siblings('.onlyNumber').attr('value',number);
 				  $(this).siblings('.onlyNumber').val(number);
 				  var oneprice = ${oneproduct.p_Landprice} * number;
@@ -779,12 +984,22 @@ td .mybtn{
 							a1 = parseInt(a2) + parseInt(a1);
 						}
 					
-					   var oneprice = (${oneproduct.p_Manpay} * a1);
+					    var oneprice = (${oneproduct.p_Manpay} * a1);
 						var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 						var cn1 = cn1 +'원';
 						var totalprice = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
 						var cn2 = totalprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 						var cn2 = cn2 +'원';
+						var producttext = $(this).parent().parent().parent().parent().attr('id');
+						var product="";
+						if(producttext !=null){
+							  product= producttext.substring(7);
+							  var b_Land = ("b_Land" + product);
+						      var b_Totalprice = ("b_Totalprice" + product);
+						      document.getElementById(b_Land).value= 0;
+							  document.getElementById(b_Totalprice).value= 0;
+							  
+						 }
 						
 						if(size>0){
 							var totalproduct = (${oneproduct.p_Landprice} * a1);
@@ -806,7 +1021,9 @@ td .mybtn{
 		    	
 		    	$(document).on("click",'.qnasubbutton',function qnasubbutton() {
 		    		var testid = $(this).parent().parent().parent().parent().next().children().next();
-		    		
+		    		 if($("#qnaupdateexit").length >0){
+	    			 	oneqna();
+	    			 }
 		    		 if( ($("#subqna").length > 0)&&(testid.length) ){
 		    			 $("#subqna").parent().html("<hr>");
 		    		 }else if(($("#subqna").length > 0)){
@@ -835,8 +1052,12 @@ td .mybtn{
 		    	
 		    			
 		    	$(document).on("click",'.updatebutton',function updatebutton() {
+			    		 
+		    			if($("#qnaupdateexit").length >0){
+		    				oneqna();
+		    			}
 		    		
-			    		 if( ($("#subqna").length > 0)){
+		    			if( ($("#subqna").length > 0)){
 			    			 $("#subqna").parent().html("<hr>");
 			    		 }
 		    			var name = $(this).attr('name');
@@ -848,32 +1069,26 @@ td .mybtn{
 		    			updatetext +="<td><input id='qnaupdate' name='"+name+"' type='button' value='수정완료' onclick='qnaupdate(this.name)'></td>;"
 		    			updatetext +="<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id='qnaupdateexit' name='"+name+"' type='button' value='수정취소' onclick='qnaupdateexit(this.name)'></td></tr>"
 		    			updatetr.html(updatetext);
-		    	
 		    	});
-		    	
-    		
-	    			
 		    			
-		    	
 		        $(window).scroll(function() {
 		          var window = $(this).scrollTop();
 		          var lnbcenter = $("#lnbcenter").offset().top;
 		          if(lnbcenter <= window) {
-		        	  
 		            $("#lnb").addClass("fixed");
+		            $("#nonecenter").css("display","block");
 		          } else {
 		            $("#lnb").removeClass("fixed");
+		            $("#nonecenter").css("display","none");
 		          }
 		        })
-		    	
 	});
-			
-			
 			
 	</script>
 
 </head>
 <body>
+
 <%	MemberBean member = ((MemberBean)session.getAttribute("member"));
 	FarmerBean farmer = ((FarmerBean)session.getAttribute("farmer"));
 	AdminBean admin = ((AdminBean)session.getAttribute("admin"));
@@ -1182,14 +1397,16 @@ td .mybtn{
 		
 	</div>
 				<!-- 메뉴바?? -->
+				
 				<div id="lnbcenter"></div>
 				<div id="lnb" style="text-align: center;">
 				   <ul>
 				     <li><a href="#lnbposition" class="sidenav">설명2</a></li>
-				     <li><a href="#" class="sidenav">덧글</a></li>
+				     <li><a href="#movereview"  class="sidenav" onclick="move()">덧글</a></li>
 				   </ul>
 				 </div>
 				 <br><br>
+				 <div id="nonecenter" style="height: 59px;display: none;"></div>
 		<div class="container">
 			<div class="row">				 
 				<div class="col-lg-12">
@@ -1232,9 +1449,11 @@ td .mybtn{
 										<br>
 									</c:if>
 
-
+								
 								</div>
 							</div>
+							<div id="movereview"></div>
+							<br>
 							<hr/>
 							<div class="tab-pane" id="tabs-3" role="tabpanel">
 									<div class="qnatalbe" id="qnatalbe">
@@ -1271,7 +1490,7 @@ td .mybtn{
 														</td>
 														<td>
 															<c:if test="${(not empty farmer || not empty admin ||(not empty member && member.m_Id == q.c_Id))&&q.c_Id !='삭제'}">
-																<input name="${q.c_Seq}" class="updatebutton" type="button" value="수정" onclick="updatebutton('${q.c_Seq}')" />
+																<input name="${q.c_Seq}" class="updatebutton" type="button" value="수정" onclick="updatebutton('${q.c_Seq}')" />&nbsp;
 																<input name="${q.c_Seq}" class="qnadeletebutton" type="button" value="삭제" onclick="qnadeletebutton('${q.c_Seq}')" />
 															</c:if>
 														</td>
@@ -1460,6 +1679,7 @@ td .mybtn{
 			dataLayer.push(arguments);
 		}
 		gtag('js', new Date());
+
 		gtag('config', 'UA-23581568-13');
 	</script>
 

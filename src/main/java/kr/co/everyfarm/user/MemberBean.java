@@ -3,7 +3,6 @@ package kr.co.everyfarm.user;
 import java.util.Date;
 
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -12,7 +11,6 @@ public class MemberBean {
 
 	@NotEmpty(message = "필수 입력 항목입니다.")
 	@Email(message = "이메일  형식에 맞지 않습니다.")
-	@Size(min = 8)
 	private String m_Id;
 
 	@NotEmpty(message = "필수 입력 항목입니다.")
@@ -20,20 +18,20 @@ public class MemberBean {
 
 	@NotEmpty(message = "필수 입력 항목입니다.")
 	@Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*\\W)(?=\\S+$).{8,20}", message = "비밀번호는 영문 소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8자 ~ 20자의 비밀번호여야 합니다.")
-	@Size(min = 8, max = 20)
 	private String m_Pw;
 
 	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String m_Addr;
 
 	@NotEmpty(message = "필수 입력 항목입니다.")
-	@Size(min = 11)
 	private String m_Tel;
 
 	@NotEmpty(message = "필수 입력 항목입니다.")
 	private String m_Birth;
 
 	private Date m_Date;
+
+	private String m_Profile;
 
 	public String getM_Id() {
 		return m_Id;
@@ -91,10 +89,17 @@ public class MemberBean {
 		this.m_Date = m_Date;
 	}
 
-	@Override
-	public String toString() {
-		return "MemberBean [m_Id=" + m_Id + ", m_Name=" + m_Name + ", m_Pw=" + m_Pw + ", m_Addr=" + m_Addr + ", m_Tel="
-				+ m_Tel + ", m_Birth=" + m_Birth + ", m_Date=" + m_Date + "]";
+	public String getM_Profile() {
+		return m_Profile;
 	}
 
+	public void setM_Profile(String m_Profile) {
+		this.m_Profile = m_Profile;
+	}
+
+	@Override
+	public String toString() {
+		return "MemberVO [m_Id=" + m_Id + ", m_Name=" + m_Name + ", m_Pw=" + m_Pw + ", m_Addr=" + m_Addr + ", m_Tel="
+				+ m_Tel + ", m_Birth=" + m_Birth + ", m_Date=" + m_Date + ", m_Profile=" + m_Profile + "]";
+	}
 }

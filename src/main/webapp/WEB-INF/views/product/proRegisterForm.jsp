@@ -256,7 +256,7 @@ tbody td {
 		<br>
 		<div id="button">
 			<input type="submit" class="btn btn-dark" value="글쓰기">&nbsp;&nbsp;
-			<button class="btn btn-outline-dark" onclick="back()">뒤로가기</button>
+			<button class="btn btn-outline-dark" onclick="history.go(-1);">뒤로가기</button>
 		</div>
 	</form:form>
 	<br>

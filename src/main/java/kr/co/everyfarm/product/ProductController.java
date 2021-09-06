@@ -15,6 +15,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -129,7 +130,7 @@ public class ProductController {
 	      
 	            for(int i=0; i < basketbean.getBasketbeanList().size() ; i++) {
 	               if(basketbean.getBasketbeanList().get(i).getB_Land() != 0) {
-	                  dao.insertbasket(basketbean.getBasketbeanList().get(i));
+	                  //dao.insertbasket(basketbean.getBasketbeanList().get(i));
 	               }
 	            }
 	      basketbean.setBasketbeanList(list);
@@ -210,6 +211,20 @@ public class ProductController {
 
 	}
 	
+	
+	@RequestMapping(value = "/productdetailoneqna")
+	@ResponseBody
+	public Map<String, Object> productdetailoneqna(@RequestParam("c_No") String c_No,@RequestParam("c_Seq") String c_Seq) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		ProductqnaDAO dao2 = sqlSessionTemplate.getMapper(ProductqnaDAO.class);
+		ProductqnaBean onelist = dao2.productqnaone(c_Seq);
+		
+		map.put("onelist", onelist);  
+		return map;
+
+	}
+	
 	@RequestMapping(value = "/productdetailinsertqna")
 	@ResponseBody
 	public Map<String, Object> insertproductqna(@RequestParam("c_No") String c_No,
@@ -257,11 +272,12 @@ public class ProductController {
 	    int mainno = dao2.mainno(c_Seq);
 	    int subno = dao2.maxcsubno(c_Seq)+1;
 	    
-	    MemberBean memberBean = new MemberBean();
-	    HttpSession session = request.getSession();
-	    memberBean = (MemberBean)session.getAttribute("member");//session member 가져오기.
+	    //MemberBean memberBean = new MemberBean();
+	    //HttpSession session = request.getSession();
+	    //memberBean = (MemberBean)session.getAttribute("member");//session member 가져오기.
+	    
 	    ProductqnaBean productqnabean = new ProductqnaBean();
-	    productqnabean.setC_Id(memberBean.getM_Id());//아이디
+	    productqnabean.setC_Id("관리자");//아이디
 	    productqnabean.setC_Mainno(mainno);//maino
 	    productqnabean.setC_Subno(subno);
 	    productqnabean.setC_Content(c_Content);
@@ -355,8 +371,7 @@ public class ProductController {
 		map.put("qnalist", qnalist);  
 		return map;
 	}
-	
-	
+
 
 	
 
@@ -481,181 +496,187 @@ public class ProductController {
 		return "product/productqnainsertform";
 	}
 
-	
-	
 	// 김주혁 ///////////////////
-	
 
-	
-	 @RequestMapping(value = "/proRegisterForm")
-	   public String getRegisterform(Model model, @ModelAttribute("product") ProductBean productbean) {
-	      model.addAttribute("product", productbean);
-	      return "product/proRegisterForm";
-	   }
-
-	   @RequestMapping(value = "/proLandListForm")
-	   public String getLandListform(Model model, @ModelAttribute("pagebeen") PageBeen pagebeen) {
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-
-	      List<ProductBean> list = dao.list();
-	      int selecttotalindex = list.size();
-
-	      model.addAttribute("productlist", list);
-	      return "product/proLandListForm";
-	   }
-
-	   @RequestMapping(value = "/ProductRegister", method = RequestMethod.POST) // 농장등록 여기서 동작함.
-	   public String getreginsert(Model model, @ModelAttribute("product") ProductBean productbean,
-	         HttpServletRequest request, @RequestParam(value = "p_Img1", required = false) MultipartFile mRequest,
-	         @RequestParam(value = "p_Subimg12", required = false) MultipartFile mRequest2,
-	         @RequestParam(value = "p_Subimg22", required = false) MultipartFile mRequest3,
-	         @RequestParam(value = "p_Subimg32", required = false) MultipartFile mRequest4,
-	         @RequestParam(value = "p_Subimg42", required = false) MultipartFile mRequest5,
-	         @RequestParam(value = "p_Imgdetail12", required = false) MultipartFile mRequest6,
-	         @RequestParam(value = "p_Imgdetail22", required = false) MultipartFile mRequest7,
-	         @RequestParam(value = "p_Imgdetail32", required = false) MultipartFile mRequest8,
-	         @RequestParam(value = "p_Imgdetail42", required = false) MultipartFile mRequest9) {
-	      MultipartFile[] ab = { mRequest, mRequest2, mRequest3, mRequest4, mRequest5, mRequest6, mRequest7, mRequest8,
-	            mRequest9 };
-
-	      productbean.setP_Accept("N");
-
-	      productbean.setP_Img(mRequest.getOriginalFilename());
-	      productbean.setP_Subimg1(mRequest2.getOriginalFilename());
-	      productbean.setP_Subimg2(mRequest3.getOriginalFilename());
-	      productbean.setP_Subimg3(mRequest4.getOriginalFilename());
-	      productbean.setP_Subimg4(mRequest5.getOriginalFilename());
-	      productbean.setP_Imgdetail1(mRequest6.getOriginalFilename());
-	      productbean.setP_Imgdetail2(mRequest7.getOriginalFilename());
-	      productbean.setP_Imgdetail3(mRequest8.getOriginalFilename());
-	      productbean.setP_Imgdetail4(mRequest9.getOriginalFilename());
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);// dao
-	      dao.insert(productbean);
-	      int pnomax = dao.listmaxpno();
-	      String path = "D:\\final\\.metadata\\.plugins\\org.eclipse.wst.server.core\\"
-	            + "tmp0\\wtpwebapps\\everyfarm\\resources\\upload\\product\\" + pnomax + "\\";
-	      ServletContext servletContext = request.getSession().getServletContext();
-	      String realPath = servletContext.getRealPath("/resource");
-	      System.out.println(realPath + "확인");
-	      realPath = "D:\\final\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\everyfarm\\resource";
-	      String mPath = "\\src\\main\\webapp\\resources\\upload\\product\\" + pnomax + "\\";
-	      int aa = realPath.indexOf("\\.");
-	      String pre = realPath.substring(0, aa);
-	      String savePath = pre + "\\everyfarm" + mPath;
-	      path = savePath;
-
-	      File Folder = new File(path);
-	      if (!Folder.exists()) {
-	         try {
-	            Folder.mkdir(); // 폴더 생성합니다.
-	            System.out.println("폴더가 생성되었습니다.");
-	         } catch (Exception e) {
-	            e.getStackTrace();
-	         }
-	      } else {
-	         System.out.println("이미 폴더가 생성되어 있습니다.");
-	      }
-
-	      String safeFile;
-	      String originFileName;
-	      long fileSize;
-
-	      for (int i = 0; i < ab.length; i++) {
-	         originFileName = ab[i].getOriginalFilename(); // 원본 파일 명
-	         fileSize = ab[i].getSize(); // 파일 사이즈
-	         safeFile = path + originFileName;
-	         try {
-	            // ab[i].transferTo(new File(safeFile));
-	            if (fileSize > 100) {
-	               ab[i].transferTo(new File(safeFile));
-	            }
-
-	         } catch (IllegalStateException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	         } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	         }
-	      }
-
-	      return "redirect:/proLandListForm";
-	   }
-
-	   @RequestMapping(value = "/proAdminListForm")
-	   public String getAdminProductList(Model model, @ModelAttribute("pagebeen") PageBeen pagebeen) {
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-
-	      /// List<ProductBean> list = dao.list();
-	      int limit = 10;
-	      pagebeen.setLimit(limit);
-	      List<ProductBean> list = dao.listserachpageingcount(pagebeen);
-	      int selecttotalindex = list.size();
-	      pagebeen.setTableindex(selecttotalindex);
-	      list = dao.listserachpageing(pagebeen);
-
-	      model.addAttribute("productlist", list);
-
-	      return "product/proAdminListForm";
-	   }
-
-	   
-	   //상품 수정 
-	   @RequestMapping("/proRegDetailForm")
-	   public String getRegDetail(Model model, @RequestParam int p_No) {
-	      System.out.println(p_No);
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-	      ProductBean productinfo = dao.info(p_No);
-	         System.out.println(productinfo.toString());
-	         model.addAttribute("productinfo", productinfo); 
-	         return "product/proRegDetailForm";
-	   
+	@RequestMapping(value = "/proRegisterForm")
+	public String getRegisterform(Model model, @ModelAttribute("product") ProductBean productbean) {
+		model.addAttribute("product", productbean);
+		return "product/proRegisterForm";
 	}
 
-	   @RequestMapping(value = "/ProYList")
-	   public String getProYList(Model model, @ModelAttribute("pagebeen") PageBeen pagebeen) {
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-	      int limit = 10;
-	      pagebeen.setLimit(limit);
-	      List<ProductBean> productasclist = dao.asclist(pagebeen);
-	      int selecttotalindex = productasclist.size();
-	      pagebeen.setTableindex(selecttotalindex);
-	      productasclist = dao.asclist(pagebeen);
-	      model.addAttribute("productlist", productasclist);
-	      return "product/proAdminListForm";
-	   }
+	@RequestMapping(value = "/proLandListForm")
+	public String getLandListform(Model model, @ModelAttribute("pagebeen") PageBeen pagebeen) {
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 
-	   @RequestMapping(value = "/ProNList")
-	   public String getProNList(Model model, @ModelAttribute("pagebeen") PageBeen pagebeen) {
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-	      int limit = 10;
-	      pagebeen.setLimit(limit);
-	      List<ProductBean> productdesclist = dao.desclist(pagebeen);
-	      int selecttotalindex = productdesclist.size();
-	      pagebeen.setTableindex(selecttotalindex);
-	      productdesclist = dao.desclist(pagebeen);
-	      model.addAttribute("productlist", productdesclist);
-	      return "product/proAdminListForm";
-	   }
+		List<ProductBean> list = dao.list();
+		int selecttotalindex = list.size();
 
-	   @RequestMapping("/ProDelete")
-	   public String getFroDelete(@RequestParam int p_No) {
-	      System.out.println(p_No);
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-	      int productdelete = dao.delete(p_No);
+		model.addAttribute("productlist", list);
+		return "product/proLandListForm";
+	}
 
-	      return "redirect:/proAdminListForm";
-	   }
-	   
-	   
-	   @RequestMapping("/proUpdate")
-	   public String getFroUpdate(Model model, ProductBean productbean) {
-	      System.out.println(productbean);
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-	      int productupdate = dao.update(productbean);
-	      System.out.println("수정 확인");
-	      model.addAttribute("P_No", productbean.getP_No());
-	      return "redirect:/proAdminListForm";
-	   }
+	@RequestMapping(value = "/ProductRegister", method = RequestMethod.POST) // 농장등록 여기서 동작함.
+	public String getreginsert(Model model, @ModelAttribute("product") ProductBean productbean,
+			HttpServletRequest request, @RequestParam(value = "p_Img1", required = false) MultipartFile mRequest,
+			@RequestParam(value = "p_Subimg12", required = false) MultipartFile mRequest2,
+			@RequestParam(value = "p_Subimg22", required = false) MultipartFile mRequest3,
+			@RequestParam(value = "p_Subimg32", required = false) MultipartFile mRequest4,
+			@RequestParam(value = "p_Subimg42", required = false) MultipartFile mRequest5,
+			@RequestParam(value = "p_Imgdetail12", required = false) MultipartFile mRequest6,
+			@RequestParam(value = "p_Imgdetail22", required = false) MultipartFile mRequest7,
+			@RequestParam(value = "p_Imgdetail32", required = false) MultipartFile mRequest8,
+			@RequestParam(value = "p_Imgdetail42", required = false) MultipartFile mRequest9) {
+		MultipartFile[] ab = { mRequest, mRequest2, mRequest3, mRequest4, mRequest5, mRequest6, mRequest7, mRequest8,
+				mRequest9 };
+
+		productbean.setP_Accept("N");
+
+		productbean.setP_Img(mRequest.getOriginalFilename());
+		productbean.setP_Subimg1(mRequest2.getOriginalFilename());
+		productbean.setP_Subimg2(mRequest3.getOriginalFilename());
+		productbean.setP_Subimg3(mRequest4.getOriginalFilename());
+		productbean.setP_Subimg4(mRequest5.getOriginalFilename());
+		productbean.setP_Imgdetail1(mRequest6.getOriginalFilename());
+		productbean.setP_Imgdetail2(mRequest7.getOriginalFilename());
+		productbean.setP_Imgdetail3(mRequest8.getOriginalFilename());
+		productbean.setP_Imgdetail4(mRequest9.getOriginalFilename());
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);// dao
+		dao.insert(productbean);
+		int pnomax = dao.listmaxpno();
+		String path = "D:\\final\\.metadata\\.plugins\\org.eclipse.wst.server.core\\"
+				+ "tmp0\\wtpwebapps\\everyfarm\\resources\\upload\\product\\" + pnomax + "\\";
+		ServletContext servletContext = request.getSession().getServletContext();
+		String realPath = servletContext.getRealPath("/resource");
+		System.out.println(realPath + "확인");
+		realPath = "D:\\final\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\everyfarm\\resource";
+		String mPath = "\\src\\main\\webapp\\resources\\upload\\product\\" + pnomax + "\\";
+		int aa = realPath.indexOf("\\.");
+		String pre = realPath.substring(0, aa);
+		String savePath = pre + "\\everyfarm" + mPath;
+		path = savePath;
+
+		File Folder = new File(path);
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		} else {
+			System.out.println("이미 폴더가 생성되어 있습니다.");
+		}
+
+		String safeFile;
+		String originFileName;
+		long fileSize;
+
+		for (int i = 0; i < ab.length; i++) {
+			originFileName = ab[i].getOriginalFilename(); // 원본 파일 명
+			fileSize = ab[i].getSize(); // 파일 사이즈
+			safeFile = path + originFileName;
+			try {
+				// ab[i].transferTo(new File(safeFile));
+				if (fileSize > 100) {
+					ab[i].transferTo(new File(safeFile));
+				}
+
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return "redirect:/proLandListForm";
+	}
+
+	@RequestMapping(value = "/proAdminListForm")
+	public String getAdminProductList(Model model, @ModelAttribute("pagebeen") PageBeen pagebeen) {
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+
+		/// List<ProductBean> list = dao.list();
+		int limit = 10;
+		pagebeen.setLimit(limit);
+		List<ProductBean> list = dao.listserachpageingcount(pagebeen);
+		int selecttotalindex = list.size();
+		pagebeen.setTableindex(selecttotalindex);
+		list = dao.listserachpageing(pagebeen);
+
+		model.addAttribute("productlist", list);
+
+		return "product/proAdminListForm";
+	}
+
+	// 상품 수정
+	@RequestMapping("/proRegDetailForm")
+	public String getRegDetail(Model model, @RequestParam int p_No) {
+		System.out.println(p_No);
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		ProductBean productinfo = dao.info(p_No);
+		System.out.println(productinfo.toString());
+		model.addAttribute("productinfo", productinfo);
+		return "product/proRegDetailForm";
+
+	}
+
+	@RequestMapping(value = "/ProYList")
+	@ResponseBody
+	public Map<String, Object> getProYList(Model model, @ModelAttribute("pagebeen") PageBeen pagebeen) {
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		Map<String, Object> map = new HashMap<String, Object>();
+		int selecttotalindex = dao.listacceptcount();
+		pagebeen.setTableindex(selecttotalindex);
+		List<ProductBean> productdesclist = dao.listserachpageing(pagebeen);
+		map.put("pagebeen", pagebeen);
+		map.put("productlist", productdesclist);
+		return map;
+	}
+
+	@RequestMapping(value = "/ProNList")
+	@ResponseBody
+	public Map<String, Object> getProNList(Model model, @ModelAttribute("pagebeen") PageBeen pagebeen) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		int selecttotalindex = dao.listacceptncount();
+		pagebeen.setTableindex(selecttotalindex);
+
+		List<ProductBean> productdesclist = dao.listserachpageing(pagebeen);
+
+		map.put("pagebeen", pagebeen);
+		map.put("productlist", productdesclist);
+		return map;
+	}
+
+	@RequestMapping("/ProDelete")
+	public String getFroDelete(@RequestParam int p_No) {
+		System.out.println(p_No);
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		int productdelete = dao.delete(p_No);
+
+		return "redirect:/proAdminListForm";
+	}
+
+	@RequestMapping("/LandDelete")
+	public String getLandDelete(@RequestParam int p_No) {
+		System.out.println(p_No);
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		int productdelete = dao.delete(p_No);
+
+		return "redirect:/proLandListForm";
+	}
+
+	@RequestMapping("/proUpdate")
+	public String getFroUpdate(Model model, ProductBean productbean) {
+		System.out.println(productbean);
+		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+		int productupdate = dao.update(productbean);
+		System.out.println("수정 확인");
+		model.addAttribute("P_No", productbean.getP_No());
+		return "redirect:/proAdminListForm";
+	}
 
 }
