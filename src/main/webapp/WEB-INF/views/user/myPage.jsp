@@ -248,19 +248,6 @@ body {
 						<form class="form-horizontal" method="post" id="myInfo">
 							<fieldset class="fieldset">
 								<h3 class="fieldset-title">상세정보</h3>
-								<div class="form-group avatar">
-									<figure class="figure col-md-2 col-sm-3 col-xs-12">
-										<img class="img-rounded img-responsive"
-											src="https://bootdey.com/img/Content/avatar/avatar1.png"
-											alt="">
-									</figure>
-									<div class="form-inline col-md-10 col-sm-9 col-xs-12">
-										<input type="file" class="file-uploader pull-left">
-										<button type="submit"
-											class="btn btn-sm btn-default-alt pull-left">Update
-											Image</button>
-									</div>
-								</div>
 								<table>
 									<colgroup>
 										<col width="20%">

@@ -18,17 +18,6 @@
 	href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
 	rel="stylesheet">
 
-<!-- Css Styles -->
-<!-- 
-    <link rel="stylesheet" href="resources/review/reviewList/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/review/reviewList/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/review/reviewList/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="resources/review/reviewList/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="resources/review/reviewList/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/review/reviewList/ss/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/review/reviewList/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/review/reviewList/css/style.css" type="text/css">
-    -->
 <link rel="stylesheet"
 	href="https://stackpatd.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
@@ -46,19 +35,20 @@
 
 <style type="text/css">
 /* CSS 작업중 삭제 XXXXXXXX */
-.container{
+.container {
 	margin: auto;
-	
 }
+
 .bb {
 	border-left: 0px solid rgba(0, 0, 0, 0.05);
 	border-right: 0px solid rgba(0, 0, 0, 0.05);
 	border-radius: 5px;
 	border-bottom: 0px;
 	border-collapse: separate;
-    border-spacing: 0 20px;
-    margin: auto;
+	border-spacing: 0 20px;
+	margin: auto;
 }
+
 .ff {
 	background: #389d29 !important;
 	margin-bottom: 20px;
@@ -68,6 +58,7 @@
 	border: 0;
 	text-align: left;
 }
+
 .cc {
 	text-align: center;
 	padding: 20px 25px;
@@ -75,14 +66,16 @@
 	font-size: 14px;
 	font-weight: 700;
 }
+
 .bef-list {
-text-align: center;
+	text-align: center;
 	margin-bottom: 20px;
 	border-top: 0px;
 	border-radius: 11px;
 	padding: 0;
 	margin: 0;
 }
+
 .list {
 	border-right: 1px solid rgba(0, 0, 0, 0.05);
 	margin-bottom: 20px;
@@ -92,8 +85,9 @@ text-align: center;
 	margin: 0;
 	background: #F3F3F3;
 }
+
 .list-end {
-border-right: 1px solid rgba(0, 0, 0, 0.05);
+	border-right: 1px solid rgba(0, 0, 0, 0.05);
 	border-bottom-left-radius: 11px;
 	border-top-left-radius: 11px;
 	margin-bottom: 20px;
@@ -101,6 +95,7 @@ border-right: 1px solid rgba(0, 0, 0, 0.05);
 	margin: 0;
 	background: #F3F3F3;
 }
+
 .list-start {
 	border-top-right-radius: 11px;
 	border-bottom-right-radius: 11px;
@@ -109,11 +104,55 @@ border-right: 1px solid rgba(0, 0, 0, 0.05);
 	margin: 0;
 	background: #F3F3F3;
 }
- /* a 태그 CSS 하는중 */
- a:link  {color: black; text-decoration: none;}
- a:visited  {color: black; text-decoration: none;}
- a:hover   {color: black; text-decoration: underline;}
-	
+/* a 태그 CSS 하는중 */
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: underline;
+}
+/* 페이징 버튼 꾸미는중 0902~ */
+.pageInfo li {
+	float: left;
+	font-size: 13px;
+	margin-left: 18px;
+	padding: 7px;
+	font-weight: 500;
+}
+
+.pageInfo_btn {
+	border: #AAAAAA 1px solid;
+	background-color: #FFFFFF;
+	color: #555555;
+	padding: 3px 6px;
+	margin: 3px;
+	font: 8pt verdana;
+	list-style-type: none;
+}
+
+.pageInfo_btn active{
+	font-weight: bold;
+	color: #555555;
+}
+.search{
+	cursor: pointer;
+    margin: 0;
+    padding: 0 0 0 5px;
+    width: 178px;
+    height: 28px;
+    border: 1px solid #c3c3c3;
+    background-color: white;
+}
+/* 페이징 버튼 꾸미는중 0902~ */
+
 /* CSS 작업중 삭제 XXXXXXXX */
 </style>
 </head>
@@ -126,18 +165,18 @@ border-right: 1px solid rgba(0, 0, 0, 0.05);
 					<div class="blog-entry justify-content-end">
 						<div class="text">
 
-								<table class="bb">
-									<thead>
-										<tr class="ff">
-											<td class="cc">번호</td>
-											<td class="cc">제목</td>
-											<td class="cc"></td>
-											<td class="cc">작성자</td>
-											<td class="cc">조회수</td>
-											<td class="cc">작성일</td>
-										</tr>
-									</thead>
-									<tbody>
+							<table class="bb">
+								<thead>
+									<tr class="ff">
+										<td class="cc">번호</td>
+										<td class="cc">제목</td>
+										<td class="cc"></td>
+										<td class="cc">작성자</td>
+										<td class="cc">조회수</td>
+										<td class="cc">작성일</td>
+									</tr>
+								</thead>
+								<tbody>
 									<c:choose>
 										<c:when test="${empty revList}">
 											<tbody>
@@ -147,10 +186,11 @@ border-right: 1px solid rgba(0, 0, 0, 0.05);
 											</tbody>
 										</c:when>
 										<c:when test="${!empty revList}">
-											<c:forEach var="re" items="${revList}">
+											<c:forEach var="re" items="${revList}" varStatus="status">
 												<tr class="bef-list">
-													<td class="list-end">${re.rev_No}</td>
-													<td class="list"><a href="reviewDetail?rev_No=${re.rev_No}">${re.rev_Title}</a>
+													<td class="list-end">${(total - status.index) -((pageMaker.cri.pageNum -1) * 10)}</td>
+													<td class="list"><a
+														href="reviewDetail?rev_No=${re.rev_No}">${re.rev_Title}</a>
 													<td class="list"><c:if test="${re.rev_Rate eq 0.5}">
 															<img alt="0.5점"
 																src="resources/review/reviewList/img/half.png" />
@@ -191,7 +231,60 @@ border-right: 1px solid rgba(0, 0, 0, 0.05);
 										</c:when>
 									</c:choose>
 								</tbody>
-								</table>
+							</table>
+							<div class="search_wrap">
+								<div class="search_area">
+									<select name="type">
+										<option value=""
+											<c:out value="${pageMaker.cri.type == null?'selected':'' }"/>>--</option>
+										<option value="T"
+											<c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
+										<option value="C"
+											<c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
+										<option value="W"
+											<c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
+										<option value="TC"
+											<c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목
+											+ 내용</option>
+										<option value="TW"
+											<c:out value="${pageMaker.cri.type eq 'TW'?'selected':'' }"/>>제목
+											+ 작성자</option>
+										<option value="TCW"
+											<c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목
+											+ 내용 + 작성자</option>
+									</select> <input type="text" name="keyword"
+										value="${pageMaker.cri.keyword }">
+									<button class="search"><img src="https://image.makeshop.co.kr/makeshop/d3/basic_simple/bbs/btn_bbs_sch.gif"/></button>
+								</div>
+							</div>
+
+							<div class="pageInfo_wrap">
+								<div class="pageInfo_area">
+									<ul id="pageInfo" class="pageInfo">
+
+										<!-- 이전페이지 버튼 -->
+										<c:if test="${pageMaker.prev}">
+											<li class="pageInfo_btn previous"><a
+												href="${pageMaker.startPage-1}">◀ 이전</a></li>
+										</c:if>
+
+										<!-- 각 번호 페이지 버튼 -->
+										<c:forEach var="num" begin="${pageMaker.startPage}"
+											end="${pageMaker.endPage}">
+											<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a
+												href="${num}">${num}</a></li>
+										</c:forEach>
+
+										<!-- 다음페이지 버튼 -->
+										<c:if test="${pageMaker.next}">
+											<li class="pageInfo_btn next"><a
+												href="${pageMaker.endPage + 1 }">다음 ▶</a></li>
+										</c:if>
+
+									</ul>
+								</div>
+							</div>
+
 							<button type="button" id="revWrite"
 								class="btn btn-outline-success"
 								onclick="location.href='/reviewWrite'">글쓰기</button>
@@ -200,87 +293,62 @@ border-right: 1px solid rgba(0, 0, 0, 0.05);
 				</div>
 			</div>
 		</div>
+		<form id="moveForm" method="get">
+			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+			<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+			<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+			<input type="hidden" name="type" value="${pageMaker.cri.type }">
+		</form>
 	</section>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                 
-                //--페이지 셋팅
-                var totalPage = ${totalPage}; //전체 페이지
-                var startPage = ${startPage}; //현재 페이지
-                 
-                var pagination = "";
-                 
-                //--페이지네이션에 항상 10개가 보이도록 조절
-                var forStart = 0;
-                var forEnd = 0;
-                 
-                if((startPage-5) < 1){
-                    forStart = 1;
-                }else{
-                    forStart = startPage-5;
-                }
-                 
-                if(forStart == 1){
-                     
-                    if(totalPage>9){
-                        forEnd = 10;
-                    }else{
-                        forEnd = totalPage;
-                    }
-                     
-                }else{
-                     
-                    if((startPage+4) > totalPage){
-                         
-                        forEnd = totalPage;
-                         
-                        if(forEnd>9){
-                            forStart = forEnd-9
-                        }
-                         
-                    }else{
-                        forEnd = startPage+4;
-                    }
-                }
-                //--페이지네이션에 항상 10개가 보이도록 조절
-                 
-                //전체 페이지 수를 받아 돌린다.
-                for(var i = forStart ; i<= forEnd ; i++){
-                    if(startPage == i){
-                        pagination += ' <button name="page_move" start_page="'+i+'" disabled>'+i+'</button>';
-                    }else{
-                        pagination += ' <button name="page_move" start_page="'+i+'" style="cursor:pointer;" >'+i+'</button>';
-                    }
-                }
-                 
-                //하단 페이지 부분에 붙인다.
-                $("#pagination").append(pagination);
-                //--페이지 셋팅
-                 
-                 
-                $("a[name='subject']").click(function(){
-                     
-                    location.href = "/board/view?id="+$(this).attr("content_id");
-                     
-                });
-                 
-                $("#write").click(function(){
-                    location.href = "/board/edit";
-                });
-                                 
-                $(document).on("click","button[name='page_move']",function(){
-                     
-                    var visiblePages = 10;//리스트 보여줄 페이지
-                     
-                    $('#startPage').val($(this).attr("start_page"));//보고 싶은 페이지
-                    $('#visiblePages').val(visiblePages);
-                     
-                    $("#frmSearch").submit();
-                     
-                });
-                 
-            });
-        </script>
+	<!-- 페이징 및 검색!!!!  -->
+	<script src="https://code.jquery.com/jquery-3.4.1.js"
+		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+		crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		let moveForm = $("#moveForm");
+		$(".move")
+				.on(
+						"click",
+						function(e) {
+							e.preventDefault();
+
+							moveForm
+									.append("<input type='hidden' name='rev_no' value='"
+											+ $(this).attr("href") + "'>");
+							moveForm.attr("action", "/get");
+							moveForm.submit();
+						});
+		$(".pageInfo a").on("click", function(e) {
+			e.preventDefault();
+			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
+			moveForm.attr("action", "/reviewList");
+			moveForm.submit();
+
+		});
+
+		$(".search_area button").on("click", function(e) {
+			e.preventDefault();
+
+			let type = $(".search_area select").val();
+			let keyword = $(".search_area input[name='keyword']").val();
+
+			if (!type) {
+				alert("검색 종류를 선택하세요.");
+				return false;
+			}
+
+			if (!keyword) {
+				alert("키워드를 입력하세요.");
+				return false;
+			}
+
+			moveForm.find("input[name='type']").val(type);
+			moveForm.find("input[name='keyword']").val(keyword);
+			moveForm.find("input[name='pageNum']").val(1);
+			moveForm.submit();
+		});
+	</script>
+	<!-- 페이징 및 검색!!!!  -->
 	<script src="resources/review/reviewList/js/jquery.min.js"></script>
 	<script
 		src="resources/review/reviewList/js/jquery-migrate-3.0.1.min.js"></script>
