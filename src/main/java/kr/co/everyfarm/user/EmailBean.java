@@ -9,6 +9,13 @@ public class EmailBean {
 	private int e_Num;
 
 	private Date e_Date;
+	
+	public EmailBean() {}
+	
+	public EmailBean(String e_Id, int e_Num) {
+		this.e_Id = e_Id;
+		this.e_Num = e_Num;
+	}
 
 	public String getE_Id() {
 		return e_Id;
@@ -38,4 +45,5 @@ public class EmailBean {
 	public String toString() {
 		return "EmailBean [e_Id=" + e_Id + ", e_Num=" + e_Num + ", e_Date=" + e_Date + "]";
 	}
+
 }

@@ -280,6 +280,7 @@
 	</div>
    
 <script type="text/javascript">
+
 function qnadelete() {
 	if (confirm('정말 삭제하시겠습니까?')) {  
 		return true;

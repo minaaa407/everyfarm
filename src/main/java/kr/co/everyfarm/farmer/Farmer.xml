@@ -52,6 +52,18 @@
 		where f_Id = #{f_Id}
 	</select>
 
+	<select id="mailNumber" resultType="int">
+		select * from email
+		where e_Id
+		= #{e_Id} and e_Num = #{e_Num} order by e_Date desc limit 1
+	</select>
+
+	<insert id="mail">
+		insert into email(e_Id, e_num)
+		values (#{e_Id},
+		#{e_Num})
+	</insert>
+
 	<update id="upPw">
 		update farmer set f_Pw = #{f_Pw} where f_Id = #{f_Id}
 	</update>
@@ -102,10 +114,52 @@
 		SELECT * FROM payment WHERE pay_No in (select p_no from
 		product where p_id =#{f_Id}) ORDER BY pay_orderno
 	</select>
-	
-	<update id="myRate" parameterType="Map">
-	UPDATE farmer SET f_Rate =f_Rate + #{rev_Rate} 
-	WHERE f_Id = (SELECT p_Id FROM product WHERE p_No=#{pay_No}) 
+
+	<update id="myRate" parameterType="Map">UPDATE farmer SET f_Rate
+		=f_Rate + #{rev_Rate} WHERE f_Id = (SELECT p_Id FROM product
+		WHERE
+		p_No=#{pay_No})
 	</update>
-	
+
+	<sql id="pageSearch1">
+		<trim prefix="and(" suffix=")" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							pay_Id like concat ('%',#{keyword},'%')
+						</when>
+						<when test="type == 'C'.toString()">
+							pay_Orderno like concat ('%',#{keyword},'%')
+						</when>
+						<when test="type == 'W'.toString()">
+							pay_Seed like concat ('%',#{keyword},'%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<select id="paging"
+		resultType="kr.co.everyfarm.payment.PaymentBean">
+		SELECT * FROM payment WHERE pay_no in (
+		SELECT p_no FROM product where
+		p_Id =#{f_Id}
+		<if test="keyword != null">
+			<include refid="pageSearch1"></include>
+		</if>
+		ORDER BY p_no desc)
+		LIMIT #{skip},#{amount}
+	</select>
+
+
+	<select id="myOrderCount" resultType="int">
+		SELECT COUNT(*) FROM payment WHERE pay_No in (select p_no from
+		product
+		where p_id = #{f_Id})
+		<if test="keyword != null">
+			<include refid="pageSearch1"></include>
+		</if>
+	</select>
 </mapper>

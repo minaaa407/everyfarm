@@ -13,7 +13,7 @@
 	$(function() {
 		$("#findBtn").click(function() {
 			$.ajax({
-				url : "/farmer/findId",
+				url : "/farmerFindId",
 				type : "POST",
 				dataType : "json",
 				data : {

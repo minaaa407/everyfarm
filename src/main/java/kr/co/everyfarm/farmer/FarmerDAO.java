@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import kr.co.everyfarm.board.Paging;
 import kr.co.everyfarm.payment.PaymentBean;
+import kr.co.everyfarm.user.EmailBean;
 
 @Repository
 public interface FarmerDAO {
@@ -19,7 +21,9 @@ public interface FarmerDAO {
 
 	public FarmerBean findPw(FarmerBean farmerBean);
 
-	public void mail(FarmerBean farmerBean);
+	public void mail(EmailBean emailBean);
+
+	public void mailNumber(EmailBean emailBean);
 
 	public int checkId(FarmerBean farmerBean);
 
@@ -30,16 +34,18 @@ public interface FarmerDAO {
 	public void fDelete(FarmerBean farmerBean);
 
 	public FarmerBean fInfo(FarmerBean farmerBean);
-	
+
 	public int myRate(FarmerBean farmerBean);
 
 	public List<FarmerBean> bestFarmer();
-	
+
 	public List<FarmerBean> listBefore();
-	
+
 	public List<FarmerBean> listAfter();
-	
+
 	public void farmerAdd(FarmerBean farmerBean);
-	
-	public List<PaymentBean> myCustomer(String f_id);
+
+	public List<PaymentBean> paging(Paging paging);
+
+	public int myOrderCount(Paging paging);
 }

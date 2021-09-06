@@ -1,6 +1,7 @@
 package kr.co.everyfarm.admin;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.everyfarm.board.PageMaker;
+import kr.co.everyfarm.board.Paging;
 import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.farmer.FarmerDAO;
 import kr.co.everyfarm.user.MailAuth;
@@ -44,13 +47,21 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Model model, FarmerBean farmerBean, MemberBean memberBean) {
-		
+
 		AdminDAO adDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
-		List<MemberBean> mchart = adDAO.mchart();
-		List<FarmerBean> fchart = adDAO.fchart();
-		model.addAttribute("mchart", mchart);
-		model.addAttribute("fchart", fchart);
-		
+
+		int month = 0;
+
+		List<Integer> mMonth = new ArrayList<Integer>();
+		List<Integer> fMonth = new ArrayList<Integer>();
+
+		for (int i = 0; i < 12; i++) {
+			month = adDAO.mchart(i);
+			mMonth.add(month);
+		}
+		model.addAttribute("mMonth", mMonth);
+		model.addAttribute("fMonth", fMonth);
+
 		return "admin/admin";
 	}
 
@@ -104,19 +115,27 @@ public class AdminController {
 		return "redirect:/adminSign";
 	}
 
-	@RequestMapping(value = "/userList", method = RequestMethod.GET)
-	public String mlist(Model model) {
+	@RequestMapping(value = "/userList")
+	public String mlist(Model model, Paging paging, MemberBean memberBean) {
 		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
-		List<MemberBean> mlist = dao.mlist();
-		model.addAttribute("member", mlist);
+
+		int total = dao.mCount(paging);
+
+		PageMaker pageMake = new PageMaker(paging, total);
+		model.addAttribute("member", dao.mlist(paging));
+		model.addAttribute("pageMaker", pageMake);
 		return "admin/userList";
 	}
 
 	@RequestMapping(value = "/farmerList", method = RequestMethod.GET)
-	public String flist(Model model) {
+	public String flist(Model model, Paging paging, FarmerBean farmerBean) {
 		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
-		List<FarmerBean> flist = dao.flist();
-		model.addAttribute("farmer", flist);
+
+		int total = dao.mCount(paging);
+
+		PageMaker pageMake = new PageMaker(paging, total);
+		model.addAttribute("farmer", dao.flist(paging));
+		model.addAttribute("pageMaker", pageMake);
 		return "admin/farmerList";
 	}
 

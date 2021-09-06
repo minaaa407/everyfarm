@@ -19,6 +19,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.everyfarm.board.PageMaker;
+import kr.co.everyfarm.board.Paging;
 import kr.co.everyfarm.payment.PaymentBean;
 import kr.co.everyfarm.user.EmailBean;
 import kr.co.everyfarm.user.MailAuth;
@@ -46,8 +49,6 @@ public class FarmerController {
 
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-
-	private static final String FILE_SERVER_PATH = "D:/Everyfarm/everyfarm/src/main/webapp/resources/upload";
 
 	@RequestMapping(value = "/farmer", method = RequestMethod.GET)
 	public String farmer() {
@@ -63,8 +64,6 @@ public class FarmerController {
 	@RequestMapping(value = "/farmerLogin", method = RequestMethod.POST)
 	public String flogin(FarmerBean farmerBean, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		System.out.println("login:: post");
-
 		HttpSession session = request.getSession();
 		FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
 
@@ -76,18 +75,18 @@ public class FarmerController {
 		FarmerBean farmer = farmerDAO.flogin(farmerBean);
 
 		if (farmer != null) {
-			if (farmer.getF_Sign().equals("Y")) {
-				session.setAttribute("farmer", farmer);
-				return "redirect:/farmer";
-			} else {
+			if (farmer.getF_Sign().equals("N")) {
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
-				out.println("<script>alert('고객님의 가입 서류를 검토중입니다. 잠시만 기다려주세요.'); </script>");
+				out.println("<script>alert('고객님의 가입 서류를 검토중입니다. 잠시만 기다려주세요.'); history.back();</script>");
 				out.flush();
-				return "redirect:/farmerLogin";
+				return "";
+			} else {
+				session.setAttribute("farmer", farmer);
+				return "redirect:/farmer";
 			}
 		} else {
-			return "redirect:/farmerLogin";
+			return "farmer/FmLogin";
 		}
 	}
 
@@ -112,25 +111,39 @@ public class FarmerController {
 		farmerBean.setF_Pw(encryPassword);
 		System.out.println("두번째:" + farmerBean.getF_Pw());
 
-		if (!file.getOriginalFilename().isEmpty()) {
-			file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
-			model.addAttribute("msg", "File uploaded successfully.");
-		} else {
-			model.addAttribute("msg", "Please select a valid mediaFile..");
-		}
+		farmerBean.setF_Auth(file.getOriginalFilename());
 
 		FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		farmerDAO.fjoin(farmerBean);
 
-		if (bindingResult.hasErrors()) {
-			return "farmer/signUp";
+		String path = "D:/Everyfarm/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/everyfarm/resources/upload/farmer/"
+				+ farmerBean.getF_Id() + "/";
+		ServletContext servletContext = request.getSession().getServletContext();
+		String rPath = servletContext.getRealPath("/resource");
+		rPath = "D:/Everyfarm/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/everyfarm/resources";
+		String mPath = "/src/main/webapp/resources/upload/farmer/" + farmerBean.getF_Id() + "/";
+		int aa = rPath.indexOf("/.");
+		String pre = rPath.substring(0, aa);
+		String savePath = pre + "/everyfarm" + mPath;
+		path = savePath;
+
+		File Folder = new File(path);
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("farmer 폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		} else {
+			System.out.println("이미 폴더가 생성되어 있습니다.");
 		}
 		return "farmer/FmLogin";
 	}
 
 	@RequestMapping(value = "/farmerCheckMail", method = RequestMethod.POST, produces = "application/json;")
 	@ResponseBody
-	public Map<String, Object> checkMail(FarmerBean farmerBean, HttpServletRequest request) {
+	public Map<String, Object> farmerCheckMail(FarmerBean farmerBean, HttpServletRequest request, EmailBean emailBean) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -141,25 +154,29 @@ public class FarmerController {
 		prop.put("mail.smtp.port", "587");
 
 		Random random = new Random();
-		int mailNum = random.nextInt(999999);
+		int e_Num = random.nextInt(999999);
 
 		Authenticator auth = new MailAuth();
-
 		Session session = Session.getDefaultInstance(prop, auth);
-
 		MimeMessage msg = new MimeMessage(session);
+
+		String e_Id = farmerBean.getF_Id();
 
 		try {
 			msg.setSentDate(new Date());
 
 			msg.setFrom(new InternetAddress("alsdk9458@gmail.com", "EVERYFARM"));
-			InternetAddress to = new InternetAddress(farmerBean.getF_Id());
+			InternetAddress to = new InternetAddress(e_Id);
 			msg.setRecipient(Message.RecipientType.TO, to);
 			msg.setSubject("EVERYFARM", "UTF-8");
-			msg.setText("안녕하세요 EVERY FARM에 방문해주셔서 감사합니다." + "\n\n이메일 인증번호는 " + mailNum + "입니다."
+			msg.setText("안녕하세요 EVERY FARM에 방문해주셔서 감사합니다." + "\n\n이메일 인증번호는 " + e_Num + "입니다."
 					+ "\n해당 인증번호를 인증번호 확인란에 기입해주십시오." + "\n감사합니다.", "UTF-8");
 
 			Transport.send(msg);
+
+			emailBean = new EmailBean(e_Id, e_Num);
+			FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+			dao.mail(emailBean);
 
 			map.put("error", true);
 
@@ -178,18 +195,22 @@ public class FarmerController {
 
 	@RequestMapping(value = "/farmerMailNum", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> mail(EmailBean emailBean, HttpServletRequest request) {
+	public Map<String, Object> mailNumber(EmailBean emailBean, FarmerBean farmerBean) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
+		String e_Id = farmerBean.getF_Id();
+		int e_Num = emailBean.getE_Num();
+
+		try {
+			FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+			emailBean = new EmailBean(e_Id, e_Num);
+			dao.mailNumber(emailBean);
+			map.put("error", true);
+		} catch (Exception e) {
+			map.put("error", false);
+		}
 		return map;
-	}
-
-	@RequestMapping(value = "/farmerMailNumCheck", method = RequestMethod.POST)
-	@ResponseBody
-	public String mailNumCheck(EmailBean emailBean, HttpServletRequest request) {
-
-		return "";
 	}
 
 	@RequestMapping(value = "/farmerCheckId", method = RequestMethod.POST)
@@ -262,9 +283,7 @@ public class FarmerController {
 			prop.put("mail.smtp.port", "587");
 
 			Authenticator auth = new MailAuth();
-
 			Session session = Session.getDefaultInstance(prop, auth);
-
 			MimeMessage msg = new MimeMessage(session);
 
 			try {
@@ -313,7 +332,7 @@ public class FarmerController {
 	public String logout(HttpSession session) {
 
 		session.invalidate();
-		return "farmer/farmerLogin";
+		return "farmer/FmLogin";
 	}
 
 	@RequestMapping(value = "/farmerMypage")
@@ -340,7 +359,7 @@ public class FarmerController {
 		dao.fDelete(farmerbean);
 
 		session.invalidate();
-		return "redirect:/farmerHome";
+		return "redirect:/farmer";
 	}
 
 	@RequestMapping(value = "/contact")
@@ -401,14 +420,26 @@ public class FarmerController {
 	}
 
 	@RequestMapping(value = "/myCustomer")
-	public String myCus(PaymentBean paymentBean, Model model, HttpSession session, FarmerBean farmerBean) {
+	public String myCus(PaymentBean paymentBean, Model model, HttpSession session, FarmerBean farmerBean,
+			Paging paging) {
+
 		FarmerBean farmer = (FarmerBean) session.getAttribute("farmer");
 		String f_Id = farmer.getF_Id();
-		System.out.println(f_Id);
+
 		FarmerDAO fDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
-		List<PaymentBean> map = fDAO.myCustomer(f_Id);
-		System.out.println(map);
-		model.addAttribute("myCus", map);
+		paging.setF_Id(f_Id);
+
+		int total = fDAO.myOrderCount(paging);
+		List<PaymentBean> myCus = fDAO.paging(paging);
+
+		PageMaker pageMake = new PageMaker(paging, total);
+
+		model.addAttribute("myCus", myCus);
+		model.addAttribute("pageMaker", pageMake);
+
+		// List<PaymentBean> map = fDAO.myCustomer(f_Id);
+		// System.out.println(map);
+		// model.addAttribute("myCus", map);
 
 		return "farmer/myCustomer";
 	}
