@@ -301,6 +301,7 @@ public class PaymentController {
 	public String adminPayListDelete(@RequestParam String[] payno, PaymentBean paymentbean, Model model, HttpServletRequest request) {
 		System.out.println("---- 어드민페이리스트딜리트 시작-----");
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		System.out.println("payno = " + payno);
 		
 		for(int i=0 ; i<payno.length; i++) {
 			System.out.println("payno = " + payno[i]);

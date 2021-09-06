@@ -28,8 +28,8 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="./examples/profile.html">
-              <i class="ni ni-single-02 text-yellow"></i> 미정
+            <a class="nav-link " href="adminPaymentList">
+              <i class="ni ni-single-02 text-yellow"></i> 내역관리
             </a>
           </li>
           <li class="nav-item">

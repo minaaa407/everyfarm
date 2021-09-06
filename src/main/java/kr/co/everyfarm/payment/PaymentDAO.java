@@ -18,8 +18,6 @@ public interface PaymentDAO {
 	
 	public int payinsert(PaymentBean payment);
 
-	// public int landupdate(@Param("FinalAvailableLand") int FinalAvailableLand, @Param("P_Id") int P_Id);
-
 	public int update(PaymentBean payment);
 
 	public int paydelete(List<String> deletelist);

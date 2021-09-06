@@ -69,7 +69,8 @@
 		where pay_OrderNo IN ( 
 		<foreach collection="list" item="deletelist" index="index" separator=",">
             ${deletelist}
-        </foreach> )
+        </foreach> 
+        )
 	</delete>
 
 

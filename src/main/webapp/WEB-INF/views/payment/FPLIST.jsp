@@ -30,7 +30,6 @@ footer {
 </style>
 </head>
 <body>
-<!-- Navigation -->
 				<!-- Navigation -->
 				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
 				<!-- Divider -->
@@ -97,5 +96,6 @@ footer {
 <!--   Argon JS   -->
 <script src="resources/farmer/js/argon-dashboard.min.js?v=1.1.2"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
 </body>
 </html>
