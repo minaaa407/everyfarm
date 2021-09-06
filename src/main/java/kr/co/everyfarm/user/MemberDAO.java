@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import kr.co.everyfarm.farmer.FarmerBean;
-
 @Repository
 public interface MemberDAO {
 
@@ -19,9 +17,11 @@ public interface MemberDAO {
 
 	public MemberBean mlogin(MemberBean memberBean);
 
+	public MemberBean slogin(String m_Id);
+
 	public void mail(EmailBean emailBean);
 
-	public void mailNumber(int e_Num);
+	public void mailNumber(EmailBean emailBean);
 
 	public int checkId(String m_Id);
 
@@ -46,5 +46,5 @@ public interface MemberDAO {
 	public void mPwdUp(MemberBean memberbean);
 	
 	public void userAdd(MemberBean memberbean);
-
+	
 }

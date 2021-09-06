@@ -63,7 +63,17 @@
 								<c:when test="${not empty member}">
 									<li>${member.m_Name}님환영합니다.</li>
 									<li><a href="/mypage">내 정보</a></li>
-									<li><a href="/logout">로그아웃</a></li>
+									<c:choose>
+										<c:when test="${member.m_Pw eq 'KAKAO'}">
+											<li><a href="/klogout">로그아웃</a></li>
+										</c:when>
+										<c:when test="${member.m_Pw eq 'NAVER'}">
+											<li><a href="/nlogout">로그아웃</a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="/logout">로그아웃</a></li>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 							</c:choose>
 						</div>

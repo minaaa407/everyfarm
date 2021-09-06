@@ -17,8 +17,8 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 <!-- 썸머노트 -->
-
-<!--  스마트 에디터  -->
+<link rel="stylesheet" href="/resources/editor/css/summernote-lite.css">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
 
 
@@ -31,6 +31,16 @@
 	.table>thead>tr>td, .table>thead>tr>th {
 	vertical-align: middle;
 }
+
+.note-modal-title{
+	visibility: hidden;
+}
+.note-modal-title:before{
+	visibility:visible;
+	display: block;
+	content: '이미지 업로드';
+}
+
 /* 제목  CSS*/
 .tit {
 	margin-top: 50px;
@@ -40,6 +50,7 @@
 	margin-top: 10px;
 	border-top: 1px solid #000;
 }
+
 th {
 	text-align: center;
 	padding-left: 30px;
@@ -48,14 +59,17 @@ th {
 	background: #f8f8f8;
 	vertical-align: inherit;
 }
+
 td {
 	text-align: center;
 	background: white;
 }
+
 input {
 	padding: 0 0 0 5px;
 	background: white;
 }
+
 .btn {
 	color: #fff;
 	text-align: center;
@@ -64,10 +78,12 @@ input {
 	padding: 5px 10%;
 	transition: background, color 1s;
 }
+
 .btn:hover {
 	color: #000;
 	background: #fff;
 }
+
 .btn2 {
 	border-radius: 4.7px;
 	color: #000;
@@ -150,8 +166,8 @@ input {
 
 						<tr>
 							<th><div>내용</div></th>
-							<td colspan="3"><textarea rows="10" cols="30" id="ir1"
-									name="rev_Cont" style="width: 100%;"></textarea></td>
+							<td colspan="3"><textarea id="summernote" rows="10" cols="30"
+									name="rev_Cont" required style="width: 100%;"></textarea></td>
 						</tr>
 						<tr>
 							<th><div>파일</div></th>
@@ -176,89 +192,70 @@ input {
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-	<!-- 썸머노트
+
+<!-- 썸머노트 -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="resources/editor/js/summernote-lite.js"></script>
-<script src="resources/editor/js/lang/summernote-ko-KR.js"></script>
--->
+<script src="/resources/editor/js/summernote-lite.js"></script>
+<script src="/resources/editor/js/lang/summernote-ko-KR.js"></script>
 
-	<script type="text/javascript"
-		src="resources/smartEditor/js/HuskyEZCreator.js" charset="utf-8"></script>
-
-
-	<script type="text/javascript">
-		var oEditors = [];
-		$(function() {
-			nhn.husky.EZCreator.createInIFrame({
-				oAppRef : oEditors,
-				elPlaceHolder : "ir1",
-				//SmartEditor2Skin.html 파일이 존재하는 경로
-				sSkinURI : "resources/smartEditor/SmartEditor2Skin.html",
-				htParams : {
-					// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-					bUseToolbar : true,
-					// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-					bUseVerticalResizer : true,
-					// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-					bUseModeChanger : true,
-					fOnBeforeUnload : function() {
-					}
-				},
-				fOnAppLoad : function() {
-					//textarea 내용을 에디터상에 바로 뿌려주고자 할때 사용
-					oEditors.getById["ir1"].exec("PASTE_HTML",
-							[ "ㅎㅇ 시작하자마자 이문구 작성됨." ]);
-				},
-				fCreator : "createSEditor2"
-			});
-			//전송버튼
-			$("#save").click(function() {
-				//id가 smarteditor인 textarea에 에디터에서 대입
-				obj.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
-				//폼 submit
-				$("#frm").submit();
-			})
-		});
-	</script>
-	<!--  
 <script type="text/javascript">
-      $(document).ready(function() {
-    	  function sendFile(file, el) {
-    			var form_data = new FormData();
-    			form_data.append('file', file);
+$(document).ready(function() {
+
+     
+        var  toolbar = [
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['view', ['fullscreen', 'help']]
+			  ];
+        
+        var setting = {
+        		placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.', 
+                height: 600,
+                minHeight: null,
+                maxHeight: null,
+                focus: false,
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+    			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+                callbacks : { 
+                	onImageUpload : function(files, editor, welEditable) {
+                // 파일 업로드(다중업로드를 위해 반복문 사용)
+                for (var i = files.length - 1; i >= 0; i--) {
+                uploadSummernoteImageFile(files[i],
+                this);
+                		}
+                	}
+                }
+             };
+        
+            $('#summernote').summernote(setting);
+            });
+            
+            function uploadSummernoteImageFile(file, el) {
+    			data = new FormData();
+    			data.append("file", file);
     			$.ajax({
-    				data: form_data,
-    				type : "post",
-    				url: 'summer_image',
-    				cache :false,
+    				data : data,
+    				type : "POST",
+    				url : "uploadSummernoteImageFile",
     				contentType : false,
     				enctype : 'multipart/form-data',
     				processData : false,
-    				success : function(img_name) {
-    					$(el).summernote('editor.insertImage',url, img_name);
+    				success : function(data) {
+    					$(el).summernote('editor.insertImage', data.url);
     				}
     			});
     		}
-    	$(function() {
-    			$('#summernote').summernote({
-    			placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.',
-    	          height: 600,
-    	          minHeight: null,
-    	          maxHeight: null,
-    	          focus: true,
-    			        callbacks: {
-    			        	onImageUpload: function(files, editor, welEditable) {
-    			        		for(var i = files.length -1; i>=0; i--) {
-    			        			sendFile(files[i], this);
-    			        		}
-    			        	}
-    			        }
-    			 });
-    	});
-      });
-      
-    
+        		
+        
+        
+        
   </script>
--->
+
+
 </body>
 </html>

@@ -105,9 +105,9 @@ tbody tr #readc {
 </style>
 
 <script>
-function proDelete(p_No) {
+function LandDelete(p_No) {
 	if (confirm('삭제하시겠습니까?')) {
-		location.href='ProDelete?p_No=' + p_No;
+		location.href='LandDelete?p_No=' + p_No;
 	}
 }
 </script>
@@ -195,9 +195,8 @@ function proDelete(p_No) {
 					<th>제목</th>
 					<th>등록날짜</th>
 					<th>승인여부</th>
-					<th>수정</th>
-					<th>삭제</th>
-					<th></th>
+					<th>상세보기</th>
+					<th>수정,삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -214,9 +213,9 @@ function proDelete(p_No) {
 						<td class="content">${p.p_Accept}</td>
 						<td class="content"><a
 							href="/productdetail?productno=${p.p_No}">상세보기</a></td>
-						<td><button type="button" class="btn btn-outline-dark"
-								onclick="javascript:proDelete(${p.p_No})">삭제</button></td>
-
+						<td><a class="btn btn-dark" href="/proRegDetailForm?p_No=${p.p_No}">수정</a>
+						<button type="button" class="btn btn-dark"
+								onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>
