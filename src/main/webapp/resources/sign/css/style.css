@@ -799,6 +799,16 @@ li.init:after {
 	display: none;
 }
 
+.num_input_re_1 {
+	color: green;
+	display: none;
+}
+
+.num_input_re_2 {
+	color: red;
+	display: none;
+}
+
 label.error {
 	display: block;
 	position: absolute;

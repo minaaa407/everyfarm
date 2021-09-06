@@ -58,8 +58,6 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String mlogin(Model model) {
-		System.out.println("login:: get");
-
 		return "user/loginForm";
 	}
 
@@ -114,6 +112,10 @@ public class UserController {
 		String id = (String) response_obj.get("email");
 		String name = (String) response_obj.get("name");
 		String mobile = (String) response_obj.get("mobile");
+		String bDay = (String) response_obj.get("birthday");
+		String bYear = (String) response_obj.get("birthyear");
+		String birth = bYear + "-" + bDay;
+		mobile = mobile.replace("-", "");
 
 		System.out.println("네이버 ID : " + id);
 		System.out.println("이름 : " + name);
@@ -125,18 +127,18 @@ public class UserController {
 			session.setAttribute("m_Id", id); // 세션 생성
 			session.setAttribute("m_Name", name);
 			session.setAttribute("m_Tel", mobile);
+			session.setAttribute("m_Birth", birth);
 
 			model.addAttribute("result", apiResult);
-			String auth_id = (String) session.getAttribute("m_Id");
-			System.out.println("id test:::" + auth_id);
-			MemberBean member = dao.mlogin(memberBean);
+			String m_Id = (String) session.getAttribute("m_Id");
 
-			model.addAttribute("member", member);
-			session.setAttribute("member", member);
+			memberBean = dao.slogin(m_Id);
+			model.addAttribute("memberBean", memberBean);
 
-			if (member == null) {
+			if (memberBean == null) {
 				return "redirect:/naverJoin";
 			} else {
+				session.setAttribute("member", memberBean);
 				return "redirect:/home";
 			}
 		} else {
@@ -144,11 +146,9 @@ public class UserController {
 		}
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping(value = "/kakaoLogin", method = RequestMethod.GET)
-	public String klogin(MemberBean memberBean, HttpSession session, HttpServletRequest request,
+	public String klogin(MemberBean memberBean, Model model, HttpSession session, HttpServletRequest request,
 			@RequestParam("code") String code) {
-		System.out.println("kakaologin:: get");
 
 		MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
 
@@ -156,19 +156,24 @@ public class UserController {
 		HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
 
 		if (userInfo.get("email") != null) {
-			if ("email".equals(dao.checkId(memberBean.getM_Id()))) {
 
-				session.setAttribute("loginPI", "kakao");
-				session.setAttribute("m_Id", userInfo.get("email"));
-				session.setAttribute("m_Name", userInfo.get("nickname"));
-				session.setAttribute("access_Token", access_Token);
+			session.setAttribute("m_Id", userInfo.get("email"));
+			session.setAttribute("m_Name", userInfo.get("nickname"));
+			session.setAttribute("access_Token", access_Token);
 
-				return "redirect:/home";
-			} else {
+			String m_Id = (String) session.getAttribute("m_Id");
+
+			memberBean = dao.slogin(m_Id);
+			model.addAttribute("memberBean", memberBean);
+
+			if (memberBean == null) {
 				return "redirect:/kakaoJoin";
+			} else {
+				session.setAttribute("member", memberBean);
+				return "redirect:/home";
 			}
 		} else {
-			return "/loginForm";
+			return "user/loginForm";
 		}
 	}
 
@@ -205,9 +210,9 @@ public class UserController {
 		memberBean.setM_Id((String) session.getAttribute("m_Id"));
 		memberBean.setM_Name((String) session.getAttribute("m_Name"));
 
-		model.addAttribute(memberBean);
-
 		dao.kakaoJoin(memberBean);
+		model.addAttribute(memberBean);
+		session.setAttribute("member", memberBean);
 
 		return "redirect:/home";
 	}
@@ -220,10 +225,10 @@ public class UserController {
 		member.setM_Id((String) session.getAttribute("m_Id"));
 		member.setM_Name((String) session.getAttribute("m_Name"));
 		member.setM_Tel((String) session.getAttribute("m_Tel"));
+		member.setM_Birth((String) session.getAttribute("m_Birth"));
 
 		dao.naverJoin(member);
-
-		model.addAttribute("member", member);
+		model.addAttribute(member);
 		session.setAttribute("member", member);
 
 		return "redirect:/home";
@@ -246,22 +251,26 @@ public class UserController {
 		int e_Num = random.nextInt(999999);
 
 		Authenticator auth = new MailAuth();
-
 		Session session = Session.getDefaultInstance(prop, auth);
-
 		MimeMessage msg = new MimeMessage(session);
+
+		String e_Id = memberBean.getM_Id();
 
 		try {
 			msg.setSentDate(new Date());
 
 			msg.setFrom(new InternetAddress("alsdk9458@gmail.com", "EVERYFARM"));
-			InternetAddress to = new InternetAddress(memberBean.getM_Id());
+			InternetAddress to = new InternetAddress(e_Id);
 			msg.setRecipient(Message.RecipientType.TO, to);
 			msg.setSubject("EVERYFARM", "UTF-8");
 			msg.setText("안녕하세요 EVERY FARM에 방문해주셔서 감사합니다." + "\n\n이메일 인증번호는 " + e_Num + "입니다."
 					+ "\n해당 인증번호를 인증번호 확인란에 기입해주십시오." + "\n감사합니다.", "UTF-8");
 
 			Transport.send(msg);
+
+			emailBean = new EmailBean(e_Id, e_Num);
+			MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+			dao.mail(emailBean);
 
 			map.put("error", true);
 
@@ -281,18 +290,22 @@ public class UserController {
 
 	@RequestMapping(value = "/mailNum", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> mail(EmailBean emailBean, HttpServletRequest request) {
+	public Map<String, Object> mailNumber(EmailBean emailBean, MemberBean memberBean) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
+		String e_Id = memberBean.getM_Id();
+		int e_Num = emailBean.getE_Num();
+
+		try {
+			MemberDAO dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+			emailBean = new EmailBean(e_Id, e_Num);
+			dao.mailNumber(emailBean);
+			map.put("error", true);
+		} catch (Exception e) {
+			map.put("error", false);
+		}
 		return map;
-	}
-
-	@RequestMapping(value = "/mailNumCheck", method = RequestMethod.POST)
-	@ResponseBody
-	public String mailNumCheck(EmailBean emailBean, HttpServletRequest request) {
-
-		return "";
 	}
 
 	@RequestMapping(value = "/checkId", method = RequestMethod.POST)
@@ -368,9 +381,7 @@ public class UserController {
 			prop.put("mail.smtp.port", "587");
 
 			Authenticator auth = new MailAuth();
-
 			Session session = Session.getDefaultInstance(prop, auth);
-
 			MimeMessage msg = new MimeMessage(session);
 
 			try {
@@ -417,12 +428,29 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
-		/*
-		 * kakao.kakaoLogout((String) session.getAttribute("access_Token"));
-		 * session.removeAttribute("access_Token"); session.removeAttribute("userId");
-		 */
+	public String logout(HttpSession session, MemberBean memberBean) {
+
 		session.invalidate();
+		
+		return "home/home";
+	}
+
+	@RequestMapping(value = "/klogout", method = RequestMethod.GET)
+	public String klogout(HttpSession session, MemberBean memberBean) {
+
+		kakao.kakaoLogout((String) session.getAttribute("access_Token"));
+		session.removeAttribute("access_Token");
+		session.removeAttribute("m_Id");
+
+		return "home/home";
+	}
+
+	@RequestMapping(value = "/nlogout", method = RequestMethod.GET)
+	public String nlogout(HttpSession session, MemberBean memberBean) {
+
+		session.removeAttribute(apiResult);
+		session.invalidate();
+
 		return "home/home";
 	}
 

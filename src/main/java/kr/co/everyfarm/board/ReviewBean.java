@@ -13,6 +13,7 @@ public class ReviewBean {
 	private Date rev_Date;
 	private Float rev_Rate;
 	
+	
 	public int getRev_No() {
 		return rev_No;
 	}
@@ -61,6 +62,15 @@ public class ReviewBean {
 	public void setRev_Rate(Float rev_Rate) {
 		this.rev_Rate = rev_Rate;
 	}
+	@Override
+	public String toString() {
+		return "ReviewBean [rev_No=" + rev_No + ", rev_Name=" + rev_Name + ", rev_Id=" + rev_Id + ", rev_Title="
+				+ rev_Title + ", rev_Cont=" + rev_Cont + ", rev_Readcount=" + rev_Readcount + ", rev_Date=" + rev_Date
+				+ ", rev_Rate=" + rev_Rate + "]";
+	}
+
+	
+	
 	
 	
 	

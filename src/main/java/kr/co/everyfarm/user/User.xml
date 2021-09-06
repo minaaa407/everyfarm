@@ -21,20 +21,25 @@
 	<insert id="kakaoJoin">
 		insert into member(m_id, m_name, m_pw, m_Addr, m_tel,
 		m_birth)
-		values (#{m_Id}, #{m_Name}, "카카오", "카카오", "카카오",
-		"카카오")
+		values (#{m_Id}, #{m_Name}, "KAKAO", "KAKAO", "KAKAO",
+		"KAKAO")
 	</insert>
 
 	<insert id="naverJoin">
 		insert into member(m_id, m_name, m_pw, m_Addr, m_tel,
 		m_birth)
-		values (#{m_Id}, #{m_Name}, "네이버", "네이버", #{m_Tel},
-		"네이버")
+		values (#{m_Id}, #{m_Name}, "NAVER", "NAVER", #{m_Tel},
+		#{m_Birth})
 	</insert>
 
 	<select id="mlogin" resultType="kr.co.everyfarm.user.MemberBean">
 		select * from member where m_id =
 		#{m_Id} and m_pw = #{m_Pw}
+	</select>
+
+	<select id="slogin" resultType="kr.co.everyfarm.user.MemberBean">
+		select * from member where m_id =
+		#{m_Id}
 	</select>
 
 	<select id="mInfo" resultType="kr.co.everyfarm.user.MemberBean">
@@ -59,15 +64,14 @@
 		where m_Id = #{m_Id}
 	</select>
 
-	<select id="mail" resultType="int">
-		select email.e_Id, email.e_Num,
-		email.e_Date from email
-		Inner Join member where member.m_Id =
-		email.e_Id
+	<select id="mailNumber" resultType="int">
+		select * from email
+		where e_Id
+		= #{e_Id} and e_Num = #{e_Num} order by e_Date desc limit 1
 	</select>
-
-	<insert id="mailNumber">
-		insert into email(e_id, e_num)
+	
+	<insert id="mail">
+		insert into email(e_Id, e_num)
 		values (#{e_Id},
 		#{e_Num})
 	</insert>
@@ -125,7 +129,8 @@
 
 	<insert id="userAdd"
 		parameterType="kr.co.everyfarm.user.MemberBean">
-		insert into member (m_id, m_name, m_pw, m_Addr, m_tel, m_birth)
+		insert into member (m_id, m_name, m_pw, m_Addr, m_tel,
+		m_birth)
 		Values (#{m_Id}, #{m_Name}, #{m_Pw}, 'TEST', 'TEST', 'TEST')
 	</insert>
 

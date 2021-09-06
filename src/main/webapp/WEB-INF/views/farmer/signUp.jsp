@@ -50,16 +50,16 @@ label.error {
 				</div>
 				<div class="signup-form">
 					<form:form method="POST" commandName="farmerBean"
-						class="register-form" action="/farmerSign"
-						enctype="multipart/form-data" onsubmit="return check()">
+						class="register-form" id="register-form" action="/farmerSign">
 						<div class="form-row">
 							<div class="form-group">
 								<div class="form-input">
-									<label for="f_Id" class="required">아이디</label> <input
-										type="email" name="f_Id" id="f_Id" placeholder="ID"
-										onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9!@#$%^&*()_-+=~?:;`|/.]/gi,'');"
-										required="required" /> <span class="id_input_re_1">사용가능한
-										아이디입니다.</span><span class="id_input_re_2">아이디가 이미 존재합니다.</span> <br>
+									<label for="f_Id" class="required">아이디</label>
+									<form:input type="email" path="f_Id" name="f_Id" id="f_Id"
+										placeholder="ID" required="required" />
+									<form:errors path="f_Id" cssClass="error" />
+									<span class="id_input_re_1">사용가능한 아이디입니다.</span><span
+										class="id_input_re_2">아이디가 이미 존재합니다.</span> <br>
 									<button id="mailNum" class="mailNum" onclick="mail()">인증번호
 										발급</button>
 								</div>
@@ -68,7 +68,9 @@ label.error {
 									<label for="e_Num" class="required">인증번호</label> <input
 										type="text" name="e_Num" id="e_Num"
 										onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-										maxlength="6" required /> <br>
+										maxlength="6" required /> <span class="num_input_re_1">이메일
+										인증이 완료되었습니다.</span><span class="num_input_re_2">인증번호를 다시
+										확인해주세요.</span> <br>
 									<button type="button" class="w-100 btn btn-primary btn-lg"
 										style="padding-left: 9px; font-size: 13px"
 										onclick="mailCheck()" id="mailNum2">인증번호 확인</button>
@@ -76,10 +78,11 @@ label.error {
 								<div class="form-input has-feedback">
 									<label for="f_Pw" class="required">비밀번호</label>
 									<div>
-										<input type="password" name="f_Pw" id="f_Pw"
+										<form:input type="password" path="f_Pw" name="f_Pw" id="f_Pw"
 											class="form-control" placeholder="PASSWORD"
 											pattern="^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_-+=[]{}~?:;`|/]).{8,20}$"
-											maxlength="20" required />
+											maxlength="20" required="required" />
+										<form:errors path="f_Pw" cssClass="error" />
 									</div>
 								</div>
 
@@ -95,21 +98,26 @@ label.error {
 										일치하지 않습니다.</div>
 								</div>
 								<div class="form-input">
-									<label for="f_Name" class="required">이름</label> <input
-										type="text" name="f_Name" id="f_Name" placeholder="NAME"
-										onKeyup="this.value=this.value.replace(/[^a-zA-Zㄱ-힣0-9]/gi,'');"
+									<label for="f_Name" class="required">이름</label>
+									<form:input type="text" path="f_Name" name="f_Name" id="f_Name"
+										placeholder="NAME"
+										onKeyup="this.value=this.value.replace(/[^a-zA-Zㄱ-힣]/gi,'');"
 										required="required" />
+									<form:errors path="f_Name" cssClass="error" />
 								</div>
 								<div class="form-input">
-									<label for="f_Birth" class="required">생년월일</label> input <input
-										type="date" name="m_Birth" id="txtDate" required="required" />
+									<label for="f_Birth" class="required">생년월일</label> 
+									<form:input type="date" path="f_Birth" name="f_Birth"
+										id="txtDate" required="required" />
+									<form:errors path="f_Birth" cssClass="error" />
 								</div>
 								<div class="form-input">
-									<label for="f_Tel" class="required">휴대전화</label> <input
-										type="tel" name="f_Tel" id="f_Tel"
+									<label for="f_Tel" class="required">휴대전화</label>
+									<form:input type="tel" path="f_Tel" name="f_Tel" id="f_Tel"
 										onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
 										maxlength="11" placeholder="ex)01012345678"
 										required="required" />
+									<form:errors path="f_Tel" cssClass="error" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -132,8 +140,8 @@ label.error {
 						</div>
 						<div class="form-submit">
 							<input type="submit" value="가입하기" class="submit" id="submit"
-								name="submit" /> <a href="/farmerLogin"><input
-								type="button" value="취소" class="submit" id="reset" name="reset" /></a>
+								name="submit" /> <a href="/farmerLogin"><input type="button"
+								value="취소" class="submit" id="reset" name="reset" /></a>
 						</div>
 					</form:form>
 				</div>
@@ -246,72 +254,59 @@ label.error {
 				$.ajax({
 					type : "post", //요청 메소드 방식
 					url : "/farmerCheckMail",
-					data : {
-						"m_Id" : mail,
-						"e_Num" : num
-					},
+					data : mail,
 					dataType : 'json', //서버가 요청 URL을 통해서 응답하는 내용의 타입
 					success : function(result) {
 						if (result.error == true) {
-							checkBox.attr("disabled", false);
-							checkBox.val('');
-							$("#alert-success-email").hide();
-							$("#alert-danger-email").hide();
 							code = result;
 							alert("작성하신 메일로 인증번호를 전송했습니다. 확인해주세요.");
-							$('#e_Num').hide();
+							$('#mailNum').hide();
 							$('#mailNum2').show();
 						} else {
 							alert("인증번호 전송에 실패하였습니다. 작성하신 이메일을 다시 확인 바랍니다.");
 						}
 					},
-					error : function(a, b, c) {
+					error : function(request, status, error) {
 						//통신 실패시 발생하는 함수(콜백)
-						alert("a:" + a + "b:" + b + "c:" + c);
+						alert("code = " + request.status + " message = "
+								+ request.responseText + " error = " + error);
 					}
 				});
 
 			}
 		}
 
-		$('#mailNum2').click(
-				function() {
-					var mailCheck = {
-						e_Num : $("#e_Num").val()
+		function mailCheck() {
+			var e_Num = $("#e_Num").val();
+			var e_Id = $("#f_Id").val();
+			if (e_Num === "") {
+				alert("이메일 인증번호를 입력해주세요.");
+				return;
+			}
+			$.ajax({
+				type : "post",
+				url : "/farmerMailNum",
+				data : {
+					"e_Num" : e_Num,
+					"e_Id" : e_Id
+				},
+				dataType : 'json',
+				success : function(result) {
+					if (result.error == true) {
+						$('.num_input_re_1').css("display", "inline-block");
+						$('.num_input_re_2').css("display", "none");
+						$("#mailNum2").hide();
+					} else {
+						$('.num_input_re_2').css("display", "inline-block");
+						$('.num_input_re_1').css("display", "none");
 					}
-					var id = {
-						f_Id : $("#f_Id").val()
-					}
-					if (mailCheck === "") {
-						alert("이메일 인증번호를 입력해주세요.");
-						return;
-					}
-					$.ajax({
-						type : "POST", //요청 메소드 방식
-						url : "/farmerMailNum",
-						data : {
-							"e_Num" : mailCheck,
-							"f_Id" : id
-						},
-						dataType : 'json', //서버가 요청 URL을 통해서 응답하는 내용의 타입
-						success : function(result) {
-
-							if (result.error == true) {
-								alert('이메일 인증이 완료되었습니다.');
-								$("#f_Id").attr("disabled", true);
-								$("#mailCheck").attr("disabled", true);
-							} else if (result.error == false) {
-								alert('이메일 인증번호가 일치하지 않습니다.');
-							}
-						},
-						error : function(request, status, error) {
-							alert("code = " + request.status + " message = "
-									+ request.responseText + " error = "
-									+ error);
-							//통신 실패시 발생하는 함수(콜백)
-						}
-					});
-				});
+				},
+				error : function(a, b, c) {
+					//통신 실패시 발생하는 함수(콜백)
+					alert("a:" + a + "b:" + b + "c:" + c);
+				}
+			});
+		}
 
 		$(function() {
 			$("#alert-success").hide();
@@ -351,12 +346,13 @@ label.error {
 	</script>
 
 
+
 	<!-- JS -->
 	<script src="resources/sign/vendor/jquery/jquery.min.js"></script>
 	<script src="resources/sign/vendor/nouislider/nouislider.min.js"></script>
 	<script src="resources/sign/vendor/wnumb/wNumb.js"></script>
-	<!-- <script
-		src="resources/sign/vendor/jquery-validation/dist/jquery.validate.min.js"></script> -->
+	<script
+		src="resources/sign/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>

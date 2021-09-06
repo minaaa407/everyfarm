@@ -209,6 +209,8 @@
 							<div class="chart">
 								<!-- Chart wrapper -->
 								<canvas id="myChart" class="chart-canvas"></canvas>
+								<input hidden="mMonth" id="mMonth" var="mMonth" name="mMonth"
+									items="${mMonth}">
 							</div>
 						</div>
 					</div>
@@ -436,74 +438,43 @@
 	</div>
 
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-	<script type="text/javascript">
-		var context = document.getElementById('myChart');
-		var myChart = new Chart(context,
-				{
-					type : 'bar', // 차트의 형태
-					data : { // 차트에 들어갈 데이터
-						labels : [
-						//x 축
-						'1월', '2월', '3월', '4월', '5월', '6월', '7월' ],
-						datasets : [ { //데이터
-							label : '2021년 회원 수', //차트 제목
-							fill : false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-							data : [ 50, 20, 47, 30, 28, 17, 34 //x축 label에 대응되는 데이터 값
-							],
-							backgroundColor : [
-							//색상
-							'rgba(255, 99, 132, 0.2)',
-									'rgba(54, 162, 235, 0.2)',
-									'rgba(255, 206, 86, 0.2)',
-									'rgba(75, 192, 192, 0.2)',
-									'rgba(153, 102, 255, 0.2)',
-									'rgba(255, 159, 64, 0.2)' ],
-							borderColor : [
-							//경계선 색상
-							'rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)',
-									'rgba(255, 206, 86, 1)',
-									'rgba(75, 192, 192, 1)',
-									'rgba(153, 102, 255, 1)',
-									'rgba(255, 159, 64, 1)' ],
-							borderWidth : 1
-						//경계선 굵기
-						},
-						{ //데이터
-							label : '2021년 농부 수', //차트 제목
-							fill : false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-							data : [ 21, 19, 25, 20, 23, 26, 25 //x축 label에 대응되는 데이터 값
-							],
-							backgroundColor : [
-							//색상
-							'rgba(255, 99, 132, 0.2)',
-									'rgba(54, 162, 235, 0.2)',
-									'rgba(255, 206, 86, 0.2)',
-									'rgba(75, 192, 192, 0.2)',
-									'rgba(153, 102, 255, 0.2)',
-									'rgba(255, 159, 64, 0.2)' ],
-							borderColor : [
-							//경계선 색상
-							'rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)',
-									'rgba(255, 206, 86, 1)',
-									'rgba(75, 192, 192, 1)',
-									'rgba(153, 102, 255, 1)',
-									'rgba(255, 159, 64, 1)' ],
-							borderWidth : 1
-						//경계선 굵기
-						}]
-					},
-					options : {
-						scales : {
-							yAxes : [ {
-								ticks : {
-									beginAtZero : true
-								}
-							} ]
-						}
-					}
-				});
+	<script>
+		var date = new Date();
+		var monArr = new Array;
+		var monSt = [];
+		var month = ('0' + (date.getMonth() + 1)).slice(-2);
+		var year = date.getFullYear();
+
+		for (var i = 0; i < 12; i++) {
+			monArr[i] = month - i;
+			monSt[i] = year + '-' + month[i] + '-' + day;
+		}
+		var monthLb = monSt.reverse();
+		var mMonth = $(mMonth);
+		var mChart = mMonth.reverse();
+
+		new Chart("myChart", {
+			type : "line",
+			data : {
+				labels : monthLb,
+				datasets : [ {
+					data : mChart,
+					borderColor : "yellow",
+					fill : false
+				}, {
+					data : mChart,
+					borderColor : "gray",
+					fill : false
+				} ]
+			},
+			options : {
+				legend : {
+					display : false
+				}
+			}
+		});
 	</script>
 
 
