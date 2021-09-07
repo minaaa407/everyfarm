@@ -18,7 +18,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -26,12 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.everyfarm.admin.AdminBean;
 import kr.co.everyfarm.basket.BasketBean;
 import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.user.MailAuth;
@@ -265,19 +264,28 @@ public class PaymentController {
 	}
 
 	@RequestMapping(value = "/adminPaymentList")
-	public String adminPaymentList(Model model) {
+	public String adminPaymentList(Model model, Criteria cri, HttpSession session) {
+		AdminBean admin = (AdminBean) session.getAttribute("admin");
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
 		
-		List<PaymentBean> paymentlist = dao.paylist();
-		//int selecttotalindex = paymentlist.size();
-		//pagebeen.setTableindex(selecttotalindex);
-		paymentlist = dao.paylist();
 		
-		// model.addAttribute("pagebeen", pagebeen);
-		model.addAttribute("paymentlist", paymentlist);
+		  // 현재 페이지에 해당하는 게시물을 조회해 옴
+	      List<PaymentBean> paymentlist = dao.paylist1(cri);
+	      // 모델에 추가
+	      model.addAttribute("paymentlist", paymentlist);
+	      // PageMaker 객체 생성
+	      PageMaker pageMaker = new PageMaker(cri);
+	      // 전체 게시물 수를 구함
+	      int totalCount = dao.getPayTotalCount(cri);
+	      // pageMaker로 전달
+	      pageMaker.setTotalCount(totalCount);
+	      // 모델에 추가
+	      model.addAttribute("pageMaker", pageMaker);
+		
 		return "payment/adminPaymentList";
 	}
 
+	
 	@RequestMapping(value = "/farmerPaymentList")
 	public String farmerPaymentList(Model model, HttpSession session) {
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
@@ -315,6 +323,7 @@ public class PaymentController {
 		System.out.println("---- 어드민페이리스트딜리트 끝-----");
 		return "redirect:/adminPaymentList";
 	}
+	
 	
 //	@RequestMapping(value = "/farmerPayListDelete/{Orderno}")
 //	public String farmerPayListDelete(@PathVariable int Orderno, Model model) {
@@ -357,11 +366,8 @@ public class PaymentController {
 		return "/payment/viewResult";
 	}
 	
-	@RequestMapping(value = "/FPLIST")
-	public String FPLIST() {
+	@RequestMapping(value = "/testlist")
+	public String testlist() {
 		return "payment/FPLIST";
 	}
-	
-	
-
 }

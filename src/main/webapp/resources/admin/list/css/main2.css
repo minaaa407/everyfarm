@@ -106,7 +106,6 @@ iframe {
   width: 100%;
   min-height: 100vh;
   
-  background: linear-gradient(87deg, #F5DF4D 0, #939597 100%) !important;
 
   display: -webkit-box;
   display: -webkit-flex;
@@ -150,7 +149,7 @@ table tbody tr:last-child {
   border: 0;
 }
 table td, table th {
-  text-align: left;
+  text-align: center;
 }
 table td.l, table th.l {
   text-align: right;

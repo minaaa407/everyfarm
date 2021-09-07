@@ -3,34 +3,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@page import="kr.co.everyfarm.admin.AdminBean"%>
+<% AdminBean admin  = (AdminBean) request.getSession().getAttribute("admin"); %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/vendor/animate/animate.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/vendor/perfect-scrollbar/perfect-scrollbar.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/css/util.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/css/main2.css">
-<!--===============================================================================================-->
-<!-- Argon CSS -->
-<link rel="stylesheet" href="resources/admin/list/css/argon.css?v=1.2.0"
-	type="text/css">
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <meta charset="UTF-8">
 
@@ -58,6 +36,59 @@
 	top:0; 
 	left:0; 
 	display:none; 
+}
+td, th {
+border-color:#ced4da;
+}
+body{
+background: linear-gradient(#d9ffa4 0, #fff4ad 100%) !important;
+}
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container-table100 {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.wrap-table100 {
+  width: 1170px;
+}
+
+table {
+  border-spacing: 1;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+table * {
+  position: relative;
+}
+table td, table th {
+  padding-left: 8px;
+}
+table thead tr {
+  height: 60px;
+  background: #efefef
+}
+table tbody tr {
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+table tbody tr:last-child {
+  border: 0;
+}
+table td, table th {
+  text-align: center;
 }
 </style>
 </head>
@@ -149,36 +180,46 @@
 		<div class="limiter">
  			<div class="container-table100">
  			<div class="wrap-table100">
-				<div><input class="btn btn-sm btn-neutral" type="button" id="submit" value="선택 삭제" onclick="checkremove();" /></div>
+				<div><input class="btn btn-sm btn-neutral" type="button" id="submit" value="선택 삭제" onclick="checkremove()" /></div>
 					<div class="table100">
-					<table>
-					<thead>
-					<tr class="table100-head">
-					<th><input class="column1" type="checkbox" id="all" name="all"/></th>
-						<th class="column2">주문번호</th>
-						<th class="column3">주문자명</th>
-						<th class="column4">상품명</th>
-						<th class="column5">금액</th>
-						<th class="column6">농장주ID</th>
-						<th class="column7">날짜</th>
-						</tr>
-						</thead>
-						<tbody>
-						<c:forEach var="pay" items="${paymentlist}" varStatus="mo">
-						<c:set var="i" value="${i+1}"/>
+					<table border="1">
+				<colgroup>
+					<col style="width:30px" class=""/>
+					<col style="width:80px"/>
+					<col style="width:80px"/>
+					<col style="width:80px"/>
+					<col style="width:80px"/>
+					<col style="width:80px"/>
+					<col style="width:80px"/>
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">
+							<input type="checkbox" id="all" name="all"/>
+						</th>
+						<th scope="col">주문번호</th>
+						<th scope="col">주문자명</th>
+						<th scope="col">상품명</th>
+						<th scope="col">금액</th>
+						<th scope="col">농부ID</th>
+						<th scope="col">날짜</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="pay" items="${paymentlist}" varStatus="mo">
 						<fmt:formatDate var="pay_Date" value="${pay.pay_Date }" pattern="yyyy-MM-dd"/>
 						<fmt:formatDate var="pay_order" value="${pay.pay_Date }" pattern="yyyyMMddkkmmss"/>
 						<tr>
-							<td class="column1"><input type="checkbox" id="${i-1}" name="list0" value="${pay.pay_Orderno}"></td>
-							<td class="column2">${pay_order}${pay.pay_Orderno }</td>
-							<td class="column3">${pay.pay_Name }</td>
-							<td class="column4">${pay.p_Title }</td>
-							<td class="column5">${pay.pay_Totalprice }</td>
-							<td class="column6">${pay.p_Id }</td>
-							<td class="column7"><c:out value="${pay_Date }"/></td>
-							</tr>
-							</c:forEach>
-							</tbody>
+							<td><input type="checkbox" id="list0" name="list0" value="${pay.pay_Orderno}"></td>
+							<td>${pay_order}${pay.pay_Orderno }</td>
+							<td>${pay.pay_Name }</td>
+							<td>${pay.p_Title }</td>
+							<td>${pay.pay_Totalprice }</td>
+							<td>${pay.p_Id }</td>
+							<td><c:out value="${pay_Date }"/></td>
+						</tr>
+					</c:forEach>
+				</tbody>
 						</table>
 					</div>
 					<br>
@@ -264,14 +305,39 @@
 				    </div>
 				  </div>
 				</div>
-					</div>
-
+				<!-- 페이징 start -->
+				<div class="row">
+                    	<div class="col btn-group">
+                        	<c:if test="${pageMaker.prev }">
+                            	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageMaker.startPage-1)}"/>'>[이전]</a>
+                            </c:if>
+                            <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
+                            	<c:if test="${pageNum eq pageMaker.cri.page}">
+                            		<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageNum)}"/>'>
+                                		<span id="pagingCur" style="background-color: #7971ea; color: white;">${pageNum}</span>
+                                	</a>
+                            	</c:if>
+                                <c:if test="${pageNum ne pageMaker.cri.page}">
+                                	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageNum)}"/>'>
+                               			<span>&nbsp;${pageNum}&nbsp;</span>
+                               		</a>
+                               	</c:if>
+                            </c:forEach>
+                            <c:if test="${pageMaker.next && pageMaker.endPage >0 }">
+                            	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageMaker.endPage+1)}"/>'>
+                                	<span style="font-weight: bold;">[다음]</span>
+                                </a>
+                            </c:if>
+                              </div>
 				</div>
-			
+				<!-- 페이징 start -->
+					</div>
+				</div>
+				
+				
+				
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<%-- <footer>
-<jsp:include page="/WEB-INF/views/home/footer.jsp" />
-</footer> --%>
 <script>
 var check = 0;
 var allcheck = $("input:checkbox[name='all']").length;
@@ -280,7 +346,6 @@ var arr = [];
 var checktrue = false;
 
 $(document).on('click','#all',function(){
-alert("전체 체크박스 개수" + allcheck);
 	if($("#all").prop("checked")){
 		$("input[name='list0']").prop("checked",true);
 		} else {
@@ -298,27 +363,17 @@ $(document).on('click','input[name=list0]',function(){
 
 
 function checkremove() {
-	var check = $("input:checkbox[name='list0']:checked").length;
-	var allcheck = $("input:checkbox[name='all']").length;
-	arr.length = 0;
-	var $checkok = 0;
-	var payno = [];
-	if(check == 0){
+	 var checkArr = [];     // 배열 초기화
+     $("input[id='list0']:checked").each(function(i) {
+          checkArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+      });
+	if(checkArr.length == 0){
 		alert("상품을 선택해주세요.");
 	} else {
-		if (confirm('선택하신' + check + '건의 내역을 삭제하시겠습니까?')) {  
-			  for (var h = 0; h < allcheck; h++) {
-			    	var $checkok = $('#'+h);
-			      	if($checkok.prop('checked')) {
-			      		arr.push(h);
-			    	}
-			    }
-			  for (var j = 0; j < check; j++) {
-			 			payno.push($('#'+arr[j]).val() * 1);
-			  }
-			  alert(arr.length);			  
-			  alert(payno);
-			  window.location.href = "http://localhost:8090/adminPayListDelete?payno=" + payno;
+		if (confirm('선택하신' + checkArr.length + '건의 내역을 삭제하시겠습니까?')) {  
+			  
+			  alert(checkArr.length);			  
+			  window.location.href = "http://localhost:8090/adminPayListDelete?payno=" + checkArr;
 		} else{   
 			return false;
 		}
@@ -353,14 +408,6 @@ function modal() {
 
 </script>
 
-<!--===============================================================================================-->
-	<script src="resources/admin/list/vendor/jquery/jquery-3.2.1.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="resources/admin/list/vendor/bootstrap/js/popper.js"></script>
-	<script src="resources/admin/list/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="resources/admin/list/vendor/select2/select2.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="resources/admin/list/js/main.js"></script>
+
 </body>
 </html>

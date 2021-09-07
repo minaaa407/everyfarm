@@ -3,7 +3,108 @@
 						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.everyfarm.payment.PaymentDAO">
+	
+	<select id="rownum">
+		SET @rownum:=0; 
+	</select>
+	
+	<select id="qnomax" resultType="int">
+		select max(pay_Orderno) from payment
+	</select>
+	
+		<!-- 총 게시글 갯수 출력 -->
+	<select id="countpayment" resultType="int">
+		SELECT COUNT(*) FROM payment
+	</select>
+	
+	<select id="searchCount" resultType="int">
+		SELECT COUNT(*) FROM payment
+	</select>
+	
+	<!--  
+	<select id="paylist1"
+		resultType="kr.co.everyfarm.payment.PaymentBean">
+		select product.p_Id,product.p_No,product.p_Title,product.p_Img,
+		payment.pay_Id,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,payment.pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
+		from (
+			SELECT @ROWNUM := @ROWNUM + 1 as rn, product.p_Id,product.p_No,product.p_Title,product.p_Img,
+		payment.pay_Id,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,payment.pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
+		FROM payment, (SELECT @ROWNUM :=0) A 
+		order by pay_orderno desc
+		) result
+		where rn between #{start} AND #{end} 
+		AND member, product, payment where payment.pay_Id=member.m_Id and payment.pay_No=product.p_No
+	</select>
+	-->
+	<select id="paylist1"
+		resultType="kr.co.everyfarm.payment.PaymentBean">
+		      select product.p_Id,product.p_No,product.p_Title,product.p_Img,
+		payment.pay_Id,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,payment.pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
+		from member, product, payment where payment.pay_Id=member.m_Id and payment.pay_No=product.p_No
+  <!--     <if test="searchType == 't'.toString()">
+            AND r_mid LIKE CONCAT('%', #{keyword},'%')
+         </if>
+         <if test="searchType == 'c'.toString()">
+            AND r_pid LIKE CONCAT('%', #{keyword},'%')
+         </if>
+         <if test="searchType == 'w'.toString()">
+            AND product.p_name LIKE CONCAT('%', #{keyword},'%')
+         </if>
+         <if test="searchType == 'tc'.toString()">
+            AND r_state LIKE CONCAT('%', #{keyword},'%')
+         </if> -->
+      ORDER BY payment.pay_Orderno desc
+      limit #{pageStart}, #{perPageNum}
 
+		</select>
+	
+	   <select id="getPayTotalCount" resultType="int">
+      select count(*)
+      from member, product, payment where payment.pay_Id=member.m_Id and payment.pay_No=product.p_No
+      <!-- <include refid="searchCondition"></include> -->
+   </select>
+	
+<!-- 	   <sql id="searchCondition">
+      <if test="searchType != null">
+         <if test="searchType == 't'.toString()">
+            AND r_mid LIKE CONCAT('%', #{keyword},'%')
+         </if>
+         <if test="searchType == 'c'.toString()">
+            AND r_pid LIKE CONCAT('%', #{keyword},'%')
+         </if>
+         <if test="searchType == 'w'.toString()">
+            AND product.p_name LIKE CONCAT('%', #{keyword},'%')
+         </if>
+         <if test="searchType == 'tc'.toString()">
+            AND r_state LIKE CONCAT('%', #{keyword},'%')
+         </if>
+      </if>
+   </sql> -->
+	
+	
+	
+	<select id="searchName" parameterType="kr.co.everyfarm.payment.PaymentBean" resultType="kr.co.everyfarm.payment.PaymentBean">
+		select product.p_Id,product.p_No,product.p_Title,product.p_Img,
+		payment.pay_Id,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,payment.pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
+		from payment where pay_Name LIKE CONCAT('%',#{pay_Name},'%')
+		AND member, product, payment where payment.pay_Id=member.m_Id and payment.pay_No=product.p_No
+		order by pay_orderno desc
+	</select>
+	
+	<select id="searchNamePaging" resultType="kr.co.everyfarm.payment.PaymentBean">
+	select product.p_Id,product.p_No,product.p_Title,product.p_Img,
+		payment.pay_Id,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,payment.pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
+		from (
+		SELECT @ROWNUM := @ROWNUM + 1 as rn, product.p_Id,product.p_No,product.p_Title,product.p_Img,
+		payment.pay_Id,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,payment.pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
+		FROM payment where payment.pay_Name LIKE CONCAT('%',#{pay_Name},'%')
+		AND member, product, payment where payment.pay_Id=member.m_Id and payment.pay_No=product.p_No
+		order by pay_orderno desc
+		) result
+		where rn between #{start} AND #{end} 
+	</select>
+	
+	
 	<select id="paylist"
 		resultType="kr.co.everyfarm.payment.PaymentBean">
 		<![CDATA[
@@ -83,5 +184,9 @@
 		select * from payment order by pay_Seed desc limit 5;
 	</select>
 	<!-- index -->
+	
+    		
+
+
 
 </mapper>
