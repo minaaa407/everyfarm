@@ -55,6 +55,7 @@ background: linear-gradient(#d9ffa4 0, #fff4ad 100%) !important;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .wrap-table100 {
@@ -90,6 +91,22 @@ table tbody tr:last-child {
 table td, table th {
   text-align: center;
 }
+.pagination {
+  display: inline-block;
+}
+.pagination a {
+  float: left;
+  padding: 8px 16px;
+  border-radius:20%;
+}
+.pagination a.active {
+  background-color: #7971ea;
+  color: white;
+}
+.pagination a:hover:not(.active) {
+background-color: silver;
+}
+
 </style>
 </head>
 <body>
@@ -306,14 +323,15 @@ table td, table th {
 				  </div>
 				</div>
 				<!-- 페이징 start -->
+				
 				<div class="row">
-                    	<div class="col btn-group">
+                    	<div class="col btn-group pagination">
                         	<c:if test="${pageMaker.prev }">
                             	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageMaker.startPage-1)}"/>'>[이전]</a>
                             </c:if>
                             <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
                             	<c:if test="${pageNum eq pageMaker.cri.page}">
-                            		<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageNum)}"/>'>
+                            		<a class="active" href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageNum)}"/>'>
                                 		<span id="pagingCur" style="background-color: #7971ea; color: white;">${pageNum}</span>
                                 	</a>
                             	</c:if>
@@ -328,8 +346,9 @@ table td, table th {
                                 	<span style="font-weight: bold;">[다음]</span>
                                 </a>
                             </c:if>
-                              </div>
+                        </div>
 				</div>
+				
 				<!-- 페이징 start -->
 					</div>
 				</div>
@@ -405,6 +424,22 @@ function modal() {
 	});
 }
 
+const c = document.querySelector('.container')
+const indexs = Array.from(document.querySelectorAll('.index'))
+let cur = -1
+indexs.forEach((index, i) => {
+  index.addEventListener('click', (e) => {
+    // clear
+    c.className = 'container'
+    void c.offsetWidth; // Reflow
+    c.classList.add('open')
+    c.classList.add(`i${i + 1}`)
+    if (cur > i) {
+      c.classList.add('flip')
+    }
+    cur = i
+  })
+})
 
 </script>
 

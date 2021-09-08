@@ -6,9 +6,5 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		<mvc:annotation-driven>
-		<mvc:message-converters>
-			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
-		</mvc:message-converters>
-	</mvc:annotation-driven>
+		
 </beans>
