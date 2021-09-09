@@ -15,18 +15,6 @@
 
 <title>결제내역-관리자 | EveryFarm</title>
 <style>
-@media (min-width: 1200px) {
-.container1 {
-    max-width: 1600px;
-	}
-}
-.container1 {
-	font-size:20px;
-   	text-align: center;
-   	position: absolute;
-    width: 60%;
-    height: 100%;
-	}
 
 .modal { 
 	position:absolute; 
@@ -38,10 +26,10 @@
 	display:none; 
 }
 td, th {
-border-color:#ced4da;
+border-color:#9ea4ca;
 }
 body{
-background: linear-gradient(#d9ffa4 0, #fff4ad 100%) !important;
+background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 }
 .limiter {
   width: 100%;
@@ -322,8 +310,8 @@ background-color: silver;
 				    </div>
 				  </div>
 				</div>
-				<!-- 페이징 start -->
 				
+				<!-- 페이징 start -->
 				<div class="row">
                     	<div class="col btn-group pagination">
                         	<c:if test="${pageMaker.prev }">
@@ -337,7 +325,7 @@ background-color: silver;
                             	</c:if>
                                 <c:if test="${pageNum ne pageMaker.cri.page}">
                                 	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageNum)}"/>'>
-                               			<span>&nbsp;${pageNum}&nbsp;</span>
+                               			<span>${pageNum}</span>
                                		</a>
                                	</c:if>
                             </c:forEach>
@@ -348,7 +336,6 @@ background-color: silver;
                             </c:if>
                         </div>
 				</div>
-				
 				<!-- 페이징 start -->
 					</div>
 				</div>
@@ -390,8 +377,6 @@ function checkremove() {
 		alert("상품을 선택해주세요.");
 	} else {
 		if (confirm('선택하신' + checkArr.length + '건의 내역을 삭제하시겠습니까?')) {  
-			  
-			  alert(checkArr.length);			  
 			  window.location.href = "http://localhost:8090/adminPayListDelete?payno=" + checkArr;
 		} else{   
 			return false;
@@ -424,22 +409,6 @@ function modal() {
 	});
 }
 
-const c = document.querySelector('.container')
-const indexs = Array.from(document.querySelectorAll('.index'))
-let cur = -1
-indexs.forEach((index, i) => {
-  index.addEventListener('click', (e) => {
-    // clear
-    c.className = 'container'
-    void c.offsetWidth; // Reflow
-    c.classList.add('open')
-    c.classList.add(`i${i + 1}`)
-    if (cur > i) {
-      c.classList.add('flip')
-    }
-    cur = i
-  })
-})
 
 </script>
 

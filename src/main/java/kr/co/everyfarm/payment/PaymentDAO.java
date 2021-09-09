@@ -2,31 +2,18 @@ package kr.co.everyfarm.payment;
 
 import java.util.List;
 
-import kr.co.everyfarm.board.PagingBean;
-import kr.co.everyfarm.board.QnABean;
-import kr.co.everyfarm.product.PageBeen;
+import org.apache.ibatis.annotations.Param;
 
 public interface PaymentDAO {
-	
-	public void rownum();
-	
-	public int countPayment();
 	
 	public List<PaymentBean> paylist();
 
 	public List<PaymentBean> paylist1(Criteria cri);
 	public int getPayTotalCount(Criteria cri);// paging
 	
-	public List<PaymentBean> searchName(PaymentBean paymentbean);
-	public List<PaymentBean> searchNamePaging(PagingBean pagingbean);
-	public List<PaymentBean> searchAllPaging(PagingBean pagingbean);
+	public List<PaymentBean> farmerpaylist(String f_Id);
+	// public List<PaymentBean> farmerpaylist(@Param("cri") Criteria cri, @Param("f_Id") String f_Id);
 	
-	public List<PaymentBean> farmerpaylist(String m_Id);
-	
-	public List<PaymentBean> farmerpaylistpageing(PageBeen pagebeen);
-	public List<PaymentBean> farmerpaylistserachpageing(PageBeen pagebeen);
-	public List<PaymentBean> farmerpaylistserachpageingcount(PageBeen pagebeen);
-
 	public List<PaymentBean> sendmessage(int pay_orderno);
 	
 	public int payinsert(PaymentBean payment);

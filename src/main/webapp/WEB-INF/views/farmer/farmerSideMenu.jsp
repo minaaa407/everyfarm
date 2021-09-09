@@ -28,7 +28,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="FPLIST">
+            <a class="nav-link " href="farmerpaymentlist">
               <i class="ni ni-single-02 text-yellow"></i> 내역관리
             </a>
           </li>

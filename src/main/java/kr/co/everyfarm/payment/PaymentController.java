@@ -265,6 +265,7 @@ public class PaymentController {
 
 	@RequestMapping(value = "/adminPaymentList")
 	public String adminPaymentList(Model model, Criteria cri, HttpSession session) {
+		System.out.println("-----어드민페이먼트리스트 시작------");
 		AdminBean admin = (AdminBean) session.getAttribute("admin");
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
 		
@@ -281,27 +282,37 @@ public class PaymentController {
 	      pageMaker.setTotalCount(totalCount);
 	      // 모델에 추가
 	      model.addAttribute("pageMaker", pageMaker);
-		
+	      System.out.println("페이리스트 = " + paymentlist.get(0));
+		    System.out.println("페이리스트 = " + paymentlist.toString());
+	      System.out.println("-----어드민페이먼트리스트 끝------");
 		return "payment/adminPaymentList";
 	}
 
 	
-	@RequestMapping(value = "/farmerPaymentList")
-	public String farmerPaymentList(Model model, HttpSession session) {
-		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
-		
+	@RequestMapping(value = "/farmerpaymentlist")
+	public String farmerPaymentList(Model model, Criteria cri, HttpSession session) {
+		System.out.println("-----파머페이먼트리스트 시작------");
 		FarmerBean farmer = (FarmerBean)session.getAttribute("farmer");
+		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
 		String f_id = farmer.getF_Id();
-//		session.setAttribute("name", "maria");                // 이거 두개 임시
-//		String temp=(String)session.getAttribute("name");     // 이거 두개 임시
-		List<PaymentBean> farmerpaymentlist = dao.farmerpaylist(f_id); // temp 대신 f_id
 		System.out.println(f_id);
-		//List<PaymentBean> paymentlist = dao.farmerpaylistserachpageingcount(pagebeen);
-		//int selecttotalindex = paymentlist.size();
-		//pagebeen.setTableindex(selecttotalindex);
 		
-		//model.addAttribute("pagebeen", pagebeen);
-		model.addAttribute("paymentlist", farmerpaymentlist);
+		// 현재 페이지에 해당하는 게시물을 조회해 옴
+		List<PaymentBean> farmerpaymentlist = dao.farmerpaylist(f_id);
+		// 모델에 추가
+	    model.addAttribute("farmerpaymentlist", farmerpaymentlist);
+	    // PageMaker 객체 생성
+	    PageMaker pageMaker = new PageMaker(cri);
+	    // 전체 게시물 수를 구함
+	    int totalCount = dao.getPayTotalCount(cri);
+	    // pageMaker로 전달  
+	    pageMaker.setTotalCount(totalCount);
+	    // 모델에 추가
+	    model.addAttribute("pageMaker", pageMaker);
+	    
+	    System.out.println("파머리스트 = " + farmerpaymentlist.get(0));
+	    System.out.println("파머리스트 = " + farmerpaymentlist.toString());
+	    System.out.println("-----파머페이먼트리스트 끝------");
 		return "payment/farmerPaymentList";
 	}
 	
@@ -366,8 +377,8 @@ public class PaymentController {
 		return "/payment/viewResult";
 	}
 	
-	@RequestMapping(value = "/testlist")
+	@RequestMapping(value = "/test2")
 	public String testlist() {
-		return "payment/FPLIST";
+		return "payment/test";
 	}
 }
