@@ -110,7 +110,87 @@
 	<!-- index -->
 	
     		
-
-
-
+ <!--  count  -->
+<select id="countProductListTotal"  resultType="int">
+		select count(*)	from product
+		<include refid="searchCondition"></include>
+	</select>
+	
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '감자';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '고구마';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '콩';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '배추';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '상추';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '수박';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '오이';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '토마토';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '호박';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '고추';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '마늘';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '파';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '양파';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '무';			
+	</select>
+	<select id="countA"  resultType="int">
+		select count(pay_seed) from payment 
+		GROUP by pay_seed
+		HAVING pay_seed = '당근';			
+	</select>
+	
+<!--  count  -->
 </mapper>

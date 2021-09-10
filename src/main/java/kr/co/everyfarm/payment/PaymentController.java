@@ -1,8 +1,10 @@
 package kr.co.everyfarm.payment;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -377,8 +379,56 @@ public class PaymentController {
 		return "/payment/viewResult";
 	}
 	
-	@RequestMapping(value = "/test2")
-	public String testlist() {
+	@RequestMapping(value = "/admin1")
+	public String testlist(Model model) {
+		DecimalFormat df = new DecimalFormat("00");
+		Calendar Cal = Calendar.getInstance();
+		String month  = df.format(Cal.get(Calendar.MONTH) + 1);
+        String monthago  = df.format(Cal.get(Calendar.MONTH) - 1);
+        
+        PaymentDAO payDAO = sqlSessionTemplate.getMapper(PaymentDAO.class);
+        List<PaymentBean> list = dao.payList(cri);
+        int listCount = list.size();
+        model.addAttribute("listCount", listCount);
+        
+        int countA = payDAO.countA();
+		int countB = payDAO.countB();
+		int countC = payDAO.countC();
+		int countD = payDAO.countD();
+		int countE = payDAO.countE();
+		int countF = payDAO.countF();
+		int countG = payDAO.countG();
+		int countH = payDAO.countH();
+		int countI = payDAO.countI();
+		int countJ = payDAO.countJ();
+		int countK = payDAO.countK();
+		int countL = payDAO.countL();
+		int countM = payDAO.countM();
+		int countN = payDAO.countN();
+		int countO = payDAO.countO();
+       
+		int[] array = {countA,countB,countC,countD,countE,
+					   countF,countG,countH,countI,countJ,
+					   countK,countL,countM,countN,countO};	
+		
+		for (int i = 0; i < array.length; i++) {					
+			model.addAttribute("array0", array[0]);
+			model.addAttribute("array1", array[1]);
+			model.addAttribute("array2", array[2]);
+			model.addAttribute("array3", array[3]);
+			model.addAttribute("array4", array[4]);	
+			model.addAttribute("array4", array[5]);	
+			model.addAttribute("array4", array[6]);	
+			model.addAttribute("array4", array[7]);	
+			model.addAttribute("array4", array[8]);	
+			model.addAttribute("array4", array[9]);	
+			model.addAttribute("array4", array[10]);	
+			model.addAttribute("array4", array[11]);	
+			model.addAttribute("array4", array[12]);	
+			model.addAttribute("array4", array[13]);	
+			model.addAttribute("array4", array[14]);	
+			}
+		
 		return "payment/test";
 	}
 }
