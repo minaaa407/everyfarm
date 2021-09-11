@@ -111,86 +111,102 @@
 	
     		
  <!--  count  -->
-<select id="countProductListTotal"  resultType="int">
-		select count(*)	from product
+<!-- <select id="countSeedList"  resultType="int">
+		select count(*)	from payment
 		<include refid="searchCondition"></include>
-	</select>
+	</select> -->
 	
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countA" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%')
 		GROUP by pay_seed
 		HAVING pay_seed = '감자';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countB" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%')
 		GROUP by pay_seed
 		HAVING pay_seed = '고구마';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countC" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%')
 		GROUP by pay_seed
 		HAVING pay_seed = '콩';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countD" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%')
 		GROUP by pay_seed
 		HAVING pay_seed = '배추';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countE" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%') 
 		GROUP by pay_seed
 		HAVING pay_seed = '상추';			
 	</select>
-	<select id="countA"  resultType="int">
+	<select id="countF" parameterType="String" resultType="int">
 		select count(pay_seed) from payment 
+		WHERE pay_date like CONCAT ('%',#{date},'%')
 		GROUP by pay_seed
 		HAVING pay_seed = '수박';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countG" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%') 
 		GROUP by pay_seed
 		HAVING pay_seed = '오이';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countH" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%') 
 		GROUP by pay_seed
 		HAVING pay_seed = '토마토';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countI" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%') 
 		GROUP by pay_seed
 		HAVING pay_seed = '호박';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countJ" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%') 
 		GROUP by pay_seed
 		HAVING pay_seed = '고추';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countK" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%') 
 		GROUP by pay_seed
 		HAVING pay_seed = '마늘';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countL" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%') 
 		GROUP by pay_seed
 		HAVING pay_seed = '파';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countM" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%') 
 		GROUP by pay_seed
 		HAVING pay_seed = '양파';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countN" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%') 
 		GROUP by pay_seed
 		HAVING pay_seed = '무';			
 	</select>
-	<select id="countA"  resultType="int">
-		select count(pay_seed) from payment 
+	<select id="countO" parameterType="String" resultType="int">
+		select count(pay_seed) from payment
+		WHERE pay_date like CONCAT ('%',#{date},'%') 
 		GROUP by pay_seed
 		HAVING pay_seed = '당근';			
 	</select>
+	
 	
 <!--  count  -->
 </mapper>

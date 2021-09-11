@@ -680,6 +680,7 @@ function checkdelete() {
 	});
 	 
 	
+	
 	// 셀렉트 박스 배송메시지
 	$("#memo").on("change", function() {
 	    var $select = $(this);
