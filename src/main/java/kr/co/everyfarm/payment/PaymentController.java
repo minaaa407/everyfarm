@@ -384,50 +384,84 @@ public class PaymentController {
 	public String testlist(Model model, Criteria cri) {
 		System.out.println("---- admin1 시작 ----");
 		
-		DecimalFormat df = new DecimalFormat("00");
+		DecimalFormat dfmonth = new DecimalFormat("00");
+		DecimalFormat dfyear = new DecimalFormat("0000"); 
         Calendar cal = Calendar.getInstance();
-        String date  = df.format(cal.get(Calendar.MONTH) + 1);
-        String monthago  = df.format(cal.get(Calendar.MONTH));
-        String twomonthago  = df.format(cal.get(Calendar.MONTH));
+        String year  = dfyear.format(cal.get(Calendar.YEAR));
+        String date  = dfmonth.format(cal.get(Calendar.MONTH) + 1);
+        String monthago1  = dfmonth.format(cal.get(Calendar.MONTH));
+        String monthago2  = dfmonth.format(cal.get(Calendar.MONTH) - 1);
+        String monthago3  = dfmonth.format(cal.get(Calendar.MONTH) - 2);
+        String monthago4  = dfmonth.format(cal.get(Calendar.MONTH) - 3);
+        String monthago5  = dfmonth.format(cal.get(Calendar.MONTH) - 4);
+        String monthago6  = dfmonth.format(cal.get(Calendar.MONTH) - 5);
+        String monthago7  = dfmonth.format(cal.get(Calendar.MONTH) - 6);
+        String monthago8  = dfmonth.format(cal.get(Calendar.MONTH) - 7);
         
-        System.out.println("현재 달 = " + date);
-		System.out.println("1달 전 = " + monthago);
-		System.out.println("2달 전 = " + twomonthago);
         
+        System.out.println("현재 년 = " + year);
+        System.out.println("현재 월 = " + date);
+		System.out.println("1달 전 = " + monthago1);
+		System.out.println("2달 전 = " + monthago2);
+		System.out.println("3달 전 = " + monthago3);
+		System.out.println("4달 전 = " + monthago4);
+		System.out.println("5달 전 = " + monthago5);
+		System.out.println("6달 전 = " + monthago6);
+		System.out.println("7달 전 = " + monthago7);
+		System.out.println("8달 전 = " + monthago8);
+        
+		model.addAttribute("year",year);
 		model.addAttribute("date",date);
-		model.addAttribute("monthago",monthago);
-		model.addAttribute("twomonthago",twomonthago);
+		model.addAttribute("monthago1",monthago1);
+		model.addAttribute("monthago2",monthago2);
+		model.addAttribute("monthago3",monthago3);
+		model.addAttribute("monthago4",monthago4);
+		model.addAttribute("monthago5",monthago5);
+		model.addAttribute("monthago6",monthago6);
+		model.addAttribute("monthago7",monthago7);
+		model.addAttribute("monthago8",monthago8);
 		
         
         PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
         
         
-        List<PaymentBean> list = dao.paylist1(cri);
-        int listCount = list.size();
-        System.out.println("listCount = " + listCount);
-        model.addAttribute("listCount", listCount);
-        
-		int countA = dao.countA(date); System.out.println(countA);
-		int countB = dao.countB(date); System.out.println(countB);
-		int countC = dao.countC(date); System.out.println(countC);
-		int countD = dao.countD(date); System.out.println(countD);
-		int countE = dao.countE(date); System.out.println(countE);
-		int countF = dao.countF(date); System.out.println(countF);
-		int countG = dao.countG(date); System.out.println(countG);
-		int countH = dao.countH(date); System.out.println(countH);
-		int countI = dao.countI(date); System.out.println(countI);
-		int countJ = dao.countJ(date); System.out.println(countJ);
-		int countK = dao.countK(date); System.out.println(countK);
-		int countL = dao.countL(date); System.out.println(countL);
-		int countM = dao.countM(date); System.out.println(countM);
-		int countN = dao.countN(date); System.out.println(countN); 
-		int countO = dao.countO(date); System.out.println(countO);
-       
-		int[] array = {countA,countB,countC,countD,countE,
-					   countF,countG,countH,countI,countJ,
-					   countK,countL,countM,countN,countO};	
+		Integer countA = dao.countA(date); System.out.println(countA); int countAA = 0;
+		if(countA != null) { countAA = dao.countA(date); }
+		Integer countB = dao.countB(date); System.out.println(countB); int countBB = 0;
+		if(countB != null) { countBB = dao.countB(date); }
+		Integer countC = dao.countC(date); System.out.println(countC); int countCC = 0;
+		if(countC != null) { countCC = dao.countC(date); }
+		Integer countD = dao.countD(date); System.out.println(countD); int countDD = 0;
+		if(countD != null) { countDD = dao.countD(date); }
+		Integer countE = dao.countE(date); System.out.println(countE); int countEE = 0;
+		if(countE != null) { countEE = dao.countE(date); }
+		Integer countF = dao.countF(date); System.out.println(countF); int countFF = 0;
+		if(countF != null) { countFF = dao.countF(date); }
+		Integer countG = dao.countG(date); System.out.println(countG); int countGG = 0;
+		if(countG != null) { countGG = dao.countG(date); }
+		Integer countH = dao.countH(date); System.out.println(countH); int countHH = 0;
+		if(countH != null) { countHH = dao.countH(date); }
+		Integer countI = dao.countI(date); System.out.println(countI); int countII = 0;
+		if(countI != null) { countII = dao.countI(date); }
+		Integer countJ = dao.countJ(date); System.out.println(countJ); int countJJ = 0;
+		if(countJ != null) { countJJ = dao.countJ(date); }
+		Integer countK = dao.countK(date); System.out.println(countK); int countKK = 0; 
+		if(countK != null) { countKK = dao.countK(date); }
+		Integer countL = dao.countL(date); System.out.println(countL); int countLL = 0;
+		if(countL != null) { countLL = dao.countL(date); }
+		Integer countM = dao.countM(date); System.out.println(countM); int countMM = 0;
+		if(countM != null) { countMM = dao.countM(date); }
+		Integer countN = dao.countN(date); System.out.println(countN); int countNN = 0;
+		if(countN != null) { countNN = dao.countN(date); }
+		Integer countO = dao.countO(date); System.out.println(countO); int countOO = 0;
+		if(countO != null) { countOO = dao.countO(date); }
 		
-		System.out.println("A = " + countA);
+       
+		int[] array = {countAA,countBB,countCC,countDD,countEE,
+					   countFF,countGG,countHH,countII,countJJ,
+					   countKK,countLL,countMM,countNN,countOO};	
+		
+		System.out.println("A = " + countAA);
 		
 		for (int i = 0; i < array.length; i++) {
 			model.addAttribute("array0", array[0]);
@@ -459,19 +493,6 @@ public class PaymentController {
 		System.out.println("선택한 달 = " + selectmonth + "월");
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
 		
-		DecimalFormat df = new DecimalFormat("00");
-        Calendar cal = Calendar.getInstance();
-        String date  = df.format(cal.get(Calendar.MONTH) + 1);
-        String monthago  = df.format(cal.get(Calendar.MONTH));
-        String twomonthago  = df.format(cal.get(Calendar.MONTH)-1);
-        
-        System.out.println("현재 달 = " + date);
-		System.out.println("1달 전 = " + monthago);
-		System.out.println("2달 전 = " + twomonthago);
-        
-		model.addAttribute("date",date);
-		model.addAttribute("monthago",monthago);
-		model.addAttribute("twomonthago",twomonthago);
 		if (selectmonth == null) {
 			map.put("url", "test1");
 			map.put("error", false);
@@ -479,45 +500,58 @@ public class PaymentController {
 			
 		model.addAttribute("selectmonth",selectmonth);
 		
-		int countA = dao.countA(selectmonth); System.out.println(countA);
-		int countB = dao.countB(selectmonth); System.out.println(countB);
-		int countC = dao.countC(selectmonth); System.out.println(countC);
-		int countD = dao.countD(selectmonth); System.out.println(countD);
-		int countE = dao.countE(selectmonth); System.out.println(countE);
-		int countF = dao.countF(selectmonth); System.out.println(countF);
-		int countG = dao.countG(selectmonth); System.out.println(countG);
-		int countH = dao.countH(selectmonth); System.out.println(countH);
-		int countI = dao.countI(selectmonth); System.out.println(countI);
-		int countJ = dao.countJ(selectmonth); System.out.println(countJ);
-		int countK = dao.countK(selectmonth); System.out.println(countK);
-		int countL = dao.countL(selectmonth); System.out.println(countL);
-		int countM = dao.countM(selectmonth); System.out.println(countM);
-		int countN = dao.countN(selectmonth); System.out.println(countN); 
-		int countO = dao.countO(selectmonth); System.out.println(countO);
+		Integer countA = dao.countA(selectmonth); System.out.println(countA); int countAA = 0;
+		if(countA != null) { countAA = dao.countA(selectmonth); }
+		Integer countB = dao.countB(selectmonth); System.out.println(countB); int countBB = 0;
+		if(countB != null) { countBB = dao.countB(selectmonth); }
+		Integer countC = dao.countC(selectmonth); System.out.println(countC); int countCC = 0;
+		if(countC != null) { countCC = dao.countC(selectmonth); }
+		Integer countD = dao.countD(selectmonth); System.out.println(countD); int countDD = 0;
+		if(countD != null) { countDD = dao.countD(selectmonth); }
+		Integer countE = dao.countE(selectmonth); System.out.println(countE); int countEE = 0;
+		if(countE != null) { countEE = dao.countE(selectmonth); }
+		Integer countF = dao.countF(selectmonth); System.out.println(countF); int countFF = 0;
+		if(countF != null) { countFF = dao.countF(selectmonth); }
+		Integer countG = dao.countG(selectmonth); System.out.println(countG); int countGG = 0;
+		if(countG != null) { countGG = dao.countG(selectmonth); }
+		Integer countH = dao.countH(selectmonth); System.out.println(countH); int countHH = 0;
+		if(countH != null) { countHH = dao.countH(selectmonth); }
+		Integer countI = dao.countI(selectmonth); System.out.println(countI); int countII = 0;
+		if(countI != null) { countII = dao.countI(selectmonth); }
+		Integer countJ = dao.countJ(selectmonth); System.out.println(countJ); int countJJ = 0;
+		if(countJ != null) { countJJ = dao.countJ(selectmonth); }
+		Integer countK = dao.countK(selectmonth); System.out.println(countK); int countKK = 0; 
+		if(countK != null) { countKK = dao.countK(selectmonth); }
+		Integer countL = dao.countL(selectmonth); System.out.println(countL); int countLL = 0;
+		if(countL != null) { countLL = dao.countL(selectmonth); }
+		Integer countM = dao.countM(selectmonth); System.out.println(countM); int countMM = 0;
+		if(countM != null) { countMM = dao.countM(selectmonth); }
+		Integer countN = dao.countN(selectmonth); System.out.println(countN); int countNN = 0;
+		if(countN != null) { countNN = dao.countN(selectmonth); }
+		Integer countO = dao.countO(selectmonth); System.out.println(countO); int countOO = 0;
+		if(countO != null) { countOO = dao.countO(selectmonth); }
 		
-		int[] array = {countA,countB,countC,countD,countE,
-				  	   countF,countG,countH,countI,countJ,
-				  	   countK,countL,countM,countN,countO};	
+		int[] array = {countAA,countBB,countCC,countDD,countEE,
+				   countFF,countGG,countHH,countII,countJJ,
+				   countKK,countLL,countMM,countNN,countOO};	
 	
 	System.out.println("A = " + countA);
 		
-	for (int i = 0; i < array.length; i++) {
-		model.addAttribute("sarray0", array[0]);
-		model.addAttribute("sarray1", array[1]);
-		model.addAttribute("sarray2", array[2]);
-		model.addAttribute("sarray3", array[3]);
-		model.addAttribute("sarray4", array[4]);	
-		model.addAttribute("sarray5", array[5]);	
-		model.addAttribute("sarray6", array[6]);	
-		model.addAttribute("sarray7", array[7]);	
-		model.addAttribute("sarray8", array[8]);	
-		model.addAttribute("sarray9", array[9]);	
-		model.addAttribute("sarray10", array[10]);	
-		model.addAttribute("sarray11", array[11]);	
-		model.addAttribute("sarray12", array[12]);	
-		model.addAttribute("sarray13", array[13]);	
-		model.addAttribute("sarray14", array[14]);
-		}
+		map.put("sarray0", array[0]);
+		map.put("sarray1", array[1]);
+		map.put("sarray2", array[2]);
+		map.put("sarray3", array[3]);
+		map.put("sarray4", array[4]);
+		map.put("sarray5", array[5]);
+		map.put("sarray6", array[6]);
+		map.put("sarray7", array[7]);
+		map.put("sarray8", array[8]);
+		map.put("sarray9", array[9]);
+		map.put("sarray10", array[10]);
+		map.put("sarray11", array[11]);
+		map.put("sarray12", array[12]);
+		map.put("sarray13", array[13]);
+		map.put("sarray14", array[14]);
 		map.put("error", true);
 		System.out.println("---- changemonth 끝 ----");
 		}

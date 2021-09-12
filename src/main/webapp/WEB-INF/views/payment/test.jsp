@@ -205,8 +205,6 @@ canvas {
 							<!-- Chart -->
 							<div id="canvas-holder" style="width:30%">
 								<canvas id="myChart" class="chart-canvas"></canvas>
-								<input hidden="mMonth" id="mMonth" var="mMonth" name="mMonth"
-									items="">
 							</div>
 							
 		<input type="hidden" id="array0" value="${array0 }" >
@@ -224,26 +222,19 @@ canvas {
 	    <input type="hidden" id="array12" value="${array12 }" >
 	    <input type="hidden" id="array13" value="${array13 }" >
 	    <input type="hidden" id="array14" value="${array14 }" >
-    
-		<input type="hidden" id="sarray0" value="${sarray0 }" >
-	    <input type="hidden" id="sarray1" value="${sarray1 }" >
-	    <input type="hidden" id="sarray2" value="${sarray2 }" >
-	    <input type="hidden" id="sarray3" value="${sarray3 }" >
-	    <input type="hidden" id="sarray4" value="${sarray4 }" >
-	    <input type="hidden" id="sarray5" value="${sarray5 }" >
-	    <input type="hidden" id="sarray6" value="${sarray6 }" >
-	    <input type="hidden" id="sarray7" value="${sarray7 }" >
-	    <input type="hidden" id="sarray8" value="${sarray8 }" >
-	    <input type="hidden" id="sarray9" value="${sarray9 }" >
-	    <input type="hidden" id="sarray10" value="${sarray10 }" >
-	    <input type="hidden" id="sarray11" value="${sarray11 }" >
-	    <input type="hidden" id="sarray12" value="${sarray12 }" >
-	    <input type="hidden" id="sarray13" value="${sarray13 }" >
-	    <input type="hidden" id="sarray14" value="${sarray14 }" >
+ 
+	    <input type="hidden" id="year" value="${year}" >
     <div>
     	<input type="hidden" id="selmonth" value="" />
     	<select id="month" name="month" onchange="javascript:myListener(this);">
-    		<option id="monthago" value="${monthago}">${monthago}월</option>
+    		<option id="monthago8" value="${monthago8}">${monthago8}월</option>
+    		<option id="monthago7" value="${monthago7}">${monthago7}월</option>
+    		<option id="monthago6" value="${monthago6}">${monthago6}월</option>
+    		<option id="monthago5" value="${monthago5}">${monthago5}월</option>
+    		<option id="monthago4" value="${monthago4}">${monthago4}월</option>
+    		<option id="monthago3" value="${monthago3}">${monthago3}월</option>
+    		<option id="monthago2" value="${monthago2}">${monthago2}월</option>
+    		<option id="monthago1" value="${monthago1}">${monthago1}월</option>
     		<option value="${date}" selected="selected">${date}월</option>
     	</select>
     </div>
@@ -256,8 +247,11 @@ canvas {
 <script src="resources/dist/utils.js"></script>
 
 <script>
-alert(1);
+console.log(1);
 console.log('시작');
+
+var myChart;
+
 const seeds = ["감자", "고구마", "콩", "배추", "상추", "수박", "오이", "토마토", "호박", "고추", "마늘", "파", "양파", "무", "당근"];
 console.log(seeds);
 var a = document.getElementById('array0').value;
@@ -275,10 +269,34 @@ var l = document.getElementById('array11').value;
 var m = document.getElementById('array12').value;
 var n = document.getElementById('array13').value;
 var o = document.getElementById('array14').value;
+
+var year = document.getElementById('year').value;
+console.log(year);
+
+var seeds2 = ['감자', '고구마', '콩', '배추', '상추',
+			  '수박', '오이', '토마토', '호박', '고추',
+			  '마늘', '파', '양파', '무', '당근'];
+var seeds3 = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o];
+
+
+console.log(1);
+console.log(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o);
+
+var sa = 0; 	var sb = 0; 	var sc = 0;		var sd = 0; 	var se = 0;
+var sf = 0; 	var sg = 0;		var sh = 0; 	var si = 0; 	var sj = 0;
+var sk = 0; 	var sl = 0; 	var sm = 0; 	var sn = 0; 	var so = 0;
+
+
+
+console.log("array" + a,b,c,d,e,f,g,h,i,j,k,l,m,n,o);
+/* console.log("sarray" + sa,sb,sc,sd,se,sf,sg,sh,si,sj,sk,sl,sm,sn,so); */
+console.log(seeds2);
+console.log(seeds3);
 //월별 셀렉트
 
 function myListener(month) {
-    alert(month.value); // 선택된 option의 value가 출력된다!
+	console.log('---셀렉트시작---');
+    console.log(month.value); // 선택된 option의 value가 출력된다!
     const month1 = month.value;
     document.getElementById('selmonth').value=document.getElementById('month').value;
     console.log(typeof month1);
@@ -294,57 +312,88 @@ function myListener(month) {
 			if(result.error == false){
 			alert("실패");
 		}else{
-			alert("성공");
+			console.log("성공");
+			console.log("sarray0 = " + result.sarray0);
+			sa = result.sarray0; 	sb = result.sarray1; 	sc = result.sarray2;
+			sd = result.sarray3; 	se = result.sarray4; 	sf = result.sarray5;
+			sg = result.sarray6; 	sh = result.sarray7; 	si = result.sarray8;
+			sj = result.sarray9; 	sk = result.sarray10; 	sl = result.sarray11;
+			sm = result.sarray12; 	sn = result.sarray13; 	so = result.sarray14;
+			
+			console.log(sa,sb,sc,sd,se,sf,sg,sh,si,sj,sk,sl,sm,sn,so);
+			
+    		seeds2 = ['감자', '고구마', '콩', '배추', '상추',
+			 		  '수박', '오이', '토마토', '호박', '고추',
+	 				  '마늘', '파', '양파', '무', '당근'];
+			seeds3 = [sa,sb,sc,sd,se,sf,sg,sh,si,sj,sk,sl,sm,sn,so];
+			console.log("seed2 = " + seeds2);
+			console.log("seed3 = " + seeds3);
+			if (myChart) {
+	            myChart.destroy()
+	        }
+			context = document.getElementById('myChart').getContext('2d');
+			myChart = new Chart(context, { 
+						  type: 'polarArea',
+						  data: {
+							  labels: seeds2,
+							  datasets: [{
+								    backgroundColor: colors,
+								    hoverBackgroundColor : [ 'rgba(255, 99, 132)', 'rgba(156, 232, 102)', 'rgba(26, 206, 107)', 'rgba(232, 202, 102)', 'rgba(143, 150, 235)',
+								    						 'rgba(107, 242, 180)', 'rgba(242, 160, 107)', 'rgba(217, 102, 232)', 'rgba(100, 211, 211)', 'rgba(245, 205, 195)',
+								    						 'rgba(180, 235, 215)', 'rgba(100, 245, 186)', 'rgba(6, 14, 117)', 'rgba(84, 219, 66)', 'rgba(235, 81, 61)'],
+								    data: seeds3,
+						}]
+					},
+					options : {
+						responsive : true,
+						legend: {
+							labels: {
+		                        fontColor: 'rgba(0,0,0,1)',
+		                        fontSize: 16,
+		                        fontStyle: "bold"
+		                    },
+			                position: 'right',
+			            },
+						title: {
+						      display: true,
+						      text: year + "년 월별 씨앗 판매수",
+						      fontSize: 25,
+						      fontColor: '#4e9525'
+						    },
+						    scale: {
+					              ticks: {
+					                beginAtZero: true
+					              },
+					              reverse: false
+						    },
+						    animation: {
+				                animateRotate: true,
+				                animateScale: true
+				            }
+					}
+			});
 			}
+		},
+		error : function(request,status,error) {
+			//통신 실패시 발생하는 함수(콜백)
+			alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+			console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
 		}
 	});
-if (document.getElementById('selmonth').value == month1) {
-	a = document.getElementById('sarray0').value;
-	b = document.getElementById('sarray1').value;
-	c = document.getElementById('sarray2').value;
-	d = document.getElementById('sarray3').value;
-	e = document.getElementById('sarray4').value;
-	f = document.getElementById('sarray5').value;
-	g = document.getElementById('sarray6').value;
-	h = document.getElementById('sarray7').value;
-	i = document.getElementById('sarray8').value;
-	j = document.getElementById('sarray9').value;
-	k = document.getElementById('sarray10').value;
-	l = document.getElementById('sarray11').value;
-	m = document.getElementById('sarray12').value;
-	n = document.getElementById('sarray13').value;
-	o = document.getElementById('sarray14').value;
-}
+    console.log('---ajax 끝---');
 
-console.log(document.getElementById('sarray0').value);
-console.log(document.getElementById('sarray1').value);
-console.log(document.getElementById('sarray2').value);
-console.log(document.getElementById('sarray3').value);
-console.log(a);
-console.log(b);
-console.log(c);
-console.log(d);
+
     
 }
 
 
-console.log(1);
-console.log(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o);
 
-var seeds2 = ['감자' + a, '고구마' + b, '콩' + c, '배추' + d, '상추' + e,
-			 '수박' + f, '오이' + g, '토마토' + h, '호박' + i, '고추' + j,
-	 		 '마늘' + k, '파' + l, '양파' + m, '무' + n, '당근' + o];
-/* var yseed = ['감자','고구마','콩','배추','상추','수박','오이','토마토','호박','고추','마늘','파','양파','무','당근']; */
-var seeds3 = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o];
 var colors = ['rgba(255, 99, 132, 0.5)', 'rgba(156, 232, 102, 0.5)', 'rgba(26, 206, 107, 0.5)', 'rgba(232, 202, 102, 0.5)', 'rgba(143, 150, 235, 0.5)',
 			  'rgba(107, 242, 180, 0.5)', 'rgba(242, 160, 107, 0.5)', 'rgba(217, 102, 232, 0.5)', 'rgba(100, 211, 211, 0.5)', 'rgba(245, 205, 195, 0.5)',
 			  'rgba(180, 235, 215, 0.5)', 'rgba(100, 245, 186, 0.5)', 'rgba(6, 14, 117, 0.5)', 'rgba(84, 219, 66, 0.5)', 'rgba(235, 81, 61, 0.5)'];
 
-/* var now = new Date().getMonth()+1;
-var parray = new Array(); */
-
 var context = document.getElementById('myChart').getContext('2d');
-var mychart = new Chart(context, { 
+myChart = new Chart(context, { 
 			  type: 'polarArea',
 			  data: {
 				  labels: seeds2,
@@ -359,11 +408,18 @@ var mychart = new Chart(context, {
 		options : {
 			responsive : true,
 			legend: {
+				labels: {
+                    fontColor: 'rgba(0,0,0,1)',
+                    fontSize: 16,
+                    fontStyle: "bold"
+                },
                 position: 'right',
             },
 			title: {
 			      display: true,
-			      text: "2021년 씨앗별 구매현황"
+			      text: year + "년 월별 씨앗 판매수",
+			      fontSize: 25,
+			      fontColor: '#4e9525'
 			    },
 			    scale: {
 		              ticks: {

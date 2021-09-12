@@ -14,9 +14,9 @@ public interface PaymentDAO {
 	// public List<PaymentBean> farmerpaylist(@Param("cri") Criteria cri, @Param("f_Id") String f_Id);
 	
 	// count
-	public int countA(String date); public int countB(String date); public int countC(String date); public int countD(String date); public int countE(String date); 
-	public int countF(String date); public int countG(String date); public int countH(String date); public int countI(String date); public int countJ(String date); 
-	public int countK(String date); public int countL(String date); public int countM(String date); public int countN(String date); public int countO(String date); 
+	public Integer countA(String date); public Integer countB(String date); public Integer countC(String date); public Integer countD(String date); public Integer countE(String date); 
+	public Integer countF(String date); public Integer countG(String date); public Integer countH(String date); public Integer countI(String date); public Integer countJ(String date); 
+	public Integer countK(String date); public Integer countL(String date); public Integer countM(String date); public Integer countN(String date); public Integer countO(String date); 
 	
 	public List<PaymentBean> sendmessage(int pay_orderno);
 	
