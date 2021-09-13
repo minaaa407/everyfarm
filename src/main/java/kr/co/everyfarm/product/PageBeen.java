@@ -54,29 +54,44 @@ public class PageBeen {
 
 
 	public void setTableindex(int tableindex) {
-		int result = (int)(Math.ceil((double)tableindex/limit));
-		endnumber = result;
 		
-		pagestart = (int)(Math.floor((double)(selectpage-1)/pagingnumber)) ;
-		pagestart = (pagestart * pagingnumber)+1;
-		pageend = pagestart + pagingnumber -1;
-
-		if(pagestart >= endnumber) {
-			pagestart = endnumber;
-		}
-		if(pageend >= endnumber) {
-			pageend = endnumber;
-
-			post = false;
-		}else {
-			post = true;
-		}
-		if(pagestart == 1) {
+		if(tableindex==0) {
+			
 			pro = false;
+			post = false;
+			pagestart = 0;
+			pageend = 0;
+			endnumber = 0;
+			
 		}else {
-			pro = true;
+		
+			int result = (int)(Math.ceil((double)tableindex/limit));
+			endnumber = result;
+			pagestart = (int)(Math.floor((double)(selectpage-1)/pagingnumber)) ;
+			pagestart = (pagestart * pagingnumber) + 1;
+			pageend = pagestart + pagingnumber -1;
+			
+			if(pagestart >= endnumber) {
+				pagestart = endnumber;
+			}
+			
+			if(pageend >= endnumber) {
+				pageend = endnumber;
+				post = false;
+				
+			}else {
+				post = true;
+				
+			}
+			if(pagestart == 1) {
+				pro = false;
+				
+			}else {
+				pro = true;
+				
+			}
+			this.tableindex = tableindex;
 		}
-		this.tableindex = tableindex;
 	}
 	
 	public PageBeen() {

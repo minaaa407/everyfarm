@@ -328,6 +328,7 @@ public class ProductController {
 			@RequestParam("c_Content") String c_Content,@RequestParam("page") String page,@RequestParam("c_Seq") String c_Seq,
 			@RequestParam("c_Id") String c_Id) {
 		int pagenumber = Integer.parseInt(page);
+		System.out.println("동작 되는겨???");
 		Map<String, Object> map = new HashMap<String, Object>();
 		ProductqnaDAO dao2 = sqlSessionTemplate.getMapper(ProductqnaDAO.class);
 		PageBeen pagebeen = new PageBeen();	
@@ -338,15 +339,19 @@ public class ProductController {
 	    productqnabean.setC_Secret("N");
 	    productqnabean.setC_Id(c_Id);
 	    System.out.println(productqnabean.getC_Id() + "id값?");
+	    System.out.println(productqnabean + "값 빈 뭐임???");
 	    dao2.updatedelete(productqnabean);
 	    int qnacount = dao2.productqnalistcount(c_No);
+	    System.out.println("동작1");
 	    pagebeen.setLimit(10);
 	    pagebeen.setTableindex(qnacount);
 	    pagebeen.setSelectpage(pagenumber);
 	    pagebeen.setWherecolumn(c_No);
 	    List<ProductqnaBean> qnalist = dao2.productqnalist(pagebeen);
+	    System.out.println("동작2");
 	    map.put("pagebeen", pagebeen);
 		map.put("qnalist", qnalist);  
+		System.out.println("동작3");
 		return map;
 	}
 	

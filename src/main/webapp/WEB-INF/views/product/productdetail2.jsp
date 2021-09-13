@@ -1100,66 +1100,52 @@ td .mybtn{
 %>					
 
 	<div class="container pt-5 pb-4">
-			<div class="row justify-content-between">
-				<div class="col-md-8 order-md-last">
-					<div class="row">
-						<div class="col-md-6 text-center">
-							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
-						</div>
-						<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
-							<form action="#" class="searchform order-lg-last">
-								<div class="form-group d-flex">
-									<input type="text" class="form-control pl-3"
-										placeholder="Search">
-									<button type="submit" placeholder=""
-										class="form-control search">
-										<span class="fa fa-search"></span>
-									</button>
-								</div>
-							</form>
-						</div>
-						<div>
-							<c:choose>
-								<c:when test="${empty member}">
-									<li><a href="/login">로그인</a></li>
-									<li><a href="/sign">회원가입</a></li>
-								</c:when>
-								<c:when test="${not empty member}">
-									<li>${member.m_Name}님환영합니다.</li>
-									<li><a href="/mypage">내 정보</a></li>
-									<li><a href="/logout">로그아웃</a></li>
-								</c:when>
-							</c:choose>
-						</div>
+		<div class="row justify-content-between">
+			<div class="col-md-8 order-md-last">
+				<div class="row">
+					<div class="col-md-6 text-center">
+						<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
+					</div>
+					<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
+						<form action="#" class="searchform order-lg-last">
+							<div class="form-group d-flex">
+								<input type="text" class="form-control pl-3"
+									placeholder="Search">
+								<button type="submit" placeholder="" class="form-control search">
+									<span class="fa fa-search"></span>
+								</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Start NavBar -->
-		<nav
-			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
-			id="ftco-navbar">
-			<div class="container-fluid">
+	</div>
 
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#ftco-nav" aria-controls="ftco-nav"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="fa fa-bars"></span> Menu
-				</button>
-				<div class="collapse navbar-collapse" id="ftco-nav">
-					<ul class="navbar-nav m-auto">
-						<li class="nav-item active"><a href="index.jsp"
-							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="services.html" class="nav-link">농장
-								등록</a></li>
-						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
-						<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-					</ul>
-				</div>
+	<nav
+		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+		id="ftco-navbar">
+		<div class="container-fluid">
+
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#ftco-nav" aria-controls="ftco-nav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="fa fa-bars"></span> Menu
+			</button>
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav m-auto">
+					<li class="nav-item active"><a href="index.jsp"
+						class="nav-link">Home</a></li>
+					<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
+					<li class="nav-item"><a href="services.html" class="nav-link">농장
+							등록</a></li>
+					<li class="nav-item"><a href="gallery.html" class="nav-link">REVIEW</a></li>
+					<li class="nav-item"><a href="blog.html" class="nav-link">Q&A</a></li>
+					<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+				</ul>
 			</div>
-		</nav>
+		</div>
+	</nav>
 	<!-- END nav -->
 
 	<!-- 여기서부터 내용 -->

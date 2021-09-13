@@ -84,7 +84,11 @@
 		select count(*) from product where p_Accept = 'Y' 		
 	</select>
 	
-		<select id="listacceptpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		<select id="listacceptncount" resultType="int">
+		select count(*) from product where p_Accept = 'N' 		
+	</select>
+	
+	<select id="listacceptpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
 		select p_id,p_no,p_title,p_content,p_Mainimage,p_Subimage,p_imagedetail,p_landprice,p_main,p_sub,p_seedprice,p_manpay,p_delivery,p_date,p_accept, p_seedcount from
 		 product where p_Accept = 'Y' limit #{limit}  offset #{offset}	
 	</select>
@@ -93,12 +97,13 @@
 
 	
 	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
-
 		update product set p_Id=#{p_Id}, p_Title=#{p_Title},
-		p_Content= #{p_Content},p_Image= #{p_Image},
-		p_Imagedetail= #{p_Imagedetail},p_Landprice= #{p_Landprice},p_Main= #{p_Main},
-		p_Sub=#{p_Sub},p_Seedprice=#{p_Seedprice},
-		p_Manpay=#{p_Manpay},p_Delivery=#{p_Delivery},
+		p_Content= #{p_Content},p_Img= #{p_Img},
+		p_Subimg1= #{p_Subimg1},p_Subimg2= #{p_Subimg2},p_Subimg3= #{p_Subimg3},
+		p_Subimg4=#{p_Subimg4},p_Imgdetail1=#{p_Imgdetail1},
+		p_Imgdetail2=#{p_Imgdetail2},p_Imgdetail3=#{p_Imgdetail3},
+		p_Imgdetail4=#{p_Imgdetail4},p_Landprice=#{p_Landprice},
+		p_Manpay=#{p_Manpay},
 		p_Accept=#{p_Accept} where p_no = #{p_No}	
 	</update>
 	
@@ -117,6 +122,10 @@
 		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product	
 		where p_Accept ='N' order by p_No desc;
 	</select>
+	
+	<select id="info" resultType="kr.co.everyfarm.product.ProductBean">
+      select* from product where p_No = #{p_No}      
+   </select>
 
 
 <!-- 듄 payment에 이용 --> 
@@ -128,11 +137,8 @@
 		  </select>
 		  
 	<!-- 듄 payment에 이용 -->
-	
-	<!-- index -->
-	<select id="viewList" resultType="kr.co.everyfarm.product.ProductBean">
-	select * from product order by p_View desc limit 3;
-	</select>
-	<!-- index -->
+
+
+
 
 </mapper>
