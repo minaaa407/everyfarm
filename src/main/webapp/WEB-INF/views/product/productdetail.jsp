@@ -750,11 +750,11 @@ td .mybtn{
 					var rowid = "product"+product;
 					var pnum = "pnum"+product;
 					var total = "total"+product;
-					
+					var amout2 = document.getElementById('iniamout').value;
 					 var oneprice = ${oneproduct.p_Landprice} * amout;
 					 var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 					 var cn1 = cn1 +'원';
-					
+				
 					 if(!(document.getElementById(rowid))){
 							var text="";	
 								text += document.getElementById('table1').innerHTML
@@ -780,6 +780,7 @@ td .mybtn{
 									var cn1 = cn1 +'원';
 									
 									var totalprice = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
+									var onetotalprice =((${oneproduct.p_Manpay} * amout2)+ (${oneproduct.p_Landprice} * amout2)); 
 									var cn2 = totalprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 									var cn2 = cn2 +'원';
 									var totalproduct = (${oneproduct.p_Landprice} * a1);
@@ -797,7 +798,7 @@ td .mybtn{
 									var b_Land = ("b_Land" + product);
 									var b_Totalprice = ("b_Totalprice" + product);
 									document.getElementById(b_Land).value= amout;
-									document.getElementById(b_Totalprice).value= totalprice;
+									document.getElementById(b_Totalprice).value= onetotalprice;
 					 }else{
 						 alert("동일 제품이 존재합니다. 수량을 조절해주십시요.")
 					 }
