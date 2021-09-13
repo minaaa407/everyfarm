@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="kr.co.everyfarm.product.ProductqnaDAO">
+  
 	 <select id="list" resultType="kr.co.everyfarm.product.ProductqnaBean">
 		select c_seq,c_id,c_no,c_content,c_date,c_mainno,c_subno,c_secret from productqna		
 	</select>
@@ -23,12 +24,9 @@
 		update productqna set c_content = #{c_Content}, c_Id = #{c_Id} where c_Seq = #{c_Seq};
 	</update>
 	
-	
-	
 	<delete id="delete">
 		delete from emp2 where empno=#{empno}	
 	</delete>
-	
 	
 	<select id="productqnalist" resultType="kr.co.everyfarm.product.ProductqnaBean" parameterType="kr.co.everyfarm.product.PageBeen">
 		select c_seq,c_id,c_no,c_content,c_date,c_mainno,c_subno,c_secret,REPLACE(c_subno,0,9999) from productqna
@@ -44,19 +42,15 @@
 	</select>
 	
 	<select id="maxcmainno" resultType="int" parameterType="String">
-		select max(c_mainno) from productqna where c_no =#{c_no}
+		select ifnull(max(c_mainno),0)  from productqna where c_no =#{c_no}
 	</select>
 	
 	<select id="mainno" resultType="int" parameterType="String">
 		select c_mainno from productqna where c_seq = #{c_seq}
 	</select>
 	
-	
 	<select id="maxcsubno" resultType="int" parameterType="String">
 		select max(c_subno) from productqna where c_mainno = (select c_mainno from productqna where c_seq = #{c_seq})
 	</select>
-	
-	
-
 
 </mapper>
