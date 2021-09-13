@@ -34,10 +34,10 @@ public class BoardConrtroller {
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	
-	@RequestMapping(value = "/a")
-	public String geta(Model model, HttpServletRequest request) {
-		return "board/a";
-	}
+//	@RequestMapping(value = "/a")
+//	public String geta(Model model, HttpServletRequest request) {
+//		return "board/a";
+//	}
 	
 //	@RequestMapping(value = "/qnalist")
 //	public String getQnAList(Model model, HttpServletRequest request) {
@@ -109,6 +109,7 @@ public class BoardConrtroller {
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
 		List<QnABean> pnoTitleList = dao.productPnoTitleList();
+		System.out.println("wirte pnoTitleList : " + pnoTitleList);
 		model.addAttribute("pnoTitleList", pnoTitleList);
 		model.addAttribute("qna", new QnABean());
 		return "board/qnawrite";
@@ -233,7 +234,7 @@ public class BoardConrtroller {
 		request.setAttribute("qnamodifyrecord", qnamodifyrecord);
 		request.setAttribute("pnoTitleList", pnoTitleList);
 	
-		System.out.println("BoardController qnamodifyrecord : " + qnamodifyrecord);
+		
 	
 		/* request.setAttribute("qnamodifyrecord", qnamodifyrecord); */
 		return "board/qnawrite";
@@ -740,29 +741,6 @@ public class BoardConrtroller {
 		}
 	}
 	
-
-	
-	
-
-//// admin
-
-//	@RequestMapping(value = "/adminQnaList/{var}")
-//	public String getQnAList(@PathVariable("var") String var, Model model, HttpServletRequest request) {
-//		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//	
-//		if(var.equals("product")) {
-//			List<QnABean> productQlist = dao.productQlist();
-//			model.addAttribute("productQlist", productQlist);
-//		}else if(var.equals("admin")){
-//			List<QnAadminBean> adminQlist = dao.adminQlist();
-//			model.addAttribute("adminQlist", adminQlist);
-//		}
-//		
-//		return "board/qnalist";
-//	}
-
-	
 	
 	@RequestMapping(value = "/adminQnaList")
 	public String getQnAadminlist(PagingBean vo, Model model, HttpServletRequest request
@@ -795,33 +773,120 @@ public class BoardConrtroller {
 		request.setAttribute("qnamodifyrecord", qnamodifyrecord);
 		request.setAttribute("pnoTitleList", pnoTitleList);
 	
-		System.out.println("BoardController qnamodifyrecord : " + qnamodifyrecord);
+		System.out.println("admin pnoTitleList : " + pnoTitleList);
+		System.out.println("admin qnamodifyrecord : " + qnamodifyrecord);
 	
 		/* request.setAttribute("qnamodifyrecord", qnamodifyrecord); */
 		return "board/qnaAdminWrite";
 	}
 	
+
+	
+	
+
+	
+	
+	
+	
 	@RequestMapping(value = "/adminMemQnaupdate")
-	public void getQnAadminMemUpdate(@ModelAttribute QnABean qna, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void getQnAadminMemUpdate(@ModelAttribute("qna") @Valid QnABean qna, BindingResult result, 
+			@RequestParam(value = "img", required = false) MultipartFile img, Model model, 
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
 		response.setContentType("text/html;charset=UTF-8");
+		String returnUrl = "";
+		
+		if(img.isEmpty() == false) {
+			qna.setQ_Img(img.getOriginalFilename());
+			}
 		
 		int pno = qna.getQ_Pno();
 		String title = dao.productTitle(pno);
+		String pid = dao.productId(pno);
 		qna.setQ_Ptitle(title);
-		
-		
+		qna.setQ_Pid(pid);
 		int qnaupdate = dao.update(qna);
+		
+if(img.isEmpty() == false) {
+			
+			int qno = qna.getQ_No();
+			System.out.println("qno: " + qno);
+			String path = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\"
+					+ "tmp0\\wtpwebapps\\everyfarm\\resources\\upload\\qna\\" + qno + "\\";
+			ServletContext servletContext = request.getSession().getServletContext();
+			String realPath = servletContext.getRealPath("/resource");
+			realPath = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\everyfarm\\resource";
+			String mPath = "\\src\\main\\webapp\\resources\\upload\\qna\\" + qno + "\\";
+			int aa = realPath.indexOf("\\.");
+			String pre = realPath.substring(0, aa);
+			String savePath = pre + "\\everyfarm" + mPath;
+			path = savePath;
+			
+			
+			File folder = new File(path);
+			try {
+			    while(folder.exists()) {
+				File[] folder_list = folder.listFiles(); //파일리스트 얻어오기
+						
+					for (int j = 0; j < folder_list.length; j++) {
+						folder_list[j].delete(); //파일 삭제 
+						System.out.println("파일이 삭제되었습니다.");
+					}
+						
+					if(folder_list.length == 0 && folder.isDirectory()){ 
+						folder.delete(); //대상폴더 삭제
+						System.out.println("폴더가 삭제되었습니다.");
+					}
+		       }
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+			
+			File Folder = new File(path);
+			if (!Folder.exists()) {
+				try {
+					Folder.mkdir(); // 폴더 생성합니다.
+					System.out.println("폴더가 생성되었습니다.");
+				} catch (Exception e) {
+					e.getStackTrace();
+				}
+			} else {
+				System.out.println("이미 폴더가 생성되어 있습니다.");
+			}
+
+			String safeFile="";
+			String originFileName="";
+			long fileSize = 0;
+
+	
+			originFileName = img.getOriginalFilename(); // 원본 파일 명
+			fileSize = img.getSize(); // 파일 사이즈
+			safeFile = path + originFileName;
+			try {
+				if (fileSize > 10) { /* 100 */
+					img.transferTo(new File(safeFile));
+				}
+
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+		}
+		
+		
 		if(qnaupdate>0) {
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('글이 수정되었습니다.'); location.href='/adminQnaList';</script>");
+			out.println("<script>location.href='/adminQnaList';</script>");
 			out.close();
 		}else {
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('글 수정에 실패하였습니다.'); location.href='/adminQnaList';</script>");
 			out.close();
 		}
+		
 	}
 	
 	@RequestMapping(value = "/adminFarmerQnaUpdate")
@@ -848,9 +913,6 @@ public class BoardConrtroller {
 			return "redirect:"+ referer;
 		}
 	}
-	
-	
-	
 	
 	
 }		

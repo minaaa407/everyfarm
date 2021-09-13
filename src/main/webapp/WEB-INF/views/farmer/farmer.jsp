@@ -4,11 +4,15 @@
 <html>
 
 <head>
-<meta charset="utf-8" />
+<meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Argon Dashboard - Free Dashboard for Bootstrap 4 by
 	Creative Tim</title>
+	
+<!-- 차트 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
 </head>
 
 <body class="">
@@ -326,11 +330,15 @@
 								</div>
 							</div>
 						</div>
-						<div class="card-body">
+						<div class="">
 							<!-- Chart -->
-							<div class="chart">
-								<!-- Chart wrapper -->
-								<canvas id="chart-sales" class="chart-canvas"></canvas>
+							<div class="">
+							
+							
+									<!-- 차트 -->
+									<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+								
+								
 							</div>
 						</div>
 					</div>
@@ -556,6 +564,52 @@
 			</footer>
 		</div>
 	</div>
+	
+<!-- 차트	 -->
+<script type="text/javascript">
+var seedName = ${seedName};
+var seedSum = ${seedSumTotal}; 
+/* var xValues = ["Italy", "France", "Spain", "USA", "Argentina"]; */
+/* var yValues = [55, 49, 44, 24, 15]; */
+var barColors = [
+  "#dda0dd",
+  "#b0e0e6",
+  "#800080",
+  "#ff0000",
+  "#bc8f8f",
+  "#4169e1",
+  "#8b4513",
+  "#fa8072",
+  "#f4a460",
+  "#2e8b57",
+  "#ffff5ee",
+  "#6a5acd",
+  "#708090",
+  "#00ff7f",
+  "#4682b4",
+  "#d2b48c",
+  "#008080"
+];
+
+new Chart("myChart", {
+  type: "doughnut", /* pie */
+  data: {
+    labels: seedName,
+    datasets: [{
+      backgroundColor: barColors,
+      data: seedSum
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "World Wide Wine Production 2018"
+    }
+  }
+});
+</script>	
+	
+	
 </body>
 <!--   Core   -->
 <script src="resources/farmer/js/plugins/jquery/dist/jquery.min.js"></script>

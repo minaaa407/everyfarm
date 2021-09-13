@@ -1,11 +1,17 @@
 package kr.co.everyfarm.farmer;
 
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -31,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.everyfarm.payment.PaymentBean;
 import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.UserPw;
 
@@ -50,11 +57,10 @@ public class FarmerController {
 		System.out.println("login:: get");
 		return "farmer/FmLogin";
 	}
-
+	
 	@RequestMapping(value = "/farmerLogin", method = RequestMethod.POST)
-	public String flogin(FarmerBean farmerBean, HttpServletRequest request) {
-		System.out.println("login:: post");
-
+	public String flogin(Model model, FarmerBean farmerBean, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		HttpSession session = request.getSession();
 		FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
 
@@ -64,14 +70,65 @@ public class FarmerController {
 		System.out.println("두번째:" + farmerBean.getF_Pw());
 
 		FarmerBean farmer = farmerDAO.flogin(farmerBean);
+		
+		/* 차트 시작. 매개변수에 Model 추가해야함*/
+		List<String> seedList = Arrays.asList(new String[] { "감자", "고구마", "콩", "배추", "상추",
+				"수박", "오이", "토마토", "호박", "고추", "마늘", "파", "양파", "무", "당근"});
+		List<PaymentBean> pno = farmerDAO.searchPno(farmer);
+		PaymentBean search = new PaymentBean();
+		PaymentBean oneSeedSum = new PaymentBean();
+		List<PaymentBean> totalSeedSum = new ArrayList<PaymentBean>();
+		String seed = "";
+		int seedSum = 0;
+		
+		 for(int i = 0; i < seedList.size(); i++ ) {
+	            for (int j = 0; j < pno.size(); j++ ) {
+	            	search.setPay_Seed(seedList.get(i));
+	            	search.setPay_No(pno.get(j).getPay_No());
+	            	oneSeedSum = farmerDAO.seedSum(search);
+	            	seedSum += oneSeedSum.getPay_Land();
+	            		if(!(oneSeedSum.getPay_Land() == 0)) {
+	            			seed = oneSeedSum.getPay_Seed();
+	            		}
+	             }
+	            oneSeedSum.setPay_Seed('"'+seed+'"');
+	            oneSeedSum.setPay_Land(seedSum);
+	            totalSeedSum.add(oneSeedSum);
+	            seed = "";
+	            seedSum = 0;
+	     }
+		 
+		 totalSeedSum = totalSeedSum.stream().sorted(Comparator.comparing(PaymentBean::getPay_Land).reversed()).collect(Collectors.toList());
+		 List<String> seedName = new ArrayList<String>();
+		 List<Integer> seedSumTotal = new ArrayList<Integer>();
+		 
+		 for(int i = 0; i < seedList.size(); i++ ) {
+			 seedName.add(totalSeedSum.get(i).getPay_Seed());
+			 seedSumTotal.add(totalSeedSum.get(i).getPay_Land());
+		 }
+	
 
 		if (farmer != null) {
-			session.setAttribute("farmer", farmer);
-			return "redirect:/farmer";
+			if (farmer.getF_Sign().equals("N")) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('고객님의 가입 서류를 검토중입니다. 잠시만 기다려주세요.'); history.back();</script>");
+				out.flush();
+				return "";
+			} else {
+				session.setAttribute("farmer", farmer);
+				
+				/* 모델 추가, redirect 지움 */
+				model.addAttribute("seedName", seedName);
+				model.addAttribute("seedSumTotal", seedSumTotal);
+				return "farmer/farmer";
+			}
 		} else {
-			return "redirect:/farmerLogin";
+			return "farmer/FmLogin";
 		}
 	}
+	/* 차트 끝 */
+	
 	
 	@RequestMapping(value = "/farmerSign", method = RequestMethod.GET)
 	public String sign(Model model) {
