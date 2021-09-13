@@ -227,6 +227,10 @@ canvas {
     <div>
     	<input type="hidden" id="selmonth" value="" />
     	<select id="month" name="month" onchange="javascript:myListener(this);">
+    		<option id="monthago12" value="${monthago12}">${monthago12}월</option>
+    		<option id="monthago11" value="${monthago11}">${monthago11}월</option>
+    		<option id="monthago10" value="${monthago10}">${monthago10}월</option>
+    		<option id="monthago9" value="${monthago9}">${monthago9}월</option>
     		<option id="monthago8" value="${monthago8}">${monthago8}월</option>
     		<option id="monthago7" value="${monthago7}">${monthago7}월</option>
     		<option id="monthago6" value="${monthago6}">${monthago6}월</option>

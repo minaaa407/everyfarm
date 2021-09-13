@@ -130,13 +130,13 @@ public class ProductController {
 	      
 	            for(int i=0; i < basketbean.getBasketbeanList().size() ; i++) {
 	               if(basketbean.getBasketbeanList().get(i).getB_Land() != 0) {
-	                  //dao.insertbasket(basketbean.getBasketbeanList().get(i));
+	                  dao.insertbasket(basketbean.getBasketbeanList().get(i));  
 	               }
 	            }
 	      basketbean.setBasketbeanList(list);
 	      model.addAttribute("basketbean",basketbean);
 	      //String url = "redirect:/productdetail"+"?productno="+pno;    
-	      return "/product/test1";
+	      return "redirect:/basket"; 
 	   }
 	   
 	   

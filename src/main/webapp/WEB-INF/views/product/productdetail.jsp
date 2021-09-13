@@ -33,9 +33,7 @@ integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChi
 
 
 <link rel="stylesheet" href="resources/index/css/magnific-popup.css">
-
 <link rel="stylesheet" href="resources/index/css/ionicons.min.css">
-
 <link rel="stylesheet" href="resources/index/css/flaticon.css">
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
@@ -329,10 +327,10 @@ function subqnainsert(number){
 }
 
 
-function oneqna(){
+function oneqna(qnaid){
 	var number = 1;
-	if($("#qnaupdateexit").length > 0 ){
-		number = $("#qnaupdateexit").attr('name');
+	if(qnaid.length > 0 ){
+		number = qnaid.attr('name');
 	}
 	
 	var table =$("#qnaupdateexit").parent().parent().parent().parent();
@@ -361,17 +359,17 @@ function oneqna(){
 								a +="<td  style='width:20%'>";
 								a +=onelist.c_Id+"<br>"+onelist.c_Date+"<br></td><tr></tr><td>";
 								if( ((onelist.c_Subno==0)&&(${(not empty farmer || not empty admin)}))&&onelist.c_Id !='삭제' ){
-									a +="<input name ='"+onelist.c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton('"+onelist.c_Seq+"')' />";
+									a +="<input name ='"+onelist.c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton(this.name)' />";
 								}
-								
+														
 								a+="</td><td>";
 								//뒤로가기 방지&& ${member.m_Id} == qnalist[i].c_Id
-								if( ( ${(not empty farmer || not empty admin)} || ( ${not empty member}  ) ) && (onelist.c_Id !='삭제')  ){
+								if( ( ${(not empty farmer || not empty admin)} ) && (onelist.c_Id !='삭제')||('${member.m_Id}'==onelist.c_Id)  ){
 									var seq= onelist.c_Seq;
 									//a+="<input type='button' value='수정' onclick='updatebutton("+seq+")'/>"
 									//a+="&nbsp;&nbsp;<input type='button' value='삭제' onclick='qnadeletebutton("+seq+")'/>";
-									a+="<input type='button' class='updatebutton' name='"+seq+"' value='수정' onclick='updatebutton()'/>";
-									a+="&nbsp;&nbsp;<input type='button' class='qnadeletebutton' name='"+seq+"' value='삭제' onclick='qnadeletebutton()'/>";
+									a+="<input type='button' class='updatebutton' name='"+seq+"' value='수정' onclick='updatebutton(this.name)'/>";
+									a+="&nbsp;&nbsp;<input type='button' class='qnadeletebutton' name='"+seq+"' value='삭제' onclick='qnadeletebutton(this.name)'/>";
 								}
 								a+="</td></tr>";
 							
@@ -417,13 +415,16 @@ function ajax(urlpath,bean){
 						}
 						
 						a+="</td><td>";
-						//뒤로가기 방지&& ${member.m_Id} == qnalist[i].c_Id
-						if( ( ${(not empty farmer || not empty admin)} || ( ${not empty member}  ) ) && (qnalist[i].c_Id !='삭제')  ){
+						var qid = qnalist[i].c_Id;
+					
+				
+						//뒤로가기 방지&& ${member.m_Id} == qnalist[i].c_Id(not empty farmer || not empty admin ||(not empty member && member.m_Id == q.c_Id))
+						if(  (${(not empty farmer || not empty admin) && qnalist[i].c_Id !='삭제' })|| ( '${member.m_Id}'==qid )){
 							var seq= qnalist[i].c_Seq;
 							//a+="<input type='button' value='수정' onclick='updatebutton("+seq+")'/>"
 							//a+="&nbsp;&nbsp;<input type='button' value='삭제' onclick='qnadeletebutton("+seq+")'/>";
-							a+="<input type='button' class='updatebutton' name='"+seq+"' value='수정' onclick='updatebutton()'/>";
-							a+="&nbsp;&nbsp;<input type='button' class='qnadeletebutton' name='"+seq+"' value='삭제' onclick='qnadeletebutton()'/>";
+							a+="<input type='button' class='updatebutton' name='"+seq+"' value='수정' onclick='updatebutton(this.name)'/>";
+							a+="&nbsp;&nbsp;<input type='button' class='qnadeletebutton' name='"+seq+"' value='삭제' onclick='qnadeletebutton(this.name)'/>";
 						}
 						//if( ( ${(not empty farmer || not empty admin)} || ( ${not empty member &&(member.m_Id == qnalist[i].c_Id) }  ) ) && qnalist[i].c_Id !='삭제' ){
 						a+="</td></tr></table><div><hr/></div>";
@@ -749,11 +750,11 @@ td .mybtn{
 					var rowid = "product"+product;
 					var pnum = "pnum"+product;
 					var total = "total"+product;
-					
+					var amout2 = document.getElementById('iniamout').value;
 					 var oneprice = ${oneproduct.p_Landprice} * amout;
 					 var cn1 = oneprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 					 var cn1 = cn1 +'원';
-					
+				
 					 if(!(document.getElementById(rowid))){
 							var text="";	
 								text += document.getElementById('table1').innerHTML
@@ -779,6 +780,7 @@ td .mybtn{
 									var cn1 = cn1 +'원';
 									
 									var totalprice = ((${oneproduct.p_Manpay} * a1)+ (${oneproduct.p_Landprice} * a1));
+									var onetotalprice =((${oneproduct.p_Manpay} * amout2)+ (${oneproduct.p_Landprice} * amout2)); 
 									var cn2 = totalprice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 									var cn2 = cn2 +'원';
 									var totalproduct = (${oneproduct.p_Landprice} * a1);
@@ -796,7 +798,7 @@ td .mybtn{
 									var b_Land = ("b_Land" + product);
 									var b_Totalprice = ("b_Totalprice" + product);
 									document.getElementById(b_Land).value= amout;
-									document.getElementById(b_Totalprice).value= totalprice;
+									document.getElementById(b_Totalprice).value= onetotalprice;
 					 }else{
 						 alert("동일 제품이 존재합니다. 수량을 조절해주십시요.")
 					 }
@@ -1022,7 +1024,9 @@ td .mybtn{
 		    	$(document).on("click",'.qnasubbutton',function qnasubbutton() {
 		    		var testid = $(this).parent().parent().parent().parent().next().children().next();
 		    		 if($("#qnaupdateexit").length >0){
-	    			 	oneqna();
+		    			 
+		    		 	var qnaid = $("#qnaupdateexit");
+	    			 	oneqna(qnaid);
 	    			 }
 		    		 if( ($("#subqna").length > 0)&&(testid.length) ){
 		    			 $("#subqna").parent().html("<hr>");
@@ -1054,7 +1058,9 @@ td .mybtn{
 		    	$(document).on("click",'.updatebutton',function updatebutton() {
 			    		 
 		    			if($("#qnaupdateexit").length >0){
-		    				oneqna();
+		    				
+		    				var qnaid = $("#qnaupdateexit");
+		    				oneqna(qnaid);
 		    			}
 		    		
 		    			if( ($("#subqna").length > 0)){
@@ -1063,11 +1069,11 @@ td .mybtn{
 		    			var name = $(this).attr('name');
 		    			var updatetr = $(this).parent().parent().parent();
 		    			var updatetext = "";
-		    			updatetext +="<tr><td colspan='1'><label>댓글 내용</label></td>";
+		    			updatetext +="<tbody><tr><td colspan='1'><label>댓글 내용</label></td>";
 		    			updatetext +="<td><textarea rows='2' cols='150' class='form-control' id='c_Contentupdate' name='c_Contentupdate' placeholder='* 내용을 입력하세요.' required>";
 		    			updatetext +="</textarea></td></tr><tr>";
 		    			updatetext +="<td><input id='qnaupdate' name='"+name+"' type='button' value='수정완료' onclick='qnaupdate(this.name)'></td>;"
-		    			updatetext +="<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id='qnaupdateexit' name='"+name+"' type='button' value='수정취소' onclick='qnaupdateexit(this.name)'></td></tr>"
+		    			updatetext +="<td>&nbsp;&nbsp;&nbsp;&nbsp;<input id='qnaupdateexit' name='"+name+"' type='button' value='수정취소' onclick='qnaupdateexit(this.name)'></td></tr></<tbody>"
 		    			updatetr.html(updatetext);
 		    	});
 		    			
@@ -1095,52 +1101,66 @@ td .mybtn{
 %>					
 
 	<div class="container pt-5 pb-4">
-		<div class="row justify-content-between">
-			<div class="col-md-8 order-md-last">
-				<div class="row">
-					<div class="col-md-6 text-center">
-						<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
-					</div>
-					<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
-						<form action="#" class="searchform order-lg-last">
-							<div class="form-group d-flex">
-								<input type="text" class="form-control pl-3"
-									placeholder="Search">
-								<button type="submit" placeholder="" class="form-control search">
-									<span class="fa fa-search"></span>
-								</button>
-							</div>
-						</form>
+			<div class="row justify-content-between">
+				<div class="col-md-8 order-md-last">
+					<div class="row">
+						<div class="col-md-6 text-center">
+							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
+						</div>
+						<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
+							<form action="#" class="searchform order-lg-last">
+								<div class="form-group d-flex">
+									<input type="text" class="form-control pl-3"
+										placeholder="Search">
+									<button type="submit" placeholder=""
+										class="form-control search">
+										<span class="fa fa-search"></span>
+									</button>
+								</div>
+							</form>
+						</div>
+						<div>
+							<c:choose>
+								<c:when test="${empty member}">
+									<li><a href="/login">로그인</a></li>
+									<li><a href="/sign">회원가입</a></li>
+								</c:when>
+								<c:when test="${not empty member}">
+									<li>${member.m_Name}님환영합니다.</li>
+									<li><a href="/mypage">내 정보</a></li>
+									<li><a href="/logout">로그아웃</a></li>
+								</c:when>
+							</c:choose>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<!-- Start NavBar -->
+		<nav
+			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+			id="ftco-navbar">
+			<div class="container-fluid">
 
-	<nav
-		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
-		id="ftco-navbar">
-		<div class="container-fluid">
-
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#ftco-nav" aria-controls="ftco-nav"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="fa fa-bars"></span> Menu
-			</button>
-			<div class="collapse navbar-collapse" id="ftco-nav">
-				<ul class="navbar-nav m-auto">
-					<li class="nav-item active"><a href="index.jsp"
-						class="nav-link">Home</a></li>
-					<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-					<li class="nav-item"><a href="services.html" class="nav-link">농장
-							등록</a></li>
-					<li class="nav-item"><a href="gallery.html" class="nav-link">REVIEW</a></li>
-					<li class="nav-item"><a href="blog.html" class="nav-link">Q&A</a></li>
-					<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-				</ul>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#ftco-nav" aria-controls="ftco-nav"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="fa fa-bars"></span> Menu
+				</button>
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav m-auto">
+						<li class="nav-item active"><a href="index.jsp"
+							class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
+						<li class="nav-item"><a href="services.html" class="nav-link">농장
+								등록</a></li>
+						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
+						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
+						<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+					</ul>
+				</div>
 			</div>
-		</div>
-	</nav>
+		</nav>
 	<!-- END nav -->
 
 	<!-- 여기서부터 내용 -->
@@ -1237,6 +1257,7 @@ td .mybtn{
 									pattern="#,###" />
 								원
 							</h4>
+							
 						</div>
 						<div>
 							<h4>
@@ -1510,12 +1531,15 @@ td .mybtn{
 	                    
 						                	<c:if test="${pagebeen.pro eq 'true' }">
 											    <a id = "page${pagebeen.pagestart -1}" style="cursor:pointer" onclick="pagebutton(${pagebeen.pagestart -1})">이전 </a>
-											</c:if>	  
-					
-											<c:forEach var="i" begin="${pagebeen.pagestart}" end="${pagebeen.pageend}" step="1">
-												<a id = "page${i}" style="cursor:pointer" onclick="pagebutton(${i })">${i }</a>  
-											</c:forEach>    
-										    	<c:if test="${pagebeen.post eq 'true'}">
+											</c:if>
+												  
+											<c:if test="${pagebeen.pagestart != '0' }">
+												<c:forEach var="i" begin="${pagebeen.pagestart}" end="${pagebeen.pageend}" step="1">
+													<a id = "page${i}" style="cursor:pointer" onclick="pagebutton(${i })">${i }</a>  
+												</c:forEach>    
+											</c:if>
+											
+										    <c:if test="${pagebeen.post eq 'true'}">
 											    <a id = "page${pagebeen.pageend +1}" style="cursor:pointer" onclick="pagebutton(${pagebeen.pageend +1})">다음 </a>
 											</c:if>
 											

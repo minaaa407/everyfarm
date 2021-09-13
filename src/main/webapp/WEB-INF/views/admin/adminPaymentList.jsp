@@ -189,10 +189,10 @@ background-color: silver;
 					<div class="table100">
 					<table border="1">
 				<colgroup>
-					<col style="width:30px" class=""/>
+					<col style="width:30px" />
+					<col style="width:100px"/>
 					<col style="width:80px"/>
-					<col style="width:80px"/>
-					<col style="width:80px"/>
+					<col style="width:130px"/>
 					<col style="width:80px"/>
 					<col style="width:80px"/>
 					<col style="width:80px"/>

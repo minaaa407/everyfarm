@@ -244,7 +244,7 @@ public class PaymentController {
 	    	  
 	    	  
 	         payInformationSave.add(PaymentBean.getPaymentbeanList().get(i));
-	         System.out.println(PaymentBean.getPaymentbeanList().get(i));
+	         System.out.println("여기 : "+PaymentBean.getPaymentbeanList().get(i));
 	         int price = PaymentBean.getPaymentbeanList().get(i).getPay_Totalprice();
 	         totalprice += price;
 	      }
@@ -288,7 +288,7 @@ public class PaymentController {
 	      System.out.println("페이리스트 = " + paymentlist.get(0));
 		    System.out.println("페이리스트 = " + paymentlist.toString());
 	      System.out.println("-----어드민페이먼트리스트 끝------");
-		return "payment/adminPaymentList";
+		return "admin/adminPaymentList";
 	}
 
 	
@@ -388,6 +388,9 @@ public class PaymentController {
 		DecimalFormat dfyear = new DecimalFormat("0000"); 
         Calendar cal = Calendar.getInstance();
         String year  = dfyear.format(cal.get(Calendar.YEAR));
+        String monthafter3  = dfmonth.format(cal.get(Calendar.MONTH) + 4);
+        String monthafter2  = dfmonth.format(cal.get(Calendar.MONTH) + 3);
+        String monthafter1  = dfmonth.format(cal.get(Calendar.MONTH) + 2);
         String date  = dfmonth.format(cal.get(Calendar.MONTH) + 1);
         String monthago1  = dfmonth.format(cal.get(Calendar.MONTH));
         String monthago2  = dfmonth.format(cal.get(Calendar.MONTH) - 1);
@@ -400,6 +403,9 @@ public class PaymentController {
         
         
         System.out.println("현재 년 = " + year);
+        System.out.println("3달 후 = " + monthafter3);
+        System.out.println("2달 후 = " + monthafter2);
+        System.out.println("1달 후 = " + monthafter1);
         System.out.println("현재 월 = " + date);
 		System.out.println("1달 전 = " + monthago1);
 		System.out.println("2달 전 = " + monthago2);
@@ -411,6 +417,9 @@ public class PaymentController {
 		System.out.println("8달 전 = " + monthago8);
         
 		model.addAttribute("year",year);
+		model.addAttribute("monthafter3",monthafter3);
+		model.addAttribute("monthafter2",monthafter2);
+		model.addAttribute("monthafter1",monthafter1);
 		model.addAttribute("date",date);
 		model.addAttribute("monthago1",monthago1);
 		model.addAttribute("monthago2",monthago2);

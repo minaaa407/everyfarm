@@ -48,4 +48,9 @@ public interface FarmerDAO {
 	public List<PaymentBean> paging(Paging paging);
 
 	public int myOrderCount(Paging paging);
+	
+	/* 차트 */
+	public List<PaymentBean> searchPno(FarmerBean farmerBean);
+	
+	public PaymentBean seedSum(PaymentBean paymentBan);
 }

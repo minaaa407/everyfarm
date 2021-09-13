@@ -413,7 +413,7 @@ margin-bottom:10px;
 		                        <option value="부재 시 택배함에 넣어주세요" >부재 시 택배함에 넣어주세요</option>
 		                        <option value="부재 시 집 앞에 놔주세요" >부재 시 집 앞에 놔주세요</option>
 		                        <option value="배송 전 연락 바랍니다" >배송 전 연락 바랍니다</option>
-		                        <option value="파손의 위험이 있는 상품입니다. 배송 시 주의해주세요" >파손의 위험이 있는 상품입니다. 배송 시 주의해주세요</option>
+		                        <option value="배송 시 주의해주세요" >파손의 위험이 있는 상품입니다. 배송 시 주의해주세요</option>
 	                        	<option value="">직접 입력</option>
                     		</select>
                     </td>
@@ -444,11 +444,11 @@ function submit() {
 			var address3 = document.getElementById('raddr2').value;
 			var address = address2 + ', ' + address3 + ' (' + address1 + ')';
 			document.getElementById('Ad').value=address;
-			alert(address + 2);
+			console.log(address + 2);
 	
 	const payname = document.getElementById('Name1').value;
 	document.getElementById('pay_Name').value = payname;
-	alert(payname + 1);
+	console.log(payname + 1);
 	console.log(payname);
 	
 	const paytel = document.getElementById('tel').value;
@@ -456,14 +456,14 @@ function submit() {
 	const paytel2 = document.getElementById('tel2').value;
 	const paytelmix = paytel + paytel1 + paytel2;
 	document.getElementById('pay_Tel').value = paytelmix;
-	alert(paytelmix + 2);
+	console.log(paytelmix + 2);
 	console.log(paytelmix);
 	
 	const payemail1 = document.getElementById('mail1').value;
 	const payemail2 = document.getElementById('mail2').value;
 	const payemail = mail1 + '@' + mail2;
 	document.getElementById('pay_Email').value = payemail;
-	alert(payemail + 3);
+	console.log(payemail + 3);
 	console.log(payemail);
 	
 	document.getElementById('pay_Deliverymemo').value=document.getElementById('dm').value;
@@ -510,7 +510,7 @@ var arr = [];
 var checktrue = false;
 
 $(document).on('click','#all',function(){
-alert("전체 체크박스 개수" + allcheck);
+console.log("전체 체크박스 개수" + allcheck);
 	if($("#all").prop("checked")){
 		$("input[id='list0']").prop("checked",true);
 		} else {
@@ -529,14 +529,14 @@ $(document).on('click','input[id=list0]',function(){
 /* 
 for(var i = 0; i < paylistLength; i++){
 	paylistLength[i].addEventListener("click",function(event){
-		alert('test');
+		console.log('test');
 	});
 } */
 
 function checkdelete() {
     	 var check = $("input:checkbox[name='list0']:checked").length;
     	 var allcheck = $("input:checkbox[name='list0']").length;
-    	 alert(check + "개");
+    	 console.log(check + "개");
     	 arr.length = 0;
     	 var check2 = $("input:checkbox[name='list0']:checked");
 		 var pno = [];
@@ -548,16 +548,16 @@ function checkdelete() {
 					 check2.parent().parent().remove();
 					 $('#all').prop('checked',false);
 					 var paylist = document.querySelectorAll("#list0");
-					 alert(paylist);
+					 console.log(paylist);
 					 var paylistLength = paylist.length;
-					 alert(paylistLength);
+					 console.log(paylistLength);
 				 }
 
 			 } else {
 				 return false;
 			 }
 		 } 
-		alert("체크가능개수" + allcheck);
+		console.log("체크가능개수" + allcheck);
 	}	
 
 	
