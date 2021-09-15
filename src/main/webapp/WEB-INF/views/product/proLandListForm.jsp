@@ -2,8 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@page import="kr.co.everyfarm.farmer.FarmerBean"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%
+	FarmerBean farmer = (FarmerBean) request.getSession().getAttribute("farmer");
+%>
+
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -33,74 +38,88 @@
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
 </head>
+
 <style>
-.top {
-	text-align: center;
+td, th {
+	border-color: #9ea4ca;
 }
 
-.top p {
-	font-size: 0.8em;
-	color: gray;
+body {
+	background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
+}
+
+.limiter {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.container-table100 {
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+
+.wrap-table100 {
+	width: 1170px;
 }
 
 table {
-	width: 100%;
+	border-spacing: 1;
 	border-collapse: collapse;
+	border-radius: 10px;
+	overflow: hidden;
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+
+table * {
+	position: relative;
+}
+
+table td, table th {
+	padding-left: 8px;
+}
+
+table thead tr {
+	height: 60px;
+	background: #efefef
+}
+
+table tbody tr {
+	height: 50px;
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+table tbody tr:last-child {
+	border: 0;
+}
+
+table td, table th {
 	text-align: center;
-	line-height: 1.5;
-}
-
-thead th {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	font-weight: bold;
-	vertical-align: top;
-	color: black;
-	border-bottom: 3px solid black;
-	background: #dcdcdc;
-}
-
-tbody td {
-	width: 350px;
-	padding: 10px;
-	font-size: 0.9em;
-	vertical-align: center;
-	border-bottom: 1px solid #ccc;
-}
-
-tbody tr #num {
-	width: 80px;
-}
-
-tbody tr #title {
-	width: 420px;
-	text-align: left;
-}
-
-tbody tr #name {
-	width: 100px;
-}
-
-tbody tr #date {
-	width: 100px;
-}
-
-tbody tr #readc {
-	width: 80px;
-}
-
-#pageList {
-	margin: auto;
-	width: 50%;
-	text-align: center;
-}
-
-#rezButton {
-	text-align: right;
 }
 
 #regSearch {
 	text-align: center;
+}
+.pagination {
+  display: inline-block;
+}
+.pagination a {
+  float: left;
+  padding: 8px 16px;
+  border-radius:20%;
+}
+.pagination a.active {
+  background-color: #7971ea;
+  color: white;
+}
+.pagination a:hover:not(.active) {
+background-color: silver;
 }
 </style>
 
@@ -110,93 +129,140 @@ function LandDelete(p_No) {
 		location.href='LandDelete?p_No=' + p_No;
 	}
 }
+
+function search(){
+	
+	var select = document.getElementById('productselect').value;
+	
+	var text = document.getElementById('selectText').value;
+	if(select == "p_Id"){
+		text = "%" + text + "%";
+	}else{
+		text = text;
+	}
+	document.getElementById('where').value = select;
+	document.getElementById('wherecolumn').value= text;
+	
+	document.myHiddenForm.submit();
+}
+
+
 </script>
 
 <title></title>
 </head>
 
 <body>
-	<header>
-		<div class="container pt-5 pb-4">
-			<div class="row justify-content-between">
-				<div class="col-md-8 order-md-last">
+	<!-- Navigation -->
+	<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Brand -->
+			<a class="navbar-brand pt-0" href="/admin"> <img
+				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
+				alt="...">
+			</a>
+			<!-- User -->
+			<ul class="nav align-items-center d-md-none">
+				<li class="nav-item dropdown"><a class="nav-link nav-link-icon"
+					href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> <i class="ni ni-bell-55"></i>
+				</a>
+					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
+						aria-labelledby="navbar-default_dropdown_1">
+						<a class="dropdown-item" href="#">Action</a> <a
+							class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div></li>
+				<li class="nav-item dropdown"><a class="nav-link" href="#"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+						<div class="media align-items-center">
+							<span class="avatar avatar-sm rounded-circle"> <img
+								alt="Image placeholder"
+								src="resources/admin/img/theme/team-1-800x800.jpg">
+							</span>
+						</div>
+				</a>
+					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+						<div class=" dropdown-header noti-title">
+							<h6 class="text-overflow m-0">Welcome!</h6>
+						</div>
+						<a href="./examples/profile.html" class="dropdown-item"> <i
+							class="ni ni-single-02"></i> <span>My profile</span>
+						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
+							class="ni ni-settings-gear-65"></i> <span>Settings</span>
+						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
+							class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
+							class="ni ni-support-16"></i> <span>Support</span>
+						</a>
+						<div class="dropdown-divider"></div>
+						<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i>
+							<span>Logout</span>
+						</a>
+					</div></li>
+			</ul>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Collapse header -->
+				<div class="navbar-collapse-header d-md-none">
 					<div class="row">
-						<div class="col-md-6 text-center">
-							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
+						<div class="col-6 collapse-brand">
+							<a href="./index.html"> <img
+								src="resources/admin/img/brand/blue.png">
+							</a>
 						</div>
-						<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
-							<form action="#" class="searchform order-lg-last">
-								<div class="form-group d-flex">
-									<input type="text" class="form-control pl-3"
-										placeholder="Search">
-									<button type="submit" placeholder=""
-										class="form-control search">
-										<span class="fa fa-search"></span>
-									</button>
-								</div>
-							</form>
-						</div>
-						<div>
-							<c:choose>
-								<c:when test="${empty member}">
-									<li><a href="/login">로그인</a></li>
-									<li><a href="/sign">회원가입</a></li>
-								</c:when>
-								<c:when test="${not empty member}">
-									<li>${member.m_Name}님환영합니다.</li>
-									<li><a href="/mypage">내 정보</a></li>
-									<li><a href="/logout">로그아웃</a></li>
-								</c:when>
-							</c:choose>
+						<div class="col-6 collapse-close">
+							<button type="button" class="navbar-toggler"
+								data-toggle="collapse" data-target="#sidenav-collapse-main"
+								aria-controls="sidenav-main" aria-expanded="false"
+								aria-label="Toggle sidenav">
+								<span></span> <span></span>
+							</button>
 						</div>
 					</div>
 				</div>
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
-		<!-- Start NavBar -->
-		<nav
-			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
-			id="ftco-navbar">
-			<div class="container-fluid">
+	</nav>
 
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#ftco-nav" aria-controls="ftco-nav"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="fa fa-bars"></span> Menu
-				</button>
-				<div class="collapse navbar-collapse" id="ftco-nav">
-					<ul class="navbar-nav m-auto">
-						<li class="nav-item active"><a href="index.jsp"
-							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="/proRegisterForm"
-							class="nav-link">농장 등록</a></li>
-						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="blog.html" class="nav-link">Q&A</a></li>
-						<li class="nav-item"><a href="/proAdminListForm"
-							class="nav-link">Contact</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
-	<!-- END NavBar -->
-	<!-- END Header -->
-	<h2>상품 리스트</h2>
-	
-
-		<div class="table" class="col-lg-12">
-		<table>
+	<br>
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+		<div class="table100">
+					<table border="1">
+						<colgroup>
+							<col style="width: 50px" />
+							<col style="width: 120px" />
+							<col style="width: 100px" />
+							<col style="width: 100px" />
+							<col style="width: 80px" />
+							<col style="width: 70px" />
+							<col style="width: 70px" />
+							<col style="width: 150px" />
+						</colgroup>
 			<thead>
 				<tr>
-					<th>상품번호</th>
-					<th>메인이미지</th>
-					<th>아이디</th>
-					<th>제목</th>
-					<th>등록날짜</th>
-					<th>승인여부</th>
-					<th>상세보기</th>
-					<th>수정,삭제</th>
+					<th scope="col">상품번호</th>
+					<th scope="col">메인이미지</th>
+					<th scope="col">아이디</th>
+					<th scope="col">제목</th>
+					<th scope="col">등록날짜</th>
+					<th scope="col">승인여부</th>
+					<th scope="col">상세보기</th>
+					<th scope="col">삭제</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -213,107 +279,69 @@ function LandDelete(p_No) {
 						<td class="content">${p.p_Accept}</td>
 						<td class="content"><a
 							href="/productdetail?productno=${p.p_No}">상세보기</a></td>
-						<td><a class="btn btn-dark" href="/proRegDetailForm?p_No=${p.p_No}">수정</a>
-						<button type="button" class="btn btn-dark"
+						<td><button type="button" class="btn btn-sm btn-neutral"
 								onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+	</tbody>
+					</table>
+				</div>
+				<br>
+				<div class="col btn-group pagination">
 
-	</div>
+					<c:if test="${pagebeen.pro eq 'true' }">
+						<a id="page${pagebeen.pagestart -1}" style="cursor: pointer"
+							onclick="paging(${pagebeen.pagestart -1})">이전 </a>
+					</c:if>
 
-	
-	<!-- Start Footer -->
-	<footer class="ftco-footer ftco-bg-dark ftco-section">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="logo">
-							<a href="#">EVERY <span>FARM</span></a>
-						</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries Vokalia and Consonantia, there live the blind texts.</p>
-						<ul
-							class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-instagram"></span></a></li>
-						</ul>
-					</div>
+					<c:forEach var="i" begin="${pagebeen.pagestart}"
+						end="${pagebeen.pageend}" step="1">
+						<a id="page${i}" style="cursor: pointer" onclick="paging(${i })">${i }</a>
+					</c:forEach>
+					<c:if test="${pagebeen.post eq 'true'}">
+						<a id="page${pagebeen.pageend +1}" style="cursor: pointer"
+							onclick="paging(${pagebeen.pageend +1})">다음 </a>
+					</c:if>
 				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4 ml-md-5">
-						<h2 class="ftco-heading-2">Services</h2>
-						<ul class="list-unstyled">
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Garden Care</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Lawn mowing</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Lawn Care</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Gutter Cleaning</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>New Lawn Installation</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Contact information</h2>
-						<div class="block-23 mb-3">
-							<ul>
-								<li><span class="icon icon-map-marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
-								<li><a href="#"><span class="icon icon-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
-								<li><a href="#"><span class="icon icon-envelope"></span><span
-										class="text">info@yourdomain.com</span></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Business Hours</h2>
-						<div class="opening-hours">
-							<h4>Opening Days:</h4>
-							<p class="pl-3">
-								<span>Monday â Friday : 9am to 20 pm</span> <span>Saturday
-									: 9am to 17 pm</span>
-							</p>
-							<h4>Vacations:</h4>
-							<p class="pl-3">
-								<span>All Sunday Days</span> <span>All Official Holidays</span>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 text-center">
+				<!-- form 해당 부분 scrip 이벤트 통해서 자동 전송 처리 -->
+				<form:form commandName="pagebeen" name="myHiddenForm"
+					action="/proAdminListForm" method="post">
+					<input type="hidden" id="selectpage" name="selectpage" value="1">
+					<input type="hidden" id="pagestart" name="pagestart"
+						value="${pagebeen.pagestart}">
+					<input type="hidden" id="pageend" name="pageend"
+						value="${pagebeen.pageend}">
+					<input type="hidden" id="endnumber" name="endnumber"
+						value="${pagebeen.endnumber}">
+					<input type="hidden" id="limit" name="limit"
+						value="${pagebeen.limit}">
+					<input type="hidden" id="offset" name="offset"
+						value="${pagebeen.offset}">
+					<input type="hidden" id="tableindex" name="tableindex"
+						value="${pagebeen.tableindex}">
+					<input type="hidden" id="pagingnumber" name="pagingnumber"
+						value="${pagebeen.pagingnumber}">
+					<input type="hidden" id="pro" name="pro" value="${pagebeen.pro}">
+					<input type="hidden" id="post" name="post" value="${pagebeen.post}">
+					<input type="hidden" id="where" name="where"
+						value="${pagebeen.where}">
+					<input type="hidden" id="wherecolumn" name="wherecolumn"
+						value="${pagebeen.wherecolumn}">
 
-					<p>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<script>
-							document.write(new Date().getFullYear());
-						</script>
-						All rights reserved | This template is made with <i
-							class="icon-heart color-danger" aria-hidden="true"></i> by <a
-							href="https://colorlib.com" target="_blank">Colorlib</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					</p>
+				</form:form>
+				<br>
+				<div id="regSearch">
+					<select name="productselect" id="productselect">
+						<option value="p_No">상품번호</option>
+						<option value="p_Id">아이디</option>
+					</select> <input type="text" name="selectText" id="selectText"> <input
+						type="button" value="검색" onclick="search()">
 				</div>
 			</div>
 		</div>
-	</footer>
-	<!-- End Footer -->
+		<br>
+		<Br>
 </body>
 </html>

@@ -552,7 +552,7 @@
 		var land = $('#land'+onlynumber).val() * 1;
 		var price = eachtotalvar * 1;
 		document.getElementById("beforeland"+onlynumber).value = land;
-		window.location.href = "http://localhost:8090/basketUpdate?bno="+bno+"&land="+land+"&price="+price+"&checkindex="+index_i_arr;
+		window.location.href = "/basketUpdate?bno="+bno+"&land="+land+"&price="+price+"&checkindex="+index_i_arr;
 	} 
     
     
@@ -569,7 +569,7 @@
         }
         var bno = $('#'+onlynumber).val() * 1;
         var seed = $('#b_Seed'+onlynumber).val();
-        window.location.href = "http://localhost:8090/basketSeedUpdate?bno="+bno+"&seed="+seed+"&checkindex="+index_i_arr;
+        window.location.href = "/basketSeedUpdate?bno="+bno+"&seed="+seed+"&checkindex="+index_i_arr;
     	
     }
     
