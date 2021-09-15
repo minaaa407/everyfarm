@@ -31,8 +31,6 @@ public interface FarmerDAO {
 
 	public void upPw(FarmerBean farmerBean);
 
-	public void fUpdate(FarmerBean farmerBean);
-
 	public void fDelete(FarmerBean farmerBean);
 
 	public void fDel(List<String> delete);
@@ -49,8 +47,7 @@ public interface FarmerDAO {
 
 	public int myOrderCount(Paging paging);
 
-
-	public void fDelDate(PaymentBean paymentBean);
+	public List<PaymentBean> fDelDate(Paging paging);
 
 	public List<ReviewBean> myReply(String f_Id);
 
@@ -63,7 +60,6 @@ public interface FarmerDAO {
 	public void upName(FarmerBean farmerBean);
 
 	public void upTel(FarmerBean farmerBean);
-
 	
 	/* 차트 */
 	public List<PaymentBean> searchPno(FarmerBean farmerBean);

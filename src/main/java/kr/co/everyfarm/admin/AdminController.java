@@ -311,7 +311,7 @@ public class AdminController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/farmerDelete")
+	@RequestMapping(value = "/farmerD")
 	@ResponseBody
 	public Map<String, Object> farmerDelete(FarmerBean farmerbean, @RequestParam(value = "checkArr[]") String checkArr) {
 

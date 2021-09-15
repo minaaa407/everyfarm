@@ -239,7 +239,6 @@ body {
 											<td class="table__td"><strong>●●●●●●●●●●</strong> <a
 												style="display: inline;" href="#" class=""
 												id="pwd_modify_onBtn"><span class="edit">변경</span></a></td>
-											<td>${myCus}</td>
 										</tr>
 									</tbody>
 									<tbody id="pwd_modify_on1" style="display: none;">

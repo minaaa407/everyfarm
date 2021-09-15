@@ -323,7 +323,7 @@ table td, table th {
 					return false;
 				} else {
 					$.ajax({
-						url : "/farmerDelete",
+						url : "/farmerD",
 						type : "POST",
 						dataType : "json",
 						data : {

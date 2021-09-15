@@ -28,33 +28,33 @@
 		f_id=#{f_Id}
 	</select>
 
-	<update id="fUpdate">
-		update farmer set
-		f_Pw=#{f_Pw},
-		f_Name=#{f_Name},
-		f_Addr=#{f_Addr},
-		f_tel=#{f_Tel},
-		f_birth=#{f_Birth},
-		f_auth=#{f_Auth},
-		where f_id=#{f_Id}
-	</update>
-
-	<delete id="fDelete">
-		delete from farmer where f_id=#{f_Id}
-	</delete>
-	
-	<update id="fDel" parameterType="java.util.List">
+	<update id="fDelete">
 		UPDATE farmer SET
 		f_Id = '탈퇴한 농부입니다',
 		f_Pw = '탈퇴한 농부입니다',
 		f_Name = '탈퇴한 농부입니다',
 		f_Addr = '탈퇴한 농부입니다',
-		f_Rate = 0.0,
 		f_tel = '탈퇴한 농부입니다',
 		f_Birth = '탈퇴한 농부입니다',
+		f_auth = 'N',
+		WHERE f_id = #{f_Id}
+	</update>
+
+	<update id="fDel" parameterType="java.util.List">
+		UPDATE farmer SET
+		f_Id = '탈퇴한 농부입니다',
+		f_Pw = '탈퇴한 농부입니다',
+		f_Name = '탈퇴한
+		농부입니다',
+		f_Addr = '탈퇴한 농부입니다',
+		f_Rate = 0.0,
+		f_tel = '탈퇴한 농부입니다',
+		f_Birth =
+		'탈퇴한 농부입니다',
 		f_auth = '탈퇴한 농부입니다',
 		f_sign = 'N',
-		f_Date = sysdate() WHERE f_id IN (
+		f_Date = sysdate() WHERE
+		f_id IN (
 		<foreach collection="list" item="delete" index="index"
 			separator=",">
 			'${delete}'
@@ -122,7 +122,6 @@
 		=f_Rate + #{rev_Rate} WHERE f_Id = (SELECT p_Id FROM product
 		WHERE
 		p_No=#{pay_No})
-
 	</update>
 
 	<sql id="pageSearch1">
@@ -166,10 +165,11 @@
 			<include refid="pageSearch1"></include>
 		</if>
 	</select>
-	
+
 	<select id="fDelDate"
 		resultType="kr.co.everyfarm.payment.PaymentBean">
-		SELECT pay_Date FROM payment WHERE pay_No in (select p_no from
+		SELECT pay_Date FROM payment WHERE pay_No in (select p_no
+		from
 		product where p_id =#{f_Id}) order by pay_Date desc limit 1
 	</select>
 	
@@ -193,24 +193,30 @@
 
 	<update id="upTel">UPDATE farmer SET f_Tel = #{f_Tel}where f_id= #{f_Id}
 	</update>
-	
-	<select id="myReply" resultType="kr.co.everyfarm.board.ReviewReplyBean">
+
+	<select id="myReply"
+		resultType="kr.co.everyfarm.board.ReviewReplyBean">
 		SELECT * FROM r_reply WHERE rep_Id = #{f_Id}
 	</select>
-	
-	<select id="myProdcutReply" resultType="kr.co.everyfarm.product.ProductqnaBean">
-		SELECT * FROM productqna WHERE c_Id = #{f_Id} 
+
+	<select id="myProdcutReply"
+		resultType="kr.co.everyfarm.product.ProductqnaBean">
+		SELECT * FROM productqna WHERE c_Id = #{f_Id}
 	</select>
-	
-	
+
 	<!-- 차트 -->
-	<select id="searchPno" resultType="kr.co.everyfarm.payment.PaymentBean">
+	<select id="searchPno"
+		resultType="kr.co.everyfarm.payment.PaymentBean">
 		select p_no as pay_no from product where p_Id=#{f_Id}
 	</select>
-	
-	<select id="seedSum" resultType="kr.co.everyfarm.payment.PaymentBean"> 
-		select ifnull(pay_seed,0) as pay_seed, ifnull(sum(pay_land),0) as pay_land from payment where (pay_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK) AND NOW())
+
+	<select id="seedSum"
+		resultType="kr.co.everyfarm.payment.PaymentBean">
+		select ifnull(pay_seed,0) as pay_seed, ifnull(sum(pay_land),0) as pay_land
+		from payment where (pay_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK)
+		AND NOW())
 		and pay_seed =#{pay_Seed} and pay_no=#{pay_No}
-		
+
 	</select>
+
 </mapper>

@@ -13,6 +13,18 @@
   <link href="/resources/admin/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="/resources/admin/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+
+<style>
+body{ cursor: url("/resources/editor/css/sap.cur"), auto;}
+a, a:link { cursor: url('/resources/editor/css/sap.cur'), auto;} 
+a:hover, a:focus { cursor: url('/resources/editor/css/sap.cur'), auto;} 
+a:active {cursor: url('/resources/editor/css/sap.cur'), auto;} 
+input { cursor: url('/resources/editor/css/sap.cur'), auto; }
+select {cursor: url('/resources/editor/css/sap.cur'), auto;}
+label {cursor: url('/resources/editor/css/sap.cur'), auto;}
+textarea {cursor: url('/resources/editor/css/sap.cur'), auto;}
+select:option {cursor: url('/resources/editor/css/sap.cur'), auto;}
+</style>
 </head>
 <body>
 
