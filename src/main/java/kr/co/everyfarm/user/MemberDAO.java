@@ -35,6 +35,8 @@ public interface MemberDAO {
 
 	public void mDelete(MemberBean memberbean);
 
+	public void uDelete(List<String> delete);
+
 	public MemberBean userInfo(String userID);
 
 	public MemberBean mInfo(MemberBean memberBean);

@@ -32,10 +32,16 @@
 	</select>
 
 	<select resultType="int" id="mchart" parameterType="Integer">
-      select count(*) from member where date_format(m_Date,'%Y-%m') = date_format(date_add(now(), interval - ${i} month),'%Y-%m') </select>
 
-   <select resultType="int" id="fchart" parameterType="Integer">
-      select count(*) from farmer where date_format(f_Date,'%Y-%m') = date_format(date_add(now(), interval - ${j} month),'%Y-%m') </select>
+		select
+		count(*) from member where date_format(m_Date,'%Y-%m') =
+		date_format(date_add(now(), interval - ${i} month),'%Y-%m') </select>
+
+	<select resultType="int" id="fchart" parameterType="Integer">
+		select
+		count(*) from farmer where date_format(f_Date,'%Y-%m') =
+		date_format(date_add(now(), interval - ${j} month),'%Y-%m') </select>
+
 
 	<sql id="MpageSearch">
 		<trim prefix="where(" suffix=")" prefixOverrides="OR">
@@ -89,6 +95,7 @@
 		<if test="keyword != null">
 			<include refid="MpageSearch"></include>
 		</if>
+
 	</select>
 
 	<!-- 농부 페이징 + 리스트 START -->
@@ -103,7 +110,9 @@
 		</if>
 		)as T1 ORDER BY f_Date DESC
 		LIMIT #{skip},#{amount}
+
 	</select>
+	<!-- 농부 페이징 + 리스트 END -->
 
 	<select id="fCount" resultType="int">
 		SELECT COUNT(*) FROM farmer
@@ -112,5 +121,14 @@
 		</if>
 	</select>
 	<!-- 농부 페이징 + 리스트 END -->
+
+	<update id="farmerY" parameterType="java.util.List">
+		UPDATE farmer SET f_Sign = "Y" WHERE f_id IN (
+		<foreach collection="list" item="yes" index="index"
+			separator=",">
+			'${yes}'
+		</foreach>
+		)
+	</update>
 
 </mapper>

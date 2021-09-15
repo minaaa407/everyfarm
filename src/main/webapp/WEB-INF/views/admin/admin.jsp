@@ -7,8 +7,7 @@
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Argon Dashboard - Free Dashboard for Bootstrap 4 by
-	Creative Tim</title>
+<title>EVERYFARM</title>
 </head>
 
 <body class="">
@@ -438,6 +437,7 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
+
 <script>
       var mMonth = ${mMonth};
       var mChart = mMonth.reverse();
@@ -477,6 +477,7 @@
          }
       });
    </script>
+
 
 
 

@@ -11,7 +11,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>EVERY FARM</title>
+<title>Checkout example for Bootstrap</title>
 
 
 <link
@@ -52,7 +52,11 @@
 <link rel="stylesheet" href="resources/user/css/sidemenu.css">
 <script type="text/javascript" src="resources/user/js/sidemenu.js"></script>
 
-
+<style type="text/css">
+td {
+	text-align: center;
+}
+</style>
 
 </head>
 <body>
@@ -63,73 +67,47 @@
 					<div class="side-bar">
 						<div class="user-info">
 							<img class="img-profile img-circle img-responsive center-block"
-								src="resources/img/user.png" alt="회원 기본이미지">
+								src="resources/img/farmer.png" alt="회원 기본이미지">
 							<ul class="meta list list-unstyled">
-								<li class="name">${member.m_Name}</li>
-								<li class="email">${member.m_Id}</li>
+								<li class="name">${farmer.f_Name}</li>
+								<li class="email">${farmer.f_Id}</li>
 							</ul>
 						</div>
-						<section>
-							<div class="nav-side-menu">
-								<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse"
-									data-target="#menu-content"></i>
-								<div class="menu-list">
-									<ul id="menu-content" class="menu-content collapse out">
-										<li ><a href="/mypage"> <i class="fa fa-user"></i>
-												내 정보
-										</a></li>
-										<li class="active" data-toggle="collapse" data-target="#products"><a
-											href="/mypage" onclick="return false;"><i class="fa fa-clock-o">
-											</i> 내가 쓴 게시글 <span class="arrow"></span></a></li>
-										<ul class="sub-menu collapse" id="products">
-											<li><a href="/myQnA">QnA</a></li>
-											<li><a href="/myReview">리뷰게시판</a></li>
-										</ul>
-										<li><a href="/myPayList"> <i class="fa fa-credit-card"></i> 결제
-												내역
-										</a></li>
-									</ul>
-								</div>
-							</div>
-						</section>
 					</div>
 
 					<div class="content-panel">
-						<h2 class="title">나의 질문</h2>
-						<form class="form-horizontal" method="post" id="">
+						<h2 class="title">나의 리뷰</h2>
+						<form class="form-horizontal" method="post">
 							<fieldset class="fieldset">
-								<h3 class="fieldset-title">나의 궁금함</h3>
+								<h3 class="fieldset-title">내가 남긴 추억</h3>
 								<div class="form-group avatar">
 									<section class="ftco-section">
 										<div class="container">
 											<div
 												class="row flex-direction:row-reverse justify-content-center">
-												<div class="col-md-12 ftco-animate">
+												<div class="col-md-12  ftco-animate">
 													<div class="blog-entry justify-content-end">
 														<div class="text">
 															<table class="table">
 																<thead>
 																	<tr class="text-center" style="background: #E6E6F2;">
-																		<th style="width: 55%">제목</th>
-																		<th style="width: 15%">작성자</th>
-																		<th style="width: 15%">작성시간</th>
+																		<th style="width: 55%">내용</th>
+																		<th style="width: 15%">작성일</th>
 																	</tr>
 																</thead>
 																<tbody>
-																	<c:if test="${empty qnamylist}">
+																	<c:if test="${empty productReply}">
 																		<tr>
 																			<td colspan="4"><h3 style="text-align: center;">작성된
-																					게시글이 없습니다.</h3></td>
+																					댓글이 없습니다.</h3></td>
 																		</tr>
 																	</c:if>
-																	<c:if test="${!empty qnamylist}">
-																		<c:forEach var="re" items="${revList}">
+																	<c:if test="${!empty productReply}">
+																		<c:forEach var="re" items="${productReply}">
 																			<tr>
-																				<td><a
-																					href="/reviewDetail?q_Title=${re.q_Title}">${re.q_Title}</a></td>
-																				<td style="text-align: center;">${re.q_Id}</td>
+																				<td><a href="/reviewDetail?rev_No=${re.rev_No}">${re.c_content}</a></td>
 																				<td style="text-align: center;"><fmt:formatDate
-																						pattern="yyyy/MM/dd" value="${re.q_Date}" />></td>
+																						pattern="yyyy/MM/dd" value="${re.c_date}"/></td>
 																			</tr>
 																		</c:forEach>
 																	</c:if>
@@ -139,6 +117,7 @@
 													</div>
 												</div>
 											</div>
+										</div>
 									</section>
 								</div>
 							</fieldset>
@@ -152,6 +131,7 @@
 
 
 </body>
+
 
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
