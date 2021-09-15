@@ -13,43 +13,55 @@
   <link href="/resources/admin/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="/resources/admin/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
+
+<style>
+body{ cursor: url("/resources/editor/css/sap.cur"), auto;}
+a, a:link { cursor: url('/resources/editor/css/sap.cur'), auto;} 
+a:hover, a:focus { cursor: url('/resources/editor/css/sap.cur'), auto;} 
+a:active {cursor: url('/resources/editor/css/sap.cur'), auto;} 
+input { cursor: url('/resources/editor/css/sap.cur'), auto; }
+select {cursor: url('/resources/editor/css/sap.cur'), auto;}
+label {cursor: url('/resources/editor/css/sap.cur'), auto;}
+textarea {cursor: url('/resources/editor/css/sap.cur'), auto;}
+select:option {cursor: url('/resources/editor/css/sap.cur'), auto;}
+</style>
 </head>
 <body>
 
 <ul class="navbar-nav">
-          <li class="nav-item  active ">
-            <a class="nav-link  active " href="adminPage">
+          <li class="nav-item">
+            <a class="nav-link" href="admin">
               <i class="ni ni-tv-2 text-primary"></i> 대시보드
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="#">
+            <a class="nav-link " href="proAdminListForm">
               <i class="ni ni-box-2 text-blue"></i> 상품관리
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link " href="adminPaymentList">
-              <i class="ni ni-single-02 text-yellow"></i> 내역관리
+              <i class="ni ni-bullet-list-67 text-yellow"></i> 결제내역
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link " href="userList">
-              <i class="ni ni-bullet-list-67 text-red"></i> 회원관리
+              <i class="ni ni-single-02 text-red"></i> 회원관리
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link " href="farmerList">
-              <i class="ni ni-bullet-list-67 text-red"></i> 농부관리
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="adminLogout">
-              <i class="ni ni-key-25 text-info"></i> 로그아웃
+              <i class="ni ni-single-02 text-orange"></i> 농부관리
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="adminSign">
               <i class="ni ni-circle-08 text-pink"></i> 관리자 추가
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="adminLogout">
+              <i class="ni ni-key-25 text-info"></i> 로그아웃
             </a>
           </li>
         </ul>

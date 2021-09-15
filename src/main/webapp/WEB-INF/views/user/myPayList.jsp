@@ -79,7 +79,7 @@ hr{
 					<div class="side-bar">
 						<div class="user-info">
 							<img class="img-profile img-circle img-responsive center-block"
-								src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+								src="resources/img/user.png" alt="회원 기본이미지">
 							<ul class="meta list list-unstyled">
 								<li class="name">${member.m_Name}</li>
 								<li class="email">${member.m_Id}</li>
@@ -100,8 +100,6 @@ hr{
 										<ul class="sub-menu collapse" id="products">
 											<li><a href="/myQnA">QnA</a></li>
 											<li><a href="/myReview">리뷰게시판</a></li>
-											<li><a href="#">추가할공간</a></li>
-											<li><a href="#">추가할공간</a></li>
 										</ul>
 										<li class="active"><a href="/myPayList"> <i
 												class="fa fa-credit-card"></i> 결제 내역
@@ -115,7 +113,7 @@ hr{
 						<h2 class="title">내 결제내역</h2>
 						<hr>
 						<div class="table-responsive">
-							<table id="table" class="table table-striped">
+							<table id="table" class="table table-striped hover">
 								<thead>
 									<tr>
 										<th scope="col">주문번호 &nbsp;&nbsp;&nbsp;</th>
@@ -159,7 +157,8 @@ hr{
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#table').dataTable({
-				language : lang_kor
+				language : lang_kor,
+				"lengthMenu": [[3, 5, 10,-1], [3, 5, 10, "전체"]] 
 			});
 		});
 		var lang_kor = {

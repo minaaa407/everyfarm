@@ -208,7 +208,7 @@ body {
 					<div class="side-bar">
 						<div class="user-info">
 							<img class="img-profile img-circle img-responsive center-block"
-								src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+								src="resources/img/user.png" alt="회원 기본이미지">
 							<ul class="meta list list-unstyled">
 								<li class="name">${member.m_Name}</li>
 								<li class="email">${member.m_Id}</li>
@@ -227,12 +227,8 @@ body {
 											href="#" onclick="return false;"><i class="fa fa-clock-o">
 											</i> 내가 쓴 게시글 <span class="arrow"></span></a></li>
 										<ul class="sub-menu collapse" id="products">
-											<li><a
-												onclick="location.href='/myQnA'"
-												type="submit">QnA</a></li>
+											<li><a onclick="location.href='/myQnA'" type="submit">QnA</a></li>
 											<li><a href="/myReview">리뷰게시판</a></li>
-											<li><a href="#">추가할공간</a></li>
-											<li><a href="#">추가할공간</a></li>
 										</ul>
 										<li><a href="/myPayList"> <i
 												class="fa fa-credit-card"></i> 결제 내역
@@ -265,7 +261,7 @@ body {
 											<th class="table__th">비밀번호</th>
 											<td class="table__td"><strong>●●●●●●●●●●</strong> <a
 												style="display: inline;" href="#" class=""
-												id="pwd_modify_on"><span class="edit">변경</span></a></td>
+												id="pwd_modify_onBtn"><span class="edit">변경</span></a></td>
 										</tr>
 									</tbody>
 									<tbody id="pwd_modify_on1" style="display: none;">
@@ -299,8 +295,8 @@ body {
 										<tr>
 											<th class="table__th">이름</th>
 											<td class="table__td">${member.m_Name}<a
-												style="display: inline;" class="" id="Name_modify_on"> <span
-													class="edit">수정</span>
+												style="display: inline;" class="" id="Name_modify_onBtn">
+													<span class="edit">수정</span>
 											</a>
 											</td>
 										</tr>
@@ -319,12 +315,25 @@ body {
 										</tr>
 									</tbody>
 
-									<tbody>
+									<tbody id="Tel_hide">
 										<tr>
 											<th class="table__th">연락처</th>
-											<td class="table__td">${member.m_Tel}<input
-												type="hidden" name="m_Tel" id="m_Tel"
-												value="${member.m_Tel}"></td>
+											<td class="table__td">${member.m_Tel}<a
+												style="display: inline;" href="#" class=""
+												id="Tel_modify_onBtn"><span class="edit">변경</span></a></td>
+										</tr>
+									</tbody>
+
+									<tbody id="Tel_modify_on" style="display: none;">
+										<tr>
+											<th class="table__th">연락처</th>
+											<td class="table_td"><input type="tel" name="m_Tel"
+												required id="m_Tel" placeholder="('-'제외 입력해주세요.)"
+												class="form-control" />
+												<button class="btn btn-style-1" type="submit" id=""
+													formaction="/myInfoTelUpdate">
+													<span class="edit">변경</span>
+												</button> <a href="#" id="Tel_modify_off"> <span class="edit">취소</span></a></td>
 										</tr>
 									</tbody>
 
@@ -333,7 +342,7 @@ body {
 											<th class="table__th">주소</th>
 											<td class="table__td">${member.m_Addr}<a
 												style="display: inline;" href="#" class=""
-												id="Addr_modify_on"><span class="edit">변경</span></a> <input
+												id="Addr_modify_onBtn"><span class="edit">변경</span></a> <input
 												type="hidden" name="m_Addr" id="m_Addr"
 												value="${member.m_Addr}"></td>
 										</tr>
@@ -349,7 +358,8 @@ body {
 													<div class="col-md-10 col-sm-9 col-xs-12">
 														<input class="form-control" placeholder="우편번호" id="Addr1"
 															name="Addr1" type="text" readonly="readonly"> <input
-															type="button" onclick="execPostCode();" value="우편번호 찾기">
+															type="button" onclick="sample6_execDaumPostcode()"
+															value="우편번호 찾기">
 													</div>
 												</div>
 												<div class="form-group">
@@ -363,14 +373,14 @@ body {
 													<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
 													<div class="col-md-10 col-sm-9 col-xs-12">
 														<input class="form-control" placeholder="상세주소" id="Addr3"
-															name="Addr3" type="text" />
+															name="Addr3" type="text" required />
 													</div>
 												</div>
 												<div class="form-group">
 													<label class="col-md-2  col-sm-3 col-xs-12 control-label"></label>
 													<div class="col-md-10 col-sm-9 col-xs-12">
 														<input class="form-control" placeholder="참고항목" id="Addr4"
-															name="Addr4" type="text" />
+															name="Addr4" type="text" required />
 													</div>
 												</div>
 												<button class="btn btn-style-1" type="submit"
@@ -420,9 +430,20 @@ body {
 				<div class="modal-footer justify-content-center">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">취 소</button>
-					<button onclick="location.href='/myInfoDelete?m_Id=${member.m_Id}'"
-						type="submit" class="btn btn-danger" formaction="/myInfoDelete">탈
-						퇴</button>
+					<c:choose>
+						<c:when test="${empty mypay}">
+							<button
+								onclick="location.href='/myInfoDelete?m_Id=${member.m_Id}'"
+								type="submit" class="btn btn-danger" formaction="/myInfoDelete">탈
+								퇴</button>
+						</c:when>
+						<c:when test="${!empty mypay}">
+							<button
+								onclick="location.href='/myInfoDelete?m_Id=${member.m_Id}'"
+								type="submit" class="btn btn-danger" formaction="/myInfoDelete">탈
+								퇴</button>
+						</c:when>
+					</c:choose>
 				</div>
 			</div>
 		</div>
@@ -431,12 +452,31 @@ body {
 
 
 <script type="text/javascript">
-	Name_modify_on
+	$(function() {
+		$("#Tel_modify_onBtn").click(function() {
+			if ($("#Name_modify_on").css("display") !== "none") {
+				$('#Tel_hide').hide();
+
+			}
+			if ($("#Tel_modify_on").css("display") == "none") {
+				$('#Tel_modify_on').show();
+			}
+		});
+	});
+	$(function() {
+		$("#Tel_modify_off").click(function() {
+			if ($("#Tel_hide").css("display") == "none") {
+				$('#Tel_hide').show();
+			}
+			if ($("#Tel_modify_on").css("display") !== "none") {
+				$('#Tel_modify_on').hide();
+			}
+		});
+	});
 
 	$(function() {
-		$("#Name_modify_on").click(function() {
-			if ($("#Name_modify_on").css("display") == "inline") {
-				$('#Name_modify_on1').hide();
+		$("#Name_modify_onBtn").click(function() {
+			if ($("#Name_hide").css("display") !== "none") {
 				$('#Name_hide').hide();
 			}
 			if ($("#Name_modify_on1").css("display") == "none") {
@@ -446,24 +486,19 @@ body {
 	});
 	$(function() {
 		$("#Name_modify_off").click(function() {
-			if ($("#Name_modify_on").css("display") == "inline") {
-				$('#Name_modify_on').hide();
-				$('#Name_modify_on1').hide();
-			}
-			if ($("#Name_modify_on1").css("display") == "none") {
+			if ($("#Name_hide").css("display") == "none") {
 				$('#Name_hide').show();
-				$('#Name_modify_on').show();
+			}
+			if ($("#Name_modify_on1").css("display") !== "none") {
+				$('#Name_modify_on1').hide();
 			}
 		});
 	});
 
 	$(function() {
-		$("#pwd_modify_on").click(function() {
-			if ($("#pwd_modify_on").css("display") == "inline") {
-				$("#Addr_modify_on1").hide();
-				$('#pwd_modify_on').hide();
+		$("#pwd_modify_onBtn").click(function() {
+			if ($("#pwd_hide").css("display") !== "none") {
 				$('#pwd_hide').hide();
-				$("#Name_modify_on1").hide();
 			}
 			if ($("#pwd_modify_on1").css("display") == "none") {
 				$('#pwd_modify_on1').show();
@@ -474,23 +509,18 @@ body {
 
 	$(function() {
 		$("#pwd_modify_off").click(function() {
-			if ($("#pwd_modify_on").css("display") == "none") {
-				$('#pwd_modify_on').show();
-				$('#Addr_modify_on1').hide();
+			if ($("#pwd_hide").css("display") == "none") {
+				$('#pwd_hide').show();
 			}
 			if ($("#pwd_modify_on1").css("display") !== "none") {
 				$('#pwd_modify_on1').hide();
-				$('#pwd_hide').show();
 			}
 		});
 	});
 
 	$(function() {
-		$("#Addr_modify_on").click(function() {
-			if ($("#Addr_modify_on").css("display") == "inline") {
-				$('#Addr_modify_on').hide();
-				$('#pwd_modify_on1').hide();
-				$('#Name_modify_on1').hide();
+		$("#Addr_modify_onBtn").click(function() {
+			if ($("#Addr_modify_on").css("display") !== "none") {
 				$('#Addr_hide').hide();
 			}
 			if ($("#Addr_modify_on1").css("display") == "none") {
@@ -502,9 +532,7 @@ body {
 
 	$(function() {
 		$("#Addr_modify_off").click(function() {
-			if ($("#Addr_modify_on").css("display") == "none") {
-				$('#Addr_modify_on').show();
-				$('#pwd_modify_on').show();
+			if ($("#Addr_hide").css("display") == "none") {
 				$('#Addr_hide').show();
 			}
 			if ($("#Addr_modify_on1").css("display") !== "none") {
@@ -514,10 +542,8 @@ body {
 	});
 </script>
 
-<script type="text/javascript">
-	
-	
-</script>
+
+
 
 
 <script type="text/javascript"
@@ -525,8 +551,7 @@ body {
 <script src="http://code.jquery.com/jquery-1.3.2.min.js"></script>
 <script
 	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 	$('#DeleteBtn').click(function() {
@@ -624,52 +649,54 @@ body {
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-	function execPostCode() {
+	function sample6_execDaumPostcode() {
 		new daum.Postcode({
 			oncomplete : function(data) {
+				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-				var roadAddr = data.roadAddress; // 도로명 주소 변수
-				var extraRoadAddr = ''; // 참고 항목 변수
+				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+				var addr = ''; // 주소 변수
+				var extraAddr = ''; // 참고항목 변수
 
-				if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-					extraRoadAddr += data.bname;
+				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+				if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+					addr = data.roadAddress;
+				} else { // 사용자가 지번 주소를 선택했을 경우(J)
+					addr = data.jibunAddress;
 				}
-				if (data.buildingName !== '' && data.apartment === 'Y') {
-					extraRoadAddr += (extraRoadAddr !== '' ? ', '
-							+ data.buildingName : data.buildingName);
-				}
-				if (extraRoadAddr !== '') {
-					extraRoadAddr = ' (' + extraRoadAddr + ')';
-				}
 
-				document.getElementById('Addr1').value = data.zonecode;
-				document.getElementById("Addr2").value = roadAddr;
-				document.getElementById("Addr3").value = data.jibunAddress;
+				// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+				if (data.userSelectedType === 'R') {
+					// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+					// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+					if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+						extraAddr += data.bname;
+					}
+					// 건물명이 있고, 공동주택일 경우 추가한다.
+					if (data.buildingName !== '' && data.apartment === 'Y') {
+						extraAddr += (extraAddr !== '' ? ', '
+								+ data.buildingName : data.buildingName);
+					}
+					// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+					if (extraAddr !== '') {
+						extraAddr = ' (' + extraAddr + ')';
+					}
+					// 조합된 참고항목을 해당 필드에 넣는다.
+					document.getElementById("Addr4").value = extraAddr;
 
-				if (roadAddr !== '') {
-					document.getElementById("Addr4").value = extraRoadAddr;
 				} else {
 					document.getElementById("Addr4").value = '';
 				}
 
-				var guideTextBox = document.getElementById("guide");
-				if (data.autoRoadAddress) {
-					var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-					guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr
-							+ ')';
-					guideTextBox.style.display = 'block';
-
-				} else if (data.autoJibunAddress) {
-					var expJibunAddr = data.autoJibunAddress;
-					guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr
-							+ ')';
-					guideTextBox.style.display = 'block';
-				} else {
-					guideTextBox.innerHTML = '';
-					guideTextBox.style.display = 'none';
-				}
+				// 우편번호와 주소 정보를 해당 필드에 넣는다.
+				document.getElementById('Addr1').value = data.zonecode;
+				document.getElementById("Addr2").value = addr;
+				// 커서를 상세주소 필드로 이동한다.
+				document.getElementById("Addr3").focus();
 			}
 		}).open();
 	}
 </script>
+
 </html>

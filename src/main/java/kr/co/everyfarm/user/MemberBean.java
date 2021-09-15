@@ -33,8 +33,6 @@ public class MemberBean {
 
 	private Date m_Date;
 
-	private String m_Profile;
-
 	public String getM_Id() {
 		return m_Id;
 	}
@@ -91,17 +89,9 @@ public class MemberBean {
 		this.m_Date = m_Date;
 	}
 
-	public String getM_Profile() {
-		return m_Profile;
-	}
-
-	public void setM_Profile(String m_Profile) {
-		this.m_Profile = m_Profile;
-	}
-
 	@Override
 	public String toString() {
 		return "MemberVO [m_Id=" + m_Id + ", m_Name=" + m_Name + ", m_Pw=" + m_Pw + ", m_Addr=" + m_Addr + ", m_Tel="
-				+ m_Tel + ", m_Birth=" + m_Birth + ", m_Date=" + m_Date + ", m_Profile=" + m_Profile + "]";
+				+ m_Tel + ", m_Birth=" + m_Birth + ", m_Date=" + m_Date + "]";
 	}
 }

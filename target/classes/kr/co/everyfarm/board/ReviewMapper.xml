@@ -42,6 +42,10 @@
 		) as T1 ORDER BY rev_date DESC
 		LIMIT #{skip},#{amount}
 	</select>
+	
+	<select id="myQnAtoFar" resultType="kr.co.everyfarm.board.QnABean">
+		SELECT * FROM  qnatofarmer ORDER BY q_date DESC
+	</select>
 
 
 	<select id="revCount" resultType="int">

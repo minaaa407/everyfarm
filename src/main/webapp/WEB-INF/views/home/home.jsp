@@ -37,75 +37,7 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<!-- Start Header -->
-	<header>
-		<div class="container pt-5 pb-4">
-			<div class="row justify-content-between">
-				<div class="col-md-8 order-md-last">
-					<div class="row">
-						<div class="col-md-6 text-center">
-							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
-						</div>
-						<div class="col-md-6 col-lg">
-							<select name="page" onchange="location.href=this.value">
-								<option value="#">홈페이지</option>
-								<option value="/home">USER</option>
-								<option value="/farmerLogin">FARMER</option>
-								<option value="/adminLogin">ADMIN</option>
-							</select>
-						</div>
-						<div>
-							<c:choose>
-								<c:when test="${empty member}">
-									<li><a href="/login">로그인</a></li>
-									<li><a href="/sign">회원가입</a></li>
-								</c:when>
-								<c:when test="${not empty member}">
-									<li>${member.m_Name}님환영합니다.</li>
-									<li><a href="/mypage">내 정보</a></li>
-									<c:choose>
-										<c:when test="${member.m_Pw eq 'KAKAO'}">
-											<li><a href="/klogout">로그아웃</a></li>
-										</c:when>
-										<c:when test="${member.m_Pw eq 'NAVER'}">
-											<li><a href="/nlogout">로그아웃</a></li>
-										</c:when>
-										<c:otherwise>
-											<li><a href="/logout">로그아웃</a></li>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-							</c:choose>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Start NavBar -->
-		<nav
-			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
-			id="ftco-navbar">
-			<div class="container-fluid">
-
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#ftco-nav" aria-controls="ftco-nav"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="fa fa-bars"></span> Menu
-				</button>
-				<div class="collapse navbar-collapse" id="ftco-nav">
-					<ul class="navbar-nav m-auto">
-						<li class="nav-item active"><a href="index.jsp"
-							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="/productlist" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
-	<!-- END NavBar -->
-	<!-- END Header -->
+	<jsp:include page="/WEB-INF/views/home/header.jsp" />
 
 	<div class="hero-wrap js-fullheight"
 		style="background-image: url('resources/index/images/bg_1.jpg');"
@@ -384,14 +316,6 @@
 	<!-- End Footer -->
 
 
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen">
-		<svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
-	</div>
 
 	<script src="resources/index/js/jquery.min.js"></script>
 	<script src="resources/index/js/jquery-migrate-3.0.1.min.js"></script>

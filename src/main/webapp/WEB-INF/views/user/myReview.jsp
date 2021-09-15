@@ -52,6 +52,13 @@
 <link rel="stylesheet" href="resources/user/css/sidemenu.css">
 <script type="text/javascript" src="resources/user/js/sidemenu.js"></script>
 
+<style type="text/css">
+
+td{
+	text-align: center;
+}
+</style>
+
 </head>
 <body>
 	<div class="container">
@@ -61,7 +68,7 @@
 					<div class="side-bar">
 						<div class="user-info">
 							<img class="img-profile img-circle img-responsive center-block"
-								src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+								src="resources/img/user.png" alt="회원 기본이미지">
 							<ul class="meta list list-unstyled">
 								<li class="name">${member.m_Name}</li>
 								<li class="email">${member.m_Id}</li>
@@ -83,8 +90,6 @@
 										<ul class="sub-menu collapse" id="products">
 											<li><a href="/myQnA">QnA</a></li>
 											<li><a onclick='return submit2(this.form);'>리뷰게시판</a></li>
-											<li><a href="#">추가할공간</a></li>
-											<li><a href="#">추가할공간</a></li>
 										</ul>
 										<li><a href="/myPayList"> <i class="fa fa-credit-card"></i> 결제
 												내역
@@ -105,15 +110,13 @@
 										<section class="ftco-section">
 		<div class="container">
 			<div class="row flex-direction:row-reverse justify-content-center">
-				<div class="col-md-3 d-flex ftco-animate">
+				<div class="col-md-12  ftco-animate">
 					<div class="blog-entry justify-content-end">
 						<div class="text">
 							<table class="table">
 								<thead>
 									<tr class="text-center" style="background: #E6E6F2;">
-										<th style="width: 10%">글번호</th>
 										<th style="width: 55%">제목</th>
-										<th style="width: 15%">작성자</th>
 										<th style="width: 15%">조회수</th>
 										<th style="width: 15%">작성시간</th>
 									</tr>
@@ -128,9 +131,7 @@
 									<c:if test="${!empty revList}">
 										<c:forEach var="re" items="${revList}">
 											<tr>
-												<td style="text-align: center;">${re.rev_No}</td>
 												<td><a href="/reviewDetail?rev_No=${re.rev_No}">${re.rev_Title}</a></td>
-												<td style="text-align: center;">${re.rev_Name}</td>
 												<td style="text-align: center;"><span class="fa fa-eye"></span>&nbsp;${re.rev_Readcount}</td>
 												<td style="text-align: center;"><fmt:formatDate pattern="yyyy/MM/dd" value="${re.rev_Date}" /></td>
 											</tr>

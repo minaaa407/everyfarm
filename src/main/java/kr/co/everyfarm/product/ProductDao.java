@@ -34,7 +34,7 @@ public interface ProductDao {
 	public float productfrate(int p_No);
 	
 
-	
+	List<ProductBean> viewList();
 	
 	public ProductBean productinfo(String p_No);
 	public List<ProductBean> listland(String p_id);
