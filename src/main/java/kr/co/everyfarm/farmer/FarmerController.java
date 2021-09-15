@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,6 +45,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.everyfarm.board.PageMaker;
 import kr.co.everyfarm.board.Paging;
 import kr.co.everyfarm.payment.PaymentBean;
+import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.user.EmailBean;
 import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.UserPw;
@@ -104,8 +106,48 @@ public class FarmerController {
 	            seed = "";
 	            seedSum = 0;
 	     }
+		 //상품 차트
+		    ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
+			Calendar cal = Calendar.getInstance();
+			int year = cal.get(Calendar.YEAR);	
+		    String farmerid = farmer.getF_Id();
+		    String[] months = {"January","february","march","april","may","june","july"
+		    		,"august","september","october","november","december"};
+			int[] payment = new int[12];
+			int[] payment1 = new int[12];
+			int[] payment2 = new int[12];
+		    for(int i =0; i < months.length; i++) {
+			    HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("farmerid", farmerid);
+				map.put("Month", months[i]);
+				map.put("year", year);
+				payment[i] = productdao.productpaymentchart(map);
+		    }
+		    model.addAttribute("payment",payment);
+		    
+		    for(int i =0; i < months.length; i++) {
+			    HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("farmerid", farmerid);
+				map.put("Month", months[i]);
+				map.put("year", year-1);
+				payment1[i] = productdao.productpaymentchart(map);
+		    }
+		    model.addAttribute("payment1pre",payment1);
+		    
+		    for(int i =0; i < months.length; i++) {
+			    HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("farmerid", farmerid);
+				map.put("Month", months[i]);
+				map.put("year", year-2);
+				payment2[i] = productdao.productpaymentchart(map);
+		    }
+		    model.addAttribute("payment2pre",payment2);
+			 
+			 
+			 
+		    //상품차트
 		 
-		 
+		
 		 totalSeedSum = totalSeedSum.stream().sorted(Comparator.comparing(PaymentBean::getPay_Land).reversed()).collect(Collectors.toList());
 		 List<String> seedName = new ArrayList<String>();
 		 List<Integer> seedSumTotal = new ArrayList<Integer>();

@@ -33,6 +33,7 @@ public class BasketController {
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
 		BasketDAO dao = sqlSessionTemplate.getMapper(BasketDAO.class);
 		List<BasketBean> basketList = dao.listAll(member);
+		System.out.println(basketList.get(1).getP_Img());
 		model.addAttribute("basketList", basketList);
 		request.setAttribute("basketList", basketList);
 //		if(checkindex != null) {

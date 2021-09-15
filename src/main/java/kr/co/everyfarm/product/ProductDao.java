@@ -1,5 +1,6 @@
 package kr.co.everyfarm.product;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.co.everyfarm.basket.BasketBean;
@@ -14,7 +15,7 @@ public interface ProductDao {
 	public List<ProductBean> desclist(PageBeen pagebeen);
 	public List<ProductBean> asclist(PageBeen pagebeen);
 	public List<ProductBean> listacceptpageing(PageBeen pagebeen);
-	
+	public int productpaymentchart(HashMap<String, Object> map);
 	
 	public int listcount();
 	public int listacceptcount();
@@ -36,4 +37,5 @@ public interface ProductDao {
 	
 	
 	public ProductBean productinfo(String p_No);
+	public List<ProductBean> listland(String p_id);
 }

@@ -208,9 +208,7 @@
 							<!-- Chart -->
 							<div class="chart">
 								<!-- Chart wrapper -->
-								<canvas id="myChart" class="chart-canvas"></canvas>
-								<input hidden="mMonth" id="mMonth" var="mMonth" name="mMonth"
-									items="${mMonth}">
+								<canvas id="userNfarmer" class="chart-canvas"></canvas>
 							</div>
 						</div>
 					</div>
@@ -441,30 +439,33 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 	<script>
-		var date = new Date();
-		var monArr = new Array;
-		var monSt = [];
-		var month = ('0' + (date.getMonth() + 1)).slice(-2);
-		var year = date.getFullYear();
-
-		for (var i = 0; i < 12; i++) {
-			monArr[i] = month - i;
-			monSt[i] = year + '-' + month[i] + '-' + day;
-		}
-		var monthLb = monSt.reverse();
-		var mMonth = $(mMonth);
+		var mMonth = ${mMonth};
 		var mChart = mMonth.reverse();
 
-		new Chart("myChart", {
+		var fMonth = ${fMonth};
+		var fChart = fMonth.reverse();
+
+		var date = new Date();
+		var year = date.getFullYear();
+		var month = ('0' + (date.getMonth() + 1)).slice(-2);
+		var monStr = new Array;
+
+		for (var i = 0; i < 12; i++) {
+			month = date.setMonth(date.getMonth() - i);
+			monStr[i] = year + '-' + month;
+		}
+		var monLb = monStr.reverse();
+
+		new Chart("userNfarmer", {
 			type : "line",
 			data : {
-				labels : monthLb,
-				datasets : [ {
+				labels : monLb,
+				datasets : [{
 					data : mChart,
 					borderColor : "yellow",
 					fill : false
 				}, {
-					data : mChart,
+					data : fChart,
 					borderColor : "gray",
 					fill : false
 				} ]

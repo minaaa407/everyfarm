@@ -67,7 +67,15 @@
 	</select>
 	
 	
+	<select id="productpaymentchart" resultType="int" parameterType="hashmap">
+		select ifnull(sum(pay_totalprice),0) from payment
+		 where ((date_format(pay_date,'%Y') = #{year} )) and (date_format(pay_date,'%M')) = #{Month}
+		 and (pay_no IN (select p_no from product where p_id =#{farmerid} ))	
+	</select>
+
 	
+
+
 	
 	<select id="listcount" resultType="int">
 		select count(*) from product		
@@ -93,39 +101,44 @@
 		 product where p_Accept = 'Y' limit #{limit}  offset #{offset}	
 	</select>
 	
-
-
-	
 	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
-		update product set p_Id=#{p_Id}, p_Title=#{p_Title},
-		p_Content= #{p_Content},p_Img= #{p_Img},
-		p_Subimg1= #{p_Subimg1},p_Subimg2= #{p_Subimg2},p_Subimg3= #{p_Subimg3},
-		p_Subimg4=#{p_Subimg4},p_Imgdetail1=#{p_Imgdetail1},
-		p_Imgdetail2=#{p_Imgdetail2},p_Imgdetail3=#{p_Imgdetail3},
-		p_Imgdetail4=#{p_Imgdetail4},p_Landprice=#{p_Landprice},
-		p_Manpay=#{p_Manpay},
-		p_Accept=#{p_Accept} where p_no = #{p_No}	
-	</update>
-	
-	<delete id="delete">
-		delete from product where p_No=#{p_No}	
-	</delete>
+	      update product set p_Id=#{p_Id}, p_Title=#{p_Title},
+	      p_Content= #{p_Content},p_Img= #{p_Img},
+	      p_Subimg1= #{p_Subimg1},p_Subimg2= #{p_Subimg2},p_Subimg3= #{p_Subimg3},
+	      p_Subimg4=#{p_Subimg4},p_Imgdetail1=#{p_Imgdetail1},
+	      p_Imgdetail2=#{p_Imgdetail2},p_Imgdetail3=#{p_Imgdetail3},
+	      p_Imgdetail4=#{p_Imgdetail4},p_Landprice=#{p_Landprice},
+	      p_Manpay=#{p_Manpay},
+	      where p_no = #{p_No}   
+   </update>
+   
+   <delete id="delete">
+      	delete from product where p_No=#{p_No}   
+   </delete>
 
-	<select id="desclist" resultType="kr.co.everyfarm.product.ProductBean">
-		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
-		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product	
-		where p_Accept ='Y' order by p_No desc;
-	</select>	
-	
-	<select id="asclist" resultType="kr.co.everyfarm.product.ProductBean">
-		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
-		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product	
-		where p_Accept ='N' order by p_No desc;
-	</select>
-	
-	<select id="info" resultType="kr.co.everyfarm.product.ProductBean">
-      select* from product where p_No = #{p_No}      
+   <select id="desclist" resultType="kr.co.everyfarm.product.ProductBean">
+	      select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product   
+	      where p_Accept ='Y' order by p_No asc limit #{limit}  offset #{offset};
+   </select>   
+   
+   <select id="asclist" resultType="kr.co.everyfarm.product.ProductBean">
+	      select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product   
+	      where p_Accept ='N' order by p_No asc limit #{limit}  offset #{offset};
    </select>
+   
+   <select id="info" resultType="kr.co.everyfarm.product.ProductBean">
+     	 select* from product where p_No = #{p_No}      
+   </select>
+
+
+   <select id="listland" resultType="kr.co.everyfarm.product.ProductBean" parameterType="String" >
+	      select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product where p_Id = #{p_Id}
+   </select>
+   
+   
 
 
 <!-- 듄 payment에 이용 --> 

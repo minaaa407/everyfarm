@@ -1422,7 +1422,7 @@ td .mybtn{
 				<div id="lnbcenter"></div>
 				<div id="lnb" style="text-align: center;">
 				   <ul>
-				     <li><a href="#lnbposition" class="sidenav">설명2</a></li>
+				     <li><a href="#lnbposition" class="sidenav">설명</a></li>
 				     <li><a href="#movereview"  class="sidenav" onclick="move()">덧글</a></li>
 				   </ul>
 				 </div>
