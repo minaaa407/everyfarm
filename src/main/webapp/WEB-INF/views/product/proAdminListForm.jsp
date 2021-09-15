@@ -146,14 +146,13 @@ function search(){
 	document.myHiddenForm.submit();
 }
 
-
+/* 
 function accepty(){
 	var bean = {
 			"selectpage" : 1,
 			"limit" : 10,
 			"where" : "p_Accept",
-			"wherecolumn" : "Y",
-			"page" : pagenumber
+			"wherecolumn" : "Y",			
 			}
 	var urlpath = "/ProYList";
 	ajax(urlpath,bean);
@@ -167,16 +166,13 @@ function acceptn(){
 			"limit" : 10,
 			"where" : "p_Accept",
 			"wherecolumn" : "N",
-			"page" : pagenumber
 			}
 	var urlpath = "/ProNList";
 	ajax(urlpath,bean);
-	
 }
 
 
 function ajax(urlpath,bean){
-	
 	$.ajax({
 		type : "post", //요청 메소드 방식
 		url : urlpath,
@@ -199,7 +195,7 @@ function ajax(urlpath,bean){
 							a +="<td><button type='button' class='btn btn-outline-dark' onclick='javascript:proDelete("+productlist[i].p_No+")'>삭제</button></td></tr>";
 						
 						}
-					document.getElementById("tableproduct").innerHTML=a;
+					document.getElementById("pageList").innerHTML=a;
 					var pageList = document.getElementById("pageList");
 					
 					var b="";
@@ -224,7 +220,7 @@ function ajax(urlpath,bean){
 			}
 		});
 	
-}	
+}	 */
 	
 
 </script>
@@ -233,77 +229,97 @@ function ajax(urlpath,bean){
 </head>
 
 <body>
-	<header>
-		<div class="container pt-5 pb-4">
-			<div class="row justify-content-between">
-				<div class="col-md-8 order-md-last">
+
+<!-- Navigation -->
+		<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Brand -->
+			<a class="navbar-brand pt-0" href="/admin"> <img
+				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
+				alt="...">
+			</a>
+			<!-- User -->
+			<ul class="nav align-items-center d-md-none">
+				<li class="nav-item dropdown"><a class="nav-link nav-link-icon"
+					href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> <i class="ni ni-bell-55"></i>
+				</a>
+					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
+						aria-labelledby="navbar-default_dropdown_1">
+						<a class="dropdown-item" href="#">Action</a> <a
+							class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div></li>
+				<li class="nav-item dropdown"><a class="nav-link" href="#"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+						<div class="media align-items-center">
+							<span class="avatar avatar-sm rounded-circle"> <img
+								alt="Image placeholder"
+								src="resources/admin/img/theme/team-1-800x800.jpg">
+							</span>
+						</div>
+				</a>
+					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+						<div class=" dropdown-header noti-title">
+							<h6 class="text-overflow m-0">Welcome!</h6>
+						</div>
+						<a href="./examples/profile.html" class="dropdown-item"> <i
+							class="ni ni-single-02"></i> <span>My profile</span>
+						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
+							class="ni ni-settings-gear-65"></i> <span>Settings</span>
+						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
+							class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
+							class="ni ni-support-16"></i> <span>Support</span>
+						</a>
+						<div class="dropdown-divider"></div>
+						<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i>
+							<span>Logout</span>
+						</a>
+					</div></li>
+			</ul>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Collapse header -->
+				<div class="navbar-collapse-header d-md-none">
 					<div class="row">
-						<div class="col-md-6 text-center">
-							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
+						<div class="col-6 collapse-brand">
+							<a href="./index.html"> <img
+								src="resources/admin/img/brand/blue.png">
+							</a>
 						</div>
-						<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
-							<form action="#" class="searchform order-lg-last">
-								<div class="form-group d-flex">
-									<input type="text" class="form-control pl-3"
-										placeholder="Search">
-									<button type="submit" placeholder=""
-										class="form-control search">
-										<span class="fa fa-search"></span>
-									</button>
-								</div>
-							</form>
-						</div>
-						<div>
-							<c:choose>
-								<c:when test="${empty member}">
-									<li><a href="/login">로그인</a></li>
-									<li><a href="/sign">회원가입</a></li>
-								</c:when>
-								<c:when test="${not empty member}">
-									<li>${member.m_Name}님환영합니다.</li>
-									<li><a href="/mypage">내 정보</a></li>
-									<li><a href="/logout">로그아웃</a></li>
-								</c:when>
-							</c:choose>
+						<div class="col-6 collapse-close">
+							<button type="button" class="navbar-toggler"
+								data-toggle="collapse" data-target="#sidenav-collapse-main"
+								aria-controls="sidenav-main" aria-expanded="false"
+								aria-label="Toggle sidenav">
+								<span></span> <span></span>
+							</button>
 						</div>
 					</div>
 				</div>
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
-		<!-- Start NavBar -->
-		<nav
-			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
-			id="ftco-navbar">
-			<div class="container-fluid">
+	</nav>
 
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#ftco-nav" aria-controls="ftco-nav"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="fa fa-bars"></span> Menu
-				</button>
-				<div class="collapse navbar-collapse" id="ftco-nav">
-					<ul class="navbar-nav m-auto">
-						<li class="nav-item active"><a href="index.jsp"
-							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="/proRegisterForm"
-							class="nav-link">농장 등록</a></li>
-						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="blog.html" class="nav-link">Q&A</a></li>
-						<li class="nav-item"><a href="/proAdminListForm"
-							class="nav-link">Contact</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
-	<!-- END NavBar -->
-	<!-- END Header -->
+
 	<h2>상품 리스트</h2>
 	<br>
 	<div id=rezButton class="col-lg-12">
-		<a class="btn btn-dark" onclick="acceptn()">승인전 </a> <a
-			class="btn btn-dark" onclick="accepty()">승인후 </a> <a
+		<a class="btn btn-dark" href = "/ProNList">승인전 </a> <a
+			class="btn btn-dark" href= "/ProYList">승인후 </a> <a
 			href="/proAdminListForm?" class="btn btn-dark">전체보기 </a>
 	</div>
 	<br>
@@ -312,13 +328,13 @@ function ajax(urlpath,bean){
 		<table>
 			<thead>
 				<tr>
-					<th>상품번호</th>
+					<th width="20">상품번호</th>
 					<th>메인이미지</th>
-					<th>아이디</th>
+					<th width="30">아이디</th>
 					<th>제목</th>
 					<th>등록날짜</th>
-					<th>승인여부</th>
-					<th>승인</th>
+					<th width="10">승인여부</th>
+					<th>상세확인</th>
 					<th>수정,삭제</th>
 					<th></th>
 				</tr>
@@ -329,7 +345,7 @@ function ajax(urlpath,bean){
 						<td class="content">${p.p_No}</td>
 						<td class="content"><img id='product${p.p_No}'
 							src="/resources/upload/product/${p.p_No}/${p.p_Img}"
-							class="test1" width="90" height="auto" alt="Image ${p.p_No}">
+							class="test1" width="90" height="70" alt="Image ${p.p_No}">
 						</td>
 						<td class="content">${p.p_Id}</td>
 						<td class="content">${p.p_Title}</td>
@@ -397,96 +413,7 @@ function ajax(urlpath,bean){
 	</div>
 	<br>
 	<br>
-	<!-- Start Footer -->
-	<footer class="ftco-footer ftco-bg-dark ftco-section">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="logo">
-							<a href="#">EVERY <span>FARM</span></a>
-						</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries Vokalia and Consonantia, there live the blind texts.</p>
-						<ul
-							class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-instagram"></span></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4 ml-md-5">
-						<h2 class="ftco-heading-2">Services</h2>
-						<ul class="list-unstyled">
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Garden Care</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Lawn mowing</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Lawn Care</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Gutter Cleaning</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>New Lawn Installation</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Contact information</h2>
-						<div class="block-23 mb-3">
-							<ul>
-								<li><span class="icon icon-map-marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
-								<li><a href="#"><span class="icon icon-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
-								<li><a href="#"><span class="icon icon-envelope"></span><span
-										class="text">info@yourdomain.com</span></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Business Hours</h2>
-						<div class="opening-hours">
-							<h4>Opening Days:</h4>
-							<p class="pl-3">
-								<span>Monday â Friday : 9am to 20 pm</span> <span>Saturday
-									: 9am to 17 pm</span>
-							</p>
-							<h4>Vacations:</h4>
-							<p class="pl-3">
-								<span>All Sunday Days</span> <span>All Official Holidays</span>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 text-center">
-
-					<p>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<script>
-							document.write(new Date().getFullYear());
-						</script>
-						All rights reserved | This template is made with <i
-							class="icon-heart color-danger" aria-hidden="true"></i> by <a
-							href="https://colorlib.com" target="_blank">Colorlib</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					</p>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- End Footer -->
+	
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </body>
 </html>

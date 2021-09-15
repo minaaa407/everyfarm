@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.everyfarm.product.ProductDao">
+
+
 	<select id="list" resultType="kr.co.everyfarm.product.ProductBean">
 		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
 		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product	
@@ -84,7 +86,7 @@
 		select count(*) from product where p_Accept = 'Y' 		
 	</select>
 	
-		<select id="listacceptncount" resultType="int">
+	<select id="listacceptncount" resultType="int">
 		select count(*) from product where p_Accept = 'N' 		
 	</select>
 	
@@ -104,7 +106,7 @@
 		p_Imgdetail2=#{p_Imgdetail2},p_Imgdetail3=#{p_Imgdetail3},
 		p_Imgdetail4=#{p_Imgdetail4},p_Landprice=#{p_Landprice},
 		p_Manpay=#{p_Manpay},
-		p_Accept=#{p_Accept} where p_no = #{p_No}	
+		where p_no = #{p_No}	
 	</update>
 	
 	<delete id="delete">
@@ -114,18 +116,24 @@
 	<select id="desclist" resultType="kr.co.everyfarm.product.ProductBean">
 		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
 		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product	
-		where p_Accept ='Y' order by p_No desc;
+		where p_Accept ='Y' order by p_No asc limit #{limit}  offset #{offset};
 	</select>	
 	
 	<select id="asclist" resultType="kr.co.everyfarm.product.ProductBean">
 		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
 		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product	
-		where p_Accept ='N' order by p_No desc;
+		where p_Accept ='N' order by p_No asc limit #{limit}  offset #{offset};
 	</select>
 	
 	<select id="info" resultType="kr.co.everyfarm.product.ProductBean">
       select* from product where p_No = #{p_No}      
    </select>
+
+
+	<select id="listland" resultType="kr.co.everyfarm.product.ProductBean" parameterType="String" >
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product where p_Id = #{p_Id}
+	</select>
 
 
 <!-- 듄 payment에 이용 --> 

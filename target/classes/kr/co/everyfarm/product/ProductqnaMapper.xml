@@ -39,6 +39,10 @@
 		select count(*) from productqna where c_no = #{c_no}
 	</select>
 	
+	<select id="productqnaone" resultType="kr.co.everyfarm.product.ProductqnaBean" parameterType="String">
+		select c_seq,c_id,c_no,c_content,c_date,c_mainno,c_subno,c_secret from productqna where c_Seq=#{c_Seq}
+	</select>
+	
 	<select id="maxcmainno" resultType="int" parameterType="String">
 		select max(c_mainno) from productqna where c_no =#{c_no}
 	</select>

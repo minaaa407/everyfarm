@@ -7,6 +7,7 @@ import kr.co.everyfarm.basket.BasketBean;
 public interface ProductDao {
 	
 	public List<ProductBean> list();
+	public List<ProductBean> listland(String p_id);
 	public List<ProductBean> listpageing(PageBeen pagebeen);
 	public List<ProductBean> listserachpageing(PageBeen pagebeen);
 	public List<ProductBean> listserachpageingcount(PageBeen pagebeen);

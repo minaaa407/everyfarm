@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="kr.co.everyfarm.farmer.FarmerBean"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page import="java.util.*"%>
+<%
+	FarmerBean farmer = (FarmerBean) request.getSession().getAttribute("farmer");
+%>
+
 
 <!DOCTYPE html>
 <html lang="kr">
@@ -44,6 +49,13 @@
 		const row = document.getElementById('Subimg');
 		row.style.display = '';
 	}
+	
+	function openClose() {
+		if ($('#post-box').css('display') == 'block') {
+		$('#post-box').hide();  
+		} else {
+		$('#post-box').show();
+		}
 
 	function hideRowDetail() {
 		const row = document.getElementById('Imgdetail');
@@ -88,59 +100,8 @@ tbody td {
 </style>
 </head>
 <body>
-	<header>
-		<div class="container pt-5 pb-4">
-			<div class="row justify-content-between">
-				<div class="col-md-8 order-md-last">
-					<div class="row">
-						<div class="col-md-6 text-center">
-							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
-						</div>
-						<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
-							<form action="#" class="searchform order-lg-last">
-								<div class="form-group d-flex">
-									<input type="text" class="form-control pl-3"
-										placeholder="Search">
-									<button type="submit" placeholder=""
-										class="form-control search">
-										<span class="fa fa-search"></span>
-									</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Start NavBar -->
-		<nav
-			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
-			id="ftco-navbar">
-			<div class="container-fluid">
-
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#ftco-nav" aria-controls="ftco-nav"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="fa fa-bars"></span> Menu
-				</button>
-				<div class="collapse navbar-collapse" id="ftco-nav">
-					<ul class="navbar-nav m-auto">
-						<li class="nav-item active"><a href="index.jsp"
-							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="/proRegisterForm"
-							class="nav-link">농장 등록</a></li>
-						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="blog.html" class="nav-link">Q&A</a></li>
-						<li class="nav-item"><a href="/proAdminListForm"
-							class="nav-link">Contact</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
-	<!-- END NavBar -->
-	<!-- END Header -->
+	<jsp:include page="/WEB-INF/views/home/header.jsp" />
+	
 	<form:form enctype="multipart/form-data" commandName="product"
 		action="/ProductRegister" method="post">
 		<table>
@@ -153,12 +114,12 @@ tbody td {
 				<tr>
 					<td colspan="1" style="width: 20%;"><label>작성자</label></td>
 					<td colspan="3"><input type="text" style="text-align: left;"
-						name="p_Id" placeholder="* 이름을 입력하세요." maxlength="50" required
+						name="p_Id" value="<%=farmer.getF_Id()%>" maxlength="50" required
 						autofocus></td>
 				</tr>
 				<tr>
 					<td colspan="1" style="width: 20%;"><label>제 목</label></td>
-					<td colspan="3"><input type="text" name="p_Title" 
+					<td colspan="3"><input type="text" name="p_Title"
 						maxlength="50" required autofocus></td>
 				</tr>
 				<tr>
@@ -168,7 +129,7 @@ tbody td {
 				</tr>
 				<tr>
 					<td style="width: 20%;"><input type='button' value='서브사진 등록'
-						onclick='showRowSub()' /></td>
+						onclick="javascript:showRowSub(); hideRowSub();" /></td>
 					<td></td>
 				</tr>
 			<tbody id="Subimg" style="display: none;">
@@ -194,8 +155,8 @@ tbody td {
 					<td style="width: 20%;"><label> 서브 이미지4 </label></td>
 					<td style="text-align: left;"><input name="p_Subimg42"
 						type="file" accept="subimg4/image/*" /> <input type="hidden"
-						name="p_Subimg4" value="1111"><input
-						type='button' value='닫기' onclick='hideRowSub()' /></td>
+						name="p_Subimg4" value="1111"><!-- <input type='button'
+						value='닫기' onclick='hideRowSub()' /></td> -->
 				</tr>
 			</tbody>
 
@@ -229,24 +190,24 @@ tbody td {
 					<td style="text-align: left;"><input name="p_Imgdetail42"
 						type="file" accept="imgdetail4/image/*" /> <input type="hidden"
 						name="p_Imgdetail" value="1111"><input type='button'
-					value='닫기' onclick='hideRowDetail()' /></td>
+						value='닫기' onclick='hideRowDetail()' /></td>
 				</tr>
 
 			</tbody>
 			<tr>
 				<td colspan="1"><label>상세 내용</label></td>
-				<td colspan="3"><textarea class="form-control" name="p_Content" placeholder="* 내용을 입력하세요."
-						rows="10"  required> 
+				<td colspan="3"><textarea class="form-control" name="p_Content"
+						placeholder="* 내용을 입력하세요." rows="10" required> 
             </textarea></td>
 			</tr>
 			<tr>
 				<td colspan="1" style="width: 20%;"><label>토지 가격</label></td>
-				<td colspan="3"><input type="text" name="p_Landprice" 
+				<td colspan="3"><input type="text" name="p_Landprice"
 					maxlength="50" required autofocus></td>
 			</tr>
 			<tr>
 				<td colspan="1" style="width: 20%;"><label>유지 관리비</label></td>
-				<td colspan="3"><input type="text" name="p_Manpay" 
+				<td colspan="3"><input type="text" name="p_Manpay"
 					maxlength="50" required autofocus></td>
 			</tr>
 
@@ -261,133 +222,7 @@ tbody td {
 	</form:form>
 	<br>
 	<br>
-	<!-- Start Footer -->
-	<footer class="ftco-footer ftco-bg-dark ftco-section">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="logo">
-							<a href="#">EVERY <span>FARM</span></a>
-						</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries Vokalia and Consonantia, there live the blind texts.</p>
-						<ul
-							class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-instagram"></span></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4 ml-md-5">
-						<h2 class="ftco-heading-2">Services</h2>
-						<ul class="list-unstyled">
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Garden Care</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Lawn mowing</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Lawn Care</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Gutter Cleaning</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>New Lawn Installation</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Contact information</h2>
-						<div class="block-23 mb-3">
-							<ul>
-								<li><span class="icon icon-map-marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
-								<li><a href="#"><span class="icon icon-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
-								<li><a href="#"><span class="icon icon-envelope"></span><span
-										class="text">info@yourdomain.com</span></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Business Hours</h2>
-						<div class="opening-hours">
-							<h4>Opening Days:</h4>
-							<p class="pl-3">
-								<span>Monday â Friday : 9am to 20 pm</span> <span>Saturday
-									: 9am to 17 pm</span>
-							</p>
-							<h4>Vacations:</h4>
-							<p class="pl-3">
-								<span>All Sunday Days</span> <span>All Official Holidays</span>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 text-center">
+	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 
-					<p>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<script>
-							document.write(new Date().getFullYear());
-						</script>
-						All rights reserved | This template is made with <i
-							class="icon-heart color-danger" aria-hidden="true"></i> by <a
-							href="https://colorlib.com" target="_blank">Colorlib</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					</p>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- End Footer -->
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen">
-		<svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
-	</div>
-
-
-	<script src="resources/index/js/jquery.min.js"></script>
-	<script src="resources/index/js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="resources/index/js/popper.min.js"></script>
-	<script src="resources/index/js/bootstrap.min.js"></script>
-	<script src="resources/index/js/jquery.easing.1.3.js"></script>
-	<script src="resources/index/js/jquery.waypoints.min.js"></script>
-	<script src="resources/index/js/jquery.stellar.min.js"></script>
-	<script src="resources/index/js/owl.carousel.min.js"></script>
-	<script src="resources/index/js/jquery.magnific-popup.min.js"></script>
-	<script src="resources/index/js/scrollax.min.js"></script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="resources/index/js/google-map.js"></script>
-	<script src="resources/index/js/main.js"></script>
-
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async
-		src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
-
-		gtag('config', 'UA-23581568-13');
-	</script>
 </body>
 </html>
