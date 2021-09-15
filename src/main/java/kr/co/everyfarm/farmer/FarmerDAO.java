@@ -49,6 +49,7 @@ public interface FarmerDAO {
 
 	public int myOrderCount(Paging paging);
 
+
 	public void fDelDate(PaymentBean paymentBean);
 
 	public List<ReviewBean> myReply(String f_Id);
@@ -62,4 +63,11 @@ public interface FarmerDAO {
 	public void upName(FarmerBean farmerBean);
 
 	public void upTel(FarmerBean farmerBean);
+
+	
+	/* 차트 */
+	public List<PaymentBean> searchPno(FarmerBean farmerBean);
+	
+	public PaymentBean seedSum(PaymentBean paymentBan);
+
 }

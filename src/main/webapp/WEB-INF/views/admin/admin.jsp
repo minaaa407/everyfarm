@@ -437,45 +437,47 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-	<script>
-		var mMonth = ${mMonth};
-		var mChart = mMonth.reverse();
 
-		var fMonth = ${fMonth};
-		var fChart = fMonth.reverse();
+<script>
+      var mMonth = ${mMonth};
+      var mChart = mMonth.reverse();
 
-		var date = new Date();
-		var year = date.getFullYear();
-		var month = ('0' + (date.getMonth() + 1)).slice(-2);
-		var monStr = new Array;
+      var fMonth = ${fMonth};
+      var fChart = fMonth.reverse();
 
-		for (var i = 0; i < 12; i++) {
-			month = date.setMonth(date.getMonth() - i);
-			monStr[i] = year + '-' + month;
-		}
-		var monLb = monStr.reverse();
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = ('0' + (date.getMonth() + 1)).slice(-2);
+      var monStr = new Array;
 
-		new Chart("userNfarmer", {
-			type : "line",
-			data : {
-				labels : monLb,
-				datasets : [{
-					data : mChart,
-					borderColor : "yellow",
-					fill : false
-				}, {
-					data : fChart,
-					borderColor : "gray",
-					fill : false
-				} ]
-			},
-			options : {
-				legend : {
-					display : false
-				}
-			}
-		});
-	</script>
+      for (var i = 0; i < 12; i++) {
+         month = date.setMonth(date.getMonth() - i);
+         monStr[i] = year + '-' + month;
+      }
+      var monLb = monStr.reverse();
+
+      new Chart("userNfarmer", {
+         type : "line",
+         data : {
+            labels : monLb,
+            datasets : [{
+               data : mChart,
+               borderColor : "yellow",
+               fill : false
+            }, {
+               data : fChart,
+               borderColor : "gray",
+               fill : false
+            } ]
+         },
+         options : {
+            legend : {
+               display : false
+            }
+         }
+      });
+   </script>
+
 
 
 

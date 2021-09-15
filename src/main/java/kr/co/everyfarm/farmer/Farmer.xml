@@ -201,4 +201,17 @@
 		SELECT * FROM productqna WHERE c_Id = #{f_Id} 
 	</select>
 	
+
+	
+	<!-- 차트 -->
+	<select id="searchPno" resultType="kr.co.everyfarm.payment.PaymentBean">
+		select p_no as pay_no from product where p_Id=#{f_Id}
+	</select>
+	
+	<select id="seedSum" resultType="kr.co.everyfarm.payment.PaymentBean"> 
+		select ifnull(pay_seed,0) as pay_seed, ifnull(sum(pay_land),0) as pay_land from payment where (pay_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK) AND NOW())
+		and pay_seed =#{pay_Seed} and pay_no=#{pay_No}
+		
+	</select>
+
 </mapper>

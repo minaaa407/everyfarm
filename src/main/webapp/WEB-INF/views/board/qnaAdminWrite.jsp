@@ -5,9 +5,7 @@
 <%@page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<% MemberBean member  = (MemberBean) request.getSession().getAttribute("member"); 
-   String url = (String) request.getAttribute("javax.servlet.forward.request_uri");
-   
+<% 
    List<QnABean> qnamodifyrecord = (List)request.getAttribute("qnamodifyrecord");
    List<QnABean> pnoTitleList = (List)request.getAttribute("pnoTitleList");
    int count = pnoTitleList.size();
@@ -37,8 +35,7 @@ String p_No = request.getParameter("no");
 
 
 
-<link rel="stylesheet" href="/resources/review/style.css">
-
+<link rel="stylesheet" href="/resources/qna/style.css">
 
 <title>QnA 글쓰기</title>
 
@@ -74,6 +71,27 @@ input::placeholder {
      transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
 }
 
+.c-control {
+	display: block;
+    outline:none;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 16px;
+    line-height: 1.42857143; 
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); */
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
+    
+    
+}
 
 
 </style>
@@ -88,22 +106,20 @@ input::placeholder {
 <div class="row">
     <div class="col-md-2"></div>
     	<div class="col-md-8">
-        	<h2 class="text-center">게시글 쓰기</h2>
+        	<h2 class="text-center" style="font-size: 35px;font-weight: bold;color: #988d8d; margin-top: 30px; margin-bottom: 30px;"><span style="color: #f4952f;">QnA</span> 글쓰기</h2>
         
     			<form action="/adminMemQnaupdate" id="qna" name="qna" method="post" enctype="multipart/form-data">
     				<c:forEach items="${qnamodifyrecord}" var="q">    
 						<table class="table table-striped">
-             				<input type="hidden" name="q_No" value="${q.q_No}" />
-             
              				<tr>
-                				<td>비밀글</td>
-                				<label><td><input onClick="return false;" type="checkbox" name="q_Secret" value="1" 
-                            		<c:if test="${q.q_Secret eq 'true'}">checked</c:if> ></td></label>
+                				<td><label for="secret" style="font-weight: 500;">비밀글 <input type="hidden" name="q_No" value="${q.q_No}"/></label></td>
+                				<td><label for="secret" style="font-weight: 500;"><input onClick="return false;" type="checkbox" name="q_Secret" value="1" 
+                            		<c:if test="${q.q_Secret eq 'true'}">checked</c:if>>비밀글</label></td>
             				</tr>
             				
               				<tr>                                       
-             					<td>상품 선택</td>                                    
-                                <td><select id="" name="q_Pno" readonly onFocus="this.initialSelect = this.selectedIndex;" 
+             					<td>상품</td>                                    
+                                <td><select id="" name="q_Pno" style="width: 180px;" readonly onFocus="this.initialSelect = this.selectedIndex;" 
        								 onChange="this.selectedIndex = this.initialSelect;"> 
               							<option value="${q.q_Pno}" selected>${q.q_Pno} : ${q.q_Ptitle}</option>
 	        							<%  for(int i=0 ;i<count;i++) {
@@ -117,18 +133,21 @@ input::placeholder {
 				            
 				            <tr>
                 				<td>제목</td>
-                				<td><input type="text" id="title" name="q_Title" class="form-control" value="${q.q_Title}" required></td>
+                				<td><input type="text" id="title" name="q_Title" class="c-control" value="${q.q_Title}" required></td>
            				 	</tr>
             
            	 				<tr>
                 				<td>작성자</td>
-                				<td><input type="text" id="q_Id" name="q_Id" value="<%=member.getM_Id()%>"  class="form-control" readonly></td>
+                				<td><input type="text" id="q_Id" name="q_Id" value="${q.q_Id}" class="c-control" readonly></td>
             				</tr>
  
-            			<!-- <tr>
-               					<td></td>
-                				<td><input multiple="multiple" type="file" name="q_Img" accept="image/gif, image/jpg, image/jpeg, image/png"/></td>
-            				</tr> -->
+            				<tr>
+               					<td style="width: 84px;">첨부 파일</td>
+               					<td><div style="width:500px;">기존 : ${q.q_Img}</div>
+               					<span style="display: flex; align-items: center;">수정 : <input type="file" id="file" name="img" accept="image/*" style="padding-left: 5px; width: 450px"/></span>
+            					</td>
+    							
+            				</tr> 
              
             				<tr>
                 				<td>글내용</td>
@@ -137,9 +156,10 @@ input::placeholder {
             				
             				<tr>
                 				<td colspan="2"  class="text-center">
-                    				<input type="submit" value="글 수정하기" class="btn btn-success">
-                   					<!--  <input type="reset" value="다시작성" class="btn btn-warning"> -->
-                    				<button type="button"  class="btn btn-primary" onclick="location.href='/adminQnaList'">목록으로 돌아가기</button>
+                    				<input type="submit" value="글 수정하기" class="btn btn-success" style="height: 35px; font-size: 15px;
+    									padding-left: 10px; padding-right: 10px; color: #fff; background-color: #4e9525; border-color: #4e9525;">
+                    				<button type="button"  class="btn btn-success" style="height: 35px; font-size: 15px;
+    							padding-left: 10px; padding-right: 10px; color: #fff; background-color: #4e9525; border-color: #4e9525;" onclick="location.href='/adminQnaList'">목록으로 돌아가기</button>
                 				</td>
            					</tr>
             

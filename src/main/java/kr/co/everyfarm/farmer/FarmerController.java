@@ -4,12 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -63,7 +67,7 @@ public class FarmerController {
 	}
 
 	@RequestMapping(value = "/farmerLogin", method = RequestMethod.POST)
-	public String flogin(FarmerBean farmerBean, HttpServletRequest request, HttpServletResponse response)
+	public String flogin(Model model, FarmerBean farmerBean, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		HttpSession session = request.getSession();
 		FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
@@ -74,6 +78,51 @@ public class FarmerController {
 		System.out.println("두번째:" + farmerBean.getF_Pw());
 
 		FarmerBean farmer = farmerDAO.flogin(farmerBean);
+
+
+		/* 차트 시작. 매개변수에 Model 추가해야함*/
+		List<String> seedList = Arrays.asList(new String[]{"감자", "고구마", "콩", "배추", "상추",
+				"수박",  "오이", "토마토", "호박", "고추", "마늘", "파", "양파", "무", "당근"});
+		List<PaymentBean> pno = farmerDAO.searchPno(farmer);
+		PaymentBean search = new PaymentBean();
+		PaymentBean oneSeedSum = new PaymentBean();
+		List<PaymentBean> totalSeedSum = new ArrayList<PaymentBean>();
+		String seed = "";
+		int seedSum = 0;
+		
+		 for(int i = 0; i < seedList.size(); i++ ) {
+	            for (int j = 0; j < pno.size(); j++ ) {
+	            	search.setPay_Seed(seedList.get(i));
+	            	search.setPay_No(pno.get(j).getPay_No());
+	            	oneSeedSum = farmerDAO.seedSum(search);
+	            	seedSum += oneSeedSum.getPay_Land();
+	            		if(!(oneSeedSum.getPay_Land() == 0)) {
+	            			seed = oneSeedSum.getPay_Seed();
+	            		}
+	             }
+	            oneSeedSum.setPay_Seed('"'+seed+'"');
+	            oneSeedSum.setPay_Land(seedSum);
+	            totalSeedSum.add(oneSeedSum);
+	            seed = "";
+	            seedSum = 0;
+	     }
+		 
+		 
+		 totalSeedSum = totalSeedSum.stream().sorted(Comparator.comparing(PaymentBean::getPay_Land).reversed()).collect(Collectors.toList());
+		 List<String> seedName = new ArrayList<String>();
+		 List<Integer> seedSumTotal = new ArrayList<Integer>();
+		 
+		 System.out.println("totalSeedSum = " + totalSeedSum);
+		 System.out.println("oneSeedSum = " + oneSeedSum);
+		 
+		 for(int i = 0; i < seedList.size(); i++ ) {
+			 seedName.add(totalSeedSum.get(i).getPay_Seed());
+			 seedSumTotal.add(totalSeedSum.get(i).getPay_Land());
+		 }
+		 System.out.println("seedName = " + seedName);
+		 System.out.println("seedSumTotal = " + seedSumTotal);
+		 
+
 		if (farmer != null) {
 			if (farmer.getF_Sign().equals("N")) {
 				response.setContentType("text/html; charset=UTF-8");
@@ -83,7 +132,10 @@ public class FarmerController {
 				return null;
 			} else {
 				session.setAttribute("farmer", farmer);
-				return "redirect:/farmer";
+				/* 모델 추가, redirect 지움 */
+				model.addAttribute("seedName", seedName);
+				model.addAttribute("seedSumTotal", seedSumTotal);
+				return "farmer/farmer";
 			}
 		} else {
 			return "farmer/FmLogin";

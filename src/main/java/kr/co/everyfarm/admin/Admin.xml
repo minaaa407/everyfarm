@@ -41,6 +41,7 @@
 		count(*) from farmer where date_format(f_Date,'%Y-%m') =
 		date_format(date_add(now(), interval - ${j} month),'%Y-%m') </select>
 
+
 	<sql id="MpageSearch">
 		<trim prefix="where(" suffix=")" prefixOverrides="OR">
 			<foreach collection="typeArr" item="type">

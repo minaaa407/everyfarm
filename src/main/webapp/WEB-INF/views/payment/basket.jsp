@@ -249,23 +249,13 @@
 		         			
 		         			<div class="button3" style = "display: flex; flex-wrap: wrap; margin-top: 0px; margin-bottom: 5px;">
 		         				<input type="button" id="submit" value="선택 삭제" class="btn btn-primary btn-lg btn-block" 
-		         					style="width: 90px; font-size: 16px; padding-left: 10px;" onclick="checkremove();" /> 
+		         					style="width: 88px;font-size: 16px;padding-left: 10px;padding-right: 10px;" onclick="checkremove();" /> 
 								<input type="button" id="zerodelete" value="장바구니 비우기" class="btn btn-primary btn-lg btn-block" 
 							       style="width: 135px; font-size: 16px; padding-left: 8px; margin-top: 0px; margin-left: 5px;" onclick="allremove();"/>  
    				 				<input type="button" id="zerodelete" value="품절 상품 지우기" class="btn btn-primary btn-lg btn-block" 
    				 			       style="width: 135px; font-size: 16px; padding-left: 7px; margin-top: 0px; margin-left: 5px;" onclick="zeroremove();"/> 
    				 			
-   				 				<%-- <div class="d-none d-sm-block">     
-   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   				 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<span>총 <%=count %>개</span>
-							
-								</div> --%>
+   				 			
 							</div>
 							
 							</c:when>
@@ -273,20 +263,20 @@
 		       </div>
 		        <div class="content">
 	 				<div class="row">
-	 					<div class="col-6 col-sm-7 col-md-8 col-lg-9">
+	 					<div class="col-5 col-sm-7 col-md-8 col-lg-9">
 	 						<div class="items">
 	 							<br>
 								<div class="row">
 									<div class="col-md-3"><input type="checkbox" id="checkall" name="checkall" value="전체 선택"/>  총 <%=count %>개</div>
-									<div class="d-none d-sm-block col-md-3">상품정보</div>
-							<div class="d-none d-sm-block col-md-1" style="text-align: center;">수량
-							</div>
-							<div class="d-none d-sm-block col-md-3" style="text-align: center;">상품가격
-							</div>
-							<div class="d-none d-sm-block col-md-2" style="text-align: center;">배송비
-							</div>
-							
-							</div>
+									<div class="d-none d-sm-block col-md-9">
+										<div class="row">
+											<div class="d-none d-sm-block col-md-4" style="padding-left: 40px;">상품정보</div>
+											<div class="d-none d-sm-block col-md-3" style="text-align: center;padding-right: 30px;padding-left: 0px;">수량</div>
+											<div class="d-none d-sm-block col-md-3" style="text-align: center;padding-right: 50px;padding-left: 0px;">상품가격</div>
+											<div class="d-none d-sm-block col-md-2" style="text-align: center;padding-right: 45px;padding-left: 0px;">배송비</div>
+										</div>
+									</div>
+								</div>
 							
 								
 								<!-- <table>
@@ -323,13 +313,13 @@
 																<div><label for="${i-1}"><input type="checkbox" id="${i-1}" name="choose" value="${b.b_No}" onchange="paybox()"/></label></div>
 															</c:otherwise>
 														</c:choose>
-					 									<label><a href="/productdetail?productno=${b.b_Pno}"><img src="/resources/upload/product/${b.b_Pno}/${b.p_Img} style="cursor: pointer""
-	                        	 								width="250" height="200" alt="Image ${b.b_Pno}"></a></label>  <%-- ${b.p_Img} --%>
+					 									<label><a href="/productdetail?productno=${b.b_Pno}"><img src="resources/upload/product/${b.b_Pno}/${b.p_Img}" 
+					 									 style="cursor: pointer; width:180px; height:150px; max-width: 100%;" alt="Image ${b.b_Pno}"></a></label>  <%-- ${b.p_Img} --%>
 					 								</div>
 					 								<div class="col-md-9">
 					 									<div class="info">
 						 									<div class="row">
-							 									<div class="col-md-3 product-name" style="padding-right: 0px;">
+							 									<div class="col-md-4 product-name" style="padding-right: 0px;">
 							 										<div class="product-name">
 																		<a href="/productdetail?productno=${b.b_Pno}">${b.p_Title}</a>
 								 						
@@ -338,7 +328,7 @@
  			        		"호박", "고추", "마늘", "파", "양파", "무", "당근", "깻잎"};
 		List<String> list = Arrays.asList(seed);   %>
 								 							
-								 									<div class="product-info">
+								 									<div class="product-info" style="text-align: left;">
 								 									<label for="${i-1}">
 																	<c:choose>
 																		<c:when test="${b.p_Accept eq 'N'}">
@@ -376,17 +366,19 @@
 																</div>
 									 						</div>
 							 							</div>
-							 							<div class="col-md-4 quantity">
+							 							<div class="col-md-3 quantity">
 							 								<label for="land${i-1}"></label>
 							 								<c:choose>
 																<c:when test="${b.p_Accept eq 'N'}">
 																	<input type="number" id="land${i-1}" min="1" max="" name="basketbeanList[${now.index}].b_Land" 
-																			value="${b.b_Land}" disabled onchange="eachtotal(this.id)" class="form-control quantity-input">
+																			value="${b.b_Land}" disabled onchange="eachtotal(this.id)" class="form-control quantity-input"
+																			style="width: 92px;">
 																			<div>구매 불가. 품절</div>
  																</c:when>                                                                    
             													<c:otherwise>
             														<input type="number" id="land${i-1}" min="1" max="" name="basketbeanList[${now.index}].b_Land" 
-            																value="${b.b_Land}" onchange="eachtotal(this.id)" class="form-control quantity-input">
+            																value="${b.b_Land}" onchange="eachtotal(this.id)" class="form-control quantity-input"
+            																style="width: 92px;">
             																
             														<input type="hidden" id="beforeland${i-1}" value="${b.b_Land}" />
             														
@@ -394,7 +386,7 @@
 															</c:choose>
 														
 							 							</div>
-							 							<div class="col-md-3 price">
+							 							<div class="col-md-3 price" style="padding-right: 20px; padding-left: 00px; text-align: center;">
 							 								<label for="${i-1}">
 							 								<fmt:formatNumber value="${b.b_Totalprice}" pattern="#,###" var="ttotalprice"/>
 															<span id="Totalprice${i-1}">${ttotalprice}원</span>
@@ -427,25 +419,26 @@
 					</c:choose>
 				</div>
 			</div>
-			<div class="col-6 col-sm-5 col-md-4 col-lg-3">
-			<!-- 	<div class="summary" id="scroll" style="position: absolute; top: -100px; height: 462px; width: 255px;">  
-			 					<h3>선택 합계</h3>
-			 					<div class="summary-item"><span class="text">상품수</span><span class="price" id="choosecount" value="0">0개</span></div>
-			 					<div class="summary-item"><span class="text">상품 금액</span><span class="price" id="producttotal" value="0">0원</span></div>
-			 					<div class="summary-item"><span class="text">배송비</span><span class="price" id="deliverytotal" value="0">0원</span></div>
-			 					<div class="summary-item"><span class="text">Total</span><span class="price" id="finaltotal" value="0">0원</span></div>
-			 					<button type="submit" form="basket" value="구매하기" onclick="checkbuy();" class="btn btn-primary btn-lg btn-block">구매하기</button>
-			 	</div> -->
-			 		<div class="summary" id="floatMenu" style="top: 130px; height: 420px;">  <!-- position: absolute;  width: 255px; max-width: 36.5% -->
-			 		
-			 					<h3>선택 합계</h3>
-			 					<div class="summary-item"><span class="text">상품수</span><span class="price" id="choosecount" value="0">0개</span></div>
-			 					<div class="summary-item"><span class="text">상품 금액</span><span class="price" id="producttotal" value="0">0원</span></div>
-			 					<div class="summary-item"><span class="text">배송비</span><span class="price" id="deliverytotal" value="0">0원</span></div>
-			 					<div class="summary-item"><span class="text">Total</span><span class="price" id="finaltotal" value="0">0원</span></div>
-			 					<button type="submit" form="basket" value="구매하기" onclick="checkbuy();" class="btn btn-primary btn-lg btn-block">구매하기</button>
+			<div class="col-7 col-sm-5 col-md-4 col-lg-3">  <!--   d-none d-sm-block-->
+				<div class="summary" id="floatMenu" style="top: 130px; height: 420px;">  <!-- position: absolute;  width: 255px; max-width: 36.5% -->
+			 		<h3>선택 합계</h3>
+			 			<div class="summary-item"><span class="text">상품수</span><span class="price" id="choosecount" value="0">0개</span></div>
+			 			<div class="summary-item"><span class="text">상품 금액</span><span class="price" id="producttotal" value="0">0원</span></div>
+			 			<div class="summary-item"><span class="text">배송비</span><span class="price" id="deliverytotal" value="0">0원</span></div>
+			 			<div class="summary-item"><span class="text">Total</span><span class="price" id="finaltotal" value="0">0원</span></div>
+			 			<button type="submit" form="basket" value="구매하기" onclick="checkbuy();" class="btn btn-primary btn-lg btn-block">구매하기</button>
 			 	</div>
 			</div>
+	<!-- 		<div class="d-block d-sm-none col 7">
+				<div class="summary" id="floatMenu" style="top: 130px; height: 420px;">  position: absolute;  width: 255px; max-width: 36.5%
+			 		<h3 style="font-size: 18px;">선택 합계</h3>
+			 			<div class="summary-item" style="font-size: 13px;"><span class="text">상품수</span><span class="price" id="choosecount" value="0">0개</span></div>
+			 			<div class="summary-item"><span class="text">상품 금액</span><span class="price" id="producttotal" value="0">0원</span></div>
+			 			<div class="summary-item"><span class="text">배송비</span><span class="price" id="deliverytotal" value="0">0원</span></div>
+			 			<div class="summary-item"><span class="text">Total</span><span class="price" id="finaltotal" value="0">0원</span></div>
+			 			<button type="submit" form="basket" value="구매하기" onclick="checkbuy();" class="btn btn-primary btn-lg btn-block">구매하기</button>
+			 	</div>
+			</div> -->
 			 	<!-- <span id="brr"></span> -->
 			 </div> 
 		   </div>

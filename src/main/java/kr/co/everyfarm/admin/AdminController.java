@@ -48,15 +48,18 @@ public class AdminController {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String admin(Model model, FarmerBean farmerBean, MemberBean memberBean) {
+	   public String admin(Model model, FarmerBean farmerBean, MemberBean memberBean) {
 
-		AdminDAO adDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
+	      AdminDAO adDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
+
 
 		int mmonth = 0;
 		int fmonth = 0;
 
-		List<Integer> mMonth = new ArrayList<Integer>();
-		List<Integer> fMonth = new ArrayList<Integer>();
+
+	      List<Integer> mMonth = new ArrayList<Integer>();
+	      List<Integer> fMonth = new ArrayList<Integer>();
+
 
 		for (int i = 0; i < 12; i++) {
 			mmonth = adDAO.mchart(i);
@@ -70,8 +73,8 @@ public class AdminController {
 		model.addAttribute("mMonth", mMonth);
 		model.addAttribute("fMonth", fMonth);
 
-		return "admin/admin";
-	}
+	      return "admin/admin";
+	   }
 
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.GET)
 	public String alogin() {

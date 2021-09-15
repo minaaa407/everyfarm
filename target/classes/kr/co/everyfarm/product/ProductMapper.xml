@@ -124,29 +124,30 @@
 		product where p_Accept = 'N'
 	</select>
 
-	<select id="listacceptpageing"
-		resultType="kr.co.everyfarm.product.ProductBean"
-		parameterType="kr.co.everyfarm.product.PageBeen">
-		select
-		p_id,p_no,p_title,p_content,p_Mainimage,p_Subimage,p_imagedetail,p_landprice,p_main,p_sub,p_seedprice,p_manpay,p_delivery,p_date,p_accept,
-		p_seedcount from
-		product where p_Accept = 'Y' limit #{limit} offset #{offset}
+
+	
+		<select id="listacceptncount" resultType="int">
+		select count(*) from product where p_Accept = 'N' 		
+	</select>
+	
+	<select id="listacceptpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_id,p_no,p_title,p_content,p_Mainimage,p_Subimage,p_imagedetail,p_landprice,p_main,p_sub,p_seedprice,p_manpay,p_delivery,p_date,p_accept, p_seedcount from
+		 product where p_Accept = 'Y' limit #{limit}  offset #{offset}	
+
 	</select>
 
 
 
-
-	<update id="update"
-		parameterType="kr.co.everyfarm.product.ProductBean">
+	
+	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
 		update product set p_Id=#{p_Id}, p_Title=#{p_Title},
 		p_Content= #{p_Content},p_Img= #{p_Img},
-		p_Subimg1=
-		#{p_Subimg1},p_Subimg2= #{p_Subimg2},p_Subimg3= #{p_Subimg3},
+		p_Subimg1= #{p_Subimg1},p_Subimg2= #{p_Subimg2},p_Subimg3= #{p_Subimg3},
 		p_Subimg4=#{p_Subimg4},p_Imgdetail1=#{p_Imgdetail1},
 		p_Imgdetail2=#{p_Imgdetail2},p_Imgdetail3=#{p_Imgdetail3},
 		p_Imgdetail4=#{p_Imgdetail4},p_Landprice=#{p_Landprice},
 		p_Manpay=#{p_Manpay},
-		p_Accept=#{p_Accept} where p_no = #{p_No}
+		p_Accept=#{p_Accept} where p_no = #{p_No}	
 	</update>
 
 	<delete id="delete">
@@ -168,6 +169,10 @@
 		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product
 		where p_Accept ='N' order by p_No desc;
 	</select>
+	
+	<select id="info" resultType="kr.co.everyfarm.product.ProductBean">
+      select* from product where p_No = #{p_No}      
+   </select>
 
 	<select id="info"
 		resultType="kr.co.everyfarm.product.ProductBean">
@@ -182,7 +187,8 @@
 		    <![CDATA[
 		    SELECT p_no, p_img, p_title, p_landprice, p_manpay FROM product where p_no=#{p_no};
 		   ]]>
-	</select>
+
+		  </select>
 
 	<!-- 듄 payment에 이용 -->
 
