@@ -14,6 +14,8 @@ public interface ReviewDAO {
 	
 	List<ReviewReplyBean> reply(int rev_No);
 	
+	List<QnABean> myQnAtoFar(String m_Id);
+	
 	int replyInsert(ReviewReplyBean reviewReplyBean);
 
 	public int insert(ReviewBean reviewBean);
@@ -27,6 +29,7 @@ public interface ReviewDAO {
 	int revDelete(ReviewBean reviewBean);
 	
 	int revCount(Paging paging); //페이징 관련
+	
 
 
 }

@@ -2,6 +2,7 @@ package kr.co.everyfarm.admin;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.everyfarm.board.PageMaker;
@@ -50,14 +52,20 @@ public class AdminController {
 
 		AdminDAO adDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
 
-		int month = 0;
+		int mmonth = 0;
+		int fmonth = 0;
 
 		List<Integer> mMonth = new ArrayList<Integer>();
 		List<Integer> fMonth = new ArrayList<Integer>();
 
 		for (int i = 0; i < 12; i++) {
-			month = adDAO.mchart(i);
-			mMonth.add(month);
+			mmonth = adDAO.mchart(i);
+			mMonth.add(mmonth);
+		}
+
+		for (int j = 0; j < 12; j++) {
+			fmonth = adDAO.fchart(j);
+			fMonth.add(fmonth);
 		}
 		model.addAttribute("mMonth", mMonth);
 		model.addAttribute("fMonth", fMonth);
@@ -285,23 +293,47 @@ public class AdminController {
 		}
 		return "redirect:/userList";
 	}
-//
-//	@RequestMapping(value = "/userDelete")
-//	@ResponseBody
-//	public Map<String, Object> userDelete(MemberBean memberbean, @RequestParam(value = "checkArr[]") List<String> checkArr) {
-//
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
-//
-//		for (int i=0; i<checkArr.size(); i++) {
-//			if (memberbean.getM_Addr().equals("TEST")) {
-//				memDao.mDelete(memberbean);
-//				map.put("error", true);
-//			} else {
-//				map.put("error", false);
-//			}
-//		}
-//		return map;
-//	}
+
+	@RequestMapping(value = "/userDelete")
+	@ResponseBody
+	public Map<String, Object> userDelete(MemberBean memberbean, @RequestParam(value = "checkArr[]") String checkArr) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
+
+		List<String> delete = Arrays.asList(checkArr);
+		memDao.uDelete(delete);
+		map.put("error", true);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/farmerDelete")
+	@ResponseBody
+	public Map<String, Object> farmerDelete(FarmerBean farmerbean, @RequestParam(value = "checkArr[]") String checkArr) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		FarmerDAO farmDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+
+		List<String> delete = Arrays.asList(checkArr);
+		farmDao.fDel(delete);
+		map.put("error", true);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/farmerY")
+	@ResponseBody
+	public Map<String, Object> farmerY(FarmerBean farmerBean, @RequestParam(value = "checkArr[]")String checkArr){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		AdminDAO farmDao = sqlSessionTemplate.getMapper(AdminDAO.class);
+		
+		List<String> yes = Arrays.asList(checkArr);
+		farmDao.farmerY(yes);
+		map.put("error", true);
+		
+		return map;
+	}
 
 }

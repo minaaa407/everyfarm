@@ -275,7 +275,7 @@ public class PaymentController {
 		
 		// model.addAttribute("pagebeen", pagebeen);
 		model.addAttribute("paymentlist", paymentlist);
-		return "payment/adminPaymentList";
+		return "admin/adminPaymentList";
 	}
 
 	@RequestMapping(value = "/farmerPaymentList")
@@ -294,7 +294,7 @@ public class PaymentController {
 		
 		//model.addAttribute("pagebeen", pagebeen);
 		model.addAttribute("paymentlist", farmerpaymentlist);
-		return "payment/farmerPaymentList";
+		return "admin/farmerPaymentList";
 	}
 	
 	@RequestMapping(value = "/adminPayListDelete")

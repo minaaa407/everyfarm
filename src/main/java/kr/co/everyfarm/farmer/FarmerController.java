@@ -20,16 +20,15 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +38,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.everyfarm.board.PageMaker;
 import kr.co.everyfarm.board.Paging;
+import kr.co.everyfarm.board.ReviewBean;
 import kr.co.everyfarm.payment.PaymentBean;
+import kr.co.everyfarm.product.ProductqnaBean;
 import kr.co.everyfarm.user.EmailBean;
 import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.UserPw;
@@ -73,14 +74,13 @@ public class FarmerController {
 		System.out.println("두번째:" + farmerBean.getF_Pw());
 
 		FarmerBean farmer = farmerDAO.flogin(farmerBean);
-
 		if (farmer != null) {
 			if (farmer.getF_Sign().equals("N")) {
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>alert('고객님의 가입 서류를 검토중입니다. 잠시만 기다려주세요.'); history.back();</script>");
 				out.flush();
-				return "";
+				return null;
 			} else {
 				session.setAttribute("farmer", farmer);
 				return "redirect:/farmer";
@@ -93,16 +93,17 @@ public class FarmerController {
 	@RequestMapping(value = "/farmerSign", method = RequestMethod.GET)
 	public String sign(Model model) {
 		model.addAttribute("farmerBean", new FarmerBean());
+
 		return "farmer/signUp";
 	}
 
 	@RequestMapping(value = "/farmerSign", method = RequestMethod.POST)
-	public String sign(@Valid FarmerBean farmerBean, @RequestParam("f_Auth") MultipartFile file,
-			BindingResult bindingResult, Model model, HttpServletRequest request)
-			throws IllegalStateException, IOException {
+	public String sign(FarmerBean farmerBean, @RequestParam(value = "f_Auth2", required = false) MultipartFile file,
+			HttpServletRequest request) {
 
+		System.out.println("동작되었는가???");
+		System.out.println(farmerBean + "bean 값은");
 		farmerBean.setF_Sign("N");
-
 		farmerBean.setF_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
 				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
 
@@ -110,22 +111,28 @@ public class FarmerController {
 		String encryPassword = UserPw.encrypt(farmerBean.getF_Pw());
 		farmerBean.setF_Pw(encryPassword);
 		System.out.println("두번째:" + farmerBean.getF_Pw());
-
+		System.out.println(file.getOriginalFilename() + "파일 확인");
 		farmerBean.setF_Auth(file.getOriginalFilename());
 
 		FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		farmerDAO.fjoin(farmerBean);
 
-		String path = "D:/Everyfarm/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/everyfarm/resources/upload/farmer/"
-				+ farmerBean.getF_Id() + "/";
+		String fId = farmerBean.getF_Id();
+
+		HttpSession session = request.getSession();
+		String root_path = session.getServletContext().getRealPath("/");
+
+		String path = root_path + "resources/upload/farmer/" + fId + "/";
 		ServletContext servletContext = request.getSession().getServletContext();
-		String rPath = servletContext.getRealPath("/resource");
-		rPath = "D:/Everyfarm/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/everyfarm/resources";
-		String mPath = "/src/main/webapp/resources/upload/farmer/" + farmerBean.getF_Id() + "/";
-		int aa = rPath.indexOf("/.");
-		String pre = rPath.substring(0, aa);
-		String savePath = pre + "/everyfarm" + mPath;
+		String realPath = servletContext.getRealPath("/resources");
+
+		String savePath = realPath + "/upload/farmer/" + fId + "/";
 		path = savePath;
+
+		Cookie[] cookie = request.getCookies();
+		for (int i = 0; i < cookie.length; i++) {
+			cookie[i].setMaxAge(0);
+		}
 
 		File Folder = new File(path);
 		if (!Folder.exists()) {
@@ -138,6 +145,27 @@ public class FarmerController {
 		} else {
 			System.out.println("이미 폴더가 생성되어 있습니다.");
 		}
+		String safeFile;
+		String originFileName;
+		long fileSize;
+		originFileName = file.getOriginalFilename(); // 원본 파일 명
+		fileSize = file.getSize(); // 파일 사이즈
+		safeFile = path + originFileName;
+		System.out.println(safeFile + "저장 경로 확인.");
+		try {
+			// ab[i].transferTo(new File(safeFile));
+			if (fileSize > 100) {
+				file.transferTo(new File(safeFile));
+			}
+
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return "farmer/FmLogin";
 	}
 
@@ -336,7 +364,12 @@ public class FarmerController {
 	}
 
 	@RequestMapping(value = "/farmerMypage")
-	public String myInfo() {
+	public String myInfo(PaymentBean paymentBean, Model model) {
+
+		FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		dao.fDelDate(paymentBean);
+		model.addAttribute("pDate", paymentBean);
+
 		return "farmer/myPage";
 	}
 
@@ -348,16 +381,6 @@ public class FarmerController {
 
 		FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		dao.fUpdate(farmerbean);
-		session.invalidate();
-		return "redirect:/farmer";
-	}
-
-	@RequestMapping(value = "/farmerMyInfoDelete")
-	public String myDelete(FarmerBean farmerbean, HttpSession session) {
-
-		FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
-		dao.fDelete(farmerbean);
-
 		session.invalidate();
 		return "redirect:/farmer";
 	}
@@ -437,11 +460,84 @@ public class FarmerController {
 		model.addAttribute("myCus", myCus);
 		model.addAttribute("pageMaker", pageMake);
 
-		// List<PaymentBean> map = fDAO.myCustomer(f_Id);
-		// System.out.println(map);
-		// model.addAttribute("myCus", map);
-
 		return "farmer/myCustomer";
+	}
+
+	@RequestMapping(value = "/farmerReply") // 리뷰 댓글
+	public String getMyCont1(Model model, HttpSession session) {
+
+		FarmerBean fBean = (FarmerBean) session.getAttribute("farmer");
+		String f_Id = fBean.getF_Id();
+
+		FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		List<ReviewBean> list = dao.myReply(f_Id);
+		model.addAttribute("repList", list);
+
+		return "farmer/myReply";
+	}
+
+	@RequestMapping(value = "/farmerProcutCont") // 리뷰 댓글
+	public String getMyCont2(Model model, HttpSession session) {
+
+		FarmerBean fBean = (FarmerBean) session.getAttribute("farmer");
+		String f_Id = fBean.getF_Id();
+
+		FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		List<ProductqnaBean> pList = dao.myProdcutReply(f_Id);
+		model.addAttribute("productReply", pList);
+
+		return "farmer/myProductReply";
+	}
+
+	@RequestMapping(value = "/farmerDelete")
+	public String myDelete(FarmerBean farmerbean, HttpSession session) {
+
+		FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		dao.fDelete(farmerbean);
+
+		session.invalidate();
+		return "redirect:/farmer";
+	}
+
+	@RequestMapping(value = "/farmerPwdUpdate")
+	public String farmerChange1(FarmerBean farmerBean, HttpSession session, HttpServletRequest request) {
+
+		String encryPassword = UserPw.encrypt(farmerBean.getF_Pw());
+		farmerBean.setF_Pw(encryPassword);
+
+		FarmerDAO Dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		Dao.upPwFar(farmerBean);
+
+		return "redirect:/home";
+	}
+
+	@RequestMapping(value = "/farmerAddrUpdate")
+	public String farmerChange2(FarmerBean farmerBean, HttpSession session, HttpServletRequest request) {
+
+		farmerBean.setF_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
+				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
+
+		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		memDao.upAddr(farmerBean);
+
+		return "redirect:/home";
+	}
+
+	@RequestMapping(value = "/farmerInfoNameUpdate")
+	public String farmerChange3(FarmerBean farmerBean, HttpSession session, HttpServletRequest request) {
+
+		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		memDao.upName(farmerBean);
+
+		return "redirect:/home";
+	}
+
+	@RequestMapping(value = "/farmerInfoTelUpdate")
+	public String myInfoChange4(FarmerBean farmerBean, HttpSession session, HttpServletRequest request) {
+
+		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		memDao.upTel(farmerBean);
+		return "redirect:/home";
 	}
 
 }

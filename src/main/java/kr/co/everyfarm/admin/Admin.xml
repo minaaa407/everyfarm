@@ -31,18 +31,15 @@
 		a_id=#{a_Id} and a_name=#{a_Name} and a_email=#{a_Email}
 	</select>
 
-	<select id="mchart" resultType="kr.co.everyfarm.user.MemberBean">
-		select count(*) from member where
-		date_format(m_Date,'%Y-%m') = date_format(date_add(now(), interval -
-		${i} month),'%Y-%m')
-	</select>
+	<select resultType="int" id="mchart" parameterType="Integer">
+		select
+		count(*) from member where date_format(m_Date,'%Y-%m') =
+		date_format(date_add(now(), interval - ${i} month),'%Y-%m') </select>
 
-	<select id="fchart"
-		resultType="kr.co.everyfarm.farmer.FarmerBean">
-		select count(*) from farmer where
-		date_format(f_Date,'%Y-%m') = date_format(date_add(now(), interval -
-		${i} month),'%Y-%m')
-	</select>
+	<select resultType="int" id="fchart" parameterType="Integer">
+		select
+		count(*) from farmer where date_format(f_Date,'%Y-%m') =
+		date_format(date_add(now(), interval - ${j} month),'%Y-%m') </select>
 
 	<sql id="MpageSearch">
 		<trim prefix="where(" suffix=")" prefixOverrides="OR">
@@ -119,5 +116,14 @@
 		</if>
 	</select>
 	<!-- 농부 페이징 + 리스트 END -->
+
+	<update id="farmerY" parameterType="java.util.List">
+		UPDATE farmer SET f_Sign = "Y" WHERE f_id IN (
+		<foreach collection="list" item="yes" index="index"
+			separator=",">
+			'${yes}'
+		</foreach>
+		)
+	</update>
 
 </mapper>

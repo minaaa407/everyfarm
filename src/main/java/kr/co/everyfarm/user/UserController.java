@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
@@ -37,6 +38,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
+import kr.co.everyfarm.board.ReviewBean;
+import kr.co.everyfarm.board.ReviewDAO;
+import kr.co.everyfarm.farmer.FarmerBean;
+import kr.co.everyfarm.farmer.FarmerDAO;
+import kr.co.everyfarm.payment.PaymentBean;
+import kr.co.everyfarm.payment.PaymentDAO;
+import kr.co.everyfarm.product.ProductBean;
+import kr.co.everyfarm.product.ProductDao;
+
 @Controller
 public class UserController {
 
@@ -52,7 +62,24 @@ public class UserController {
 	private String apiResult = null;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String home() {
+	public String home(Model model, ProductBean product, FarmerBean farmerBean, ReviewBean review, PaymentBean pay) {
+
+		ProductDao prodao = sqlSessionTemplate.getMapper(ProductDao.class);
+		List<ProductBean> proView = prodao.viewList();
+		model.addAttribute("proView", proView);
+
+		ReviewDAO revdao = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		List<ReviewBean> revView = revdao.reviewList();
+		model.addAttribute("revView", revView);
+
+		PaymentDAO paydao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		List<PaymentBean> payView = paydao.seedList();
+		model.addAttribute("payView", payView);
+
+		FarmerDAO farDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		List<FarmerBean> farView = farDAO.bestFarmer();
+		model.addAttribute("farView", farView);
+
 		return "home/home";
 	}
 
@@ -431,7 +458,7 @@ public class UserController {
 	public String logout(HttpSession session, MemberBean memberBean) {
 
 		session.invalidate();
-		
+
 		return "home/home";
 	}
 
