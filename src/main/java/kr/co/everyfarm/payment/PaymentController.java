@@ -381,8 +381,8 @@ public class PaymentController {
 	}
 	
 	@RequestMapping(value = "/admin1", method = RequestMethod.GET)
-	public String testlist(Model model, Criteria cri) {
-		System.out.println("---- admin1 시작 ----");
+	public String testlist(Model model) {
+		System.out.println("---- 씨앗 차트 시작 ----");
 		
 		DecimalFormat dfmonth = new DecimalFormat("00");
 		DecimalFormat dfyear = new DecimalFormat("0000"); 

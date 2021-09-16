@@ -41,17 +41,13 @@
 						<div class="col-md-6 text-center">
 							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
 						</div>
-						<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
-							<form action="#" class="searchform order-lg-last">
-								<div class="form-group d-flex">
-									<input type="text" class="form-control pl-3"
-										placeholder="Search">
-									<button type="submit" placeholder=""
-										class="form-control search">
-										<span class="fa fa-search"></span>
-									</button>
-								</div>
-							</form>
+						<div class="col-md-6 col-lg">
+							<select name="page" onchange="location.href=this.value">
+								<option value="#">홈페이지</option>
+								<option value="/home">USER</option>
+								<option value="/farmerLogin">FARMER</option>
+								<option value="/adminLogin">ADMIN</option>
+							</select>
 						</div>
 						<div>
 							<c:choose>
@@ -62,7 +58,17 @@
 								<c:when test="${not empty member}">
 									<li>${member.m_Name}님환영합니다.</li>
 									<li><a href="/mypage">내 정보</a></li>
-									<li><a href="/logout">로그아웃</a></li>
+									<c:choose>
+										<c:when test="${member.m_Pw eq 'KAKAO'}">
+											<li><a href="/klogout">로그아웃</a></li>
+										</c:when>
+										<c:when test="${member.m_Pw eq 'NAVER'}">
+											<li><a href="/nlogout">로그아웃</a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="/logout">로그아웃</a></li>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 							</c:choose>
 						</div>
@@ -85,12 +91,9 @@
 					<ul class="navbar-nav m-auto">
 						<li class="nav-item active"><a href="index.jsp"
 							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="services.html" class="nav-link">농장
-								등록</a></li>
+						<li class="nav-item"><a href="/productlist" class="nav-link">농장</a></li>
 						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
 						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
-						<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
 					</ul>
 				</div>
 			</div>
