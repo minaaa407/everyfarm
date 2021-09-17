@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <title>empList</title><style>
 	body{ font-size: 11pt; color: teal;}
 	div{ margin: 0 auto;}

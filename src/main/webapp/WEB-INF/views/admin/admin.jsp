@@ -4,16 +4,20 @@
 <html>
 
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Argon Dashboard - Free Dashboard for Bootstrap 4 by
-	Creative Tim</title>
+<title>Every Farm : 관리자</title>
 	<style>
 	canvas {
         -moz-user-select: none;
         -webkit-user-select: none;
         -ms-user-select: none;
+    }
+    .chartD {
+    background-color: white;
+    box-shadow: 1px 1px 20px lightgrey;
     }
     </style>
 </head>
@@ -239,11 +243,25 @@
 					</div>
 				</div>
 			</div>
-			<div class="row mt-5">
+			<div class="row mt-5 ">
 			
 				<!-- Chart -->
-							<div id="canvas-holder" style="width:30%">
+							<div class="chartD" id="canvas-holder" style="width:30%">
 								<canvas id="myChart" class="chart-canvas"></canvas>
+								<div>
+    	<input type="hidden" id="selmonth" value="" />
+    	<select id="month" name="month" onchange="javascript:myListener(this);">
+    		<option id="monthago8" value="${monthago8}">${monthago8}월</option>
+    		<option id="monthago7" value="${monthago7}">${monthago7}월</option>
+    		<option id="monthago6" value="${monthago6}">${monthago6}월</option>
+    		<option id="monthago5" value="${monthago5}">${monthago5}월</option>
+    		<option id="monthago4" value="${monthago4}">${monthago4}월</option>
+    		<option id="monthago3" value="${monthago3}">${monthago3}월</option>
+    		<option id="monthago2" value="${monthago2}">${monthago2}월</option>
+    		<option id="monthago1" value="${monthago1}">${monthago1}월</option>
+    		<option value="${date}" selected="selected">${date}월</option>
+    	</select>
+    </div>
 							</div>
 							
 		<input type="hidden" id="array0" value="${array0 }" >
@@ -263,24 +281,7 @@
 	    <input type="hidden" id="array14" value="${array14 }" >
  
 	    <input type="hidden" id="year" value="${year}" >
-    <div>
-    	<input type="hidden" id="selmonth" value="" />
-    	<select id="month" name="month" onchange="javascript:myListener(this);">
-    		<option id="monthago12" value="${monthago12}">${monthago12}월</option>
-    		<option id="monthago11" value="${monthago11}">${monthago11}월</option>
-    		<option id="monthago10" value="${monthago10}">${monthago10}월</option>
-    		<option id="monthago9" value="${monthago9}">${monthago9}월</option>
-    		<option id="monthago8" value="${monthago8}">${monthago8}월</option>
-    		<option id="monthago7" value="${monthago7}">${monthago7}월</option>
-    		<option id="monthago6" value="${monthago6}">${monthago6}월</option>
-    		<option id="monthago5" value="${monthago5}">${monthago5}월</option>
-    		<option id="monthago4" value="${monthago4}">${monthago4}월</option>
-    		<option id="monthago3" value="${monthago3}">${monthago3}월</option>
-    		<option id="monthago2" value="${monthago2}">${monthago2}월</option>
-    		<option id="monthago1" value="${monthago1}">${monthago1}월</option>
-    		<option value="${date}" selected="selected">${date}월</option>
-    	</select>
-    </div>
+    
     <!-- Chart -->
 				<div class="col-xl-4">
 					<div class="card shadow">
@@ -419,6 +420,7 @@
 			</footer>
 		</div>
 	</div>
+
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -661,16 +663,6 @@
 
 
 </body>
-<!--   Core   -->
-<script src="resources/admin/js/plugins/jquery/dist/jquery.min.js"></script>
-<script
-	src="resources/admin/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!--   Optional JS   -->
-<script src="resources/admin/js/plugins/chart.js/dist/Chart.min.js"></script>
-<script
-	src="resources/admin/js/plugins/chart.js/dist/Chart.extension.js"></script>
-<!--   Argon JS   -->
-<script src="resources/admin/js/argon-dashboard.min.js?v=1.1.2"></script>
-<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
 
 </html>

@@ -8,6 +8,7 @@
 <title>Table V01</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css"
 	href="resources/admin/list/vendor/bootstrap/css/bootstrap.min.css">

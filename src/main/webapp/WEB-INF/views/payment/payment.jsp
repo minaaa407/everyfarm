@@ -10,7 +10,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제 : EveryFarm</title>
+<title>EveryFarm : 결제</title>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

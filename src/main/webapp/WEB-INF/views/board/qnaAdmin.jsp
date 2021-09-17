@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Unna:400,700&display=swap" rel="stylesheet">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="resources/qna/css/bootstrap.min.css" type="text/css">

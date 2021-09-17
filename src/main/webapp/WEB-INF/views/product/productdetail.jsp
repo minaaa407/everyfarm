@@ -16,7 +16,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link
 	href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
 	rel="stylesheet">
@@ -693,12 +693,19 @@ td .mybtn{
 	width: 100pt;
 }
 
+.onlyNumber{
+  width: 40px;
+  text-align : center;
+}
+}
+
 @media screen and (max-width: 768px) {
 	div.select{
 	width: 250px;
 	}
 	.onlyNumber{
-	  width: 50px;
+	  width: 40px;
+	  text-align : center;
 	}
 	td{
 	font-size: 90%
@@ -761,14 +768,17 @@ td .mybtn{
 							
 							    text += '<table id="'+rowid+'"style="width: 100%;">';
 								text += '<tr><td>'+product+ '</td><td></td></tr>' ;
-								text += '<tr><td><i class="fas fa-minus-circle" style="font-size:24px; vertical-align: middle;"></i>';
+								text += '<tr><td><i class="fas fa-minus-circle" style="font-size:24px; vertical-align: middle;"></i>&nbsp;&nbsp;';
 								text += '<input class="onlyNumber" type=text min=1  name=productamout value='+amout+' size=10>';
-								text += '<i class="fas fa-plus-circle" style="font-size:24px; vertical-align: middle;"></i>';	
+								text += '&nbsp;&nbsp;<span class="landfont">평</span>&nbsp;&nbsp;<i class="fas fa-plus-circle" style="font-size:24px; vertical-align: middle;"></i>';	
 								text += '</td><td>'+cn1+'</td>';
 								text += '<td><i class="fas fa-times" style="vertical-align: middle;"></i></td></tr></table>';
 								document.getElementById('table1').innerHTML=text;
 								var size = document.getElementsByName("productamout").length;
 								var a1 = 0;
+								
+								
+				
 								
 									for(var i = 0; i < size; i++){				
 										a2 = document.getElementsByName("productamout")[i].value;
@@ -903,7 +913,7 @@ td .mybtn{
 							  var b_Land = ("b_Land" + product);
 						      var b_Totalprice = ("b_Totalprice" + product);
 						      document.getElementById(b_Land).value= number;
-							  document.getElementById(b_Totalprice).value= (number)*(${oneproduct.p_Landprice});
+							  document.getElementById(b_Totalprice).value= (number)*(${oneproduct.p_Landprice}+${oneproduct.p_Manpay});
 							  
 						  }
 						if(size>0){
@@ -935,7 +945,7 @@ td .mybtn{
 							  var b_Land = ("b_Land" + product);
 						      var b_Totalprice = ("b_Totalprice" + product);
 						      document.getElementById(b_Land).value= number;
-							  document.getElementById(b_Totalprice).value= (number)*(${oneproduct.p_Landprice});
+						      document.getElementById(b_Totalprice).value= (number)*(${oneproduct.p_Landprice}+${oneproduct.p_Manpay});
 							  
 						 }
 				  }
@@ -1100,24 +1110,21 @@ td .mybtn{
 	AdminBean admin = ((AdminBean)session.getAttribute("admin"));
 %>					
 
-	<div class="container pt-5 pb-4">
+
+		<div class="container pt-5 pb-4">
 			<div class="row justify-content-between">
 				<div class="col-md-8 order-md-last">
 					<div class="row">
 						<div class="col-md-6 text-center">
 							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
 						</div>
-						<div class="col-md-6 d-md-flex justify-content-end mb-md-0 mb-3">
-							<form action="#" class="searchform order-lg-last">
-								<div class="form-group d-flex">
-									<input type="text" class="form-control pl-3"
-										placeholder="Search">
-									<button type="submit" placeholder=""
-										class="form-control search">
-										<span class="fa fa-search"></span>
-									</button>
-								</div>
-							</form>
+						<div class="col-md-6 col-lg">
+							<select name="page" onchange="location.href=this.value">
+								<option value="#">홈페이지</option>
+								<option value="/home">USER</option>
+								<option value="/farmerLogin">FARMER</option>
+								<option value="/adminLogin">ADMIN</option>
+							</select>
 						</div>
 						<div>
 							<c:choose>
@@ -1128,7 +1135,17 @@ td .mybtn{
 								<c:when test="${not empty member}">
 									<li>${member.m_Name}님환영합니다.</li>
 									<li><a href="/mypage">내 정보</a></li>
-									<li><a href="/logout">로그아웃</a></li>
+									<c:choose>
+										<c:when test="${member.m_Pw eq 'KAKAO'}">
+											<li><a href="/klogout">로그아웃</a></li>
+										</c:when>
+										<c:when test="${member.m_Pw eq 'NAVER'}">
+											<li><a href="/nlogout">로그아웃</a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="/logout">로그아웃</a></li>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 							</c:choose>
 						</div>
@@ -1151,16 +1168,14 @@ td .mybtn{
 					<ul class="navbar-nav m-auto">
 						<li class="nav-item active"><a href="index.jsp"
 							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="about.html" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="services.html" class="nav-link">농장
-								등록</a></li>
+						<li class="nav-item"><a href="/productlist" class="nav-link">농장</a></li>
 						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
 						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
-						<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
+	
 	<!-- END nav -->
 
 	<!-- 여기서부터 내용 -->
@@ -1252,7 +1267,7 @@ td .mybtn{
 						<hr>
 						<div>
 							<h4>
-								1평 작물가 :
+								평당 가격 :
 								<fmt:formatNumber value="${oneproduct.p_Landprice }"
 									pattern="#,###" />
 								원
@@ -1261,7 +1276,7 @@ td .mybtn{
 						</div>
 						<div>
 							<h4>
-								1평 노동비 :
+								평당 노동력:
 								<fmt:formatNumber value="${oneproduct.p_Manpay }"
 									pattern="#,###" />
 								원
@@ -1317,10 +1332,12 @@ td .mybtn{
 						<br>
 
 						<form>
-
-							<i class="fas fa-minus-circle" style='font-size:24px; vertical-align: middle;'>
-							</i><input class="onlyNumber" id="iniamout" type=text min=1  name=amount value=1 size=10><i class="fas fa-plus-circle" style='font-size:24px; vertical-align: middle;'></i>
-							<input id="selectproduct" style="width: 50px;" type=button class="mybtn" value="선택" onClick="selectproduct()">
+							
+							<i class="fas fa-minus-circle" style='font-size:24px; vertical-align: middle;'>&nbsp;
+							</i><input class="onlyNumber" id="iniamout" type=text min=1  name=amount value=1 size=10>
+							&nbsp;<span class="landfont">평</span>&nbsp;
+							<i class="fas fa-plus-circle" style='font-size:24px; vertical-align: middle;'></i>
+							&nbsp;<input id="selectproduct" style="width: 50px;" type=button class="mybtn" value="선택" onClick="selectproduct()">
 						</form>
 
 						<ol id="productbasket" style="display:none;">
@@ -1422,7 +1439,7 @@ td .mybtn{
 				<div id="lnbcenter"></div>
 				<div id="lnb" style="text-align: center;">
 				   <ul>
-				     <li><a href="#lnbposition" class="sidenav">설명2</a></li>
+				     <li><a href="#lnbposition" class="sidenav">설명</a></li>
 				     <li><a href="#movereview"  class="sidenav" onclick="move()">덧글</a></li>
 				   </ul>
 				 </div>
@@ -1710,7 +1727,7 @@ td .mybtn{
 
 	<!-- Js Plugins 상품 추가 -->
 	<script src="resources/product/js/jquery-3.3.1.min.js"></script>
-	<script src="resources/product/js/bootstrap.min.js"></script>
+
 
 	<script src="resources/product/js/jquery-ui.min.js"></script>
 	<script src="resources/product/js/jquery.slicknav.js"></script>

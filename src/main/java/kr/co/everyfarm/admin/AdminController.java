@@ -108,9 +108,6 @@ public class AdminController {
 			System.out.println("8달 전 = " + monthago8);
 	        
 			model.addAttribute("year",year);
-			model.addAttribute("monthafter3",monthafter3);
-			model.addAttribute("monthafter2",monthafter2);
-			model.addAttribute("monthafter1",monthafter1);
 			model.addAttribute("date",date);
 			model.addAttribute("monthago1",monthago1);
 			model.addAttribute("monthago2",monthago2);
