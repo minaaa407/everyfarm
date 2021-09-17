@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
-<title>everyfarm admin product</title>
+<title>Every Farm : </title>
 
 <!-- Google Font -->
 <link
@@ -377,10 +376,7 @@ ol {
 			
 		 }
  }
- 
- 
  var page = 1;
- 
  function chageproductnoSelect(){ 
 	 var productno = document.getElementById("productnooption");
 	 page = productno.options[productno.selectedIndex].value;
@@ -443,44 +439,13 @@ ol {
 	document.getElementById("maintextp").innerHTML=subfilenames;
 	
 	}
+		
 	
-</script>
-
-<script>
-
-function paging(i){
- 	var page = "page" + i;
-
- 	document.getElementById('selectpage').value = i;
-
- 	document.myHiddenForm.submit();
-}
-
-
-function search(){
-	
-	var select = document.getElementById('productselect').value;
-	
-	var text = document.getElementById('selectText').value;
-	if(select == "p_Id"){
-		text = "%" + text + "%";
-	}else{
-		text = text;
-	}
-	
-	
-	
-	
-	
-	document.getElementById('where').value = select;
-	document.getElementById('wherecolumn').value= text;
-	
-	document.myHiddenForm.submit();
-}
-
-
-
-
+	 
+	 
+ 
+ 
+ 
 </script>
 
 <body>
@@ -580,63 +545,46 @@ function search(){
 								<th class="one"></th>
 								<th class="two">상품번호</th>
 								<th>아이디</th>
-								<th>내용</th>
-								<th>날짜</th>
+								<th>제목</th>
+								<th>메인이미지</th>
+								<th>땅사이즈</th>
+								<th>대카테고리</th>
+								<th>소카테고리</th>
+								<th>등록날짜</th>
+								<th>상품등록</th>
 								<th></th>
 							</tr>
 										</thead>
 										<tbody>
-										<c:forEach var="c" items="${productqnalist }">
+										<c:forEach var="p" items="${productlist }">
 											<tr>
-												<td class="content"><input type="checkbox" name="check" value = "${c.c_Seq}" form="myhiddenform"></td>
-												<td class="content">${c.c_Seq}</td>
-												<td class="content"><a href="solarproduct.bo?ptype=${c.c_Id}">${c.c_Id}</a></td>
-												<td class="content"><a href="solarproduct.bo?ptype=${c.c_Id }">${c.c_Content}</a></td>
-												<td class="content"><a href="solarProductUpdateForm.bo?product_no=${c.c_Date}">
-												${c.c_Date}</a></td>
+												<td class="content"><input type="checkbox" name="check" value = "${p.p_No}" form="myhiddenform"></td>
+												<td class="content">${p.p_No}</td>
+												<td class="content"><a href="solarproduct.bo?ptype=${p.p_Id}">${p.p_Id}</a></td>
+												<td class="content"><a href="solarProductUpdateForm.bo?product_no=${p.p_Title}">
+												${p.p_Title}</a></td>
+												<td class="content">${p.p_Image}</td>
+												<td class="content">${p.p_Land}</td>
+												<td class="content"> ${p.p_Main}</td>
+												<td class="content">${p.p_Sub}</td>
+												<td class="content">${p.p_Date}</td>
+												<td><a href="solarProductUpdateForm.bo?product_no=${p.p_Accept}"><input class="buttonmenuadmin" type="button" value="${p.p_Accept}"></a></td>
 											</tr>
 												</c:forEach>
 										</tbody>
 					</table>
 				</div>
 	<section>
-				  <div class="product__pagination">
-			                    
-				                	<c:if test="${pagebeen.pro eq 'true' }">
-									    <a id = "page${pagebeen.pagestart -1}" style="cursor:pointer" onclick="paging(${pagebeen.pagestart -1})">이전 </a>
-									</c:if>	  
-			
-									<c:forEach var="i" begin="${pagebeen.pagestart}" end="${pagebeen.pageend}" step="1">
-										   <a id = "page${i}" style="cursor:pointer" onclick="paging(${i })">${i }</a>  
-										</c:forEach>    
-								    	<c:if test="${pagebeen.post eq 'true'}">
-									    <a id = "page${pagebeen.pageend +1}" style="cursor:pointer" onclick="paging(${pagebeen.pageend +1})">다음 </a>
-									</c:if>
-			                    </div>
-			                    <!-- form 해당 부분 scrip 이벤트 통해서 자동 전송 처리 -->
-			                    <form:form commandName="pagebeen" name = "myHiddenForm" action="/adminproductlist2" method="post">
-										<input type="hidden" id = "selectpage" name="selectpage" value="1">
-										<input type="hidden" id = "pagestart" name="pagestart" value="${pagebeen.pagestart}">
-										<input type="hidden" id = "pageend" name="pageend" value="${pagebeen.pageend}">
-										<input type="hidden" id = "endnumber" name="endnumber" value="${pagebeen.endnumber}">
-										<input type="hidden" id = "limit" name="limit" value="${pagebeen.limit}">
-										<input type="hidden" id = "offset" name="offset" value="${pagebeen.offset}">
-										<input type="hidden" id = "tableindex" name="tableindex" value="${pagebeen.tableindex}">
-										<input type="hidden" id = "pagingnumber" name="pagingnumber" value="${pagebeen.pagingnumber}">
-										<input type="hidden" id = "pro" name="pro" value="${pagebeen.pro}">
-										<input type="hidden" id = "post" name="post" value="${pagebeen.post}">
-										<input type="hidden" id = "where" name="where" value="${pagebeen.where}">
-										<input type="hidden" id = "wherecolumn" name="wherecolumn" value="${pagebeen.wherecolumn}">
-			
-								</form:form>
 	<br/>
-			<select name="productselect" id="productselect">
-    			<option value="p_No">상품번호</option>
-    			<option value="p_Id">아이디</option>
+		<form method="get" action="solarProductadminsearch.bo" name="selectList">
+			<select name="productselect" >
+    			<option value="pno">상품번호</option>
+    			<option value="ptype">카테고리</option>
+    			<option value="pname">상품이름</option>
 			</select>
-			<input type="text" name="selectText" id="selectText">
-			<input type="button" value="검색" onclick="search()">
-	
+			<input type="text" name="selectText">
+			<input type="submit" value="검색">
+		</form>
 	</section>
 	</div>
 	</div>

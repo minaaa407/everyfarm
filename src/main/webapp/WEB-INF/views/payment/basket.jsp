@@ -683,7 +683,7 @@
 				  for (var j = 0; j < check_length; j++) {
 				 			bno.push($('#'+index_i_arr[j]).val() * 1);
 				  }
-				  window.location.href = "http://localhost:8090/basketdelete?bno="+bno;
+				  window.location.href = "/basketdelete?bno="+bno;
 			} else{   
 				return false;
 			}

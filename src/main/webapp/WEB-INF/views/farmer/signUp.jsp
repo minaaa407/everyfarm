@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>회원가입</title>
-
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <!-- Font Icon -->
 <link rel="stylesheet"
 	href="resources/sign/fonts/material-icon/css/material-design-iconic-font.min.css">

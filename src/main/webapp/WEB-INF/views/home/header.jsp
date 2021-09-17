@@ -9,6 +9,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link
 	href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
 	rel="stylesheet">
@@ -30,17 +31,7 @@
 <link rel="stylesheet" href="/resources/index/css/flaticon.css">
 <link rel="stylesheet" href="/resources/index/css/icomoon.css">
 <link rel="stylesheet" href="/resources/index/css/style.css">
-<style>
-body{ cursor: url("/resources/editor/css/sap.cur"), auto;}
-a, a:link { cursor: url('/resources/editor/css/sap.cur'), auto;} 
-a:hover, a:focus { cursor: url('/resources/editor/css/sap.cur'), auto;} 
-a:active {cursor: url('/resources/editor/css/sap.cur'), auto;} 
-input { cursor: url('/resources/editor/css/sap.cur'), auto; }
-select {cursor: url('/resources/editor/css/sap.cur'), auto;}
-label {cursor: url('/resources/editor/css/sap.cur'), auto;}
-textarea {cursor: url('/resources/editor/css/sap.cur'), auto;}
-select:option {cursor: url('/resources/editor/css/sap.cur'), auto;}
-</style>
+
 </head>
 <body>
 	<!-- Start Header -->

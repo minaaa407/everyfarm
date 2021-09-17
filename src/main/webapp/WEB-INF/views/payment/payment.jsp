@@ -10,20 +10,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제 : EveryFarm</title>
+<title>EveryFarm : 결제</title>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
-body{ cursor: url("/resources/editor/css/sap.cur"), auto;}
-a, a:link { cursor: url('/resources/editor/css/sap.cur'), auto;} 
-a:hover, a:focus { cursor: url('/resources/editor/css/sap.cur'), auto;} 
-a:active {cursor: url('/resources/editor/css/sap.cur'), auto;} 
-input { cursor: url('/resources/editor/css/sap.cur'), auto; }
-select {cursor: url('/resources/editor/css/sap.cur'), auto;}
-label {cursor: url('/resources/editor/css/sap.cur'), auto;}
-textarea {cursor: url('/resources/editor/css/sap.cur'), auto;}
-select:option {cursor: url('/resources/editor/css/sap.cur'), auto;}
  #rphone2_1 {
  height:100%;
  width:15%;
@@ -151,9 +143,7 @@ margin-bottom:10px;
 </style>
 </head>
 <body>
-<header>
 <jsp:include page="/WEB-INF/views/home/header.jsp" />
-</header>
 <div class="container">	
 	<div clss="row">
 	<div clss="col">
@@ -170,7 +160,7 @@ margin-bottom:10px;
 				
 				<input type="hidden" name="pay_Id" id="" value="${Member.m_Id}" />
 				<ul class="option ulborder">
-					<li class="optionH">&#10071;상품의 옵션 및 수량 변경은 상품상세 또는 장바구니에서 가능합니다.</li>
+					<li class="optionH"></li>
 				</ul>
 		
 				<!-- 국내배송상품 주문내역 -->
@@ -188,7 +178,6 @@ margin-bottom:10px;
         <div class="ec-base-table typeList">
             <table border="1" summary="">
 				<colgroup>
-					<col style="width:27px" class=""/>
 					<col style="width:130px"/>
 					<col style="width:150px"/>
 					<col style="width:75px"/>
@@ -199,9 +188,6 @@ margin-bottom:10px;
 				</colgroup>
 				<thead>
 					<tr class="center">
-						<th scope="col">
-							<input type="checkbox" id="all" name="all"/>
-						</th>
                         <th scope="col">이미지</th>
                         <th scope="col">상품정보</th>
                         <th scope="col">수량</th>
@@ -233,9 +219,6 @@ margin-bottom:10px;
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}"/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }"/>
 						<tr class="center">
-							<td>
-								<input type="checkbox" id="list0" name="list0" value="">
-							</td>
 							<td><a href="/productdetail"><img src="/resources/upload/product/1/${p.p_Img }" name="image" class="img" /></a></td>
 							<td><a href="/productdetail" class="bold">${p.p_Title} - ${p.b_Seed}</a></td>
 							<td><div>${p.b_Land}</div></td>
@@ -275,9 +258,6 @@ margin-bottom:10px;
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}"/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }"/>
 						<tr class="center">
-							<td>
-								<input type="checkbox" id="list0" name="list0" value="">
-							</td>
 							<td><a href="/productdetail"><img src="/resources/upload/product/1/${p.p_Img }" name="image" class="img" /></a></td>
 							<td><a href="/productdetail" class="bold">${p.p_Title} - ${p.b_Seed}</a></td>
 							<td><div>${p.b_Land}</div></td>
@@ -312,15 +292,8 @@ margin-bottom:10px;
 		   </div>
 		</div>
 		<ul class="option">
-			<li class="optionH">&#10071;상품의 옵션 및 수량 변경은 상품상세 또는 장바구니에서 가능합니다.</li>
+			<li class="optionH"></li>
 		</ul>
-					<div class="ec-base-button">
-        	<span class="gLeft ">
-            	<strong class="text">선택상품을</strong>
-            	<a id="checkdelete" onclick="checkdelete();">
-            	<img src="http://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_delete2.gif" alt="삭제하기"/></a>
-        	</span>
-        </div>	
 								
 					
 					
@@ -503,7 +476,7 @@ function submit() {
 			
 			
 	
-var check = 0;
+/* var check = 0;
 var allcheck = $("input:checkbox[id='list0']").length;
 var $checkok = 0;
 var arr = [];
@@ -526,12 +499,6 @@ $(document).on('click','input[id=list0]',function(){
     }
 });
 
-/* 
-for(var i = 0; i < paylistLength; i++){
-	paylistLength[i].addEventListener("click",function(event){
-		console.log('test');
-	});
-} */
 
 function checkdelete() {
     	 var check = $("input:checkbox[name='list0']:checked").length;
@@ -558,7 +525,7 @@ function checkdelete() {
 			 }
 		 } 
 		console.log("체크가능개수" + allcheck);
-	}	
+	}	 */
 
 	
 	// 우편번호 자르기
