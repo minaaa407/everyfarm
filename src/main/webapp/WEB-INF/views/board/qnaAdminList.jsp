@@ -145,8 +145,8 @@
                        <c:choose>   
                  		<c:when test = "${empty productQlist}">
                  			<div class="breadcrumb__text">
-								<h2 style="color:#988d8d; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;"><span style="padding-right: 10px;">QnA </span>게시판</h2>                           	
-							</div>
+<!-- 								<h2 style="color:#988d8d; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;"><span style="padding-right: 10px;">QnA </span>게시판</h2>                           	
+ -->							</div>
 						 	<div style="display: flex;justify-content: flex-end;margin-bottom: 10px;">
 						 		<button type="submit" class="site-btn" style="border-radius: 5px; background-color: #5e72e4;" onClick="location.href='/adminQnaList'">전체보기</button>
 							</div>
@@ -154,8 +154,8 @@
                  		<c:when test = "${productQlist != null}">
                       
                          <div class="breadcrumb__text" style="margin-bottom: 10px;">
-                              <h2 style="color:#988d8d; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;"><span style="padding-right: 10px;">QnA </span>게시판</h2>
-                                <div class="breadcrumb__option">
+<!--                               <h2 style="color:#988d8d; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;"><span style="padding-right: 10px;">QnA </span>게시판</h2>
+ -->                                <div class="breadcrumb__option">
                                   <div style="display: flex; justify-content: space-between;">
                                    <form action="adminQnasearch" method="post">
          								<select name="searchBox" style="height: 35px;"> <!-- style="padding: 7px 11px;" -->
@@ -222,7 +222,7 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="categories__post__item__pic set-bg" style="margin-bottom: 0px;">
                                          <c:choose>
-                                          <c:when test="${q.q_Img != null}">
+                                          <c:when test="${ !(empty q.q_Img)}">
                                             <a href="resources/upload/qna/${q.q_No}/${q.q_Img}" data-toggle="lightbox" data-title="${q.q_Title}" data-footer="${q.q_Id}">
                 								<img data-imgbigurl="resources/upload/qna/${q.q_No}/${q.q_Img}" 
 												 src="resources/upload/qna/${q.q_No}/${q.q_Img}"

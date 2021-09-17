@@ -107,6 +107,7 @@ public class FarmerController {
 			 seedSumTotal.add(totalSeedSum.get(i).getPay_Land());
 		 }
 	
+		 System.out.println();
 
 		if (farmer != null) {
 			if (farmer.getF_Sign().equals("N")) {
