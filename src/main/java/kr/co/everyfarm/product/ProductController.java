@@ -39,11 +39,11 @@ public class ProductController {
 	   public String getProductlist(Model model, @ModelAttribute ("pagebeen") PageBeen pagebeen) {
 	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 	      DecimalFormat decFormat = new DecimalFormat("###,###");
-	      List<ProductBean> productlist = dao.listserachpageingcount(pagebeen);
+	      
 	      int no = 0;
 	      int selecttotalindex = dao.listacceptcount();
 	      pagebeen.setTableindex(selecttotalindex);
-	      productlist = dao.listserachacceptpageing(pagebeen);
+	      List<ProductBean> productlist = dao.listserachacceptpageing(pagebeen);
 	      
 	      float[] rateArray = new float[productlist.size()];
 	      String[] pricecomma = new String[productlist.size()];
@@ -127,25 +127,33 @@ public class ProductController {
 	         }
 	      }
 	      //장바구니로 간다.
+	      HttpSession session = request.getSession();
+		  memberBean = (MemberBean)session.getAttribute("member");
+	      if(memberBean != null) {
+		        for(int i=0; i < basketbean.getBasketbeanList().size() ; i++) {
+		               if(basketbean.getBasketbeanList().get(i).getB_Land() != 0) {
+		                  dao.insertbasket(basketbean.getBasketbeanList().get(i));  
+		               }
+		        }
+	    	  basketbean.setBasketbeanList(list);
+		      model.addAttribute("basketbean",basketbean);
+		      //String url = "redirect:/productdetail"+"?productno="+pno;    
+		     return "redirect:/basket"; 
+	      }else {
+	    	  return "redirect:/login";
+	      }
+	            
 	      
-	      
-	            for(int i=0; i < basketbean.getBasketbeanList().size() ; i++) {
-	               if(basketbean.getBasketbeanList().get(i).getB_Land() != 0) {
-	                  dao.insertbasket(basketbean.getBasketbeanList().get(i));  
-	               }
-	            }
-	      basketbean.setBasketbeanList(list);
-	      model.addAttribute("basketbean",basketbean);
-	      //String url = "redirect:/productdetail"+"?productno="+pno;    
-	     return "redirect:/basket"; 
 	   }
 	   
 	   
 	   
 	   @RequestMapping(value="/productpayment")
-	   public String getproductpayment(Model model, @ModelAttribute ("basketbean") BasketBean basketbean) {
+	   public String getproductpayment(Model model, @ModelAttribute ("basketbean") BasketBean basketbean,
+			   HttpServletRequest request,MemberBean memberBean) {
 	      List<BasketBean> list = basketbean.getBasketbeanList();
-	      
+	      HttpSession session = request.getSession();
+		  memberBean = (MemberBean)session.getAttribute("member");
 	      int j = list.size();
 	      for(int i =0; i<j; i++) {
 	         if(list.get(i).getB_Land()<=0) {
@@ -154,10 +162,69 @@ public class ProductController {
 	            i--;
 	         }
 	      }
+	      
+	      
+	      
 	      basketbean.setBasketbeanList(list);
-	   
 	      model.addAttribute("memBasketModel",basketbean);
-	      return "/product/test1";
+	      
+	      
+	      
+	      if(memberBean != null) {
+	    	  return "/product/test1";
+	      }
+	      else {
+	    	  return "redirect:/login";
+	      }
+	      
+	      
+	   }
+	   
+	   @RequestMapping(value="/productdetail2")
+	   public String gettest(Model model, @RequestParam("productno") String productno
+		         ,@ModelAttribute ("basketbean") BasketBean basketbean,HttpServletRequest request,
+		         MemberBean memberBean) {
+	      List<BasketBean> list = basketbean.getBasketbeanList();
+	      
+	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+	      int p_No = Integer.parseInt(productno);
+	      ProductBean oneproduct = dao.onelist(p_No);
+	      //product id 값 가져오고 그 다음  farmer 평점 가져오기.
+	      
+	      HttpSession session = request.getSession();
+	      memberBean = (MemberBean)session.getAttribute("member");//Farmer,admin,member 처리.
+	      //rate 가져오기.
+	      float f_rate = dao.productfrate(p_No);
+	      //view 카운터 올리기
+	      int p_View = dao.viewpno(p_No);
+	      p_View= p_View+1;
+	      ProductBean productbean = new ProductBean();
+	      productbean.setP_No(p_No);
+	      productbean.setP_View(p_View);
+	      dao.updateview(productbean);
+	      //view 카운터 올리기
+	      
+	      if(memberBean != null) {
+	         
+	         model.addAttribute("mid",memberBean.getM_Id());
+	      }else {
+	         model.addAttribute("mid","");
+	      }
+	      //아래 댓글
+	      ProductqnaDAO dao2 = sqlSessionTemplate.getMapper(ProductqnaDAO.class);
+	      PageBeen pagebeen = new PageBeen();
+	      int qnacount = dao2.productqnalistcount(productno);
+	      pagebeen.setLimit(10);
+	      pagebeen.setTableindex(qnacount);
+	      pagebeen.setWherecolumn(productno);
+	      List<ProductqnaBean> qnalist = dao2.productqnalist(pagebeen);
+	      
+	      model.addAttribute("p_No",p_No);
+	      model.addAttribute("pagebeen",pagebeen);
+	      model.addAttribute("qnalist",qnalist);
+	      model.addAttribute("f_rate",f_rate);
+	      model.addAttribute("oneproduct",oneproduct);
+	      return "/product/productdetail2";
 	      
 	   }
 	// 테스트 해당 아래 사항 죽음
@@ -171,15 +238,10 @@ public class ProductController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 		DecimalFormat decFormat = new DecimalFormat("###,###");
-
-		List<ProductBean> productlist = dao.listserachpageingcount(pagebeen);
 		int no = 0;
 		int selecttotalindex = dao.listacceptcount();
-		
 		pagebeen.setTableindex(selecttotalindex);
-		productlist = dao.listserachacceptpageing(pagebeen);
-
-
+		List<ProductBean> productlist = dao.listserachacceptpageing(pagebeen);
 	      float[] rateArray = new float[productlist.size()];
 	      String[] pricecomma = new String[productlist.size()];
 	      for(int i=0; i< productlist.size(); i++) {

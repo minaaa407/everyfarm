@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 
@@ -218,15 +220,73 @@
 							<div class="row align-items-center">
 								<div class="col">
 									<h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-									<h2 class="mb-0">Total orders</h2>
+										<c:set var="today" value="<%=new java.util.Date()%>" />
+										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
+									<h2 id="productyeartext" class="mb-0">Total orders <c:out value="${year}"/> </h2>
+								</div>
+								<div class="col text-right">
+									<input class="btn btn-sm btn-primary" onclick="pretowyear()" type="button" value="<c:out value="${year-2}" />"/>
+									<input class="btn btn-sm btn-primary" onclick="preoneyear()" type="button" value="<c:out value="${year-1}" />"/>
+									<input class="btn btn-sm btn-primary" onclick="nowyear()" type="button" value="<c:out value="${year}" />"/>
 								</div>
 							</div>
 						</div>
 						<div class="card-body">
 							<!-- Chart -->
-							<div class="chart">
-								<canvas id="chart-orders" class="chart-canvas"></canvas>
+							<div id = "productchart" class="chart">
+								<canvas id="chart-orders2" class="chart-canvas"></canvas>
 							</div>
+							
+							
+								<script src="resources/admin/js/argon-dashboard.min.js?v=1.1.2"></script>
+								<script>
+								function nowyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "Total orders <c:out value='${year}'/>";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
+
+								}
+								
+								function preoneyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "Total orders <c:out value='${year-1}'/>";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment1pre[0]},${payment1pre[1]},${payment1pre[2]},${payment1pre[3]},${payment1pre[4]},${payment1pre[5]},${payment1pre[6]},${payment1pre[7]},${payment1pre[8]},${payment1pre[9]},${payment1pre[10]},${payment1pre[11]}]}]}}),e.data("chart",a))}();
+
+								}
+								
+								function pretowyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "Total orders <c:out value='${year-2}'/>";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment2pre[0]},${payment2pre[1]},${payment2pre[2]},${payment2pre[3]},${payment2pre[4]},${payment2pre[5]},${payment2pre[6]},${payment2pre[7]},${payment2pre[8]},${payment2pre[9]},${payment2pre[10]},${payment2pre[11]}]}]}}),e.data("chart",a))}();
+
+								}
+								</script>
+							
+							
 						</div>
 					</div>
 				</div>
@@ -493,6 +553,18 @@
 	src="resources/admin/js/plugins/chart.js/dist/Chart.extension.js"></script>
 <!--   Argon JS   -->
 <script src="resources/admin/js/argon-dashboard.min.js?v=1.1.2"></script>
+<script>
+OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+	ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+		callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+		return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
+
+</script>
+
+
+
+
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 
 </html>

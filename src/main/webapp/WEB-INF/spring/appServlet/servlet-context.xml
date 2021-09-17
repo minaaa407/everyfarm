@@ -72,6 +72,8 @@
 		<interceptor>
 			<mapping path="/reviewWrite" />	   <!-- 리뷰 작성 -->
 			<mapping path="/reviewCommWrite" /> <!-- 리뷰 댓글 작성 -->
+			<mapping path="/productbasketchoice"/>
+			<mapping path="/PaymentInfo"/>
 			<beans:ref bean="SessionInterceptor" /><!-- 모든 Logger에 대한 인텁세터 
 				할려면~ /** 하래요 -->
 		</interceptor>

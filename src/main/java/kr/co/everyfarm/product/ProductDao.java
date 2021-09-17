@@ -16,6 +16,8 @@ public interface ProductDao {
 	public List<ProductBean> asclist(PageBeen pagebeen);
 	public List<ProductBean> listacceptpageing(PageBeen pagebeen);
 	public int productpaymentchart(HashMap<String, Object> map);
+	public int adminproductpaymentchart(HashMap<String, Object> map);
+	
 	
 	public int listcount();
 	public int listacceptcount();
