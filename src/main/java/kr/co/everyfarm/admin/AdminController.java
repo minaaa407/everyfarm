@@ -3,6 +3,7 @@ package kr.co.everyfarm.admin;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,7 @@ import kr.co.everyfarm.board.PageMaker;
 import kr.co.everyfarm.board.Paging;
 import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.farmer.FarmerDAO;
+import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.MemberBean;
 import kr.co.everyfarm.user.MemberDAO;
@@ -70,9 +72,47 @@ public class AdminController {
 			fmonth = adDAO.fchart(j);
 			fMonth.add(fmonth);
 		}
+		
+		
 		model.addAttribute("mMonth", mMonth);
 		model.addAttribute("fMonth", fMonth);
-
+		
+		//상품 차트
+	    ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);	
+	    
+	    String[] months = {"January","february","march","april","may","june","july"
+	    		,"august","september","october","november","december"};
+		int[] payment = new int[12];
+		int[] payment1 = new int[12];
+		int[] payment2 = new int[12];
+	    for(int i =0; i < months.length; i++) {
+		    HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("Month", months[i]);
+			map.put("year", year);
+			payment[i] = productdao.adminproductpaymentchart(map);
+	    }
+	    model.addAttribute("payment",payment);
+	    
+	    for(int i =0; i < months.length; i++) {
+		    HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("Month", months[i]);
+			map.put("year", year-1);
+			payment1[i] = productdao.adminproductpaymentchart(map);
+	    }
+	    model.addAttribute("payment1pre",payment1);
+	    
+	    for(int i =0; i < months.length; i++) {
+		    HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("Month", months[i]);
+			map.put("year", year-2);
+			payment2[i] = productdao.adminproductpaymentchart(map);
+	    }
+	    model.addAttribute("payment2pre",payment2);
+ 
+	    //상품차트
+	
 	      return "admin/admin";
 	   }
 
@@ -94,6 +134,8 @@ public class AdminController {
 		System.out.println("두번째:" + adminBean.getA_Pw());
 
 		AdminBean admin = adminDAO.alogin(adminBean);
+		
+
 
 		if (admin != null) {
 			session.setAttribute("admin", admin);

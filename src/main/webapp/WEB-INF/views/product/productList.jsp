@@ -35,7 +35,7 @@
 
  <!-- Css Styles -->
 
-    <link rel="stylesheet" href="resources/product/css/style.css" type="text/css">
+<link rel="stylesheet" href="resources/product/css/style.css" type="text/css">
 
 <style>
 a:hover, a:focus {
@@ -88,8 +88,8 @@ function orderby(id){
 	
 	if(id=="orderbygrade"){
 		
-		document.getElementById('orderby').value = "p_No";
-		document.getElementById('ascdesc').value = "ASC";
+		document.getElementById('orderby').value = "p_Rate";
+		document.getElementById('ascdesc').value = "DESC";
 		
 	}else if(id == "orderbyhighlandprice"){
 		document.getElementById('orderby').value = "p_Landprice";
@@ -289,8 +289,8 @@ window.onload = function(){
 												<option value="12">12</option>
 											</c:if>	 
 											<c:if test="${pagebeen.limit eq '6'}">
-												<option value="3" selected>3</option>
-												<option value="6">6</option>
+												<option value="3">3</option>
+												<option value="6" selected>6</option>
 												<option value="9" >9</option>
 												<option value="12">12</option>
 											</c:if>	 
@@ -359,10 +359,7 @@ window.onload = function(){
                 </div>
          		</section>
     <!-- Product Section End -->
-	
-	
-	
-	
+
 	
 	
 	<!-- footer -->
