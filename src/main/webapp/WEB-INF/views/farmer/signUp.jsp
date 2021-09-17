@@ -49,7 +49,7 @@ label.error {
 					</div>
 				</div>
 				<div class="signup-form">
-					<form:form method="POST" commandName="farmerBean"
+					<form:form enctype="multipart/form-data" method="POST" commandName="farmerBean"
 						class="register-form" id="register-form" action="/farmerSign">
 						<div class="form-row">
 							<div class="form-group">
@@ -134,8 +134,8 @@ label.error {
 									placeholder="참고항목" id="Addr4" name="Addr4" type="text" />
 							</div>
 							<div class="form-input">
-								<label for="f_Auth" class="required">농업경영체 증명서</label> <input
-									type="file" name="f_Auth" />
+								<label for="f_Auth2" class="required">농업경영체 증명서</label> <input
+									type="file" name="f_Auth2" />
 							</div>
 						</div>
 						<div class="form-submit">

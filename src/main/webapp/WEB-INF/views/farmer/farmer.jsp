@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 
@@ -10,9 +12,8 @@
 
 <title>Every Farm : 농부</title>
 	<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
-	<!-- 차트 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+							
+
 <style>
 .height {
 height: 602px;
@@ -20,7 +21,9 @@ height: 602px;
 .chartcenter {
     justify-content: center;
 }
-
+.margin {
+    margin-top: 50px;
+    }
 </style>
 </head>
 
@@ -40,58 +43,11 @@ height: 602px;
 				src="resources/farmer/img/brand/brand.jpg" class="navbar-brand-img"
 				alt="...">
 			</a>
-			<!-- User -->
-			<ul class="nav align-items-center d-md-none">
-				<li class="nav-item dropdown"><a class="nav-link nav-link-icon"
-					href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <i class="ni ni-bell-55"></i>
-				</a>
-					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
-						aria-labelledby="navbar-default_dropdown_1">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
-					</div></li>
-				<li class="nav-item dropdown"><a class="nav-link" href="#"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">
-						<div class="media align-items-center">
-							<span class="avatar avatar-sm rounded-circle"> <img
-								alt="Image placeholder"
-								src="resources/farmer/img/theme/team-1-800x800.jpg">
-							</span>
-						</div>
-				</a>
-					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-						<div class=" dropdown-header noti-title">
-							<h6 class="text-overflow m-0">Welcome!</h6>
-						</div>
-						<a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-single-02"></i> <span>My profile</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-settings-gear-65"></i> <span>Settings</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-support-16"></i> <span>Support</span>
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i>
-							<span>Logout</span>
-						</a>
-					</div></li>
-			</ul>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Collapse header -->
 				<div class="navbar-collapse-header d-md-none">
 					<div class="row">
-						<div class="col-6 collapse-brand">
-							<a href="./index.html"> <img
-								src="resources/farmer/img/brand/blue.png">
-							</a>
-						</div>
 						<div class="col-6 collapse-close">
 							<button type="button" class="navbar-toggler"
 								data-toggle="collapse" data-target="#sidenav-collapse-main"
@@ -102,19 +58,6 @@ height: 602px;
 						</div>
 					</div>
 				</div>
-				<!-- Form -->
-				<form class="mt-4 mb-3 d-md-none">
-					<div class="input-group input-group-rounded input-group-merge">
-						<input type="search"
-							class="form-control form-control-rounded form-control-prepended"
-							placeholder="Search" aria-label="Search">
-						<div class="input-group-prepend">
-							<div class="input-group-text">
-								<span class="fa fa-search"></span>
-							</div>
-						</div>
-					</div>
-				</form>
 				<!-- Navigation -->
 				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
 			</div>
@@ -151,10 +94,109 @@ height: 602px;
 						</div>
 					</div>
 				</div>
+			
+				<div class="col-xl-6 ">
+					<div class="card shadow height">
+						<div class="card-header bg-transparent">
+							<div class="row align-items-center">
+								<div class="col">
+									<h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
+										<c:set var="today" value="<%=new java.util.Date()%>" />
+										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
+									<h2 id="productyeartext" class="mb-0">Total orders <c:out value="${year}"/> </h2>
+								</div>									
+								<div class="col text-right">
+									<input class="btn btn-sm btn-primary" onclick="pretowyear()" type="button" value="<c:out value="${year-2}" />"/>
+									<input class="btn btn-sm btn-primary" onclick="preoneyear()" type="button" value="<c:out value="${year-1}" />"/>
+									<input class="btn btn-sm btn-primary" onclick="nowyear()" type="button" value="<c:out value="${year}" />"/>
+								</div>
+							</div>
+						</div>
+						<!-- 차트 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--   Core   -->
+<script src="resources/farmer/js/plugins/jquery/dist/jquery.min.js"></script>
+<script
+	src="resources/farmer/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!--   Optional JS   -->
+<script src="resources/farmer/js/plugins/chart.js/dist/Chart.min.js"></script>
+<script
+	src="resources/farmer/js/plugins/chart.js/dist/Chart.extension.js"></script>
+<!--   Argon JS   -->
+<script src="resources/farmer/js/argon-dashboard.min.js?v=1.1.2"></script>
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>	
+
+						<div class="card-body">
+							<!-- Chart -->
+							<div id = "productchart" class="chart ">
+								<canvas id="chart-orders2" class="chart-canvas margin"></canvas>
+							</div>
+							</div>
+		</div>
+							<script>
+OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+	ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+		callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+		return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
+
+</script>
+							
+					<script>
+								function nowyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "Total orders <c:out value='${year}'/>";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
+
+								}
+								
+								function preoneyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "Total orders <c:out value='${year-1}'/>";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment1pre[0]},${payment1pre[1]},${payment1pre[2]},${payment1pre[3]},${payment1pre[4]},${payment1pre[5]},${payment1pre[6]},${payment1pre[7]},${payment1pre[8]},${payment1pre[9]},${payment1pre[10]},${payment1pre[11]}]}]}}),e.data("chart",a))}();
+
+								}
+								
+								function pretowyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "Total orders <c:out value='${year-2}'/>";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment2pre[0]},${payment2pre[1]},${payment2pre[2]},${payment2pre[3]},${payment2pre[4]},${payment2pre[5]},${payment2pre[6]},${payment2pre[7]},${payment2pre[8]},${payment2pre[9]},${payment2pre[10]},${payment2pre[11]}]}]}}),e.data("chart",a))}();
+
+								}
+								</script>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- 차트	 -->
 <script type="text/javascript">
 var seedName = ${seedName};
@@ -201,17 +243,8 @@ new Chart("myChart", {
 });
 </script>
 
-</body>
-<!--   Core   -->
-<script src="resources/farmer/js/plugins/jquery/dist/jquery.min.js"></script>
-<script
-	src="resources/farmer/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!--   Optional JS   -->
-<script src="resources/farmer/js/plugins/chart.js/dist/Chart.min.js"></script>
-<script
-	src="resources/farmer/js/plugins/chart.js/dist/Chart.extension.js"></script>
-<!--   Argon JS   -->
-<script src="resources/farmer/js/argon-dashboard.min.js?v=1.1.2"></script>
-<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 
+
+
+</body>
 </html>

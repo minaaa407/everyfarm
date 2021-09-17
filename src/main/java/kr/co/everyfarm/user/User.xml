@@ -49,7 +49,7 @@
 
 	<update id="mDelete">
 		UPDATE member SET
-		m_Id = sysdate(),
+		m_Id = '탈퇴한 회원입니다',
 		m_Pw = '탈퇴한 회원입니다',
 		m_Name = '탈퇴한 회원입니다',
 		m_Addr = '탈퇴한 회원입니다',
@@ -57,6 +57,22 @@
 		m_Birth
 		= '탈퇴한 회원입니다',
 		m_Date = sysdate() WHERE m_id=#{m_Id}
+	</update>
+
+	<update id="uDelete" parameterType="java.util.List">
+		UPDATE member SET
+		m_Id = '탈퇴한 회원입니다',
+		m_Pw = '탈퇴한 회원입니다',
+		m_Name = '탈퇴한 회원입니다',
+		m_Addr = '탈퇴한 회원입니다',
+		m_tel = '탈퇴한 회원입니다',
+		m_Birth = '탈퇴한 회원입니다',
+		m_Date = sysdate() WHERE m_id IN (
+		<foreach collection="list" item="delete" index="index"
+			separator=",">
+			'${delete}'
+		</foreach>
+		)
 	</update>
 
 	<select id="checkId" resultType="int">
@@ -69,7 +85,7 @@
 		where e_Id
 		= #{e_Id} and e_Num = #{e_Num} order by e_Date desc limit 1
 	</select>
-	
+
 	<insert id="mail">
 		insert into email(e_Id, e_num)
 		values (#{e_Id},

@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="/resources/index/css/flaticon.css">
 <link rel="stylesheet" href="/resources/index/css/icomoon.css">
 <link rel="stylesheet" href="/resources/index/css/style.css">
+
 </head>
 <body>
 	<!-- Start Header -->

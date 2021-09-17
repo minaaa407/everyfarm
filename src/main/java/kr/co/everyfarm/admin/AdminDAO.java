@@ -33,4 +33,6 @@ public interface AdminDAO {
 	int mCount(Paging paging);
 
 	int fCount(Paging paging);
+
+	public void farmerY(List<String> yes);
 }

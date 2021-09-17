@@ -63,7 +63,7 @@
 					<div class="side-bar">
 						<div class="user-info">
 							<img class="img-profile img-circle img-responsive center-block"
-								src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+								src="resources/img/user.png" alt="회원 기본이미지">
 							<ul class="meta list list-unstyled">
 								<li class="name">${member.m_Name}</li>
 								<li class="email">${member.m_Id}</li>
@@ -84,8 +84,6 @@
 										<ul class="sub-menu collapse" id="products">
 											<li><a href="/myQnA">QnA</a></li>
 											<li><a href="/myReview">리뷰게시판</a></li>
-											<li><a href="#">추가할공간</a></li>
-											<li><a href="#">추가할공간</a></li>
 										</ul>
 										<li><a href="/myPayList"> <i class="fa fa-credit-card"></i> 결제
 												내역
@@ -106,7 +104,7 @@
 										<div class="container">
 											<div
 												class="row flex-direction:row-reverse justify-content-center">
-												<div class="col-md-3 d-flex ftco-animate">
+												<div class="col-md-12 ftco-animate">
 													<div class="blog-entry justify-content-end">
 														<div class="text">
 															<table class="table">

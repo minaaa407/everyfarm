@@ -99,11 +99,18 @@ input {
 	color: #fff;
 	background: #000;
 }
+.pro{
+	border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+.proNum{
+	border-bottom: 1px solid #ddd;
+}
 </style>
 <title>EVERY FARM</title>
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/views/home/header.jsp" />
 
 	<div class="row">
 		<div class="col-md-2"></div>
@@ -125,8 +132,8 @@ input {
 							<th><div>작성자</div></th>
 							<td><input type="text" value="${member.m_Name}"
 								class="form-control" name="rev_Name" readonly></td>
-							<th><div>상품</div></th>
-							<td><select required="required" name="pay_No">
+							<th class="pro"><div>상품</div></th>
+							<td class="proNum"><select required="required" name="pay_No">
 									<option value="">상품번호를 선택해주세요.</option>
 									<c:forEach items="${myPayList}" var="mp">
 										<option><c:out value="${mp.pay_No}"></c:out></option>
@@ -171,13 +178,10 @@ input {
 									name="rev_Cont" required style="width: 100%;"></textarea></td>
 						</tr>
 						<tr>
-							<th><div>파일</div></th>
-						</tr>
-						<tr>
 
-							<td colspan="2" class="text-center"><input type="submit"
-								id="save" value="확인" class="btn"> <input type="reset"
-								value="다시작성" class="btn">
+							<td colspan="2" class="text-center"><button type="submit"
+								id="save"  class="btn2">작성완료</button> <button type="reset"
+								 class="btn2">다시작성</button>
 								<button type="button" class="btn2"
 									onclick="location.href='/reviewList'">게시글 목록</button></td>
 						</tr>
@@ -187,9 +191,6 @@ input {
 			</div>
 		</div>
 	</div>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -251,12 +252,9 @@ $(document).ready(function() {
     				}
     			});
     		}
-        		
-        
-        
-        
   </script>
 
 
 </body>
+	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </html>

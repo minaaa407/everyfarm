@@ -16,15 +16,6 @@
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
-body{ cursor: url("/resources/editor/css/sap.cur"), auto;}
-a, a:link { cursor: url('/resources/editor/css/sap.cur'), auto;} 
-a:hover, a:focus { cursor: url('/resources/editor/css/sap.cur'), auto;} 
-a:active {cursor: url('/resources/editor/css/sap.cur'), auto;} 
-input { cursor: url('/resources/editor/css/sap.cur'), auto; }
-select {cursor: url('/resources/editor/css/sap.cur'), auto;}
-label {cursor: url('/resources/editor/css/sap.cur'), auto;}
-textarea {cursor: url('/resources/editor/css/sap.cur'), auto;}
-select:option {cursor: url('/resources/editor/css/sap.cur'), auto;}
  #rphone2_1 {
  height:100%;
  width:15%;

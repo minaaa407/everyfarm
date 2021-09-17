@@ -18,6 +18,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link rel="stylesheet" href="resources/product/css/style.css" type="text/css">
 
+<link rel="stylesheet" href="resources/product/css/style.css" type="text/css">
 
 
 <jsp:include page="/WEB-INF/views/home/header.jsp" />

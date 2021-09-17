@@ -5,62 +5,149 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Table V01</title>
+<title>EVERY FARM | 농부 리스트</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/vendor/animate/animate.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/vendor/perfect-scrollbar/perfect-scrollbar.css">
-<!--===============================================================================================-->
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/css/util.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/admin/list/css/main2.css">
-<!--===============================================================================================-->
-<!-- Argon CSS -->
-<link rel="stylesheet" href="resources/admin/list/css/argon.css?v=1.2.0"
-	type="text/css">
-
+<style>
+.modal {
+	position: absolute;
+	width: 50%;
+	height: 50%;
+	background: rgba(0, 0, 0, 0.8);
+	top: 0;
+	left: 0;
+	display: none;
+}
+td, th {
+	border-color: #9ea4ca;
+}
+body {
+	background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
+}
+.limiter {
+	width: 100%;
+	margin: 0 auto;
+}
+.container-table100 {
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+.wrap-table100 {
+	width: 1170px;
+}
+table {
+	border-spacing: 1;
+	border-collapse: collapse;
+	border-radius: 10px;
+	overflow: hidden;
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+table * {
+	position: relative;
+}
+table td, table th {
+	padding-left: 8px;
+}
+table thead tr {
+	height: 60px;
+	background: #efefef
+}
+table tbody tr {
+	height: 50px;
+	background-color: rgba(255, 255, 255, 0.4);
+}
+table tbody tr:last-child {
+	border: 0;
+}
+table td, table th {
+	text-align: center;
+}
+.pagination {
+	display: inline-block;
+}
+.pagination a {
+	float: left;
+	padding: 8px 16px;
+	border-radius: 20%;
+}
+.pagination a.active {
+	background-color: #7971ea;
+	color: white;
+}
+.pagination a:hover:not (.active ) {
+	background-color: silver;
+}
+</style>
 </head>
 <body>
-
+	<!-- Navigation -->
+	<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Brand -->
+			<a class="navbar-brand pt-0" href="/admin"> <img
+				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
+				alt="...">
+			</a>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
+			</div>
+		</div>
+	</nav>
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
 				<div>
-					<a id="listAll" style="cursor: pointer" onclick="orderby(this.id)">전체
-					</a>&nbsp;&nbsp; <a id="listBefore" style="cursor: pointer"
-						onclick="orderby(this.id)">가입요청 </a>&nbsp;&nbsp; <a id="listAfter"
-						style="cursor: pointer" onclick="orderby(this.id)">가입완료 </a>
+					<input class="btn btn-sm btn-neutral" type="button" id="submit"
+						value="선택 삭제" onclick="fDelete()" />
+					<input onclick="location.href='/farmerAdd'" type="button" id="submit"
+						class="btn btn-sm btn-neutral" value="계정 추가">
+					<input onclick="fSign()" type="button" id="submit"
+						class="btn btn-sm btn-neutral" value="가입 승인">
 				</div>
-				<br>
 				<div class="table100">
-					<table>
+					<table id="farmerTable" border="1">
+						<colgroup>
+							<col style="width:80px"/>
+							<col style="width:80px"/>
+							<col style="width:100px"/>
+							<col style="width:200px"/>
+							<col style="width:150px"/>
+							<col style="width:150px"/>
+							<col style="width:80px"/>
+							<col style="width:150px"/>
+							<col style="width:150px"/>
+							<col style="width:80px"/>
+						</colgroup>
 						<thead>
-							<tr class="table100-head">
-								<th class="column0"></th>
-								<th class="column1">ID</th>
-								<th class="column2">NAME</th>
-								<th class="column3">ADDRESS</th>
-								<th class="column4">TEL</th>
-								<th class="column5">BIRTH</th>
-								<th class="column6">RATE</th>
-								<th class="column7">DATE</th>
-								<th class="column8">AUTH</th>
-								<th class="column9">SIGN</th>
+							<tr>
+								<th scope="col"><input type="checkbox" id="allCheck"
+									name="all" onclick="allChk(this);" /></th>
+								<th scope="col">아이디</th>
+								<th scope="col">성명</th>
+								<th scope="col">주소</th>
+								<th scope="col">전화번호</th>
+								<th scope="col">생년월일</th>
+								<th scope="col">별점</th>
+								<th scope="col">가입일</th>
+								<th scope="col">인증서</th>
+								<th scope="col">승인여부</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -73,17 +160,18 @@
 								<c:when test="${!empty farmer}">
 									<c:forEach var="farmer" items="${farmer}">
 										<tr>
-											<td class="column0"><input type="checkbox" id="fCheck"></td>
-											<td class="column1">${farmer.f_Id}</td>
-											<td class="column2">${farmer.f_Name}</td>
-											<td class="column3">${farmer.f_Addr}</td>
-											<td class="column4">${farmer.f_Tel}</td>
-											<td class="column5">${farmer.f_Birth}</td>
-											<td class="column6">${farmer.f_Rate}</td>
-											<td class="column7"><fmt:formatDate pattern="yyyy-MM-dd"
+											<td><input type="checkbox"
+												name="RowCheck" value="${farmer.f_Id}"></td>
+											<td>${farmer.f_Id}</td>
+											<td>${farmer.f_Name}</td>
+											<td>${farmer.f_Addr}</td>
+											<td>${farmer.f_Tel}</td>
+											<td>${farmer.f_Birth}</td>
+											<td>${farmer.f_Rate}</td>
+											<td><fmt:formatDate pattern="yyyy-MM-dd"
 													value="${farmer.f_Date}" /></td>
-											<td class="column8">${farmer.f_Auth}</td>
-											<td class="column9">${farmer.f_Sign}</td>
+											<td>${farmer.f_Auth}</td>
+											<td>${farmer.f_Sign}</td>
 										</tr>
 									</c:forEach>
 								</c:when>
@@ -112,7 +200,7 @@
 								<!-- 이전페이지 버튼 -->
 								<c:if test="${pageMaker.prev}">
 									<li class="pageInfo_btn previous"><a
-										href="${pageMaker.startPage-1}">◀ 이전</a></li>
+										href="${pageMaker.startPage-1}">[이전]</a></li>
 								</c:if>
 
 								<!-- 각 번호 페이지 버튼 -->
@@ -125,7 +213,7 @@
 								<!-- 다음페이지 버튼 -->
 								<c:if test="${pageMaker.next}">
 									<li class="pageInfo_btn next"><a
-										href="${pageMaker.endPage + 1 }">다음 ▶</a></li>
+										href="${pageMaker.endPage + 1 }">[다음]</a></li>
 								</c:if>
 
 							</ul>
@@ -138,58 +226,37 @@
 							type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
 						<input type="hidden" name="type" value="${pageMaker.cri.type }">
 					</form>
-					<br>
-					<div class="col-lg-6 col-5 text-right">
-						<input onclick="location.href='/farmerAdd'"
-							class="btn btn-sm btn-neutral" value="계정 추가"> <input
-							class="btn btn-sm btn-neutral" onclick="fDelete()" value="계정 삭제">
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.4.1.js"
-		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-		crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		let moveForm = $("#moveForm");
-		$(".move")
-				.on(
-						"click",
-						function(e) {
-							e.preventDefault();
-
-							moveForm
-									.append("<input type='hidden' name='pay_Date' value='"
-											+ $(this).attr("href") + "'>");
-							moveForm.attr("action", "/get");
-							moveForm.submit();
-						});
+		$(".move").on("click", function(e) {
+			e.preventDefault();
+			moveForm.attr("action", "/get");
+			moveForm.submit();
+		});
 		$(".pageInfo a").on("click", function(e) {
 			e.preventDefault();
 			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
 			moveForm.attr("action", "/farmerList");
 			moveForm.submit();
-
 		});
-
 		$(".search_area button").on("click", function(e) {
 			e.preventDefault();
-
 			let type = $(".search_area select").val();
 			let keyword = $(".search_area input[name='keyword']").val();
-
 			if (!type) {
 				alert("검색 종류를 선택하세요.");
 				return false;
 			}
-
 			if (!keyword) {
 				alert("키워드를 입력하세요.");
 				return false;
 			}
-
 			moveForm.find("input[name='type']").val(type);
 			moveForm.find("input[name='keyword']").val(keyword);
 			moveForm.find("input[name='pageNum']").val(1);
@@ -199,82 +266,94 @@
 	<!-- 페이징 및 검색!!!!  -->
 
 	<script type="text/javascript">
+		function allChk(obj) {
+			var chkObj = document.getElementsByName("RowCheck");
+			var rowCnt = chkObj.length - 1;
+			var check = obj.checked;
+			if (check) {
+				for (var i = 0; i <= rowCnt; i++) {
+					if (chkObj[i].type == "checkbox")
+						chkObj[i].checked = true;
+				}
+			} else {
+				for (var i = 0; i <= rowCnt; i++) {
+					if (chkObj[i].type == "checkbox") {
+						chkObj[i].checked = false;
+					}
+				}
+			}
+		}
 		function fDelete() {
 			var checkArr = [];
-			var fTest = $(".column8").val();
-			$("input[id='fCheck']:checked").each(function(i) {
-				checkArr.push($(this).val());
-			});
+			var list = $("input[name='RowCheck']");
+			for (var i = 0; i < list.length; i++) {
+				if (list[i].checked) {
+					checkArr.push(list[i].value);
+				}
+			}
 			if (checkArr.length == 0) {
-				alert('선택된 회원이 없습니다.');
-				return;
+				alert("선택된 계정이 없습니다.");
 			} else {
-				if (fTest == "TEST") {
-					$("#myModal").modal('show');
+				var chk = confirm("해당 계정을 삭제하시겠습니까?");
+				if (!chk) {
+					return false;
 				} else {
-					alert("해당 계정을 삭제 할 권한이 없습니다.");
+					$.ajax({
+						url : "/farmerD",
+						type : "POST",
+						dataType : "json",
+						data : {
+							checkArr : checkArr
+						},
+						success : function(result) {
+							if (result.error == true) {
+								alert("삭제 성공.");
+								location.href = "/farmerList"
+							} else {
+								alert("삭제 실패.");
+								location.href = "/farmerList"
+							}
+						}
+					});
+				}
+			}
+		}
+		
+		function fSign() {
+			var checkArr = [];
+			var list = $("input[name='RowCheck']");
+			for (var i = 0; i < list.length; i++) {
+				if (list[i].checked) {
+					checkArr.push(list[i].value);
+				}
+			}
+			if (checkArr.length == 0) {
+				alert("선택된 계정이 없습니다.");
+			} else {
+				var chk = confirm("해당 계정의 가입을 승인하시겠습니까?");
+				if (!chk) {
+					return false;
+				} else {
+					$.ajax({
+						url : "/farmerY",
+						type : "POST",
+						dataType : "json",
+						data : {
+							checkArr : checkArr
+						},
+						success : function(result) {
+							if (result.error == true) {
+								alert("승인 완료.");
+								location.href = "/farmerList"
+							} else {
+								alert("승인 실패.");
+								location.href = "/farmerList"
+							}
+						}
+					});
 				}
 			}
 		}
 	</script>
-	<div id="myModal" class="modal fade">
-		<div class="modal-dialog modal-confirm">
-			<div class="modal-content">
-				<div class="modal-header flex-column">
-					<div class="icon-box">
-						<i class="material-icons">&#xE5CD;</i>
-					</div>
-					<h4 class="modal-title w-100">해당 계정을 삭제하시겠습니까?</h4>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<p>거래 내역이 있는 회원님의 경우 거래증명을 위해 &nbsp;&nbsp;&nbsp;수집된 개인정보를 6개월간
-						보관 후 파기합니다.</p>
-				</div>
-				<div class="modal-footer justify-content-center">
-					<input type="button" class="btn btn-secondary" data-dismiss="modal"
-						value="취 소"> <input
-						onclick="location.href='/farmerMyInfoDelete'" type="submit"
-						class="btn btn-danger" formaction="/myInfoDelete" value="삭 제">
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<script type="text/javascript">
-		function orderby(id) {
-
-			if (id == "listAll") {
-				document.getElementById('orderby').value = "f_Date";
-				document.getElementById('ascdesc').value = "ASC";
-
-			} else if (id == "listBefore") {
-				document.getElementById('orderby').value = "p_Landprice";
-				document.getElementById('ascdesc').value = "ASC";
-
-			} else if (id == "listAfter") {
-				document.getElementById('orderby').value = "p_Landprice";
-				document.getElementById('ascdesc').value = "DESC";
-			}
-			document.myHiddenForm.submit();
-
-		}
-	</script>
-
-
-
-
-	<!--===============================================================================================-->
-	<script src="resources/admin/list/vendor/jquery/jquery-3.2.1.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="resources/admin/list/vendor/bootstrap/js/popper.js"></script>
-	<script src="resources/admin/list/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="resources/admin/list/vendor/select2/select2.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="resources/admin/list/js/main.js"></script>
-
 </body>
 </html>

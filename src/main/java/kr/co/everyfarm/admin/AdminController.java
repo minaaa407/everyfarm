@@ -3,6 +3,7 @@ package kr.co.everyfarm.admin;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ import kr.co.everyfarm.board.Paging;
 import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.farmer.FarmerDAO;
 import kr.co.everyfarm.payment.PaymentDAO;
+import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.MemberBean;
 import kr.co.everyfarm.user.MemberDAO;
@@ -55,23 +57,19 @@ public class AdminController {
 		  PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
 	      AdminDAO adDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
 
-	      int mmonth = 0;
-	      int fmonth = 0;
+
+		int mmonth = 0;
+		int fmonth = 0;
+
 
 	      List<Integer> mMonth = new ArrayList<Integer>();
 	      List<Integer> fMonth = new ArrayList<Integer>();
 
-	      for (int i = 0; i < 12; i++) {
-	         mmonth = adDAO.mchart(i);
-	         mMonth.add(mmonth);
-	      }
 
-	      for (int j = 0; j < 12; j++) {
-	         fmonth = adDAO.fchart(j);
-	         fMonth.add(fmonth);
-	      }
-	      model.addAttribute("mMonth", mMonth);
-	      model.addAttribute("fMonth", fMonth);
+		for (int i = 0; i < 12; i++) {
+			mmonth = adDAO.mchart(i);
+			mMonth.add(mmonth);
+		}
 
 	      System.out.println("---- 씨앗 차트 시작 ----");
 	      
@@ -79,9 +77,6 @@ public class AdminController {
 			DecimalFormat dfyear = new DecimalFormat("0000"); 
 	        Calendar cal = Calendar.getInstance();
 	        String year  = dfyear.format(cal.get(Calendar.YEAR));
-	        String monthafter3  = dfmonth.format(cal.get(Calendar.MONTH) + 4);
-	        String monthafter2  = dfmonth.format(cal.get(Calendar.MONTH) + 3);
-	        String monthafter1  = dfmonth.format(cal.get(Calendar.MONTH) + 2);
 	        String date  = dfmonth.format(cal.get(Calendar.MONTH) + 1);
 	        String monthago1  = dfmonth.format(cal.get(Calendar.MONTH));
 	        String monthago2  = dfmonth.format(cal.get(Calendar.MONTH) - 1);
@@ -94,9 +89,6 @@ public class AdminController {
 	        
 	        
 	        System.out.println("현재 년 = " + year);
-	        System.out.println("3달 후 = " + monthafter3);
-	        System.out.println("2달 후 = " + monthafter2);
-	        System.out.println("1달 후 = " + monthafter1);
 	        System.out.println("현재 월 = " + date);
 			System.out.println("1달 전 = " + monthago1);
 			System.out.println("2달 전 = " + monthago2);
@@ -175,6 +167,50 @@ public class AdminController {
 				}
 			System.out.println("---- 씨앗 차트 끝 ----");
 			
+		for (int j = 0; j < 12; j++) {
+			fmonth = adDAO.fchart(j);
+			fMonth.add(fmonth);
+		}
+		
+		
+		model.addAttribute("mMonth", mMonth);
+		model.addAttribute("fMonth", fMonth);
+		
+		//상품 차트
+	    ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
+		int year2 = cal.get(Calendar.YEAR);	
+	    
+	    String[] months = {"January","february","march","april","may","june","july"
+	    		,"august","september","october","november","december"};
+		int[] payment = new int[12];
+		int[] payment1 = new int[12];
+		int[] payment2 = new int[12];
+	    for(int i =0; i < months.length; i++) {
+		    HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("Month", months[i]);
+			map.put("year", year2);
+			payment[i] = productdao.adminproductpaymentchart(map);
+	    }
+	    model.addAttribute("payment",payment);
+	    
+	    for(int i =0; i < months.length; i++) {
+		    HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("Month", months[i]);
+			map.put("year", year2-1);
+			payment1[i] = productdao.adminproductpaymentchart(map);
+	    }
+	    model.addAttribute("payment1pre",payment1);
+	    
+	    for(int i =0; i < months.length; i++) {
+		    HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("Month", months[i]);
+			map.put("year", year2-2);
+			payment2[i] = productdao.adminproductpaymentchart(map);
+	    }
+	    model.addAttribute("payment2pre",payment2);
+ 
+	    //상품차트
+	
 	      return "admin/admin";
 	   }
 	
@@ -290,6 +326,8 @@ public class AdminController {
 		System.out.println("두번째:" + adminBean.getA_Pw());
 
 		AdminBean admin = adminDAO.alogin(adminBean);
+		
+
 
 		if (admin != null) {
 			session.setAttribute("admin", admin);
@@ -492,23 +530,47 @@ public class AdminController {
 		}
 		return "redirect:/userList";
 	}
-//
-//	@RequestMapping(value = "/userDelete")
-//	@ResponseBody
-//	public Map<String, Object> userDelete(MemberBean memberbean, @RequestParam(value = "checkArr[]") List<String> checkArr) {
-//
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
-//
-//		for (int i=0; i<checkArr.size(); i++) {
-//			if (memberbean.getM_Addr().equals("TEST")) {
-//				memDao.mDelete(memberbean);
-//				map.put("error", true);
-//			} else {
-//				map.put("error", false);
-//			}
-//		}
-//		return map;
-//	}
+
+	@RequestMapping(value = "/userDelete")
+	@ResponseBody
+	public Map<String, Object> userDelete(MemberBean memberbean, @RequestParam(value = "checkArr[]") String checkArr) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
+
+		List<String> delete = Arrays.asList(checkArr);
+		memDao.uDelete(delete);
+		map.put("error", true);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/farmerD")
+	@ResponseBody
+	public Map<String, Object> farmerDelete(FarmerBean farmerbean, @RequestParam(value = "checkArr[]") String checkArr) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		FarmerDAO farmDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+
+		List<String> delete = Arrays.asList(checkArr);
+		farmDao.fDel(delete);
+		map.put("error", true);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/farmerY")
+	@ResponseBody
+	public Map<String, Object> farmerY(FarmerBean farmerBean, @RequestParam(value = "checkArr[]")String checkArr){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		AdminDAO farmDao = sqlSessionTemplate.getMapper(AdminDAO.class);
+		
+		List<String> yes = Arrays.asList(checkArr);
+		farmDao.farmerY(yes);
+		map.put("error", true);
+		
+		return map;
+	}
 
 }
