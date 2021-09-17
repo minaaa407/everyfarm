@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -45,7 +46,6 @@ import kr.co.everyfarm.board.PageMaker;
 import kr.co.everyfarm.board.Paging;
 import kr.co.everyfarm.board.ReviewBean;
 import kr.co.everyfarm.payment.PaymentBean;
-import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.product.ProductqnaBean;
 import kr.co.everyfarm.user.EmailBean;
 import kr.co.everyfarm.user.MailAuth;
@@ -90,79 +90,39 @@ public class FarmerController {
 		List<PaymentBean> totalSeedSum = new ArrayList<PaymentBean>();
 		String seed = "";
 		int seedSum = 0;
-		
-		 for(int i = 0; i < seedList.size(); i++ ) {
-	            for (int j = 0; j < pno.size(); j++ ) {
-	            	search.setPay_Seed(seedList.get(i));
-	            	search.setPay_No(pno.get(j).getPay_No());
-	            	oneSeedSum = farmerDAO.seedSum(search);
-	            	seedSum += oneSeedSum.getPay_Land();
-	            		if(!(oneSeedSum.getPay_Land() == 0)) {
-	            			seed = oneSeedSum.getPay_Seed();
-	            		}
-	             }
-	            oneSeedSum.setPay_Seed('"'+seed+'"');
-	            oneSeedSum.setPay_Land(seedSum);
-	            totalSeedSum.add(oneSeedSum);
-	            seed = "";
-	            seedSum = 0;
-	     }
-		 //상품 차트
-		    ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
-			Calendar cal = Calendar.getInstance();
-			int year = cal.get(Calendar.YEAR);	
-		    String farmerid = farmer.getF_Id();
-		    String[] months = {"January","february","march","april","may","june","july"
-		    		,"august","september","october","november","december"};
-			int[] payment = new int[12];
-			int[] payment1 = new int[12];
-			int[] payment2 = new int[12];
-		    for(int i =0; i < months.length; i++) {
-			    HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("farmerid", farmerid);
-				map.put("Month", months[i]);
-				map.put("year", year);
-				payment[i] = productdao.productpaymentchart(map);
-		    }
-		    model.addAttribute("payment",payment);
-		    
-		    for(int i =0; i < months.length; i++) {
-			    HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("farmerid", farmerid);
-				map.put("Month", months[i]);
-				map.put("year", year-1);
-				payment1[i] = productdao.productpaymentchart(map);
-		    }
-		    model.addAttribute("payment1pre",payment1);
-		    
-		    for(int i =0; i < months.length; i++) {
-			    HashMap<String, Object> map = new HashMap<String, Object>();
-				map.put("farmerid", farmerid);
-				map.put("Month", months[i]);
-				map.put("year", year-2);
-				payment2[i] = productdao.productpaymentchart(map);
-		    }
-		    model.addAttribute("payment2pre",payment2);
-			 
-			 
-			 
-		    //상품차트
-		 
-		
-		 totalSeedSum = totalSeedSum.stream().sorted(Comparator.comparing(PaymentBean::getPay_Land).reversed()).collect(Collectors.toList());
-		 List<String> seedName = new ArrayList<String>();
-		 List<Integer> seedSumTotal = new ArrayList<Integer>();
-		 
-		 System.out.println("totalSeedSum = " + totalSeedSum);
-		 System.out.println("oneSeedSum = " + oneSeedSum);
-		 
-		 for(int i = 0; i < seedList.size(); i++ ) {
-			 seedName.add(totalSeedSum.get(i).getPay_Seed());
-			 seedSumTotal.add(totalSeedSum.get(i).getPay_Land());
-		 }
-		 System.out.println("seedName = " + seedName);
-		 System.out.println("seedSumTotal = " + seedSumTotal);
-		 
+
+		for (int i = 0; i < seedList.size(); i++) {
+			for (int j = 0; j < pno.size(); j++) {
+				search.setPay_Seed(seedList.get(i));
+				search.setPay_No(pno.get(j).getPay_No());
+				oneSeedSum = farmerDAO.seedSum(search);
+				seedSum += oneSeedSum.getPay_Land();
+				if (!(oneSeedSum.getPay_Land() == 0)) {
+					seed = oneSeedSum.getPay_Seed();
+				}
+			}
+			oneSeedSum.setPay_Seed('"' + seed + '"');
+			oneSeedSum.setPay_Land(seedSum);
+			totalSeedSum.add(oneSeedSum);
+			seed = "";
+			seedSum = 0;
+		}
+
+		totalSeedSum = totalSeedSum.stream().sorted(Comparator.comparing(PaymentBean::getPay_Land).reversed())
+				.collect(Collectors.toList());
+		List<String> seedName = new ArrayList<String>();
+		List<Integer> seedSumTotal = new ArrayList<Integer>();
+
+		System.out.println("totalSeedSum = " + totalSeedSum);
+		System.out.println("oneSeedSum = " + oneSeedSum);
+
+		for (int i = 0; i < seedList.size(); i++) {
+			seedName.add(totalSeedSum.get(i).getPay_Seed());
+			seedSumTotal.add(totalSeedSum.get(i).getPay_Land());
+		}
+		System.out.println("seedName = " + seedName);
+		System.out.println("seedSumTotal = " + seedSumTotal);
+
 		if (farmer != null) {
 			if (farmer.getF_Sign().equals("N")) {
 				response.setContentType("text/html; charset=UTF-8");
@@ -463,15 +423,17 @@ public class FarmerController {
 		FarmerDAO fDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		paging.setF_Id(f_Id);
 
-		List<PaymentBean> myCus = fDAO.fDelDate(paging);
-
-		Calendar cal = Calendar.getInstance();
-		int month = cal.get(Calendar.MONTH) + 1;
-
-		model.addAttribute("myCus", myCus);
-		model.addAttribute("nowMonth", month);
+		PaymentBean myCus = fDAO.fDelDate(paging);
+		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();
+		System.out.println("now:::" + test.format(now));
+		System.out.println("myCUs:::" + test.format(myCus.getPay_Date()));
+		
+		model.addAttribute("myCus", test.format(myCus.getPay_Date()));
+		model.addAttribute("nowMonth",test.format(now));
 		return "farmer/myPage";
 	}
+
 
 	@RequestMapping(value = "/contact")
 	public String contact() {

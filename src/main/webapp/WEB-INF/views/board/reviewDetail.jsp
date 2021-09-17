@@ -15,25 +15,25 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#btn').click(function() {
-			var rep_Cont = $('#rep_Cont').val();
-			var rep_Id = $('#rep_Id').val();
-			var rev_No = $('#rev_No').val();
+			var rep_Cont = $("#rep_Cont").val();
+			var rep_Id = $("#rep_Id").val();
+			var rev_No = $("#rev_No").val();
 			var rep_Secret = "N";
 			var rep_Subno = 0;
 
-			if ($('#rep_Secret').is(":checked")) {
+			if ($("#rep_Secret").is(":checked")) {
 				rep_Secret = "Y";
 			}
 
 			$.ajax({
 				url : "/replyWrite",
-				type : 'POST',
+				type : "POST",
 				data : {
-					"rev_No" : rev_No,
-					"rep_Cont" : rep_Cont,
-					"rep_Id" : rep_Id,
-					"rep_Secret" : rep_Secret,
-					"rep_Subno" : rep_Subno
+					rep_Id : rep_Id,
+					rev_No : rev_No,
+					rep_Cont : rep_Cont,
+					rep_Secret :rep_Secret,
+					rep_Subno : rep_Subno
 				},
 				success : function(result) {
 					if (result == "OK") {
@@ -218,6 +218,8 @@ span {
 									value="${repList.rep_Date}" /></span>
 							<div class="cont2">${repList.rep_Cont}</div></td>
 					</tr>
+					<c:when test="${repList.rep_Secret == Y}">
+					</c:when>
 				</c:forEach>
 			</tbody>
 		</table>
@@ -232,6 +234,7 @@ span {
 									<div>
 										<label><i class="fas fa-caret-right"></i> 이름 : </label> <span>${member.m_Name}<input
 											type="hidden" name="rep_Id" value="${member.m_Name}"></span>
+											<input type="checkbox" name="rep_Secret" id="rep_Secret" value="Y">
 										<input type="hidden" id="rev_No" name="rev_No"
 											value="${revList.rev_No}">
 									</div>
