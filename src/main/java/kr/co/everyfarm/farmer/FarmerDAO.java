@@ -47,7 +47,7 @@ public interface FarmerDAO {
 
 	public int myOrderCount(Paging paging);
 
-	public List<PaymentBean> fDelDate(Paging paging);
+	public PaymentBean fDelDate(Paging paging);
 
 	public List<ReviewBean> myReply(String f_Id);
 
