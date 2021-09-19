@@ -33,7 +33,8 @@ background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 }
 
 .wrap-table100 {
-  width: 1170px;
+  width: 1500px;
+  padding-bottom: 20px;
 }
 
 table {
@@ -83,6 +84,9 @@ background-color: silver;
 </style>
 </head>
 <body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-1">
 <!-- Navigation -->
 		<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
@@ -178,53 +182,49 @@ background-color: silver;
 			</div>
 		</div>
 	</nav>
+	</div>
 	<!-- Navigation -->
-	
+	<div class="col-md-11">
 		<div class="limiter">
  			<div class="container-table100">
  				<div class="wrap-table100">
-					<div><input class="btn btn-sm btn-neutral" type="button" id="submit" value="선택 삭제" onclick="checkremove();" /></div>
  					<div class="table100">
 						<table border="1">
 						<colgroup>
-							<col style="width:30px" class=""/>
+							<col style="width:50px"/>
+							<col style="width:30px"/>
+							<col style="width:30px"/>
+							<col style="width:40px"/>
 							<col style="width:80px"/>
-							<col style="width:80px"/>
-							<col style="width:80px"/>
-							<col style="width:80px"/>
-							<col style="width:80px"/>
-							<col style="width:80px"/>
-							<col style="width:80px"/>
-							<col style="width:80px"/>
+							<col style="width:50px"/>
+							<col style="width:100px"/>
+							<col style="width:60px"/>
 						</colgroup>
 						<thead>
 							<tr>
-								<th scope="col">
-									<input type="checkbox" id="all" name="all"/>
-								</th>
 								<th scope="col">주문자명</th>
-								<th scope="col">주문번호</th>
-								<th scope="col">상품번호</th>
-								<th scope="col">상품명</th>
-								<th scope="col">씨앗</th>
 								<th scope="col">땅평수</th>
+								<th scope="col">씨앗</th>
 								<th scope="col">금액</th>
-								<th scope="col">날짜</th>
+								<th scope="col">배송메시지</th>
+								<th scope="col">전화번호</th>
+								<th scope="col">배송지</th>
+								<th scope="col">주문날짜</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="farmerpay" items="${farmerpaymentlist}">
+							<script>
+							</script>
 							<fmt:formatDate var="pay_Date" value="${farmerpay.pay_Date }" pattern="yyyy-MM-dd"/>
-							<fmt:formatDate var="pay_order" value="${farmerpay.pay_Date }" pattern="yyyyMMddkkmmss"/>
 								<tr>
-									<td><input type="checkbox" id="list0" name="list0" value="${farmerpay.pay_Orderno}"></td>
 									<td>${farmerpay.pay_Name }</td>
-									<td>${pay_order}${farmerpay.pay_Orderno }</td>
-									<td>${farmerpay.p_No }</td>
-									<td>${farmerpay.p_Title }</td>
+									<td>${farmerpay.pay_Land }평</td>
 									<td>${farmerpay.pay_Seed }</td>
-									<td>${farmerpay.pay_Land }</td>
-									<td>${farmerpay.pay_Totalprice }</td>
+									<td>${farmerpay.pay_Totalprice }원</td>
+									<td>${farmerpay.pay_Deliverymemo }</td>
+									<td>${farmerpay.pay_Tel }</td>
+									<td>${farmerpay.pay_Address }</td>
 									<td><c:out value="${pay_Date }"/></td>
 									<%-- <button type="button" class="btn btn-primary mr-md-2 py-1 px-2" onclick="location.href='/farmerPaymentListDetail/${pay.pay_Orderno}'">상세</button> --%>
 								</tr>
@@ -238,73 +238,36 @@ background-color: silver;
 				<div class="row">
                     	<div class="col btn-group pagination">
                         	<c:if test="${pageMaker.prev }">
-                            	<a href='<c:url value="/farmerPaymentList${pageMaker.makeQuery(pageMaker.startPage-1)}"/>'>[이전]</a>
+                            	<a href='<c:url value="/farmerpaymentlist${pageMaker.makeQuery(pageMaker.startPage-1)}"/>'>[이전]</a>
                             </c:if>
                             <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
                             	<c:if test="${pageNum eq pageMaker.cri.page}">
-                            		<a class="active" href='<c:url value="/farmerPaymentList${pageMaker.makeQuery(pageNum)}"/>'>
+                            		<a class="active" href='<c:url value="/farmerpaymentlist${pageMaker.makeQuery(pageNum)}"/>'>
                                 		<span id="pagingCur" style="background-color: #7971ea; color: white;">${pageNum}</span>
                                 	</a>
                             	</c:if>
                                 <c:if test="${pageNum ne pageMaker.cri.page}">
-                                	<a href='<c:url value="/farmerPaymentList${pageMaker.makeQuery(pageNum)}"/>'>
+                                	<a href='<c:url value="/farmerpaymentlist${pageMaker.makeQuery(pageNum)}"/>'>
                                			<span>${pageNum}</span>
                                		</a>
                                	</c:if>
                             </c:forEach>
                             <c:if test="${pageMaker.next && pageMaker.endPage >0 }">
-                            	<a href='<c:url value="/farmerPaymentList${pageMaker.makeQuery(pageMaker.endPage+1)}"/>'>
+                            	<a href='<c:url value="/farmerpaymentlist${pageMaker.makeQuery(pageMaker.endPage+1)}"/>'>
                                 	<span style="font-weight: bold;">[다음]</span>
                                 </a>
                             </c:if>
                         </div>
 				</div>
 				<!-- 페이징 start -->
-				
+				</div>
 			</div>
 			</div>
-			
+			</div>
+			</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-var check = 0;
-var allcheck = $("input:checkbox[name='all']").length;
-var $checkok = 0;
-var arr = [];
-var checktrue = false;
-
-$(document).on('click','#all',function(){
-	if($("#all").prop("checked")){
-		$("input[name='list0']").prop("checked",true);
-		} else {
-		$("input[name='list0']").prop("checked",false);	
-		}
-	});
-	
-$(document).on('click','input[name=list0]',function(){
-	if($('input[name=list0]:checked').length==$('input[name=list0]').length){
-    	$('#all').prop('checked',true);
-    }else{
-        $('#all').prop('checked',false);
-    }
-});
-
-
-function checkremove() {
-	var checkArr = [];
-	$("input[id='list0']:checked").each(function(i) {
-        checkArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
-    });
-	if(checkArr.length == 0){
-		alert("상품을 선택해주세요.");
-	} else {
-		if (confirm('선택하신' + checkArr.length + '건의 내역을 삭제하시겠습니까?')) {  
-			window.location.href = "http://localhost:8090/adminPayListDelete?payno=" + checkArr;
-		} else{   
-			return false;
-		}
-	}
-}
 
 function modal() {
 	alert(1);

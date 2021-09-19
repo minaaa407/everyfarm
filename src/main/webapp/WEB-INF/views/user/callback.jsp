@@ -7,6 +7,7 @@
 <%@ page import="java.io.InputStreamReader"%>
 <html>
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <title>네이버로그인</title>
 </head>
 <body>

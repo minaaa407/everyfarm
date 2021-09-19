@@ -42,7 +42,7 @@
 			   } else { // 실패시
 			      var msg = '결제에 실패하였습니다. 결제를 다시 진행해주세요.';
 			      alert(msg);
-			      location.href = "/payfailed";
+			      window.history.back();
 			   }
 			});
 		}); 

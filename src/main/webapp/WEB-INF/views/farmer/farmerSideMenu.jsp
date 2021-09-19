@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8" />
   <!-- Favicon -->
-  <link href="resources/farmer/img/brand/favicon.png" rel="icon" type="image/png">
+  <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->

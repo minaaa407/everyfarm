@@ -64,14 +64,6 @@ height: 602px;
 		</div>
 	</nav>
 	<div class="main-content">
-		<!-- Navbar -->
-		<nav class="navbar navbar-top navbar-expand-md navbar-dark"
-			id="navbar-main">
-			<div class="container-fluid">
-				<!-- User -->
-			</div>
-		</nav>
-		<!-- End Navbar -->
 		<!-- Header -->
 		<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 			<div class="container-fluid">
@@ -81,16 +73,9 @@ height: 602px;
 			<div class="row">
 				<div class="col-xl-6 mb-5 mb-xl-0">
 					<div class="card bg-gradient-default shadow height chartcenter">
-							<div class="">
-							<!-- Chart -->
-							<div class="">
-							
-							
-									<!-- 차트 -->
-									<canvas id="myChart" style="width:100%;max-width:800px"></canvas>
-								
-								
-							</div>
+						<!-- Chart -->
+						<div>
+							<canvas id="myChart" style="width:100%;max-width:800px"></canvas>
 						</div>
 					</div>
 				</div>
@@ -132,8 +117,8 @@ height: 602px;
 							<div id = "productchart" class="chart ">
 								<canvas id="chart-orders2" class="chart-canvas margin"></canvas>
 							</div>
-							</div>
-		</div>
+						</div>
+					</div>
 							<script>
 OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
 t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
@@ -193,8 +178,6 @@ t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lin
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- 차트	 -->

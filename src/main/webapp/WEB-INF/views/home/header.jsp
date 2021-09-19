@@ -32,6 +32,16 @@
 <link rel="stylesheet" href="/resources/index/css/icomoon.css">
 <link rel="stylesheet" href="/resources/index/css/style.css">
 
+<style>
+.everyfarm {
+  color: #000000;
+  font-weight: 900;
+  font-size: 54px;
+  line-height: 1;
+  margin-bottom: 30px; }
+  .everyfarm span {
+    color: #4e9525; }
+</style>
 </head>
 <body>
 	<!-- Start Header -->
@@ -41,7 +51,7 @@
 				<div class="col-md-8 order-md-last">
 					<div class="row">
 						<div class="col-md-6 text-center">
-							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
+							<a class="everyfarm" href="index.jsp">EVERY <span>FARM</span></a>
 						</div>
 						<div class="col-md-6 col-lg">
 							<select name="page" onchange="location.href=this.value">
@@ -92,10 +102,10 @@
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul class="navbar-nav m-auto">
 						<li class="nav-item active"><a href="index.jsp"
-							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="/productlist" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
+							class="nav-link" style="font-size:20px">Home</a></li>
+						<li class="nav-item"><a href="/productlist" class="nav-link" style="font-size:20px">농장</a></li>
+						<li class="nav-item"><a href="/reviewList" class="nav-link" style="font-size:20px">REVIEW</a></li>
+						<li class="nav-item"><a href="/qnalist" class="nav-link" style="font-size:20px">Q&A</a></li>
 					</ul>
 				</div>
 			</div>

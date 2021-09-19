@@ -310,7 +310,6 @@ margin-bottom:10px;
 						<div class="address">
 							<input id="sameaddr" name="sameaddr" value="M" type="radio" /><label for="sameaddr" >회원 정보와 동일</label>
 							<input id="otheraddr" name="otheraddr" value="F" type="radio"  /><label for="otheraddr" >새로운 배송지</label> 
-							<a href="#none" id="btn_shipp_addr" class="" ><img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_address.gif" alt="주소록 보기"/></a>
 						</div>
 					</td>
 				</tr>
@@ -532,6 +531,13 @@ function checkdelete() {
 	var post = '${Member.m_Addr }';
 	var lastpost = post.slice(-6, -1);
 	var firstpost = post.slice(0, -7);
+	
+	var beforeStr = firstpost;
+	var afterStr = beforeStr.split(',');
+	console.log(afterStr);
+	console.log(afterStr[0]);
+	console.log(afterStr[1]);
+	
 	console.log(firstpost);
 	console.log(lastpost);
 	document.getElementById('postcode').value = lastpost;
@@ -565,8 +571,8 @@ function checkdelete() {
 			$("input:radio[id=otheraddr]").prop("checked", false);  // 새로운배송지에 체크 해제
 			$('#Name1').val(name);       $('#Name1').prop('disabled', true);
 			$('#postcode').val(lastpost); $('#postcode').prop('disabled', true);  
-			$('#raddr1').val(firstpost);  $('#raddr1').prop('disabled', true);
-			$('#raddr2').val(firstpost);  $('#raddr2').prop('disabled', true);
+			$('#raddr1').val(afterStr[0]);  $('#raddr1').prop('disabled', true);
+			$('#raddr2').val(afterStr[1]);  $('#raddr2').prop('disabled', true);
 			$('#tel').val(tel);			  $('#tel').prop('disabled', true);
 			$('#tel1').val(tel1);		  $('#tel1').prop('disabled', true);
 			$('#tel2').val(tel2);		  $('#tel2').prop('disabled', true);
@@ -629,8 +635,8 @@ function checkdelete() {
 	    	  $("input:radio[id=otheraddr]").prop("checked", false);
 	    	  $('#Name1').val(name);          $('#Name1').prop('disabled', true);
 	    	  $('#postcode').val(lastpost);	 $('#postcode').prop('disabled', true);
-			  $('#raddr1').val(firstpost);	 $('#raddr1').prop('disabled', true);
-			  $('#raddr2').val(firstpost);	 $('#raddr2').prop('disabled', true);
+			  $('#raddr1').val(afterStr[0]);	 $('#raddr1').prop('disabled', true);
+			  $('#raddr2').val(afterStr[1]);	 $('#raddr2').prop('disabled', true);
 			  $('#tel').val(tel);			 $('#tel').prop('disabled', true);
 			  $('#tel1').val(tel1);			 $('#tel1').prop('disabled', true);
 			  $('#tel2').val(tel2);			 $('#tel2').prop('disabled', true);
