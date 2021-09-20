@@ -247,9 +247,8 @@
 		</div>
 	</section>
 	
-<jsp:include page="/WEB-INF/views/home/footer.jsp" />
-
-
+	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
+  
 	<script src="resources/index/js/jquery.min.js"></script>
 	<script src="resources/index/js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="resources/index/js/popper.min.js"></script>

@@ -53,14 +53,6 @@
 						<div class="col-md-6 text-center">
 							<a class="everyfarm" href="index.jsp">EVERY <span>FARM</span></a>
 						</div>
-						<div class="col-md-6 col-lg">
-							<select name="page" onchange="location.href=this.value">
-								<option value="#">홈페이지</option>
-								<option value="/home">USER</option>
-								<option value="/farmerLogin">FARMER</option>
-								<option value="/adminLogin">ADMIN</option>
-							</select>
-						</div>
 						<div>
 							<c:choose>
 								<c:when test="${empty member}">
