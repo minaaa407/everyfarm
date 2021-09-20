@@ -489,7 +489,7 @@ public class UserController {
 	@RequestMapping(value = "/myInfoUpdate")
 	public String myInfoChange(MemberBean memberbean, HttpSession session, HttpServletRequest request) {
 
-		memberbean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
+		memberbean.setM_Addr(request.getParameter("Addr2") + ", " + request.getParameter("Addr3")
 				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
 
 		String encryPassword = UserPw.encrypt(memberbean.getM_Pw());
@@ -531,7 +531,7 @@ public class UserController {
 	@RequestMapping(value = "/myInfoAddrUpdate")
 	public String myInfoChange2(MemberBean memberbean, HttpSession session, HttpServletRequest request) {
 
-		memberbean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
+		memberbean.setM_Addr(request.getParameter("Addr2") + ", " + request.getParameter("Addr3")
 				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
 
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);

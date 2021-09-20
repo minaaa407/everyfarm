@@ -13,7 +13,7 @@
 
 <title>EVERY FARM</title>
 
-
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
 	rel="stylesheet">

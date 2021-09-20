@@ -16,6 +16,7 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900&display=swap"
         rel="stylesheet">
@@ -54,7 +55,7 @@
 </header>
     <!-- Categories Section Begin -->
     <section class="categories categories-grid spad" style="padding-top: 0; background-color: #fafbf9;">
-        <div class="categories__post">
+        <div class="categories__post" style="min-height: 100vh">
             <div class="container">
                 <div class="categories__grid__post">
                     <div class="row" >
@@ -199,7 +200,8 @@
                                         <div class="categories__post__item__pic set-bg" style="margin-bottom: 0px;">
                                             <%-- data-setbg="${q.q_Img}" --%>
                                              <c:choose>
-                                              <c:when test="${q.q_Img != null}">
+                                              <c:when test="${ !(empty q.q_Img)}">
+                                              
                                                <a href="resources/upload/qna/${q.q_No}/${q.q_Img}" data-toggle="lightbox" data-title="${q.q_Title}" data-footer="${q.q_Id}">
                 								<img data-imgbigurl="resources/upload/qna/${q.q_No}/${q.q_Img}" 
 												 src="resources/upload/qna/${q.q_No}/${q.q_Img}"

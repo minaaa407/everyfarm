@@ -12,7 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <script>
 function button_click(number,value) {
 	

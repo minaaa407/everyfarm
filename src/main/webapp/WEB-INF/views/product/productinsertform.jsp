@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 </head>
 <body>
 <h2>방명록 쓰기</h2>

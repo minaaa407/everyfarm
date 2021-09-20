@@ -10,6 +10,7 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <title>EVERY FARM</title>
 
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <!-- Google Font -->
 
 <style type="text/css">

@@ -65,5 +65,6 @@ margin-top:200px;
 			</div>
 		</div>
 	</footer>
+	<!-- End Footer -->
 </body>
 </html>

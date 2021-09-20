@@ -8,6 +8,7 @@
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <title>Sign Up | Bootstrap Based Admin Template - Material
 	Design</title>
 <!-- Favicon-->

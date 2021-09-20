@@ -9,6 +9,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link
 	href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
 	rel="stylesheet">
@@ -30,16 +31,16 @@
 <link rel="stylesheet" href="/resources/index/css/flaticon.css">
 <link rel="stylesheet" href="/resources/index/css/icomoon.css">
 <link rel="stylesheet" href="/resources/index/css/style.css">
+
 <style>
-body{ cursor: url("/resources/editor/css/sap.cur"), auto;}
-a, a:link { cursor: url('/resources/editor/css/sap.cur'), auto;} 
-a:hover, a:focus { cursor: url('/resources/editor/css/sap.cur'), auto;} 
-a:active {cursor: url('/resources/editor/css/sap.cur'), auto;} 
-input { cursor: url('/resources/editor/css/sap.cur'), auto; }
-select {cursor: url('/resources/editor/css/sap.cur'), auto;}
-label {cursor: url('/resources/editor/css/sap.cur'), auto;}
-textarea {cursor: url('/resources/editor/css/sap.cur'), auto;}
-select:option {cursor: url('/resources/editor/css/sap.cur'), auto;}
+.everyfarm {
+  color: #000000;
+  font-weight: 900;
+  font-size: 54px;
+  line-height: 1;
+  margin-bottom: 30px; }
+  .everyfarm span {
+    color: #4e9525; }
 </style>
 </head>
 <body>
@@ -50,7 +51,7 @@ select:option {cursor: url('/resources/editor/css/sap.cur'), auto;}
 				<div class="col-md-8 order-md-last">
 					<div class="row">
 						<div class="col-md-6 text-center">
-							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
+							<a class="everyfarm" href="index.jsp">EVERY <span>FARM</span></a>
 						</div>
 						<div>
 							<c:choose>
@@ -93,10 +94,10 @@ select:option {cursor: url('/resources/editor/css/sap.cur'), auto;}
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul class="navbar-nav m-auto">
 						<li class="nav-item active"><a href="index.jsp"
-							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="/productlist" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
+							class="nav-link" style="font-size:20px">Home</a></li>
+						<li class="nav-item"><a href="/productlist" class="nav-link" style="font-size:20px">농장</a></li>
+						<li class="nav-item"><a href="/reviewList" class="nav-link" style="font-size:20px">REVIEW</a></li>
+						<li class="nav-item"><a href="/qnalist" class="nav-link" style="font-size:20px">Q&A</a></li>
 					</ul>
 				</div>
 			</div>

@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8" />
   <!-- Favicon -->
-  <link href="resources/farmer/img/brand/favicon.png" rel="icon" type="image/png">
+  <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -13,17 +13,6 @@
   <link href="resources/farmer/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="resources/farmer/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
-<style>
-body{ cursor: url("/resources/editor/css/sap.cur"), auto;}
-a, a:link { cursor: url('/resources/editor/css/sap.cur'), auto;} 
-a:hover, a:focus { cursor: url('/resources/editor/css/sap.cur'), auto;} 
-a:active {cursor: url('/resources/editor/css/sap.cur'), auto;} 
-input { cursor: url('/resources/editor/css/sap.cur'), auto; }
-select {cursor: url('/resources/editor/css/sap.cur'), auto;}
-label {cursor: url('/resources/editor/css/sap.cur'), auto;}
-textarea {cursor: url('/resources/editor/css/sap.cur'), auto;}
-select:option {cursor: url('/resources/editor/css/sap.cur'), auto;}
-</style>
 </head>
 <body>
 

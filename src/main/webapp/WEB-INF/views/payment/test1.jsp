@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
@@ -41,7 +42,7 @@
 			   } else { // 실패시
 			      var msg = '결제에 실패하였습니다. 결제를 다시 진행해주세요.';
 			      alert(msg);
-			      location.href = "/payfailed";
+			      window.history.back();
 			   }
 			});
 		}); 

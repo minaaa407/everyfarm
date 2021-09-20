@@ -11,20 +11,10 @@
 <head>
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 
-
-<title>결제내역-관리자 | EveryFarm</title>
+<title>EVERY FARM | 결제내역 - 관리자</title>
 <style>
-
-.modal { 
-	position:absolute; 
-	width:50%; 
-	height:50%; 
-	background: rgba(0,0,0,0.8); 
-	top:0; 
-	left:0; 
-	display:none; 
-}
 td, th {
 border-color:#9ea4ca;
 }
@@ -48,6 +38,7 @@ background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 
 .wrap-table100 {
   width: 1170px;
+  padding-bottom: 20px;
 }
 
 table {
@@ -72,6 +63,11 @@ table thead tr {
 table tbody tr {
   height: 50px;
   background-color: rgba(255, 255, 255, 0.4);
+}
+table tbody tr:hover {
+  height: 50px;
+  color: white;
+  background-color: #7971ea;
 }
 table tbody tr:last-child {
   border: 0;
@@ -99,7 +95,7 @@ background-color: silver;
 </head>
 <body>
 		<!-- Navigation -->
-		<nav
+	<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
 		id="sidenav-main">
 		<div class="container-fluid">
@@ -114,68 +110,8 @@ background-color: silver;
 				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
 				alt="...">
 			</a>
-			<!-- User -->
-			<ul class="nav align-items-center d-md-none">
-				<li class="nav-item dropdown"><a class="nav-link nav-link-icon"
-					href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <i class="ni ni-bell-55"></i>
-				</a>
-					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
-						aria-labelledby="navbar-default_dropdown_1">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
-					</div></li>
-				<li class="nav-item dropdown"><a class="nav-link" href="#"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">
-						<div class="media align-items-center">
-							<span class="avatar avatar-sm rounded-circle"> <img
-								alt="Image placeholder"
-								src="resources/admin/img/theme/team-1-800x800.jpg">
-							</span>
-						</div>
-				</a>
-					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-						<div class=" dropdown-header noti-title">
-							<h6 class="text-overflow m-0">Welcome!</h6>
-						</div>
-						<a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-single-02"></i> <span>My profile</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-settings-gear-65"></i> <span>Settings</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-support-16"></i> <span>Support</span>
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i>
-							<span>Logout</span>
-						</a>
-					</div></li>
-			</ul>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
-				<!-- Collapse header -->
-				<div class="navbar-collapse-header d-md-none">
-					<div class="row">
-						<div class="col-6 collapse-brand">
-							<a href="./index.html"> <img
-								src="resources/admin/img/brand/blue.png">
-							</a>
-						</div>
-						<div class="col-6 collapse-close">
-							<button type="button" class="navbar-toggler"
-								data-toggle="collapse" data-target="#sidenav-collapse-main"
-								aria-controls="sidenav-main" aria-expanded="false"
-								aria-label="Toggle sidenav">
-								<span></span> <span></span>
-							</button>
-						</div>
-					</div>
-				</div>
 				<!-- Navigation -->
 				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
 			</div>
@@ -207,7 +143,7 @@ background-color: silver;
 						<th scope="col">상품명</th>
 						<th scope="col">금액</th>
 						<th scope="col">농부ID</th>
-						<th scope="col">날짜</th>
+						<th scope="col">주문날짜</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -216,101 +152,34 @@ background-color: silver;
 						<fmt:formatDate var="pay_order" value="${pay.pay_Date }" pattern="yyyyMMddkkmmss"/>
 						<tr>
 							<td><input type="checkbox" id="list0" name="list0" value="${pay.pay_Orderno}"></td>
-							<td>${pay_order}${pay.pay_Orderno }</td>
-							<td>${pay.pay_Name }</td>
-							<td>${pay.p_Title }</td>
-							<td>${pay.pay_Totalprice }</td>
-							<td>${pay.p_Id }</td>
-							<td><c:out value="${pay_Date }"/></td>
+							<td onclick="window.location='/adminListDetail/${pay.pay_Orderno}'">${pay_order}${pay.pay_Orderno }</td>
+							<td onclick="window.location='/adminListDetail/${pay.pay_Orderno}'">${pay.pay_Name }</td>
+							<td onclick="window.location='/adminListDetail/${pay.pay_Orderno}'">${pay.p_Title }</td>
+							<td onclick="window.location='/adminListDetail/${pay.pay_Orderno}'">${pay.pay_Totalprice }원</td>
+							<td onclick="window.location='/adminListDetail/${pay.pay_Orderno}'">${pay.p_Id }</td>
+							<td onclick="window.location='/adminListDetail/${pay.pay_Orderno}'"><c:out value="${pay_Date }"/></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 						</table>
 					</div>
-					<br>
 						</div>
-					<%-- <button type="button" class="btn btn-primary mr-md-2 py-1 px-2" data-target="#layerpop${mo.index}" data-toggle="modal">상세</button> --%>
-										<div class="modal fade" id="layerpop${mo.index}" >
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <!-- header -->
-				      <div class="modal-header">
-				        <!-- header title -->
-				        <h4 class="modal-title">상세정보</h4>
-				      </div>
-				      <!-- body -->
-				      <div class="modal-body">
-				      		<div class="container">
-				      			<div class="col">
-				      				<div class="row">
-										<div class="col-md-6 form-group">
-											<label for="1">주문번호</label>
-											<input name="name" class="form-control" id="1" value="${pay_order}${pay.pay_Orderno }" readonly>
-										</div> 
-										<div class="col-md-6 form-group">
-											<label for="2">주문자 성명</label>
-											<input name="name" class="form-control" id="2" value="${pay.pay_Name }" readonly>
-										</div>
-									</div>
-									<div class="row"> 
-										<div class="col-md-6 form-group">
-											<label for="3">상품번호</label>
-											<input name="name" class="form-control" id="3" value="${pay.p_No }" readonly>
-										</div> 
-										<div class="col-md-6 form-group">
-											<label for="4">상품명</label>
-											<input name="name" class="form-control" id="4" value="${pay.p_Title}""${pay.pay_Land + pay.pay_Seed}" readonly>
-										</div>
-									</div>
-									<div class="row"> 
-										<div class="col-md-6 form-group">
-											<label for="5">상품금액</label>
-											<input name="name" class="form-control" id="5" value="${pay.pay_Totalprice }원" readonly>
-										</div> 
-										<div class="col-md-6 form-group">
-											<label for="6">농장주ID</label>
-											<input name="name" class="form-control" id="6" value="${pay.p_Id }" readonly>
-										</div>
-									</div>
-									<div class="row"> 
-										<div class="col-md-6 form-group">
-											<label for="7">배송비</label>
-											<input name="name" class="form-control" id="7" value="3,000원" readonly>
-										</div> 
-										<div class="col-md-6 form-group">
-											<label for="8">주문날짜</label>
-											<input name="name" class="form-control" id="8" value="${pay_Date }" readonly>
-										</div>
-									</div> 
-									<div class="form-group"> 
-										<label for="9">배송메시지</label>
-										<textarea name="name" class="form-control" id="9" readonly>${pay.pay_Deliverymemo}</textarea>
-									</div>
-									<label for="10">주문상태</label>
-									<div class="row"> 
-										<div class="col-md-6 form-group">
-											<input name="name" class="form-control" id="10" value="농사중">
-										</div>
-										<div class="col-md-6">
-											<select class="form-control" id="10">
-							                    <option>농사중</option>
-							                    <option>농사완료</option>
-							                    <option>배송준비중</option>
-							                    <option>배송완료</option>
-							                </select>
-						                </div>
-									</div>
-				      			</div>
-				      		</div>
-				      	</div>
-				      <!-- Footer -->
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
 				
+				<form id="sort" name="rentSearch" method="post"
+                                 action="/adminPaymentList">
+
+                              <select id="searchType" name="searchType">
+                                    <option value="">전체검색</option>
+                                    <option value="t" <c:if test="${pageMaker.cri.searchType eq 't'}">selected </c:if>>농부이름</option>
+                                    <option value="c" <c:if test="${pageMaker.cri.searchType eq 'c'}"> selected </c:if>>회원이름</option>
+                                 </select>&nbsp;
+                                 <input type="text" id="keyword" name="keyword"  
+                                    value="${pageMaker.cri.keyword}" placeholder="검색어를 입력하세요" />&nbsp;
+                        
+                                 <button id="button" class="btn waves-effect waves-light btn-primary btn-outline-primary">검색</button>&nbsp;
+                                 <input type="button" id="button" class="btn waves-effect waves-light btn-primary btn-outline-primary" value="전체보기" onClick="location.href='/adminPaymentList';">&nbsp;
+                              </form>
+                              
 				<!-- 페이징 start -->
 				<div class="row">
                     	<div class="col btn-group pagination">
@@ -336,7 +205,7 @@ background-color: silver;
                             </c:if>
                         </div>
 				</div>
-				<!-- 페이징 start -->
+				<!-- 페이징 end -->
 					</div>
 				</div>
 				

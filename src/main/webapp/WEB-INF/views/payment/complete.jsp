@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <title>결제 완료 | EveryFarm</title>
 <style>
 .ulStep {
@@ -75,53 +75,7 @@ background-color:#E6E6E6;
 			<input type=hidden id="pay_Totalprice" name="pay_Totalprice" value="${pay.pay_Totalprice }" />
 			<input type=hidden id="pay_Orderno" name="pay_Orderno" value="${pay.pay_Orderno }" />
 			</c:forEach>
-			<hr>
 			
 			
-			
-<%-- <footer>
-<jsp:include page="/WEB-INF/views/home/footer.jsp" />
-</footer>	 --%>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<script>
-$(function(){
-		/* console.log("payname = " + ${payname });
-		console.log("payemail = " + ${payemail });
-		console.log("totalprice = " + ${totalprice });
-		console.log("pay_Orderno = " + ${pay_Orderno }); */
-		console.log("payname = " + $("#pay_Name").val());
-		console.log("pay_Email = " + $("#pay_Email").val());
-		console.log("pay_Totalprice = " + $("#pay_Totalprice").val());
-		console.log("pay_Orderno = " + $("#pay_Orderno").val()); 
-		$.ajax({
-			url : "/sendmessage2",
-			type : "POST",
-			dataType: "json", 
-			data : {
-				pay_Name : '권형준',
-				pay_Email : 'rjarorgudwns@naver.com',
-				pay_Totalprice : '1000',
-				pay_Orderno : '40'
-			},
-			success : function(result) {
-				if(result.error == false){
-				console.log("메일전송실패.");
-				
-				}else{
-					console.log("메일전송완료.");
-				}
-			},
-			error : function(a, b, c) {
-				//통신 실패시 발생하는 함수(콜백)
-				alert("a:" + a + "b:" + b + "c:" + c);
-			}
-		})
-})
-
-</script>
-	
 </body>
 </html>

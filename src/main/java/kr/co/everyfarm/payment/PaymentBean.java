@@ -19,11 +19,23 @@ public class PaymentBean {
 	private String pay_Email;
   
 	private String p_Id;
+	private String f_Name;
 	private int p_No;
 	private String p_Title;
 	private String p_Img;
 
   private List<PaymentBean> paymentbeanList;
+
+
+  	
+	public String getF_Name() {
+		return f_Name;
+	}
+
+
+	public void setF_Name(String f_Name) {
+		this.f_Name = f_Name;
+	}
 
 
 	public String getPay_Id() {
@@ -201,8 +213,12 @@ public class PaymentBean {
 		return "PaymentBean [pay_Id=" + pay_Id + ", pay_Seed=" + pay_Seed + ", pay_Deliverymemo=" + pay_Deliverymemo
 				+ ", pay_Land=" + pay_Land + ", pay_No=" + pay_No + ", pay_Orderno=" + pay_Orderno + ", pay_Totalprice="
 				+ pay_Totalprice + ", pay_Date=" + pay_Date + ", pay_Address=" + pay_Address + ", pay_Name=" + pay_Name
-				+ ", pay_Tel=" + pay_Tel + ", pay_Email=" + pay_Email + ", p_Id=" + p_Id + ", p_No=" + p_No
-				+ ", p_Title=" + p_Title + ", p_Img=" + p_Img + ", paymentbeanList=" + paymentbeanList + "]";
+				+ ", pay_Tel=" + pay_Tel + ", pay_Email=" + pay_Email + ", p_Id=" + p_Id + ", f_Name=" + f_Name
+				+ ", p_No=" + p_No + ", p_Title=" + p_Title + ", p_Img=" + p_Img + ", paymentbeanList="
+				+ paymentbeanList + "]";
 	}
+
+
+	
 
 }

@@ -11,31 +11,45 @@
 </select>
 	<select id="paylist1"
 		resultType="kr.co.everyfarm.payment.PaymentBean">
-		      select product.p_Id,product.p_No,product.p_Title,product.p_Img,
+		      select product.p_Id,product.p_No,product.p_Title,product.p_Img,farmer.f_Name,
 		payment.pay_Id,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,payment.pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
-		from product, payment where payment.pay_No=product.p_No
-  <!--     <if test="searchType == 't'.toString()">
-            AND r_mid LIKE CONCAT('%', #{keyword},'%')
+		from farmer, product, payment where farmer.f_id=product.p_Id and payment.pay_No=product.p_No
+     <if test="searchType == 't'.toString()">
+            AND farmer.f_Name LIKE CONCAT('%', #{keyword},'%')
          </if>
          <if test="searchType == 'c'.toString()">
-            AND r_pid LIKE CONCAT('%', #{keyword},'%')
+            AND payment.pay_Name LIKE CONCAT('%', #{keyword},'%')
          </if>
-         <if test="searchType == 'w'.toString()">
-            AND product.p_name LIKE CONCAT('%', #{keyword},'%')
+         <if test="searchType == ''.toString()">
+            AND (payment.pay_Name LIKE CONCAT('%', #{keyword},'%') or farmer.f_Name LIKE CONCAT('%', #{keyword},'%'))
          </if>
-         <if test="searchType == 'tc'.toString()">
-            AND r_state LIKE CONCAT('%', #{keyword},'%')
-         </if> -->
+         
       ORDER BY payment.pay_Orderno desc
       limit #{pageStart}, #{perPageNum}
 		</select>
 	
 	   <select id="getPayTotalCount" resultType="int">
       select count(*)
-      from member, product, payment where payment.pay_Id=member.m_Id and payment.pay_No=product.p_No
-      <!-- <include refid="searchCondition"></include> -->
+      from farmer, product, payment where farmer.f_id=product.p_Id and payment.pay_No=product.p_No
+      <if test="searchType == 't'.toString()">
+            AND farmer.f_Name LIKE CONCAT('%', #{keyword},'%')
+         </if>
+         <if test="searchType == 'c'.toString()">
+            AND payment.pay_Name LIKE CONCAT('%', #{keyword},'%')
+         </if>
+         <if test="searchType == ''.toString()">
+            AND (payment.pay_Name LIKE CONCAT('%', #{keyword},'%') or farmer.f_Name LIKE CONCAT('%', #{keyword},'%'))
+         </if>
+      
+      
    </select>
 	
+	   <select id="getPayFarmerCount" resultType="int">
+      select count(*)
+      from member, product, payment where payment.pay_Id=member.m_Id and payment.pay_No=product.p_No
+      and product.p_Id=#{f_Id}
+      <!-- <include refid="searchCondition"></include> -->
+   </select>
 <!-- 	   <sql id="searchCondition">
       <if test="searchType != null">
          <if test="searchType == 't'.toString()">
@@ -55,7 +69,13 @@
 	
 	<select id="farmerpaylist"
 		resultType="kr.co.everyfarm.payment.PaymentBean">
-		select product.p_No,product.p_Title,payment.pay_seed,payment.pay_land,product.p_Img,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,pay_Address
+		select product.p_No,product.p_Title,payment.pay_seed,payment.pay_land,product.p_Img,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
+		from product, payment where product.p_Id=#{f_Id} and payment.pay_No=product.p_No
+	</select>
+		
+	<select id="farmerpaylist1"
+		resultType="kr.co.everyfarm.payment.PaymentBean">
+		select product.p_No,product.p_Title,payment.pay_seed,payment.pay_land,product.p_Img,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
 		from product, payment where product.p_Id=#{f_Id} and payment.pay_No=product.p_No
 		<!--     <if test="searchType == 't'.toString()">
             AND r_mid LIKE CONCAT('%', #{keyword},'%')
@@ -71,15 +91,25 @@
          </if> -->
          <!-- ORDER BY payment.pay_Orderno desc
       limit #{pageStart}, #{perPageNum} -->
+      ORDER BY payment.pay_Orderno desc
+      limit #{pageStart}, #{perPageNum}
 	</select>
 
-
-	<select id="getinfo" resultType="int">
+	<select id="paydetailadmin" resultType="kr.co.everyfarm.payment.PaymentBean">
 		<![CDATA[
-		select p_Landavailable from product where p_no=#{p_No} 
+		select product.p_Id,product.p_No,product.p_Title,product.p_Img,payment.pay_Seed,payment.pay_land,payment.pay_no,farmer.f_Name,
+		payment.pay_Id,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,payment.pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
+		from farmer, product, payment where farmer.f_id=product.p_Id and payment.pay_No=product.p_No and payment.pay_Orderno=#{Orderno}
 		]]>
 	</select>
 
+	<select id="paydetailfarmer" resultType="kr.co.everyfarm.payment.PaymentBean">
+		<![CDATA[
+		select product.p_Id,product.p_No,product.p_Title,product.p_Img,payment.pay_Seed,payment.pay_land,payment.pay_no,
+		payment.pay_Id,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,payment.pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
+		from product, payment where payment.pay_No=product.p_No and payment.pay_Orderno=#{Orderno}
+		]]>
+	</select>
 
 	<insert id="payinsert"
 		parameterType="kr.co.everyfarm.payment.PaymentBean">
@@ -88,11 +118,6 @@
 		values(#{pay_No},#{pay_Id},#{pay_Land},#{pay_Seed},#{pay_Totalprice},#{pay_Deliverymemo},#{pay_Address},#{pay_Name},#{pay_Tel},#{pay_Email})
 		]]>
 	</insert>
-
-	<select id="sendmessage" resultType="kr.co.everyfarm.payment.PaymentBean">
-		select * from payment where
-		pay_orderno=#{pay_Orderno}
-	</select>
 
 	<delete id="paydelete" parameterType="java.util.List">
 		delete from payment 

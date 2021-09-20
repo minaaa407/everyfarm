@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -422,15 +423,17 @@ public class FarmerController {
 		FarmerDAO fDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		paging.setF_Id(f_Id);
 
-		List<PaymentBean> myCus = fDAO.fDelDate(paging);
-
-		Calendar cal = Calendar.getInstance();
-		int month = cal.get(Calendar.MONTH) + 1;
-
-		model.addAttribute("myCus", myCus);
-		model.addAttribute("nowMonth", month);
+		PaymentBean myCus = fDAO.fDelDate(paging);
+		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();
+		System.out.println("now:::" + test.format(now));
+		System.out.println("myCUs:::" + test.format(myCus.getPay_Date()));
+		
+		model.addAttribute("myCus", test.format(myCus.getPay_Date()));
+		model.addAttribute("nowMonth",test.format(now));
 		return "farmer/myPage";
 	}
+
 
 	@RequestMapping(value = "/contact")
 	public String contact() {

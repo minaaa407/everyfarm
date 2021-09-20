@@ -7,6 +7,7 @@
 <head>
 <title>EVERY FARM | 회원 리스트</title>
 <meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <style>
 .modal {
 	position: absolute;
@@ -17,20 +18,16 @@
 	left: 0;
 	display: none;
 }
-
 td, th {
 	border-color: #9ea4ca;
 }
-
 body {
 	background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 }
-
 .limiter {
 	width: 100%;
 	margin: 0 auto;
 }
-
 .container-table100 {
 	width: 100%;
 	min-height: 100vh;
@@ -40,11 +37,9 @@ body {
 	flex-wrap: wrap;
 	flex-direction: column;
 }
-
 .wrap-table100 {
 	width: 1170px;
 }
-
 table {
 	border-spacing: 1;
 	border-collapse: collapse;
@@ -54,48 +49,38 @@ table {
 	margin: 0 auto;
 	position: relative;
 }
-
 table * {
 	position: relative;
 }
-
 table td, table th {
 	padding-left: 8px;
 }
-
 table thead tr {
 	height: 60px;
 	background: #efefef
 }
-
 table tbody tr {
 	height: 50px;
 	background-color: rgba(255, 255, 255, 0.4);
 }
-
 table tbody tr:last-child {
 	border: 0;
 }
-
 table td, table th {
 	text-align: center;
 }
-
 .pagination {
 	display: inline-block;
 }
-
 .pagination a {
 	float: left;
 	padding: 8px 16px;
 	border-radius: 20%;
 }
-
 .pagination a.active {
 	background-color: #7971ea;
 	color: white;
 }
-
 .pagination a:hover:not (.active ) {
 	background-color: silver;
 }
@@ -255,7 +240,6 @@ table td, table th {
 						"click",
 						function(e) {
 							e.preventDefault();
-
 							moveForm
 									.append("<input type='hidden' name='pay_Date' value='"
 											+ $(this).attr("href") + "'>");
@@ -267,25 +251,19 @@ table td, table th {
 			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
 			moveForm.attr("action", "/myCustomer");
 			moveForm.submit();
-
 		});
-
 		$(".search_area button").on("click", function(e) {
 			e.preventDefault();
-
 			let type = $(".search_area select").val();
 			let keyword = $(".search_area input[name='keyword']").val();
-
 			if (!type) {
 				alert("검색 종류를 선택하세요.");
 				return false;
 			}
-
 			if (!keyword) {
 				alert("키워드를 입력하세요.");
 				return false;
 			}
-
 			moveForm.find("input[name='type']").val(type);
 			moveForm.find("input[name='keyword']").val(keyword);
 			moveForm.find("input[name='pageNum']").val(1);

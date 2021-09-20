@@ -8,12 +8,20 @@ public class Criteria {
    private int perPageNum;
    private String searchType;
    private String keyword;
-   
+   private String f_Id;
    
    
 
 
-   public Criteria() {
+   public String getF_Id() {
+	return f_Id;
+}
+
+public void setF_Id(String f_Id) {
+	this.f_Id = f_Id;
+}
+
+public Criteria() {
       this.page = 1;
       this.perPageNum = 10;
       
@@ -87,8 +95,9 @@ public class Criteria {
 @Override
 public String toString() {
 	return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", searchType=" + searchType + ", keyword="
-			+ keyword + "]";
+			+ keyword + ", f_Id=" + f_Id + "]";
 }
+
 
 
    

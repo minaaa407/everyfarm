@@ -11,8 +11,7 @@
 <title>Sign Up | Bootstrap Based Admin Template - Material
 	Design</title>
 <!-- Favicon-->
-<link rel="icon" href="resources/admin/sign/favicon.ico"
-	type="image/x-icon">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 
 <!-- Google Fonts -->
 <link

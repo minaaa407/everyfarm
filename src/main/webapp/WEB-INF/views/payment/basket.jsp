@@ -23,6 +23,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"">
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <!-- <link rel="stylesheet" href="/assets/css/style.css"> -->
@@ -552,7 +553,7 @@
 		var land = $('#land'+onlynumber).val() * 1;
 		var price = eachtotalvar * 1;
 		document.getElementById("beforeland"+onlynumber).value = land;
-		window.location.href = "http://localhost:8090/basketUpdate?bno="+bno+"&land="+land+"&price="+price+"&checkindex="+index_i_arr;
+		window.location.href = "/basketUpdate?bno="+bno+"&land="+land+"&price="+price+"&checkindex="+index_i_arr;
 	} 
     
     
@@ -569,7 +570,7 @@
         }
         var bno = $('#'+onlynumber).val() * 1;
         var seed = $('#b_Seed'+onlynumber).val();
-        window.location.href = "http://localhost:8090/basketSeedUpdate?bno="+bno+"&seed="+seed+"&checkindex="+index_i_arr;
+        window.location.href = "/basketSeedUpdate?bno="+bno+"&seed="+seed+"&checkindex="+index_i_arr;
     	
     }
     
@@ -683,7 +684,7 @@
 				  for (var j = 0; j < check_length; j++) {
 				 			bno.push($('#'+index_i_arr[j]).val() * 1);
 				  }
-				  window.location.href = "http://localhost:8090/basketdelete?bno="+bno;
+				  window.location.href = "/basketdelete?bno="+bno;
 			} else{   
 				return false;
 			}

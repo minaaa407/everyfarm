@@ -4,6 +4,7 @@
 <!DOCTYPE>
 <html>
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
 $(document ).ready(function() {
