@@ -181,8 +181,8 @@ margin-bottom:10px;
             </div>
         		<!-- 선택상품 제어 버튼 -->
          <!-- 기본배송 -->
-        <div class="ec-base-table typeList">
-            <table border="1" summary="">
+        <div style="width:100%; overflow:auto">
+            <table border="1" summary="" class="txc-table" style="." width="100%" cellspacing="0" cellpadding="0">
 				<thead>
 					<tr class="center">
                         <th scope="col">이미지</th>
