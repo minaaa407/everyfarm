@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.everyfarm.product.ProductDao">
+	<select id="list" resultType="kr.co.everyfarm.product.ProductBean">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product	
+	</select>
+	
+	<select id="listserachpageingcount" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product
+		  where (${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) order by ${orderby} ${ascdesc};		
+	</select>
+	
+	<select id="listserachpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product
+		  where (${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) order by ${orderby} ${ascdesc} limit #{limit}  offset #{offset};		
+	</select>
+	
+	<select id="listserachacceptpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept, p_View, ifnull((select f_rate from farmer where f_id =p_id),0) as p_Rate from product
+		  where (${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) and (p_Accept = 'Y') order by ${orderby} ${ascdesc} limit #{limit}  offset #{offset};		
+	</select>
+	
+
+	<insert id="insert" parameterType="kr.co.everyfarm.product.ProductBean">
+		insert into product(p_Id,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,
+		p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,p_Imgdetail4,p_Landprice,p_Manpay,p_Accept)
+		 values (#{p_Id},#{p_Title},#{p_Content},#{p_Img},#{p_Subimg1},#{p_Subimg2},
+		 #{p_Subimg3},#{p_Subimg4},#{p_Imgdetail1},#{p_Imgdetail2},#{p_Imgdetail3},#{p_Imgdetail4},#{p_Landprice},#{p_Manpay},#{p_Accept})
+	</insert>
+	
+	<select id="onelist" resultType="kr.co.everyfarm.product.ProductBean" parameterType="int">
+		select  p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product where p_no = #{p_No}
+	</select>
+	
+	
+	<insert id="insertbasket" parameterType="kr.co.everyfarm.basket.BasketBean">
+		insert into basket(b_id, b_pno, b_land, b_seed, b_totalprice)
+		 values (#{b_Id},#{b_Pno},#{b_Land},#{b_Seed},#{b_Totalprice})
+	</insert>
+	
+	
+	<select id="listmaxpno" resultType="int">
+		select max(p_No) from product
+	</select>
+	
+	<select id="viewpno" resultType="int">
+		select p_View from product where p_no = #{p_No}	
+	</select>
+	
+	<update id="updateview" parameterType ="kr.co.everyfarm.product.ProductBean">
+		update product set p_View=#{p_View} where p_no = #{p_No}	
+	</update>
+	
+	
+	<update id="updateaccept" parameterType ="kr.co.everyfarm.product.ProductBean">
+		update product set p_Accept=#{p_Accept} where p_no = #{p_No}	
+	</update>
+	
+	<select id="productfrate" resultType="float" parameterType="int">
+		select f_rate from farmer where f_id = (select p_id from product where p_no= #{p_No});		
+	</select>
+	
+	
+	<select id="productpaymentchart" resultType="int" parameterType="hashmap">
+		select ifnull(sum(pay_totalprice),0) from payment
+		 where ((date_format(pay_date,'%Y') = #{year} )) and (date_format(pay_date,'%M')) = #{Month}
+		 and (pay_no IN (select p_no from product where p_id =#{farmerid} ))	
+	</select>
+	
+	<select id="adminproductpaymentchart" resultType="int" parameterType="hashmap">
+		select ifnull(sum(pay_totalprice),0) from payment
+		 where ((date_format(pay_date,'%Y') = #{year} )) and (date_format(pay_date,'%M')) = #{Month}	
+	</select>
+
+	
+
+
+	
+	<select id="listcount" resultType="int">
+		select count(*) from product		
+	</select>
+	
+	
+	
+	<select id="listpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_id,p_no,p_title,p_content,p_Mainimage,p_Subimage,p_imagedetail,p_landprice,p_main,p_sub,p_seedprice,p_manpay,p_delivery,p_date,p_accept, p_seedcount from product limit #{limit}  offset #{offset};		
+	</select>
+	
+	
+	<select id="listacceptcount" resultType="int">
+		select count(*) from product where p_Accept = 'Y' 		
+	</select>
+	
+		<select id="listacceptncount" resultType="int">
+		select count(*) from product where p_Accept = 'N' 		
+	</select>
+	
+	<select id="listacceptpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_id,p_no,p_title,p_content,p_Mainimage,p_Subimage,p_imagedetail,p_landprice,p_main,p_sub,p_seedprice,p_manpay,p_delivery,p_date,p_accept, p_seedcount from
+		 product where p_Accept = 'Y' limit #{limit}  offset #{offset}	
+	</select>
+	
+	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
+	      update product set p_Id=#{p_Id}, p_Title=#{p_Title},
+	      p_Content= #{p_Content},p_Img= #{p_Img},
+	      p_Subimg1= #{p_Subimg1},p_Subimg2= #{p_Subimg2},p_Subimg3= #{p_Subimg3},
+	      p_Subimg4=#{p_Subimg4},p_Imgdetail1=#{p_Imgdetail1},
+	      p_Imgdetail2=#{p_Imgdetail2},p_Imgdetail3=#{p_Imgdetail3},
+	      p_Imgdetail4=#{p_Imgdetail4},p_Landprice=#{p_Landprice},
+	      p_Manpay=#{p_Manpay},
+	      where p_no = #{p_No}   
+   </update>
+   
+   <delete id="delete">
+      	delete from product where p_No=#{p_No}   
+   </delete>
+
+   <select id="desclist" resultType="kr.co.everyfarm.product.ProductBean">
+	      select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product   
+	      where p_Accept ='Y' order by p_No asc limit #{limit}  offset #{offset};
+   </select>   
+   
+   <select id="asclist" resultType="kr.co.everyfarm.product.ProductBean">
+	      select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product   
+	      where p_Accept ='N' order by p_No asc limit #{limit}  offset #{offset};
+   </select>
+   
+   <select id="info" resultType="kr.co.everyfarm.product.ProductBean">
+     	 select* from product where p_No = #{p_No}      
+   </select>
+
+
+   <select id="listland" resultType="kr.co.everyfarm.product.ProductBean" parameterType="String" >
+	      select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product where p_Id = #{p_Id}
+   </select>
+   
+   <select resultType="kr.co.everyfarm.product.ProductBean"
+      id="viewList">select * from product order by p_View desc limit 3; </select>
+
+<!-- 듄 payment에 이용 --> 
+	
+		<select id ="productinfo" resultType="kr.co.everyfarm.product.ProductBean">
+		    <![CDATA[
+		    SELECT p_no, p_img, p_title, p_landprice, p_manpay FROM product where p_no=#{p_no};
+		   ]]>
+		  </select>
+		  
+	<!-- 듄 payment에 이용 -->
+
+
+
+
+</mapper>

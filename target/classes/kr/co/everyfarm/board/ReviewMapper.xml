@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.everyfarm.board.ReviewDAO">
+
+   <sql id="pageSearch">
+      <trim prefix="where(" suffix=")" prefixOverrides="OR">
+         <foreach collection="typeArr" item="type">
+            <trim prefix="OR">
+               <choose>
+                  <when test="type == 'T'.toString()">
+                     rev_Title like concat ('%',#{keyword},'%')
+                  </when>
+                  <when test="type == 'C'.toString()">
+                     rev_Cont like concat ('%',#{keyword},'%')
+                  </when>
+                  <when test="type == 'W'.toString()">
+                     rev_Name like concat ('%',#{keyword},'%')
+                  </when>
+               </choose>
+            </trim>
+         </foreach>
+      </trim>
+   </sql>
+
+  <!-- 목록~출력 -->
+   <select id="list" resultType="kr.co.everyfarm.board.ReviewBean">
+      SELECT * FROM review ORDER BY
+      rev_Date DESC
+   </select>
+
+   <select id="paging"
+      resultType="kr.co.everyfarm.board.ReviewBean">
+      SELECT * FROM (
+      SELECT rev_no, rev_Name, rev_Id, rev_Title, rev_Cont, rev_Readcount,
+      rev_Date, rev_Rate, rev_ProNum
+      FROM review
+      <if test="keyword != null">
+         <include refid="pageSearch"></include>
+      </if>
+      ) as T1 ORDER BY rev_date DESC
+      LIMIT #{skip},#{amount}
+   </select>
+   
+   <select id="myQnAtoFar" resultType="kr.co.everyfarm.board.QnABean">
+      SELECT * FROM  qnatofarmer ORDER BY q_date DESC
+   </select>
+
+
+   <select id="revCount" resultType="int">
+      SELECT COUNT(*) from review
+      <if test="keyword != null">
+         <include refid="pageSearch"></include>
+      </if>
+
+   </select>
+
+
+   <select id="mylist"
+      resultType="kr.co.everyfarm.board.ReviewBean">
+      select * from review WHERE rev_Id=#{m_Id}
+   </select>
+
+   <select resultType="kr.co.everyfarm.board.ReviewBean"
+      id="revDetail">
+      SELECT * FROM review WHERE rev_No=#{rev_No}
+   </select>
+
+   <select id="reply"
+      resultType="kr.co.everyfarm.board.ReviewReplyBean">
+      SELECT * FROM r_reply WHERE rev_No = #{rev_No} ORDER BY
+      rep_Date
+   </select>
+
+   <insert id="insert"
+      parameterType="kr.co.everyfarm.board.ReviewBean">
+      INSERT INTO review ( rev_Name, rev_Id, rev_Title,
+      rev_Cont, rev_Rate,rev_ProNum)
+      values ( #{rev_Name} ,#{rev_Id}, #{rev_Title},
+      #{rev_Cont}, #{rev_Rate}, #{rev_ProNum})
+   </insert>
+
+   <insert id="replyInsert"
+      parameterType="kr.co.everyfarm.board.ReviewReplyBean">
+      INSERT INTO r_reply (rep_No, rep_Subno, rev_No, rep_Id,
+      rep_Cont, rep_Secret) values
+      ( #{rep_No}, #{rep_Subno}, #{rev_No}, #{rep_Id},
+      #{rep_Cont}, #{rep_Secret})
+   </insert>
+
+
+   <delete id="revDelete" parameterType="int">
+      DELETE FROM review WHERE
+      rev_No=#{rev_No}
+   </delete>
+
+   <update id="ReadCount"
+      parameterType="kr.co.everyfarm.board.ReviewBean">
+      UPDATE review SET rev_Readcount = rev_Readcount + 1
+      WHERE
+      rev_No=#{rev_No}
+   </update>
+
+   <update id="revUpdate">
+      UPDATE review SET
+      rev_Title = #{rev_Title},
+      rev_Cont =
+      #{rev_Cont},
+      rev_Rate =#{rev_Rate}
+      WHERE rev_No=#{rev_No}
+   </update>
+
+   <update id="myRate" parameterType="Map">
+      UPDATE farmer SET f_Rate =
+      f_Rate + #{rev_Rate} WHERE f_Id = (SELECT p_Id
+      FROM product where
+      p_No=#{pay_No})
+   </update>
+
+   <!-- index -->
+   <select id="reviewList"
+      resultType="kr.co.everyfarm.board.ReviewBean">
+      select * from review order by rev_Readcount desc limit 3
+   </select>
+   <!-- index -->
+
+</mapper>

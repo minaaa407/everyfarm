@@ -13,7 +13,6 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-
  <!-- Css Styles -->
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link rel="stylesheet" href="resources/product/css/style.css" type="text/css">
@@ -23,7 +22,7 @@
 
 <jsp:include page="/WEB-INF/views/home/header.jsp" />
 <style>
-a:hover, a:focus {
+.over:hover, .over:focus {
     text-decoration: none;
     outline: none;
     color: #d8d57d;
@@ -254,7 +253,7 @@ window.onload = function(){
      				<br>
                     <div align="center" class="row" id="productlist1">
                     	<c:forEach var="p" items="${productlist }" varStatus="status">
-	                        <div class="col-lg-4 col-md-6 col-sm-6"><a href="/productdetail?productno=${p.p_No}">
+	                        <div class="col-lg-4 col-md-6 col-sm-6"><a class="over" href="/productdetail?productno=${p.p_No}">
 	                        	<img id='product${p.p_No}' src="/resources/upload/product/${p.p_No}/${p.p_Img}"
 	                        	 class="test1" width="250" height="200" alt="Image ${p.p_No}"><br>
 									 ${p.p_Title}</a><br>

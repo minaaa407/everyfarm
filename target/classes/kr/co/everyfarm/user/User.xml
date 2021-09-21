@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.everyfarm.user.MemberDAO">
+
+	<select id="mlist" resultType="kr.co.everyfarm.user.MemberBean">
+		select * from member
+	</select>
+
+	<insert id="mjoin"
+		parameterType="kr.co.everyfarm.user.MemberBean">
+		insert into member (m_id, m_name, m_pw, m_Addr, m_tel,
+		m_birth)
+		Values (#{m_Id}, #{m_Name}, #{m_Pw}, #{m_Addr},
+		#{m_Tel},
+		#{m_Birth})
+	</insert>
+
+	<insert id="kakaoJoin">
+		insert into member(m_id, m_name, m_pw, m_Addr, m_tel,
+		m_birth)
+		values (#{m_Id}, #{m_Name}, "KAKAO", "KAKAO", "KAKAO",
+		"KAKAO")
+	</insert>
+
+	<insert id="naverJoin">
+		insert into member(m_id, m_name, m_pw, m_Addr, m_tel,
+		m_birth)
+		values (#{m_Id}, #{m_Name}, "NAVER", "NAVER", #{m_Tel},
+		#{m_Birth})
+	</insert>
+
+	<select id="mlogin" resultType="kr.co.everyfarm.user.MemberBean">
+		select * from member where m_id =
+		#{m_Id} and m_pw = #{m_Pw}
+	</select>
+
+	<select id="slogin" resultType="kr.co.everyfarm.user.MemberBean">
+		select * from member where m_id =
+		#{m_Id}
+	</select>
+
+	<select id="mInfo" resultType="kr.co.everyfarm.user.MemberBean">
+		select * from member where
+		m_id=#{m_Id}
+	</select>
+
+	<update id="mDelete">
+		UPDATE member SET
+		m_Id = '탈퇴한 회원입니다',
+		m_Pw = '탈퇴한 회원입니다',
+		m_Name = '탈퇴한 회원입니다',
+		m_Addr = '탈퇴한 회원입니다',
+		m_tel = '탈퇴한 회원입니다',
+		m_Birth
+		= '탈퇴한 회원입니다',
+		m_Date = sysdate() WHERE m_id=#{m_Id}
+	</update>
+
+	<update id="uDelete" parameterType="java.util.List">
+		UPDATE member SET
+		m_Id = '탈퇴한 회원입니다',
+		m_Pw = '탈퇴한 회원입니다',
+		m_Name = '탈퇴한 회원입니다',
+		m_Addr = '탈퇴한 회원입니다',
+		m_tel = '탈퇴한 회원입니다',
+		m_Birth = '탈퇴한 회원입니다',
+		m_Date = sysdate() WHERE m_id IN (
+		<foreach collection="list" item="delete" index="index"
+			separator=",">
+			'${delete}'
+		</foreach>
+		)
+	</update>
+
+	<select id="checkId" resultType="int">
+		select count(*) from member
+		where m_Id = #{m_Id}
+	</select>
+
+	<select id="mailNumber" resultType="int">
+		select * from email
+		where e_Id
+		= #{e_Id} and e_Num = #{e_Num} order by e_Date desc limit 1
+	</select>
+
+	<insert id="mail">
+		insert into email(e_Id, e_num)
+		values (#{e_Id},
+		#{e_Num})
+	</insert>
+
+	<update id="upPw">
+		update member set m_Pw = #{m_Pw} where m_Id = #{m_Id}
+	</update>
+
+	<select id="findId" resultType="kr.co.everyfarm.user.MemberBean">
+		select * from member where
+		m_name=#{m_Name} and m_tel=#{m_Tel}
+	</select>
+
+	<select id="findPw" resultType="kr.co.everyfarm.user.MemberBean">
+		select * from member where
+		m_id=#{m_Id} and m_name=#{m_Name} and m_tel=#{m_Tel}
+	</select>
+
+	<!-- 결제 페이지 이용 -->
+
+	<select id="userInfo"
+		resultType="kr.co.everyfarm.user.MemberBean">
+	    <![CDATA[
+	    SELECT m_name, m_tel, m_addr, m_id FROM member where m_id = #{m_Id};
+	   ]]>
+	</select>
+
+	<!-- 결제 페이지 이용 -->
+
+	<update id="mPwdUp">
+		UPDATE member SET
+		m_Pw = #{m_Pw}
+		where m_id=#{m_Id}
+	</update>
+
+	<update id="mUpdate">
+		UPDATE member SET
+		m_Pw = #{m_Pw},
+		m_Addr =#{m_Addr},
+		m_tel = #{m_Tel}where
+		m_id=#{m_Id}
+	</update>
+
+	<update id="mAddrUpdate">
+		UPDATE member SET
+		m_Addr = #{m_Addr}
+		where m_id=#{m_Id}
+	</update>
+
+	<update id="mNameUpdate">
+		UPDATE member SET
+		m_Name = #{m_Name}
+		where m_id=#{m_Id}
+	</update>
+
+	<insert id="userAdd"
+		parameterType="kr.co.everyfarm.user.MemberBean">
+		insert into member (m_id, m_name, m_pw, m_Addr, m_tel,
+		m_birth)
+		Values (#{m_Id}, #{m_Name}, #{m_Pw}, 'TEST', 'TEST', 'TEST')
+	</insert>
+
+</mapper>

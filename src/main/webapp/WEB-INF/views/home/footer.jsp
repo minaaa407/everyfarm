@@ -57,7 +57,8 @@ margin-top:200px;
 			</div>
 			<div class="row">
 				<div class="col-md-12 text-center">
-
+					<div>Copyright © 2021 All rights reserved </div>
+					<div>ThisWebSite is Made By Team Every Farm</div>
 					<p style="font-size : 20px">
 						김민아&nbsp;&nbsp;권형준&nbsp;&nbsp;김주혁&nbsp;&nbsp;박정빈&nbsp;&nbsp;연정환&nbsp;&nbsp;이지원
 					</p>

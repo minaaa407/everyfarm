@@ -10,12 +10,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>EveryFarm : 결제</title>
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<style>
+<style type="text/css">
+@media only screen and (max-width: 600px) {
+    .ulStep {
+    padding-left: 45px;
+    }
+}
  #rphone2_1 {
  height:100%;
  width:15%;
@@ -119,9 +126,7 @@ margin-top:2px;
 text-align:right;
 }
 .img{
-width:inherit;
-max-width:100%;
-height:auto;
+max-width:100px;
 }
 .center{
 text-align:center;
@@ -140,6 +145,7 @@ padding-top:10px;
 .agree {
 margin-bottom:10px;
 }
+
 </style>
 </head>
 <body>
@@ -177,15 +183,6 @@ margin-bottom:10px;
          <!-- 기본배송 -->
         <div class="ec-base-table typeList">
             <table border="1" summary="">
-				<colgroup>
-					<col style="width:130px"/>
-					<col style="width:150px"/>
-					<col style="width:75px"/>
-					<col style="width:98px"/>
-					<col style="width:98px"/>
-					<col style="width:85px"/>
-					<col style="width:98px"/>
-				</colgroup>
 				<thead>
 					<tr class="center">
                         <th scope="col">이미지</th>
