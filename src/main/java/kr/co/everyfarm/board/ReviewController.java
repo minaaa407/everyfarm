@@ -113,8 +113,9 @@ public class ReviewController {
 			@RequestParam("rev_No") int rev_No) {
 		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		revDAO.ReadCount(reviewBean);
-
 		List<ReviewReplyBean> list = revDAO.reply(rev_No);
+		String test = reviewReplyBean.getRep_Id().replaceAll("(?<=.{1}).",	"*");
+		reviewReplyBean.setRep_Id(test);
 		ReviewBean revVO = revDAO.revDetail(reviewBean);
 		model.addAttribute("repList", list);
 		model.addAttribute("revList", revVO);

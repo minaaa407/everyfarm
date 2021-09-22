@@ -9,8 +9,6 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link
 	href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
 	rel="stylesheet">
@@ -37,6 +35,64 @@
 	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
 	crossorigin="anonymous">
+<style type="text/css">
+.ribbon {
+	width: 48%;
+	height: 188px;
+	margin-bottom: 30px;
+	background-size: cover;
+	text-transform: uppercase;
+	color: white;
+}
+
+.ribbon:nth-child(even) {
+	margin-right: 4%;
+}
+
+@media ( max-width : 500px) {
+	.ribbon {
+		width: 100%;
+	}
+	.ribbon:nth-child(even) {
+		margin-right: 0%;
+	}
+}
+
+.ribbon2 {
+	width: 60px;
+	padding: 10px 0;
+	position: absolute;
+	top: -6px;
+	left: 25px;
+	text-align: center;
+	border-top-left-radius: 3px;
+	background: #F47530;
+}
+
+.ribbon2:before {
+	height: 0;
+	width: 0;
+	right: -5.5px;
+	top: 0.1px;
+	border-bottom: 6px solid #8D5A20;
+	border-right: 6px solid transparent;
+}
+
+.ribbon2:before, .ribbon2:after {
+	content: "";
+	position: absolute;
+}
+
+.ribbon2:after {
+	height: 0;
+	width: 0;
+	bottom: -29.5px;
+	left: 0;
+	border-left: 30px solid #F47530;
+	border-right: 30px solid #F47530;
+	border-bottom: 30px solid transparent;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/home/header.jsp" />
@@ -75,15 +131,15 @@
 					<div class="col-md-4 d-flex align-items-stretch">
 						<div class="services text-center">
 							<div
-								class="icon d-flex justify-content-center align-items-center">
+								class="icon d-flex justify-content-center align-items-center ribbon">
 								<span class="flaticon-fence"></span>
+								<span class="ribbon2">1</span>
 							</div>
 							<div class="text">
-								<h3>Garden Care</h3>
-								<p>Seeking justice in the world is a sed significant
-									emotional and investment when we follow this call.</p>
+								<h3>${farView1.p_Title}</h3>
+								<p>${farView1.p_Content}</p>
 							</div>
-							<a href="#"
+							<a href="/productdetail?productno=${farView1.p_No}"
 								class="btn-custom d-flex align-items-center justify-content-center"><span
 								class="ion-ios-arrow-round-forward"></span></a>
 						</div>
@@ -91,15 +147,15 @@
 					<div class="col-md-4 d-flex align-items-stretch">
 						<div class="services text-center">
 							<div
-								class="icon d-flex justify-content-center align-items-center">
+								class="icon d-flex justify-content-center align-items-center ribbon">
 								<span class="flaticon-lawn-mower"></span>
+								<span class="ribbon2">2</span>
 							</div>
 							<div class="text">
-								<h3>Lawn mowing</h3>
-								<p>Seeking justice in the world is a sed significant
-									emotional and investment when we follow this call.</p>
+								<h3>${farView2.p_Title}</h3>
+								<p>${farView2.p_Content}</p>
 							</div>
-							<a href="#"
+							<a href="/productdetail?productno=${farView2.p_No}"
 								class="btn-custom d-flex align-items-center justify-content-center"><span
 								class="ion-ios-arrow-round-forward"></span></a>
 						</div>
@@ -107,15 +163,15 @@
 					<div class="col-md-4 d-flex align-items-stretch">
 						<div class="services text-center">
 							<div
-								class="icon d-flex justify-content-center align-items-center">
+								class="icon d-flex justify-content-center align-items-center   ribbon">
 								<span class="flaticon-natural-resources"></span>
+								<span class="ribbon2">3</span>
 							</div>
 							<div class="text">
-								<h3>Lawn care</h3>
-								<p>Seeking justice in the world is a sed significant
-									emotional and investment when we follow this call.</p>
+								<h3>${farView3.p_Title}</h3>
+								<p>${farView3.p_Content}</p>
 							</div>
-							<a href="#"
+							<a href="/productdetail?productno=${farView3.p_No}"
 								class="btn-custom d-flex align-items-center justify-content-center"><span
 								class="ion-ios-arrow-round-forward"></span></a>
 						</div>
@@ -212,16 +268,11 @@
 					<h2>BEST REVIEW</h2>
 				</div>
 			</div>
-			<div class="row d-flex">
-				<div class="col-md-4 d-flex ftco-animate">
 					<c:choose>
-						<c:when test="${empty revView}">
-							<div>
-								<p align="center">상품이 존재하지 않습니다.</p>
-							</div>
-						</c:when>
 						<c:when test="${!empty revView}">
+			<div class="row d-flex">
 							<c:forEach var="revView" items="${revView}">
+				<div class="col-md-4 d-flex ftco-animate">
 								<div class="blog-entry justify-content-end">
 
 									<a href="blog-single.html" class="block-20"
@@ -239,16 +290,15 @@
 										</p>
 									</div>
 								</div>
+				</div>
 							</c:forEach>
+			</div>
 						</c:when>
 					</c:choose>
-				</div>
-			</div>
 		</div>
 	</section>
-	
-<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 
+	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 
 	<script src="resources/index/js/jquery.min.js"></script>
 	<script src="resources/index/js/jquery-migrate-3.0.1.min.js"></script>

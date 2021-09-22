@@ -63,6 +63,8 @@ public class UserController {
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model, ProductBean product, FarmerBean farmerBean, ReviewBean review, PaymentBean pay) {
+		
+		
 
 		ProductDao prodao = sqlSessionTemplate.getMapper(ProductDao.class);
 		List<ProductBean> proView = prodao.viewList();
@@ -77,9 +79,21 @@ public class UserController {
 		model.addAttribute("payView", payView);
 
 		FarmerDAO farDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
-		List<FarmerBean> farView = farDAO.bestFarmer();
-		model.addAttribute("farView", farView);
-
+		List<PaymentBean> farView = farDAO.forbestItem();
+		System.out.println("vvvv :::::::" + farView);
+		int Pay_no1 = farView.get(0).getPay_No(); // 1 등
+		int Pay_no2 = farView.get(1).getPay_No(); // 2 등
+		int Pay_no3 = farView.get(2).getPay_No(); // 3 등
+		System.out.println(Pay_no1);
+		System.out.println(Pay_no2);
+		System.out.println(Pay_no3);
+		System.out.println(farDAO.bestItem(Pay_no1));
+		System.out.println(farDAO.bestItem(Pay_no2));
+		System.out.println(farDAO.bestItem(Pay_no3));
+		model.addAttribute("farView1", farDAO.bestItem(Pay_no1));
+		model.addAttribute("farView2", farDAO.bestItem(Pay_no2));
+		model.addAttribute("farView3", farDAO.bestItem(Pay_no3));
+		
 		return "home/home";
 	}
 

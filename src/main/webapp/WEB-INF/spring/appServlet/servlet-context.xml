@@ -67,17 +67,45 @@
 
 	<beans:bean id="SessionInterceptor"
 		class="kr.co.everyfarm.user.SessionInterceptor" />
-
+	<beans:bean id="AdminInterceptor"
+		class="kr.co.everyfarm.user.AdminInterceptor" />
+	<beans:bean id="FarmerInterceptor"
+		class="kr.co.everyfarm.user.FarmerInterceptor" />
+	
 	<interceptors>
 		<interceptor>
 			<mapping path="/reviewWrite" />	   <!-- 리뷰 작성 -->
 			<mapping path="/reviewCommWrite" /> <!-- 리뷰 댓글 작성 -->
-			<mapping path="/productbasketchoice"/>
-			<mapping path="/PaymentInfo"/>
+			<mapping path="/productbasketchoice" />
+			<mapping path="/PaymentInfo" />
+			<mapping path="/myPayList" />
 			<beans:ref bean="SessionInterceptor" /><!-- 모든 Logger에 대한 인텁세터 
 				할려면~ /** 하래요 -->
 		</interceptor>
+		<interceptor>
+			<mapping path="/admin" />
+			<mapping path="/userList" />
+			<mapping path="/farmerList" />
+			<mapping path="/farmerAdd" />
+			<mapping path="/userAdd" />
+			<mapping path="/userDelete" />
+			<mapping path="/farmerD" />
+			<mapping path="/farmerY" />
+			<mapping path="/farmerpaymentlist" />
+			<mapping path="/adminPaymentList" />
+			<mapping path="/adminproductlist" />
+			<mapping path="/adminPayListDelete" />
+			
+			<beans:ref bean="AdminInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/farmerMypage"/>
+			<mapping path="/myCustomer"/>
+			<beans:ref bean="FarmerInterceptor"/>
+		</interceptor>
+
 	</interceptors>
+
 
 	<!-- Validator 추가 -->
 	<beans:bean

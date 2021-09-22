@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class SessionInterceptor extends HandlerInterceptorAdapter {
+public class AdminInterceptor extends HandlerInterceptorAdapter {
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(SessionInterceptor.class);
@@ -26,11 +26,11 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		response.setContentType("text/html; charset=utf-8"); 
 		HttpSession httpSession = request.getSession();
 		PrintWriter printwriter = response.getWriter();
-		
 
-		if(httpSession.getAttribute("member")==null) {
+		if(httpSession.getAttribute("admin")==null) {
 			logger.info("로그인 후 이용가능한 기능 접근");
-			printwriter.print("<script charset=UTF-8>alert('로그인 후 이용가능합니다.'); location.href=\"/login\"</script>");
+			printwriter.print("<script charset=UTF-8>alert('로그인 후 이용가능합니다.'); location.href=\"/adminLogin\"</script>");
+			//response.sendRedirect("/login");
 			return false;
 		}
 		return true;

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.everyfarm.board.Paging;
 import kr.co.everyfarm.board.ReviewBean;
 import kr.co.everyfarm.payment.PaymentBean;
+import kr.co.everyfarm.product.ProductBean;
 import kr.co.everyfarm.product.ProductqnaBean;
 import kr.co.everyfarm.user.EmailBean;
 
@@ -39,8 +40,6 @@ public interface FarmerDAO {
 
 	public int myRate(FarmerBean farmerBean);
 
-	public List<FarmerBean> bestFarmer();
-
 	public void farmerAdd(FarmerBean farmerBean);
 
 	public List<PaymentBean> paging(Paging paging);
@@ -60,6 +59,10 @@ public interface FarmerDAO {
 	public void upName(FarmerBean farmerBean);
 
 	public void upTel(FarmerBean farmerBean);
+	
+	public List<PaymentBean> forbestItem();
+	
+	public ProductBean bestItem(int pay_no);
 	
 	/* 차트 */
 	public List<PaymentBean> searchPno(FarmerBean farmerBean);
