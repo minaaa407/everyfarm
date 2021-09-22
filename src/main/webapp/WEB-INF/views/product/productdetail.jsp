@@ -350,19 +350,19 @@ function oneqna(qnaid){
 							
 								a +="<tr>";
 								if(onelist.c_Subno > 0){
-									a +="<td style='width:80%;padding-left: 20px;'>";
-									a +="<span style='font-size:20px'>└</span>"+onelist.c_Content+"<br></td>";
+									a +="<td style='padding-left: 20px;'>";
+									a +="<span style='font-size:20px'>└</span>"+onelist.c_Content+"<br><span style='font-size:8px'>"
+									+onelist.c_Date+" "+onelist.c_Id+"</span></td>";
 								}else{
-									a +="<td style='width:80%'>"+onelist.c_Content +"<br></td>";
+									a +="<td style=''>"+onelist.c_Content +"<br><span style='font-size:8px'>"
+									+onelist.c_Date+" "+onelist.c_Id+"</span></td>";
 									
 								}
-								a +="<td  style='width:20%'>";
-								a +=onelist.c_Id+"<br>"+onelist.c_Date+"<br></td><tr></tr><td>";
+								a +="</tr><tr><td>";
 								if( ((onelist.c_Subno==0)&&(${(not empty farmer || not empty admin)}))&&onelist.c_Id !='삭제' ){
 									a +="<input name ='"+onelist.c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton(this.name)' />";
 								}
 														
-								a+="</td><td>";
 								//뒤로가기 방지&& ${member.m_Id} == qnalist[i].c_Id
 								if( ( ${(not empty farmer || not empty admin)} ) && (onelist.c_Id !='삭제')||('${member.m_Id}'==onelist.c_Id)  ){
 									var seq= onelist.c_Seq;
@@ -402,19 +402,20 @@ function ajax(urlpath,bean){
 					for(var i =0; i < qnalist.length; i++){
 						a +="<table style='width:100%'><tr>";
 						if(qnalist[i].c_Subno > 0){
-							a +="<td style='width:80%;padding-left: 20px;'>";
-							a +="<span style='font-size:20px'>└</span>"+qnalist[i].c_Content+"<br></td>";
+							a +="<td style='padding-left: 20px;'>";
+							a +="<span style='font-size:20px'>└</span>"+qnalist[i].c_Content+"<br><span style='font-size:8px'>"
+							+qnalist[i].c_Date+" "+qnalist[i].c_Id+"</span></td>";
 						}else{
-							a +="<td style='width:80%'>"+qnalist[i].c_Content +"<br></td>";
-							
+							a +="<td style=''>"+qnalist[i].c_Content +"<br><span style='font-size:8px'>"
+							+qnalist[i].c_Date+" "+qnalist[i].c_Id+"</span></td>";
 						}
-						a +="<td  style='width:20%'>";
-						a +=qnalist[i].c_Id+"<br>"+qnalist[i].c_Date+"<br></td><tr></tr><td>";
+						
+						a +="</tr><tr><td>";
+						
 						if( ((qnalist[i].c_Subno==0)&&(${(not empty farmer || not empty admin)}))&&qnalist[i].c_Id !='삭제' ){
 							a +="<input name ='"+qnalist[i].c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton('"+qnalist[i].c_Seq+"')' />";
 						}
 						
-						a+="</td><td>";
 						var qid = qnalist[i].c_Id;
 					
 				
@@ -1438,31 +1439,33 @@ td .mybtn{
 													<tr>
 														<c:choose>
 															<c:when test="${q.c_Subno > 0}">
-																<td style="width:80%;padding-left: 20px;">
+																<td style="padding-left: 20px;">
 																	<span style="font-size:20px">└</span>
-																	${q.c_Content }
+																	${q.c_Content}
 																	<br>
+																	<span style='font-size:8px'>
+																	${q.c_Date} ${q.c_Id} 
+																	</span>
 																</td>
    															 </c:when>
    															 <c:otherwise>
-   															 	<td style="width:80%">
+   															 	<td style="">
 																	${q.c_Content }
 																	<br>
+																	<span style='font-size:8px'>
+																	${q.c_Date} ${q.c_Id} 
+																	</span>
 																</td>
    															 </c:otherwise>
 														</c:choose>
-														<td  style="width:20%">
-														${q.c_Id }<br>
-														${q.c_Date }<br>
-														</td>
+														
 													</tr>
 													<tr>
 														<td>
 															<c:if test="${(q.c_Subno == 0 && (not empty farmer || not empty admin))&&q.c_Id !='삭제'}">
 																<input name="${q.c_Seq}" class="qnasubbutton" type="button" value="답글" onclick="qnasubbutton('${q.c_Seq}')" />
 															</c:if>
-														</td>
-														<td>
+														
 															<c:if test="${(not empty farmer || not empty admin ||(not empty member && member.m_Id == q.c_Id))&&q.c_Id !='삭제'}">
 																<input name="${q.c_Seq}" class="updatebutton" type="button" value="수정" onclick="updatebutton('${q.c_Seq}')" />&nbsp;
 																<input name="${q.c_Seq}" class="qnadeletebutton" type="button" value="삭제" onclick="qnadeletebutton('${q.c_Seq}')" />
