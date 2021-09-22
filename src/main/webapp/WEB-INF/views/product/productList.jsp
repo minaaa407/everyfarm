@@ -15,9 +15,37 @@
 
  <!-- Css Styles -->
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
-<link rel="stylesheet" href="resources/product/css/style.css" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="resources/index/css/animate.css">
+
+<link rel="stylesheet" href="resources/index/css/owl.carousel.min.css">
+<link rel="stylesheet"
+	href="resources/index/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="resources/index/css/magnific-popup.css">
+
+<link rel="stylesheet" href="resources/index/css/ionicons.min.css">
+<link rel="stylesheet" href="resources/index/css/flaticon.css">
+<link rel="stylesheet" href="resources/index/css/icomoon.css">
+<link rel="stylesheet" href="resources/index/css/style.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+	crossorigin="anonymous">
+
+
+
+
 
 <link rel="stylesheet" href="resources/product/css/style.css" type="text/css">
+
+
 
 
 <jsp:include page="/WEB-INF/views/home/header.jsp" />
@@ -29,6 +57,11 @@
 }
 
 
+#productspad{
+	
+	background-image : url("")
+	
+}
 </style>
 </head>
 <body>
@@ -36,7 +69,6 @@
 
 <script>
 var idd = "<c:out value='${pagebeen.wherecolumn2}'/>";
-
 function ptype(id){
 	
 	var i = document.getElementById(id).innerHTML;
@@ -46,17 +78,13 @@ function ptype(id){
 	document.getElementById('wherecolumn2').value = "%%";
 	document.myHiddenForm.submit();
 }
-
-
 function paging(i){
 	var page = "page" + i;
 	document.getElementById('selectpage').value = i;
 	document.myHiddenForm.submit();
 }
-
 function psub(id){
 	var i = document.getElementById(id).value;
-
 	if(i =="모두"){
 		document.getElementById('wherecolumn2').value = "%%";
 	}else{
@@ -65,7 +93,6 @@ function psub(id){
 	}
 	document.myHiddenForm.submit();
 }
-
 function orderby(id){
 	
 	
@@ -88,19 +115,15 @@ function orderby(id){
 		document.getElementById('ascdesc').value = "DESC";
 	}
 	document.myHiddenForm.submit();
-
 	
 }
-
 function limitChange(){
 	
 	var limit = document.getElementById('productlist').value ;
 	document.getElementById('limit').value = limit;
 	document.myHiddenForm.submit();
 }
-
 //(function() { 
-
 	//var psub = document.getElementById("psub1");
 	//alert(psub);
 	//var a = 0;
@@ -115,9 +138,7 @@ function limitChange(){
 	//
 	
 	//}());
-
 window.onload = function(){
-
 	var psub = document.getElementById("psub1");
 		for(i=0; i<psub.options.length; i++){
 			if(idd == "%%"){
@@ -137,10 +158,6 @@ window.onload = function(){
 		
 		
 	}
-
-
-
-
 </script>
 
 
@@ -186,14 +203,19 @@ window.onload = function(){
 					abcd.innerHTML = a;
 					var b="";
 					if(page.pro == true){//페이징 처리 부분
-						b += "<a id = '"+page.pagestart+"-1 ' style='cursor:pointer' onclick= 'testbutton("+page.pagestart+" -1 )' >이전 </a>";
+						b += "<a id = 'page"+(page.pagestart-1)+"' style='cursor:pointer' onclick= 'testbutton("+(page.pagestart-1)+")' >이전 </a> ";
 					}
 					var i = page.pagestart;
 					for(i; i < page.pageend+1; i++){
-						b += "<a id = 'page"+i+"' style='cursor:pointer' onclick= 'testbutton("+i+")' >"+i+"</a>";;
+						if(page.selectpage == i){
+							b += "<a id = 'page"+i+"' style='cursor:pointer;background: #88e44f;' onclick= 'testbutton("+i+")' >"+i+"</a> ";	
+						}else{
+							b += "<a id = 'page"+i+"' style='cursor:pointer;' onclick= 'testbutton("+i+")' >"+i+"</a> ";
+						}
+						
 					}
 					if(page.post == true){
-						b += "<a id = '"+page.pageend+"+1 ' style='cursor:pointer' onclick= 'testbutton("+page.pageend+" +1 )' >다음 </a>";
+						b += "<a id = 'page"+(page.pageend+1)+"' style='cursor:pointer' onclick= 'testbutton("+(page.pageend+1)+")' >다음 </a> ";
 					}
 					pagesystem.innerHTML = b;
 				},
@@ -212,7 +234,7 @@ window.onload = function(){
 	<!-- main -->
 	
 	  <!-- Product Section Begin -->
-    <section class="product spad">
+    <section class="product spad" id="productspad">
         <div class="container">
                  	 <div class="row" style="float: right; margin-right: 55px;" >
                                 <div  class="filter__option">
@@ -253,14 +275,18 @@ window.onload = function(){
      				<br>
                     <div align="center" class="row" id="productlist1">
                     	<c:forEach var="p" items="${productlist }" varStatus="status">
-	                        <div class="col-lg-4 col-md-6 col-sm-6"><a class="over" href="/productdetail?productno=${p.p_No}">
+                    	
+                 	
+	                        <div  class="col-lg-4 col-md-6 col-sm-6"><a class="over" href="/productdetail?productno=${p.p_No}">
 	                        	<img id='product${p.p_No}' src="/resources/upload/product/${p.p_No}/${p.p_Img}"
 	                        	 class="test1" width="250" height="200" alt="Image ${p.p_No}"><br>
 									 ${p.p_Title}</a><br>
 									 평당 :<span> ${pricecomma[status.index]}</span> 원 <br>평점 : ${ rateArray[status.index] }<br>
 									 조회수 : ${p.p_View}<br>
 	                        </div>
-                       </c:forEach> 
+                       </c:forEach>
+           
+
                     </div>
                     <div align="center" class="product__pagination" id="pagesystem">
                     
@@ -269,9 +295,19 @@ window.onload = function(){
 						</c:if>	  
 
 						<c:forEach var="i" begin="${pagebeen.pagestart}" end="${pagebeen.pageend}" step="1">
-							   <a id = "page${i}" style="cursor:pointer" onclick="testbutton(${i })">${i }</a>  
-							</c:forEach>    
-					    	<c:if test="${pagebeen.post eq 'true'}">
+							<c:choose>
+							
+							 <c:when test="${pagebeen.selectpage eq i }">
+							   <a id = "page${i}" style="cursor:pointer;background: #88e44f;" onclick="testbutton(${i })">${i }</a>  
+							</c:when>
+							<c:otherwise>
+							   <a id = "page${i}" style="cursor:pointer;" onclick="testbutton(${i })">${i }</a>  
+							</c:otherwise>
+							</c:choose>
+							   
+						</c:forEach>
+						    
+					    <c:if test="${pagebeen.post eq 'true'}">
 						    <a id = "page${pagebeen.pageend +1}" style="cursor:pointer" onclick="testbutton(${pagebeen.pageend +1})">다음 </a>
 						</c:if>
 						
@@ -304,13 +340,34 @@ window.onload = function(){
 	<!-- footer -->
 	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 
+	<script src="resources/index/js/jquery.min.js"></script>
+	<script src="resources/index/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="resources/index/js/popper.min.js"></script>
+	<script src="resources/index/js/bootstrap.min.js"></script>
+	<script src="resources/index/js/jquery.easing.1.3.js"></script>
+	<script src="resources/index/js/jquery.waypoints.min.js"></script>
+	<script src="resources/index/js/jquery.stellar.min.js"></script>
+	<script src="resources/index/js/owl.carousel.min.js"></script>
+	<script src="resources/index/js/jquery.magnific-popup.min.js"></script>
+	<script src="resources/index/js/scrollax.min.js"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="resources/index/js/google-map.js"></script>
+	<script src="resources/index/js/main.js"></script>
 
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async
+		src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
 
-	<!-- loader -->
+		gtag('config', 'UA-23581568-13');
+	</script>
 
-	
-
-	 <!-- Js Plugins product -->
 
 	
 
