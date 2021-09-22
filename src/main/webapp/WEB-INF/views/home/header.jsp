@@ -41,6 +41,15 @@
   margin-bottom: 30px; }
   .everyfarm span {
     color: #4e9525; }
+    .logo{
+    width:100%;
+    }
+  .sign{
+  	text-align: center;
+  }
+  .signmargin {
+  margin-right : 25px;
+  }
 </style>
 </head>
 <body>
@@ -48,38 +57,41 @@
 	<header>
 		<div class="container pt-5 pb-4">
 			<div class="row justify-content-between">
-				<div class="col-md-8 order-md-last">
-					<div class="row">
-						<div class="col-md-6 text-center">
-							<a class="everyfarm" href="index.jsp">EVERY <span>FARM</span></a>
-						</div>
-						<div>
-							<c:choose>
-								<c:when test="${empty member}">
-									<li><a href="/login">로그인</a></li>
-									<li><a href="/sign">회원가입</a></li>
-								</c:when>
-								<c:when test="${not empty member}">
-									<li>${member.m_Name}님환영합니다.</li>
-									<li><a href="/mypage">내 정보</a></li>
-									<c:choose>
-										<c:when test="${member.m_Pw eq 'KAKAO'}">
-											<li><a href="/klogout">로그아웃</a></li>
-										</c:when>
-										<c:when test="${member.m_Pw eq 'NAVER'}">
-											<li><a href="/nlogout">로그아웃</a></li>
-										</c:when>
-										<c:otherwise>
-											<li><a href="/logout">로그아웃</a></li>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-							</c:choose>
-						</div>
+				<div class="col">
+					<div>
+						<!-- <a class="everyfarm" href="index.jsp">EVERY <span>FARM</span></a> -->
+						<a class="everyfarm" href="index.jsp"><img class="logo" src="/resources/img/everyfarm.png" alt="메인 바로가기"></a>
 					</div>
 				</div>
-			</div>
-		</div>
+				<div class="col sign">
+							<c:choose>
+								<c:when test="${empty member}">
+									<div>
+										<a href="/login" class="signmargin">로그인</a>
+										<a href="/sign">회원가입</a>
+									</div>
+								</c:when>
+								<c:when test="${not empty member}">
+										<a><span style="font-weight:bold">${member.m_Name}님</span> 환영합니다.</a>
+									<div>
+										<a href="/mypage" class="signmargin">내 정보</a>
+									<c:choose>
+										<c:when test="${member.m_Pw eq 'KAKAO'}">
+											<a href="/klogout">로그아웃</a>
+										</c:when>
+										<c:when test="${member.m_Pw eq 'NAVER'}">
+											<a href="/nlogout">로그아웃</a>
+										</c:when>
+										<c:otherwise>
+											<a href="/logout">로그아웃</a>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								</c:when>
+							</c:choose>
+							</div>
+						</div>
+				</div>
 		<!-- Start NavBar -->
 		<nav
 			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"

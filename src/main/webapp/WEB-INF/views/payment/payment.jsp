@@ -18,11 +18,49 @@
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style type="text/css">
-@media only screen and (max-width: 600px) {
-    .ulStep {
-    padding-left: 45px;
+@media
+	  only screen 
+    and (max-width: 760px), (min-device-width: 768px) 
+    and (max-device-width: 1024px)  {
+    
+    .ulStep{
+    margin-left: 65px;
     }
-}
+    table, thead, tbody, th, td, tr {
+			display: block;
+			border-inline-style: none;
+		}
+	thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	tr {
+      border-bottom: ridge;
+    }
+    th {
+      background: #E6E6E6;
+    }
+    td {
+			/* Behave  like a "row" */
+			border: none;
+			border-bottom: 1px solid #eee;
+			position: relative;
+			padding-left: 50%;
+			
+		}
+	td:before {
+			/* Now like a table header */
+			position: absolute;
+			/* Top/left values mimic padding */
+			top: 0;
+			left: 6px;
+			width: 45%;
+			padding-right: 10px;
+			white-space: nowrap;
+		}
+		
+    }
  #rphone2_1 {
  height:100%;
  width:15%;
@@ -82,7 +120,6 @@ height: 25px;
 }
 .ulStep {
     list-style:none;
-    margin:0;
     padding:0;
     display: inline-block;
 }
@@ -173,28 +210,23 @@ margin-bottom:10px;
 	<div class="order ">
         <div class="row title" style="margin-right:0px; margin-left:0px;">
             <span class="list">&nbsp;&nbsp;&nbsp;상품 주문내역</span>
-            <span class="button">
-            	<a href="javascript:window.history.back();" >
-            		<img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/btn_prev.gif" style="float:right; padding-left:30px" alt="이전페이지"/>
-            	</a>
-            </span>
             </div>
         		<!-- 선택상품 제어 버튼 -->
          <!-- 기본배송 -->
-        <div style="width:100%; overflow:auto">
-            <table border="1" summary="" class="txc-table" style="." width="100%" cellspacing="0" cellpadding="0">
-				<thead>
-					<tr class="center">
-                        <th scope="col">이미지</th>
-                        <th scope="col">상품정보</th>
-                        <th scope="col">수량</th>
-                        <th scope="col">작물가</th>
-                        <th scope="col">인건비</th>
-                        <th scope="col">배송비</th>
-                        <th scope="col">합계</th>
+        <div>
+            <table border="1" role="table">
+				<thead role="rowgroup">
+					<tr class="center" role="row">
+                        <th role="columnheader">이미지</th>
+                        <th role="columnheader">상품정보</th>
+                        <th role="columnheader">수량</th>
+                        <th role="columnheader">작물가</th>
+                        <th role="columnheader">인건비</th>
+                        <th role="columnheader">배송비</th>
+                        <th role="columnheader">합계</th>
                     </tr>
                 </thead>
-                <tbody> 
+                <tbody role="rowgroup"> 
 						<c:set var="landtotal" value="0" />
 						<c:set var="deliverytotal" value="0" />
 						<c:choose>
@@ -215,14 +247,14 @@ margin-bottom:10px;
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Seed" value="${p.b_Seed}"/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Land" value="${p.b_Land}"/>
 						<input type="hidden" name="paymentbeanList[${ps.index}].pay_Totalprice" value="${ price }"/>
-						<tr class="center">
-							<td><a href="/productdetail"><img src="/resources/upload/product/1/${p.p_Img }" name="image" class="img" /></a></td>
-							<td><a href="/productdetail" class="bold">${p.p_Title} - ${p.b_Seed}</a></td>
-							<td><div>${p.b_Land}</div></td>
-                        	<td><div>${ landprice }</div></td>
-							<td><div>${ manpay }</div></td>
-							<td><div>${ delivery }</div></td>
-							<td><div>${ price }</div></td>
+						<tr class="center" role="row">
+							<td role="cell"><a href="/productdetail"><img src="/resources/upload/product/1/${p.p_Img }" name="image" class="img" /></a></td>
+							<td role="cell"><a href="/productdetail" class="bold">${p.p_Title} - ${p.b_Seed}</a></td>
+							<td role="cell"><div>${p.b_Land}</div></td>
+                        	<td role="cell"><div>${ landprice }</div></td>
+							<td role="cell"><div>${ manpay }</div></td>
+							<td role="cell"><div>${ delivery }</div></td>
+							<td role="cell"><div>${ price }</div></td>
 							
 								<c:set var= "landtotal" value="${landtotal + price2}"/>
 								<c:set var= "deliverytotal" value="${deliverytotal + delivery}"/>
@@ -326,11 +358,11 @@ margin-bottom:10px;
                         
                         <br>
                         
-                        <input id="raddr1" name="raddr1" size="60" value="${Member.m_Addr }" type="text"/> 기본주소
+                        <input id="raddr1" name="raddr1" size="38" value="${Member.m_Addr }" type="text"/> 기본주소
                         
                         <br>
                         
-                        <input id="raddr2" name="raddr2" size="60" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Zㄱ-힣0-9()]/gi,'');" required="required"/> 상세주소 (선택입력가능)
+                        <input id="raddr2" name="raddr2" size="38" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Zㄱ-힣0-9()]/gi,'');" required="required"/> 상세주소 (선택입력가능)
                     </td>
                 </tr>		
 				<tr class="">
@@ -346,8 +378,8 @@ margin-bottom:10px;
                 	<tr>
                 		<th scope="row" class="th">이메일 <img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
 						<td>
-							<input id="mail1" name="mail1" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9()]/gi,'');" required="required"/>@
-							<input id="mail2" name="mail2" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9()]/gi,'');" required="required"/>
+							<input id="mail1" name="mail1" size="14" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9()]/gi,'');" required="required"/>@
+							<input id="mail2" name="mail2" size="14" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9()]/gi,'');" required="required"/>
 							<select id="mail" name="mail">
 							<option value="" selected="selected">- 이메일 선택 -</option>
 							<option value="naver.com">naver.com</option>
@@ -374,15 +406,15 @@ margin-bottom:10px;
 				</th>
 
                     <td>
-                        <textarea id="dm" name="dm" maxlength="255" cols="70" ></textarea> 
+                        <textarea id="dm" name="dm" maxlength="255" cols="43" ></textarea> 
                         <div class="message displaynone"></div>
                         <select id="memo" name="memo" onChange="memo1()">
-		                        <option value="">배송 시 요청사항을 선택해주세요</option>
+		                        <option value="">배송 시 요청사항을 선택해주세요 &nbsp;</option>
 		                        <option value="부재 시 경비실에 맡겨주세요" >부재 시 경비실에 맡겨주세요</option>
 		                        <option value="부재 시 택배함에 넣어주세요" >부재 시 택배함에 넣어주세요</option>
 		                        <option value="부재 시 집 앞에 놔주세요" >부재 시 집 앞에 놔주세요</option>
 		                        <option value="배송 전 연락 바랍니다" >배송 전 연락 바랍니다</option>
-		                        <option value="배송 시 주의해주세요" >파손의 위험이 있는 상품입니다. 배송 시 주의해주세요</option>
+		                        <option value="배송 시 주의해주세요" >배송 시 주의해주세요</option>
 	                        	<option value="">직접 입력</option>
                     		</select>
                     </td>
