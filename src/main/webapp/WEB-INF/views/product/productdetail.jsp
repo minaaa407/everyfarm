@@ -721,6 +721,7 @@ td .mybtn{
 </style>
 
 <script>
+
 			$(document).ready(function () {
 				lnb = $("#lnb").offset().top;
 				  $("div.select > a").click(function () {
@@ -1100,7 +1101,7 @@ td .mybtn{
 		          }
 		        })
 	});
-			
+
 	</script>
 
 </head>

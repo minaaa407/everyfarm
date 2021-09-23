@@ -44,7 +44,12 @@
           </li>
           <li class="nav-item">
             <a class="nav-link " href="farmerMypage">
-              <i class="ni ni-bullet-list-67 text-blue"></i> 댓글 관리
+              <i class="ni ni-bullet-list-67 text-blue"></i> 댓글관리
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/proRegisterForm">
+              <i class="ni ni-circle-08 text-pink"></i> 땅등록
             </a>
           </li>
           <li class="nav-item">

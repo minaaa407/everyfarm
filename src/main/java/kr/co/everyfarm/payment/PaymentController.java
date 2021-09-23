@@ -334,8 +334,6 @@ public class PaymentController {
 	    // 모델에 추가
 	    model.addAttribute("pageMaker", pageMaker);
 	    
-	    System.out.println("파머리스트 = " + farmerpaymentlist.get(0));
-	    System.out.println("파머리스트 = " + farmerpaymentlist.toString());
 	    System.out.println("-----파머페이먼트리스트 끝------");
 		return "farmer/farmerPaymentList";
 	}

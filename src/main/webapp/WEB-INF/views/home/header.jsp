@@ -103,11 +103,11 @@
 				</button>
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul class="navbar-nav m-auto">
-						<li class="nav-item active"><a href="index.jsp"
+						<li id="a1" class="nav-item active"><a href="index.jsp"
 							class="nav-link" style="font-size:20px">Home</a></li>
-						<li class="nav-item"><a href="/productlist" class="nav-link" style="font-size:20px">농장</a></li>
-						<li class="nav-item"><a href="/reviewList" class="nav-link" style="font-size:20px">REVIEW</a></li>
-						<li class="nav-item"><a href="/qnalist" class="nav-link" style="font-size:20px">Q&A</a></li>
+						<li id="a2" class="nav-item"><a href="/productlist" class="nav-link" style="font-size:20px">농장</a></li>
+						<li id="a3" class="nav-item"><a href="/reviewList" class="nav-link" style="font-size:20px">REVIEW</a></li>
+						<li id="a4" class="nav-item"><a href="/qnalist" class="nav-link" style="font-size:20px">Q&A</a></li>
 					</ul>
 				</div>
 			</div>
@@ -149,7 +149,6 @@
 			dataLayer.push(arguments);
 		}
 		gtag('js', new Date());
-
 		gtag('config', 'UA-23581568-13');
 	</script>
 
