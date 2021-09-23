@@ -195,7 +195,7 @@ window.onload = function(){
 						a +="<div class='col-lg-4 col-md-6 col-sm-6'><a href='/productdetail?productno="+list123[i].p_No+"'>";
 				        a +="<img id='product"+list123[i].p_No+"' src='/resources/upload/product/"+list123[i].p_No+"/"+list123[i].p_Img+"' class='test1' width='250' height='200' alt='Image "+list123[i].p_No+"'><br>";
 				        a +=list123[i].p_Title+"</a><br>";
-				        a +=" 평당 :<span> "+pricecomma[i]+"</span> 원 <br>평점 : "+rateArray[i];
+				        a +=" 평당 :<span> "+pricecomma[i]+"</span> 원 ;
 						a +="<br>조회수 : "+list123[i].p_View +"<br></div>";				        
 				        
 				        
@@ -238,7 +238,6 @@ window.onload = function(){
         <div class="container">
                  	 <div class="row" style="float: right; margin-right: 55px;" >
                                 <div  class="filter__option">
-                                    	<a id = "orderbygrade" style="cursor:pointer" onclick="orderby(this.id)">평점 </a>
                                     	<a id = "orderbyhighlandprice" style="cursor:pointer" onclick="orderby(this.id)">낮은땅가격 </a>
                                     	<a id = "orderbylowlandprice" style="cursor:pointer" onclick="orderby(this.id)">높은땅가격 </a>
                                     	<a id = "orderbyview" style="cursor:pointer" onclick="orderby(this.id)">조회수 </a>
@@ -281,7 +280,7 @@ window.onload = function(){
 	                        	<img id='product${p.p_No}' src="/resources/upload/product/${p.p_No}/${p.p_Img}"
 	                        	 class="test1" width="250" height="200" alt="Image ${p.p_No}"><br>
 									 ${p.p_Title}</a><br>
-									 평당 :<span> ${pricecomma[status.index]}</span> 원 <br>평점 : ${ rateArray[status.index] }<br>
+									 평당 :<span> ${pricecomma[status.index]}</span> 원 <br>
 									 조회수 : ${p.p_View}<br>
 	                        </div>
                        </c:forEach>
