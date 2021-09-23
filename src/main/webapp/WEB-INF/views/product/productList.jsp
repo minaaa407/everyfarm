@@ -202,7 +202,7 @@ document.getElementById('a4').className ='nav-item';
 						a +="<div class='col-lg-4 col-md-6 col-sm-6'><a href='/productdetail?productno="+list123[i].p_No+"'>";
 				        a +="<img id='product"+list123[i].p_No+"' src='/resources/upload/product/"+list123[i].p_No+"/"+list123[i].p_Img+"' class='test1' width='250' height='200' alt='Image "+list123[i].p_No+"'><br>";
 				        a +=list123[i].p_Title+"</a><br>";
-				        a +=" 평당 :<span> "+pricecomma[i]+"</span> 원;
+				        a +=" 평당 :<span> "+pricecomma[i]+"</span> 원 ;
 						a +="<br>조회수 : "+list123[i].p_View +"<br></div>";				        
 				        
 				        

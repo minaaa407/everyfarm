@@ -17,8 +17,6 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="resources/index/css/animate.css">
 
@@ -50,8 +48,10 @@
 					<h1>농장 신청</h1>
 					<p class="mb-4">내 손안의 농장</p>
 					<p>
+
 						<a href="/productlist" class="btn btn-primary mr-md-4 py-2 px-4">농장 보러가기
 							 <span class="ion-ios-arrow-forward"></span>
+
 						</a>
 					</p>
 				</div>
@@ -121,7 +121,6 @@
 		</div>
 		</div>
 	</section>
-
 	<section class="ftco-section bg-light">
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-3">

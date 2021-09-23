@@ -9,7 +9,8 @@
 <html>
 <head>
 <link rel="stylesheet" href="resources/index/css/test.css">
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+<link rel="shortcut icon" type="image/x-icon"
+	href="/resources/editor/connn.ico" />
 <meta charset="UTF-8">
 <script type="text/javascript"
 	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
