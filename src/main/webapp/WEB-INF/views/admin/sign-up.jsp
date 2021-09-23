@@ -8,8 +8,7 @@
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
-<title>Sign Up | Bootstrap Based Admin Template - Material
-	Design</title>
+<title>EVERY FARM | 관리자 계정 추가</title>
 <!-- Favicon-->
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <!-- Google Fonts -->

@@ -74,6 +74,23 @@
 			</foreach>
 		</trim>
 	</sql>
+	
+	<sql id="ApageSearch">
+		<trim prefix="where(" suffix=")" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							a_Id like concat ('%',#{keyword},'%')
+						</when>
+						<when test="type == 'W'.toString()">
+							a_Name like concat ('%',#{keyword},'%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
 
 
 	<!-- 맴버 페이징 + 리스트 -->
@@ -115,13 +132,46 @@
 			<include refid="FpageSearch"></include>
 		</if>
 	</select>
-	<!-- 농부 페이징 + 리스트 END -->
+
+	<!-- 관리자 페이징 + 리스트 -->
+	<select id="alist" resultType="kr.co.everyfarm.admin.AdminBean">
+		SELECT * FROM (
+		SELECT a_Id, a_Name, a_Email, a_Date
+		FROM admin
+		<if test="keyword != null">
+			<include refid="ApageSearch"></include>
+		</if>
+		)as T1 ORDER BY a_Date DESC
+		LIMIT #{skip},#{amount}
+	</select>
+
+	<select id="aCount" resultType="int">
+		SELECT COUNT(*) FROM admin
+		<if test="keyword != null">
+			<include refid="ApageSearch"></include>
+		</if>
+	</select>
 
 	<update id="farmerY" parameterType="java.util.List">
 		UPDATE farmer SET f_Sign = "Y" WHERE f_id IN (
 		<foreach collection="list" item="yes" index="index"
 			separator=",">
 			'${yes}'
+		</foreach>
+		)
+	</update>
+	
+	<update id="aDel" parameterType="java.util.List">
+		UPDATE admin SET
+		a_Id = '삭제된 관리자입니다',
+		a_Pw = '삭제된 관리자입니다',
+		a_Name = '삭제된 관리자입니다',
+		a_Email = '삭제된 관리자입니다',
+		a_Date = sysdate() WHERE
+		a_Id IN (
+		<foreach collection="list" item="delete" index="index"
+			separator=",">
+			'${delete}'
 		</foreach>
 		)
 	</update>
