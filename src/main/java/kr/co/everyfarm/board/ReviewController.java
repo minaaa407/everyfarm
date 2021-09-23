@@ -75,24 +75,13 @@ public class ReviewController {
 	@RequestMapping(value = "/reviewInsert", method = RequestMethod.POST)
 	public String Reviewinsert(ReviewBean reviewBean, @RequestParam("rev_Rate") Float rev_Rate,
 			@RequestParam("pay_No") Float pay_No, FarmerBean farmerBean) {
-		System.out.println("동작되었는가??");
-		
-		
 		int pay_orderno = reviewBean.getRev_ProNum();
-		
-		
 		FarmerDAO fdao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		ReviewDAO dao = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		pay_No = (float)(dao.productno(pay_orderno));
-		System.out.println(pay_No);
-		
-		
 		Map<Float, Object> map = new HashMap<Float, Object>();
-		
-		
 		map.put(rev_Rate, rev_Rate);
 		map.put(pay_No, Math.round(pay_No));
-
 		fdao.myRate(farmerBean);
 		int n = dao.insert(reviewBean);
 		return "redirect:/reviewList";

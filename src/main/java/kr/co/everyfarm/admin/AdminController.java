@@ -68,6 +68,7 @@ public class AdminController {
 
 		for (int i = 0; i < 12; i++) {
 			mmonth = adDAO.mchart(i);
+			
 			mMonth.add(mmonth);
 		}
 
