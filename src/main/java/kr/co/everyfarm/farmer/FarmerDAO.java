@@ -32,7 +32,7 @@ public interface FarmerDAO {
 
 	public void upPw(FarmerBean farmerBean);
 
-	public void fDelete(FarmerBean farmerBean);
+	public void fDelete(String f_Id);
 
 	public void fDel(List<String> delete);
 

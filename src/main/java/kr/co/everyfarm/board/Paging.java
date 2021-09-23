@@ -16,6 +16,8 @@ public class Paging {
 	private String[] typeArr;
 
 	private String f_Id;
+	
+	private String m_Id;
 
 	public Paging() {
 		this(1, 10);
@@ -90,13 +92,21 @@ public class Paging {
 	public void setF_Id(String f_Id) {
 		this.f_Id = f_Id;
 	}
+	
+	public String getM_Id() {
+		return m_Id;
+	}
+
+	public void setM_Id(String m_Id) {
+		this.m_Id = m_Id;
+	}
 
 	@Override
 	public String toString() {
 		return "Paging [pageNum=" + pageNum + ", amount=" + amount + ", skip=" + skip + ", keyword=" + keyword
-				+ ", type=" + type + ", typeArr=" + Arrays.toString(typeArr) + ", f_Id=" + f_Id + "]";
+				+ ", type=" + type + ", typeArr=" + Arrays.toString(typeArr) + ", f_Id=" + f_Id + ", m_Id=" + m_Id
+				+ "]";
 	}
-	
-	
+
 
 }

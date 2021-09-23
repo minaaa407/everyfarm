@@ -248,7 +248,6 @@ function search(){
 							<col style="width: 50px" />
 							<col style="width: 120px" />
 							<col style="width: 100px" />
-							<col style="width: 100px" />
 							<col style="width: 80px" />
 							<col style="width: 70px" />
 							<col style="width: 70px" />
@@ -258,7 +257,7 @@ function search(){
 				<tr>
 					<th scope="col">상품번호</th>
 					<th scope="col">메인이미지</th>
-					<th scope="col">아이디</th>
+					
 					<th scope="col">제목</th>
 					<th scope="col">등록날짜</th>
 					<th scope="col">승인여부</th>
@@ -274,7 +273,6 @@ function search(){
 							src="/resources/upload/product/${p.p_No}/${p.p_Img}"
 							class="test1" width="90" height="auto" alt="Image ${p.p_No}">
 						</td>
-						<td class="content">${p.p_Id}</td>
 						<td class="content">${p.p_Title}</td>
 						<td class="content">${p.p_Date}</td>
 						<td class="content">${p.p_Accept}</td>

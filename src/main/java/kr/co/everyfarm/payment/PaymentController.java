@@ -2,6 +2,7 @@ package kr.co.everyfarm.payment;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.everyfarm.admin.AdminBean;
 import kr.co.everyfarm.basket.BasketBean;
+import kr.co.everyfarm.board.Paging;
 import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.MemberBean;
@@ -369,15 +371,15 @@ public class PaymentController {
 
 
 	@RequestMapping(value = "/myPayList")
-	public String getMyPayList(Model model, PaymentBean PayBean,HttpSession session) {
+	public String getMyPayList(Model model, PaymentBean PayBean,HttpSession session, Paging paging) {
 		MemberBean mBean = (MemberBean) session.getAttribute("member");
 		PaymentDAO payDAO = sqlSessionTemplate.getMapper(PaymentDAO.class);
 		String m_Id = mBean.getM_Id();
 		
-		List<PaymentBean> myPay = payDAO.mypaylist(m_Id);
-		model.addAttribute("mypay", myPay);
+		List<PaymentBean> mypay = payDAO.mypayListuser(m_Id);
+		model.addAttribute("mypay", mypay);
 		return "user/myPayList";
-
+		
 	}
 	
 	@RequestMapping(value = "/modal/modal_view")

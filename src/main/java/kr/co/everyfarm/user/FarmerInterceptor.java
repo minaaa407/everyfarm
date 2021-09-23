@@ -13,7 +13,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class FarmerInterceptor extends HandlerInterceptorAdapter {
 
-	private static final Logger logger = LoggerFactory.getLogger(SessionInterceptor.class);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -23,9 +22,8 @@ public class FarmerInterceptor extends HandlerInterceptorAdapter {
 		HttpSession httpSession = request.getSession();
 		PrintWriter printwriter = response.getWriter();
 
-		if (httpSession.getAttribute("admin") == null) {
-			logger.info("로그인 후 이용가능한 기능 접근");
-			printwriter.print("<script charset=UTF-8>alert('로그인 후 이용가능합니다.'); location.href=\"/farmerLogin\"</script>");
+		if (httpSession.getAttribute("farmer") == null) {
+			printwriter.print("<script charset=UTF-8>alert('로그인 후 이용가능합니다.농부'); location.href=\"/farmerLogin\"</script>");
 			return false;
 		}
 		return true;

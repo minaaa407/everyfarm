@@ -44,13 +44,12 @@
 	<update id="fDelete">
 		UPDATE farmer SET
 		f_Id = '탈퇴한 농부입니다',
-		f_Pw = '탈퇴한
-		농부입니다',
+		f_Pw = '탈퇴한 농부입니다',
 		f_Name = '탈퇴한 농부입니다',
 		f_Addr = '탈퇴한 농부입니다',
 		f_tel = '탈퇴한 농부입니다',
 		f_Birth = '탈퇴한 농부입니다',
-		f_auth = 'N',
+		f_auth = 'N'
 		WHERE f_id = #{f_Id}
 	</update>
 

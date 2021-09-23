@@ -55,7 +55,7 @@ public class ReviewController {
 		String m_Id = member.getM_Id();
 
 		PaymentDAO pDao = sqlSessionTemplate.getMapper(PaymentDAO.class);
-		List<PaymentBean> myPay = pDao.mypaylist(m_Id);
+		List<PaymentBean> myPay = pDao.mypayListuser(m_Id);
 		model.addAttribute("myPayList", myPay);
 		return "board/reviewWrite";
 	}

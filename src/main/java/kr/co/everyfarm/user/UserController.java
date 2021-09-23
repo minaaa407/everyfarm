@@ -2,6 +2,7 @@ package kr.co.everyfarm.user;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
+import kr.co.everyfarm.board.Paging;
 import kr.co.everyfarm.board.ReviewBean;
 import kr.co.everyfarm.board.ReviewDAO;
 import kr.co.everyfarm.farmer.FarmerBean;
@@ -80,16 +82,10 @@ public class UserController {
 
 		FarmerDAO farDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		List<PaymentBean> farView = farDAO.forbestItem();
-		System.out.println("vvvv :::::::" + farView);
+		String no1 = farView.get(0).getP_Id();
 		int Pay_no1 = farView.get(0).getPay_No(); // 1 등
 		int Pay_no2 = farView.get(1).getPay_No(); // 2 등
 		int Pay_no3 = farView.get(2).getPay_No(); // 3 등
-		System.out.println(Pay_no1);
-		System.out.println(Pay_no2);
-		System.out.println(Pay_no3);
-		System.out.println(farDAO.bestItem(Pay_no1));
-		System.out.println(farDAO.bestItem(Pay_no2));
-		System.out.println(farDAO.bestItem(Pay_no3));
 		model.addAttribute("farView1", farDAO.bestItem(Pay_no1));
 		model.addAttribute("farView2", farDAO.bestItem(Pay_no2));
 		model.addAttribute("farView3", farDAO.bestItem(Pay_no3));
@@ -496,7 +492,20 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/mypage")
-	public String myInfo() {
+	public String myInfo(PaymentBean paymentBean, HttpSession session,Paging paging,Model model) {
+		PaymentDAO payDAO = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		MemberBean mBean = (MemberBean) session.getAttribute("member");
+		String m_Id = mBean.getM_Id();
+		paging.setM_Id(m_Id);
+		
+		PaymentBean forDel = payDAO.mypaylist(paging);
+		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();
+		System.out.println(test.format(forDel.getPay_Date()));
+		System.out.println(test.format(now));
+		
+		model.addAttribute("payDay",test.format(forDel.getPay_Date()));
+		model.addAttribute("now", test.format(now));
 		return "user/myPage";
 	}
 
@@ -510,21 +519,18 @@ public class UserController {
 		memberbean.setM_Pw(encryPassword);
 
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		
 		memDao.mUpdate(memberbean);
 		System.out.println(memberbean);
 
-		session.invalidate();
 		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/myInfoDelete")
 	public String myDelete(MemberBean memberbean, HttpSession session) {
-
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
-		System.out.println(memberbean.getM_Id());
+		
 		memDao.mDelete(memberbean);
-
-		session.invalidate();
 		return "redirect:/home";
 	}
 
@@ -538,7 +544,6 @@ public class UserController {
 		memDao.mPwdUp(memberbean);
 		System.out.println(memberbean);
 
-		session.invalidate();
 		return "redirect:/home";
 	}
 
@@ -552,7 +557,6 @@ public class UserController {
 		memDao.mAddrUpdate(memberbean);
 		System.out.println(memberbean);
 
-		session.invalidate();
 		return "redirect:/home";
 	}
 
@@ -560,10 +564,19 @@ public class UserController {
 	public String myInfoChange3(MemberBean memberbean, HttpSession session, HttpServletRequest request) {
 
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		memberbean.setM_Name(request.getParameter("m_Name"));
 		memDao.mNameUpdate(memberbean);
 		System.out.println(memberbean);
 
-		session.invalidate();
+		return "redirect:/home";
+	}
+	
+	@RequestMapping(value = "/myInfoTelUpdate")
+	public String myInfoTel(MemberBean memberBean, HttpSession session, HttpServletRequest request) {
+		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		memberBean.setM_Name(request.getParameter("m_Tel"));
+		memDao.mTelUp(memberBean);
+		
 		return "redirect:/home";
 	}
 

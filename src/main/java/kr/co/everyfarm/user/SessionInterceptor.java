@@ -30,7 +30,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 
 		if(httpSession.getAttribute("member")==null) {
 			logger.info("로그인 후 이용가능한 기능 접근");
-			printwriter.print("<script charset=UTF-8>alert('로그인 후 이용가능합니다.'); location.href=\"/login\"</script>");
+			printwriter.print("<script charset=UTF-8>alert('로그인 후 이용가능합니다.회원'); location.href=\"/login\"</script>");
 			return false;
 		}
 		return true;
