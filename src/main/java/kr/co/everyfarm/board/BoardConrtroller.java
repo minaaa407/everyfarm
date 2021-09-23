@@ -35,21 +35,6 @@ public class BoardConrtroller {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	
-//	@RequestMapping(value = "/a")
-//	public String geta(Model model, HttpServletRequest request) {
-//		return "board/a";
-//	}
-	
-//	@RequestMapping(value = "/qnalist")
-//	public String getQnAList(Model model, HttpServletRequest request) {
-//		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		List<QnABean> productQlist = dao.productQlist();
-//		model.addAttribute("productQlist", productQlist);
-//		return "board/qnalist";
-//	}
-	
 	@RequestMapping(value = "/qnalist")
 	public String boardList(PagingBean vo, Model model, HttpServletRequest request
 			, @RequestParam(value="nowPage", required=false)String nowPage
@@ -69,7 +54,6 @@ public class BoardConrtroller {
 		}
 		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		model.addAttribute("paging", vo);
-		/* model.addAttribute("viewAll", boardService.selectBoard(vo)); */
 		List<QnABean> productQlist = dao.selectBoard(vo);
 		System.out.println("productQlist : " + productQlist);
 		model.addAttribute("productQlist", productQlist);
@@ -120,16 +104,6 @@ public class BoardConrtroller {
 	
 
 	
-	
-
-		 
-		 
-
-	
-
-	
-	
-	
 	@RequestMapping(value = "/qnainsert", method = RequestMethod.POST)
 	public String getQnApdInsert( @ModelAttribute("qna") @Valid QnABean qna, BindingResult result, 
 			@RequestParam(value = "img", required = false) MultipartFile img, Model model, 
@@ -166,29 +140,6 @@ public class BoardConrtroller {
 	    String savePath = realPath + "/upload/qna/" + qnomax + "/";
 	    path = savePath;
 		
-//		System.out.println("qnomax: " + qnomax);
-//		String path = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\"
-//				+ "tmp0\\wtpwebapps\\everyfarm\\resources\\upload\\qna\\" + qnomax + "\\";
-//		ServletContext servletContext = request.getSession().getServletContext();
-//		String realPath = servletContext.getRealPath("/resource");
-//		realPath = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\everyfarm\\resource";
-//		String mPath = "\\src\\main\\webapp\\resources\\upload\\qna\\" + qnomax + "\\";
-//		int aa = realPath.indexOf("\\.");
-//		String pre = realPath.substring(0, aa);
-//		String savePath = pre + "\\everyfarm" + mPath;
-//		path = savePath;
-
-//		File Folder = new File(path);
-//		if (!Folder.exists()) {
-//			try {
-//				Folder.mkdir(); // 폴더 생성합니다.
-//				System.out.println("폴더가 생성되었습니다.");
-//			} catch (Exception e) {
-//				e.getStackTrace();
-//			}
-//		} else {
-//			System.out.println("이미 폴더가 생성되어 있습니다.");
-//		}
 	    
 	    File Folder = new File(path);
 	      if (!Folder.exists()) {
@@ -241,8 +192,7 @@ public class BoardConrtroller {
 	
 	@RequestMapping({ "/qnamodify/{no}" }) /* , "/qnamodify/my/{no}" */
 	public String getQnAModify(@PathVariable int no, Model model, HttpServletRequest request) {
-//	@RequestMapping(value = "/qnamodify")
-//	public String getQnAModify(@RequestParam int no, Model model, HttpServletRequest request) {
+
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
 		List<QnABean> qnamodifyrecord = dao.modifyrecord(no);
@@ -252,9 +202,6 @@ public class BoardConrtroller {
 		request.setAttribute("qnamodifyrecord", qnamodifyrecord);
 		request.setAttribute("pnoTitleList", pnoTitleList);
 	
-		
-	
-		/* request.setAttribute("qnamodifyrecord", qnamodifyrecord); */
 		return "board/qnawrite";
 	}
 	
@@ -274,7 +221,7 @@ public class BoardConrtroller {
 		
 		System.out.println("BoardConrtroller insert : "+qna.getQ_Title());
 		System.out.println("BoardConrtroller insert : "+qna.getQ_Id());
-//		String returnUrl = "";
+
 		
 		if(img.isEmpty() == false) {
 			qna.setQ_Img(img.getOriginalFilename());
@@ -301,40 +248,7 @@ public class BoardConrtroller {
 		    for (int i = 0; i < cookie.length; i++) {
 		       cookie[i].setMaxAge(0);
 		    }
-			
-//			File folder = new File(path);
-//			try {
-//			    while(folder.exists()) {
-//				File[] folder_list = folder.listFiles(); //파일리스트 얻어오기
-//						
-//					for (int j = 0; j < folder_list.length; j++) {
-//						folder_list[j].delete(); //파일 삭제 
-//						System.out.println("파일이 삭제되었습니다.");
-//					}
-//						
-//					if(folder_list.length == 0 && folder.isDirectory()){ 
-//						folder.delete(); //대상폴더 삭제
-//						System.out.println("폴더가 삭제되었습니다.");
-//					}
-//		       }
-//			} catch (Exception e) {
-//				e.getStackTrace();
-//			}
-//			
-//			File Folder = new File(path);
-//			if (!Folder.exists()) {
-//				try {
-//					Folder.mkdir(); // 폴더 생성합니다.
-//					System.out.println("폴더가 생성되었습니다.");
-//				} catch (Exception e) {
-//					e.getStackTrace();
-//				}
-//			} else {
-//				System.out.println("이미 폴더가 생성되어 있습니다.");
-//			}
-		    
 	
-
 			String safeFile="";
 			String originFileName="";
 			long fileSize = 0;
@@ -625,94 +539,7 @@ public class BoardConrtroller {
 		return "board/qnaAdminList";
 	}
 	
-//	@RequestMapping(value = "/searchqna/{var}")
-//	public String getQnASearch(@PathVariable("var") String var, @RequestParam String searchBox, @RequestParam String searchText, @RequestParam String searchAnswer,
-//			QnABean qna, Model model, HttpServletRequest request) {
-//		
-//		String returnUrl = "";
-//		if(var.equals("member")) {
-//			returnUrl = "board/qnalist";
-//		} else if (var.equals("farmer")) {
-//			returnUrl = "board/farmerQnaList";
-//		} else if (var.equals("admin")) {
-//			returnUrl = "board/adminQnaList";
-//		}
-//		
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		qna.setQ_Content(searchText);
-//		if(searchAnswer.equals("o")) {
-//			qna.setQ_Answer(true);
-//		} else if(searchAnswer.equals("x")) {
-//			qna.setQ_Answer(false);
-//		}
-//		if(searchBox.equals("all")) {
-//			List<QnABean> qnalist = dao.searchall(qna);
-//			model.addAttribute("productQlist", qnalist);
-//		}else if(searchBox.equals("pno")){
-//			List<QnABean> qnalist = dao.searchpno(qna);
-//			model.addAttribute("productQlist", qnalist);
-//		}else if(searchBox.equals("ptitle")){
-//			List<QnABean> qnalist = dao.searchptitle(qna);
-//			model.addAttribute("productQlist", qnalist);
-//		}else if(searchBox.equals("content")){
-//			List<QnABean> qnalist = dao.searchcontent(qna);
-//			model.addAttribute("productQlist", qnalist);
-//		}else if(searchBox.equals("id")){
-//			List<QnABean> qnalist = dao.searchId(qna);
-//			model.addAttribute("productQlist", qnalist);
-//		}
-//		return returnUrl;
-//	}
-	
-//	
-//	@RequestMapping(value = "/searchadminqna")
-//	public String getQnASearchAdmin(@RequestParam String searchBox, @RequestParam String searchText, 
-//			QnABean qna, Model model, HttpServletRequest request) {
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		qna.setQ_Content(searchText);
-//		if(searchBox.equals("all")) {
-//			List<QnABean> qnalistadmin = dao.searchall(qna);
-//			model.addAttribute("qnalistadmin", qnalistadmin);
-//		}else if(searchBox.equals("id")){
-//			List<QnABean> qnalistadmin = dao.searchId(qna);
-//			model.addAttribute("qnalistadmin", qnalistadmin);
-//		}else {
-//			qna.setQ_About(searchBox);
-//			List<QnABean> qnalistadmin = dao.searchEach(qna);
-//			model.addAttribute("qnalistadmin", qnalistadmin);
-//		}
-//		return "board/qnaAdmin";
-//	}
-//		
-//		
-		
-////farmer
-	
-//	@RequestMapping(value = "/qnalist")
-//	public String boardfeeList(PagingBean vo, Model model, HttpServletRequest request
-//			, @RequestParam(value="nowPage", required=false)String nowPage
-//			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
-//		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-//		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-//		
-//		
-//		int total = dao.countBoard();
-//		if (nowPage == null && cntPerPage == null) {
-//			nowPage = "1";
-//			cntPerPage = "10";
-//		} else if (nowPage == null) {
-//			nowPage = "1";
-//		} else if (cntPerPage == null) { 
-//			cntPerPage = "10";
-//		}
-//		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-//		model.addAttribute("paging", vo);
-//		/* model.addAttribute("viewAll", boardService.selectBoard(vo)); */
-//		List<QnABean> productQlist = dao.selectBoard(vo);
-//		System.out.println("productQlist : " + productQlist);
-//		model.addAttribute("productQlist", productQlist);
-//		return "board/qnalist";
-//	}
+
 	
 	@RequestMapping(value = "/farmerQnaList")
 	public String getQnAfarmerList(PagingBean vo, Model model, HttpServletRequest request
@@ -739,8 +566,7 @@ public class BoardConrtroller {
 		
 		dao.rownum();
 		
-//		List<QnABean> pnoList = dao.productByfarmer(vo);
-//		List<QnABean> productQlist = dao.productQlistFarmer(pnoList);
+
 		List<QnABean> productQlist = dao.productQlistFarmer(vo);
 		model.addAttribute("productQlist", productQlist);
 
@@ -808,7 +634,6 @@ public class BoardConrtroller {
 		System.out.println("admin pnoTitleList : " + pnoTitleList);
 		System.out.println("admin qnamodifyrecord : " + qnamodifyrecord);
 	
-		/* request.setAttribute("qnamodifyrecord", qnamodifyrecord); */
 		return "board/qnaAdminWrite";
 	}
 	
@@ -840,7 +665,7 @@ public class BoardConrtroller {
 		qna.setQ_Pid(pid);
 		int qnaupdate = dao.update(qna);
 		
-if(img.isEmpty() == false) {
+		if(img.isEmpty() == false) {
 			
 			int qno = qna.getQ_No();
 			System.out.println("qno: " + qno);
@@ -949,26 +774,5 @@ if(img.isEmpty() == false) {
 	
 }		
 		
-/*		//글 등록
-		@RequestMapping("/insertBoard.do")
-		public String insertBoard(BoardVO vo) throws IOException {
-			MultipartFile uploadFile = vo.getUploadFile();
-			if(!uploadFile.isEmpty()) {
-				String fileName = uploadFile.getOriginalFilename();
-				uploadFile.transferTo(new File("D:/upload/" + fileName));
-			}
-			boardService.insertBoard(vo);
-			return "getBoardList.do";
-		}
-		
-		
-		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-		List<QnABean> qnalist = dao.list();
-		List<QnABean> qnamylist = dao.mylist(member);
-		model.addAttribute("qnalist", qnalist);
-		model.addAttribute("qnamylist", qnamylist);
-		return "board/qnalist";
-	}*/
-	
 	
 

@@ -33,15 +33,9 @@ public class BasketController {
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
 		BasketDAO dao = sqlSessionTemplate.getMapper(BasketDAO.class);
 		List<BasketBean> basketList = dao.listAll(member);
-		System.out.println(basketList.get(1).getP_Img());
 		model.addAttribute("basketList", basketList);
 		request.setAttribute("basketList", basketList);
-//		if(checkindex != null) {
-//			model.addAttribute("checkindex", checkindex);
-//			for(int i=0; i<checkindex.length; i++) {
-//				System.out.println("여기까지 잘옴 : " + checkindex[i]);
-//			}
-//		}
+
 		return "payment/basket";
 	}
 	
@@ -49,16 +43,10 @@ public class BasketController {
 	public String basketDelete(@RequestParam String[] bno, BasketBean basket, Model model, HttpServletRequest request) {
 		
 		BasketDAO dao = sqlSessionTemplate.getMapper(BasketDAO.class);
-		/* String[] chooseSt = request.getParameterValues("choose"); */
 		for(int i=0 ; i<bno.length; i++) {
 			System.out.println("BasketController bno i : " + bno[i]);
 		}
-		/* System.out.println("BasketController chooseSt: "+ chooseSt); */
-//		int[] chooseInt = new int[chooseSt.length];
-//		for(int i=0 ; i<chooseInt.length; i++) {
-//			chooseInt[i] = Integer.parseInt(chooseSt[i]);
-//		}
-//		System.out.println("chooseInt : "+chooseInt);
+		
 		List<String> deletenolist = Arrays.asList(bno);
 		System.out.println("BasketController deletenolist: "+deletenolist);
 		int basketdelete = dao.delete(deletenolist);
@@ -83,7 +71,6 @@ public class BasketController {
 	
 	@RequestMapping("/basketTopayment")
 	public String basketTopay(@ModelAttribute BasketBean basket, Model model, HttpServletRequest request) {
-//		@RequestParam int b_No, @RequestParam int b_Pno, @RequestParam int b_Land, @RequestParam String b_Seed
 		
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
 		BasketDAO dao = sqlSessionTemplate.getMapper(BasketDAO.class);
