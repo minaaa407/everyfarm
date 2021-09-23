@@ -29,22 +29,34 @@
 label.error {
 	position: inherit;
 }
-
+ul{
+border : none;
+}
 .error {
 	color: red;
 }
-</style>
+ul li{
+	padding: 0px; 0px;
+}
 
-</head>
-<body>
+.container{
+background:none;
+}
+
+
+</style>
 <jsp:include page="/WEB-INF/views/home/header.jsp" />
+</head>
+<body style="padding-bottom: 0px;padding-top: 0px;">
+
 	<div class="main">
 
 		<div class="container">
-			<div class="signup-content">
+			<div class="signup-content" style="display: flex;align-content: stretch;justify-content: space-around;">
 				<div class="signup-form">
 					<form:form method="POST" commandName="memberBean"
-						class="register-form" id="register-form" action="/sign">
+						class="register-form" id="register-form" action="/sign" style="
+    padding-right: 80px;">
 						<div class="form-row">
 							<div class="form-group">
 								<div class="form-input">
