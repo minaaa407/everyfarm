@@ -17,8 +17,6 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="resources/index/css/animate.css">
 
@@ -33,10 +31,6 @@
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
 
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
-	crossorigin="anonymous">
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/home/header.jsp" />
@@ -54,8 +48,10 @@
 					<h1>농장 신청</h1>
 					<p class="mb-4">내 손안의 농장</p>
 					<p>
+
 						<a href="/productlist" class="btn btn-primary mr-md-4 py-2 px-4">농장 보러가기
 							 <span class="ion-ios-arrow-forward"></span>
+
 						</a>
 					</p>
 				</div>
@@ -165,45 +161,6 @@
 		</div>
 	</section>
 
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center mb-5">
-				<div class="col-md-10 text-center heading-section ftco-animate">
-					<span class="subheading">PRODUCT</span>
-					<h2 class="mb-4">BEST PRODUCT</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="carousel-seasonal owl-carousel ftco-owl">
-						<div class="item">
-							<div class="wrap">
-								<c:choose>
-									<c:when test="${empty proView}">
-										<div>
-											<p align="center">상품이 존재하지 않습니다.</p>
-										</div>
-									</c:when>
-									<c:when test="${!empty proView}">
-										<c:forEach var="proView" items="${proView}">
-											<div
-												class="seasonal img d-flex align-items-center justify-content-center"
-												style="background-image: ${proView.p_Img};"></div>
-											<div class="text text-center px-4">
-												<h3>
-													<a href="/productdetail?productno=${proView.p_No}">${proView.p_Title}</a>
-												</h3>
-											</div>
-										</c:forEach>
-									</c:when>
-								</c:choose>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
 	<section class="ftco-section bg-light">
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-3">

@@ -11,7 +11,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi =medium-dpi">
 
-<title>Checkout example for Bootstrap</title>
+<title>마이페이지</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link
@@ -201,6 +201,7 @@ body {
 
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/home/header.jsp" />
 	<div class="container">
 		<div class="view-account">
 			<section class="module">
@@ -448,6 +449,7 @@ body {
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </body>
 
 
