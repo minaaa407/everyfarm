@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,12 +134,15 @@ input {
 							<td><input type="text" value="${member.m_Name}"
 								class="form-control" name="rev_Name" readonly></td>
 							<th class="pro"><div>상품</div></th>
-							<td class="proNum"><select required="required" name="pay_No">
-									<option value="">상품번호를 선택해주세요.</option>
-									<c:forEach items="${myPayList}" var="mp">
-										<option><c:out value="${mp.pay_No}"></c:out></option>
+							<td class="proNum"><select required="required" id ="rev_ProNum" name="rev_ProNum" onchange="chageLangSelect()">
+									<option value="">상품을 선택해주세요.</option>
+									<c:forEach items="${myPayList}" var="mp" varStatus="status">
+										<option value="${mp.pay_Orderno}" >주문 번호 : <c:out value="${mp.pay_Orderno}"></c:out> ${myProductList[status.index].p_Title} 
+										<fmt:formatDate value="${mp.pay_Date}" type="date"/></option>
 									</c:forEach>
-							</select></td>
+							</select>
+							<input type="hidden" name="pay_No" id="pay_No" value="" />
+							</td>
 						</tr>
 						<tr>
 							<th><div>제목</div></th>
@@ -252,6 +256,16 @@ $(document).ready(function() {
     				}
     			});
     		}
+            
+            
+function chageLangSelect(){
+	
+	var pno = document.getElementById('rev_ProNum').value;
+	document.getElementById('pay_No').value = pno;
+}
+
+            
+            
   </script>
 
 

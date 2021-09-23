@@ -29,6 +29,7 @@ import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.farmer.FarmerDAO;
 import kr.co.everyfarm.payment.PaymentBean;
 import kr.co.everyfarm.payment.PaymentDAO;
+import kr.co.everyfarm.product.ProductBean;
 import kr.co.everyfarm.user.MemberBean;
 
 @Controller
@@ -52,23 +53,45 @@ public class ReviewController {
 	@RequestMapping("/reviewWrite")
 	public String getReviewWrite(HttpSession session, PaymentBean paymentbean, Model model, FarmerBean farmerBean) {
 		MemberBean member = (MemberBean) session.getAttribute("member");
-		String m_Id = member.getM_Id();
+		String m_Id = member.getM_Id();//아이디 검색
 
-		PaymentDAO pDao = sqlSessionTemplate.getMapper(PaymentDAO.class);
-		List<PaymentBean> myPay = pDao.mypaylist(m_Id);
-		model.addAttribute("myPayList", myPay);
+
+		
+		ReviewDAO rdao = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		List<PaymentBean> myPay = rdao.selectpaymentreview(m_Id);//뽑아 낸다.
+		List<ProductBean> myProductList = rdao.selectproductreview(m_Id);
+		
+		System.out.println(myPay + "값 확인");
+		//여기에서 for 문 서서 비교해서 날려버린다. 
+		
+		
+		
+		
+		model.addAttribute("myPayList", myPay);//mypay에서 가져오게 만든다이네. 이걸 그냥 집어 넣는다이고. 그러면 중간에 빼내는거 만들어낸다.
+		model.addAttribute("myProductList", myProductList);
 		return "board/reviewWrite";
 	}
 
 	@RequestMapping(value = "/reviewInsert", method = RequestMethod.POST)
 	public String Reviewinsert(ReviewBean reviewBean, @RequestParam("rev_Rate") Float rev_Rate,
 			@RequestParam("pay_No") Float pay_No, FarmerBean farmerBean) {
-
-		Map<Float, Object> map = new HashMap<Float, Object>();
-		map.put(rev_Rate, rev_Rate);
-		map.put(pay_No, Math.round(pay_No));
+		System.out.println("동작되었는가??");
+		
+		
+		int pay_orderno = reviewBean.getRev_ProNum();
+		
+		
 		FarmerDAO fdao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		ReviewDAO dao = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		pay_No = (float)(dao.productno(pay_orderno));
+		System.out.println(pay_No);
+		
+		
+		Map<Float, Object> map = new HashMap<Float, Object>();
+		
+		
+		map.put(rev_Rate, rev_Rate);
+		map.put(pay_No, Math.round(pay_No));
 
 		fdao.myRate(farmerBean);
 		int n = dao.insert(reviewBean);
