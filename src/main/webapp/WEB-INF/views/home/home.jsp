@@ -48,7 +48,10 @@
 					<h1>농장 신청</h1>
 					<p class="mb-4">내 손안의 농장</p>
 					<p>
-						<a href="/productlist" class="btn btn-primary mr-md-4 py-2 px-4">more <span class="ion-ios-arrow-forward"></span>
+
+						<a href="/productlist" class="btn btn-primary mr-md-4 py-2 px-4">농장 보러가기
+							 <span class="ion-ios-arrow-forward"></span>
+
 						</a>
 					</p>
 				</div>

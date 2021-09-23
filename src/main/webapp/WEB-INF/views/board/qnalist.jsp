@@ -415,7 +415,7 @@ $(document).on('click', '[data-toggle="lightbox"]', function(event) {
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
     
-    
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />    
 </body>
 
 </html>

@@ -170,8 +170,26 @@ public class PaymentController {
 				InternetAddress to = new InternetAddress("rjarorgudwns@naver.com");
 				msg.setRecipient(Message.RecipientType.TO, to);
 				msg.setSubject(pay_Name + "고객님, EVERY FARM 결제가 완료 되었습니다.", "UTF-8");
-				msg.setText("안녕하세요, " + pay_Name + " 님의 결제내역입니다." + "\n\n" + pay_Name + "고객님의 결제금액은 "
-						+ totalprice + "입니다." + "\n감사합니다.", "UTF-8");
+				msg.setContent("안녕하세요<br>"
+						+ pay_Name + " 님의 결제내역입니다.<br>" 
+						+ pay_Name + " 고객님의 결제금액은 " + totalprice + "원 입니다.<br>" 
+						+ "감사합니다."
+						+ "<!DOCTYPE html>" 
+						+ "<html>"
+						+ "<head>"
+						+ "<meta charset=\"UTF-8\">"
+						+ "</head>"
+						+ "<body>"
+						+ "<table border='1' role='table'>"
+						+ "<thead role='rowgroup'>"
+						+ "<tr class='center' role='row'>"
+						+ "<th role='columnheader'>이미지</th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "</table>"
+						+ "</body>"
+						+ "</html>"
+						, "text/html; charset=UTF-8");
 				System.out.println(8);
 
 				Transport.send(msg);
