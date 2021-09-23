@@ -37,18 +37,11 @@ label.error {
 
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/views/home/header.jsp" />
 	<div class="main">
 
 		<div class="container">
 			<div class="signup-content">
-				<div class="signup-img">
-					<img src="resources/sign/images/join.jpg" alt="">
-					<div class="signup-img-content">
-						<h2>Register now</h2>
-						<p>while seats are available !</p>
-					</div>
-				</div>
 				<div class="signup-form">
 					<form:form method="POST" commandName="memberBean"
 						class="register-form" id="register-form" action="/sign">
@@ -361,6 +354,7 @@ label.error {
 	<script
 		src="resources/sign/vendor/jquery-validation/dist/additional-methods.min.js"></script>
 	<script src="resources/sign/js/main.js"></script>
+	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </body>
 <!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>

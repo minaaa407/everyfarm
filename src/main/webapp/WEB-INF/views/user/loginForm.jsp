@@ -20,8 +20,9 @@
 <title>LOGIN</title>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/home/header.jsp" />
 	<div class="Main-container">
-		<div class="col-md-6 container-login">
+		<div class="col-md-12 container-login">
 			<div class="wrap-login">
 				<form class="login-form" action="login" method="post">
 					<span class="login-form-title">EVERY FARM</span>
@@ -76,5 +77,6 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </body>
 </html>

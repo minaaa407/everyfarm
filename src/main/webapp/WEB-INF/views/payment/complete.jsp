@@ -33,12 +33,16 @@
 }
 .orderStep {
 	margin-bottom: 50px;
-	margin-top: 50px;
+	margin-top: 100px;
 	text-align: center;
 }
 .select {
 font-weight:bold;
 background-color:#E6E6E6;
+}
+.complete{
+margin-bottom: 100px;
+	margin-top: 50px;
 }
 </style>
 </head>
@@ -54,28 +58,27 @@ background-color:#E6E6E6;
 			        </ul>
 				</div>
 			
-			<hr>
-			<br>
-			<br>
-			
-			<div>
-				<h1 style="text-align:center">결제가 성공적으로 완료되었습니다.</h1>
+			<div class="complete">
+				<div>
+					<h1 style="text-align:center">
+						<span>결제가 성공적으로</span>
+						<br>
+						<span>완료되었습니다.</span>
+					</h1>
+				</div>
+				
+				<div style="text-align:center">   
+					<input type=button class="btn btn-primary" value="결제내역" onclick="location.href='/myPayList'">
+					<input type=button class="btn btn-primary" value="홈" onclick="location.href='/home'"/>
+				</div>
 			</div>
-			
-			<div style="text-align:center">   
-				<input type=button value="조회하기" onclick="location.href='/WEB-INF/views/member/login.jsp'">
-				<input type=button value="구매내역" onclick="location.href='/WEB-INF/views/member/mypage.jsp'">
-				<input type=button value="홈" onclick="location.href='index.jsp'"/>
-			</div>
-			<br>
-			<br>
 			<c:forEach var="pay" items="${paymentlist}">
 			<input type=hidden id="pay_Name" name="pay_Name" value="${pay.pay_Name }" />
 			<input type=hidden id="pay_Email" name="pay_Email" value="${pay.pay_Email }" />
 			<input type=hidden id="pay_Totalprice" name="pay_Totalprice" value="${pay.pay_Totalprice }" />
 			<input type=hidden id="pay_Orderno" name="pay_Orderno" value="${pay.pay_Orderno }" />
 			</c:forEach>
-			
+			<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 			
 </body>
 </html>

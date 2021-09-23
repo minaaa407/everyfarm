@@ -1199,8 +1199,6 @@ td .mybtn{
 					<div class="product__details__text">
 						<h2>${oneproduct.p_Title}</h2>
 						<hr>
-						<h3>평점 : ${f_rate}</h3>
-						<hr>
 						<p>${oneproduct.p_Content}</p>
 						<hr>
 						<div>
