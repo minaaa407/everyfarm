@@ -49,7 +49,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/proRegisterForm">
-              <i class="ni ni-circle-08 text-pink"></i> 땅등록
+              <i class="ni ni-circle-08 text-pink"></i> 땅 등록
             </a>
           </li>
           <li class="nav-item">

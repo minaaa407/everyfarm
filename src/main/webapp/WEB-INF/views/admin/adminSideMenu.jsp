@@ -44,8 +44,8 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/adminSign">
-              <i class="ni ni-circle-08 text-pink"></i> 관리자 추가
+            <a class="nav-link" href="/adminList">
+              <i class="ni ni-single-02 text-pink"></i> 관리자 목록
             </a>
           </li>
           <li class="nav-item">
