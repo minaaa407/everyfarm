@@ -391,12 +391,12 @@ public class AdminController {
 		return "admin/sign-in";
 	}
 
-	@RequestMapping(value = "/amdinFindId", method = RequestMethod.GET)
+	@RequestMapping(value = "/adminFindId", method = RequestMethod.GET)
 	public String findId() {
 		return "/admin/findId";
 	}
 
-	@RequestMapping(value = "/amdinFindId", method = RequestMethod.POST)
+	@RequestMapping(value = "/adminFindId", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> findId(@ModelAttribute AdminBean adminBean) {
 
@@ -406,7 +406,7 @@ public class AdminController {
 		AdminBean admin = dao.findId(adminBean);
 
 		if (admin == null) {
-			map.put("url", "/amdinFindId");
+			map.put("url", "/adminFindId");
 			map.put("error", false);
 		} else {
 			map.put("url", "/adminLogin");
@@ -417,12 +417,12 @@ public class AdminController {
 		return map;
 	}
 
-	@RequestMapping(value = "/amdinFindPw", method = RequestMethod.GET)
+	@RequestMapping(value = "/adminFindPw", method = RequestMethod.GET)
 	public String findPw() {
 		return "/admin/findPw";
 	}
 
-	@RequestMapping(value = "/amdinFindPw", method = RequestMethod.POST)
+	@RequestMapping(value = "/adminFindPw", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> findPw(@ModelAttribute AdminBean adminBean, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -431,7 +431,7 @@ public class AdminController {
 		AdminBean admin = dao.findPw(adminBean);
 
 		if (admin == null) {
-			map.put("url", "/amdinFindPw");
+			map.put("url", "/adminFindPw");
 			map.put("error", false);
 		} else {
 			String pw = "";

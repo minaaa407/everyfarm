@@ -9,7 +9,8 @@
 <html>
 <head>
 <link rel="stylesheet" href="resources/index/css/test.css">
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+<link rel="shortcut icon" type="image/x-icon"
+	href="/resources/editor/connn.ico" />
 <meta charset="UTF-8">
 <script type="text/javascript"
 	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
@@ -20,6 +21,7 @@
 <title>LOGIN</title>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/home/header.jsp" />
 	<div class="Main-container">
 		<div class="col-md-6 container-login">
 			<div class="wrap-login">
@@ -76,5 +78,6 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </body>
 </html>

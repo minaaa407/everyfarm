@@ -16,7 +16,7 @@
 			<div class="wrap-login">
 				<form class="login-form" action="farmerLogin" method="post"
 					id="loginBtn">
-					<span class="login-form-title">FARMER's FARM</span>
+					<span class="login-form-title">EVERY FARM</span>
 
 					<div class="wrap-input">
 						<input type="text" class="input" name="F_Id" placeholder="ID"
