@@ -1,10 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Sign In | Bootstrap Based Admin Template - Material Design</title>
+    <title>EVERY FARM | 관리자</title>
     <!-- Favicon-->
     <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 
@@ -28,12 +30,12 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">Admin<b>Farm</b></a>
+            <a href="javascript:void(0);">EVERY<b> FARM</b></a>
         </div>
         <div class="card">
             <div class="body">
                 <form id="sign_in" action="adminLogin" method="POST">
-                    <div class="msg">Sign in to start your session</div>
+                    <div class="msg">EVERY FARM | 관리자</div>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
@@ -51,17 +53,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-8 p-t-5">
-                            <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
-                            <label for="rememberme">Remember Me</label>
-                        </div>
                         <div class="col-xs-4">
                             <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
                         </div>
                     </div>
                     <div class="row m-t-15 m-b--20">
                         <div class="col-xs-6 align-right">
-                            <a href="/adminFindId">Forgot Password?</a>
+                            <a href="/adminFindId">Forgot ID?</a>
                         </div>
                         <div class="col-xs-6 align-right">
                             <a href="/adminFindPw">Forgot Password?</a>
