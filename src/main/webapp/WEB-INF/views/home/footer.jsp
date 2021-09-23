@@ -14,28 +14,23 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="resources/index/css/animate.css">
+<link rel="stylesheet" href="/resources/index/css/animate.css">
 
-<link rel="stylesheet" href="resources/index/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/resources/index/css/owl.carousel.min.css">
 <link rel="stylesheet"
-	href="resources/index/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="resources/index/css/magnific-popup.css">
+	href="/resources/index/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="/resources/index/css/magnific-popup.css">
 
-<link rel="stylesheet" href="resources/index/css/ionicons.min.css">
+<link rel="stylesheet" href="/resources/index/css/ionicons.min.css">
 
-<link rel="stylesheet" href="resources/index/css/flaticon.css">
-<link rel="stylesheet" href="resources/index/css/icomoon.css">
-<link rel="stylesheet" href="resources/index/css/style.css">
+<link rel="stylesheet" href="/resources/index/css/flaticon.css">
+<link rel="stylesheet" href="/resources/index/css/icomoon.css">
+<link rel="stylesheet" href="/resources/index/css/style.css">
 
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
 	crossorigin="anonymous"> 	
-<style>
-footer{
-margin-top:200px;
-}
-</style>
 </head>
 <body>
 	<!-- Start Footer -->
@@ -90,19 +85,19 @@ margin-top:200px;
 		</div>
 	</footer>
 	<!-- End Footer -->
-	<script src="resources/index/js/jquery.min.js"></script>
-	<script src="resources/index/js/jquery-migrate-3.0.1.min.js"></script>
-	<script src="resources/index/js/popper.min.js"></script>
-	<script src="resources/index/js/bootstrap.min.js"></script>
-	<script src="resources/index/js/jquery.easing.1.3.js"></script>
-	<script src="resources/index/js/jquery.waypoints.min.js"></script>
-	<script src="resources/index/js/jquery.stellar.min.js"></script>
-	<script src="resources/index/js/owl.carousel.min.js"></script>
-	<script src="resources/index/js/jquery.magnific-popup.min.js"></script>
-	<script src="resources/index/js/scrollax.min.js"></script>
+	<script src="/resources/index/js/jquery.min.js"></script>
+	<script src="/resources/index/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="/resources/index/js/popper.min.js"></script>
+	<script src="/resources/index/js/bootstrap.min.js"></script>
+	<script src="/resources/index/js/jquery.easing.1.3.js"></script>
+	<script src="/resources/index/js/jquery.waypoints.min.js"></script>
+	<script src="/resources/index/js/jquery.stellar.min.js"></script>
+	<script src="/resources/index/js/owl.carousel.min.js"></script>
+	<script src="/resources/index/js/jquery.magnific-popup.min.js"></script>
+	<script src="/resources/index/js/scrollax.min.js"></script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="resources/index/js/google-map.js"></script>
-	<script src="resources/index/js/main.js"></script>
+	<script src="/resources/index/js/google-map.js"></script>
+	<script src="/resources/index/js/main.js"></script>
 </body>
 </html>
