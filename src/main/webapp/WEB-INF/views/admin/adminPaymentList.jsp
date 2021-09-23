@@ -176,15 +176,17 @@ background-color: silver;
                                  <input type="text" id="keyword" name="keyword"  
                                     value="${pageMaker.cri.keyword}" placeholder="검색어를 입력하세요" />&nbsp;
                         
-                                 <button id="button" class="btn waves-effect waves-light btn-primary btn-outline-primary">검색</button>&nbsp;
-                                 <input type="button" id="button" class="btn waves-effect waves-light btn-primary btn-outline-primary" value="전체보기" onClick="location.href='/adminPaymentList';">&nbsp;
+                                 <button id="button" class="btn waves-effect waves-light btn-outline">검색</button>&nbsp;
+                                 <input type="button" id="button" class="btn waves-effect waves-light btn-outline" value="전체보기" onClick="location.href='/adminPaymentList';">&nbsp;
                               </form>
+                              
+                              <br>
                               
 				<!-- 페이징 start -->
 				<div class="row">
                     	<div class="col btn-group pagination">
                         	<c:if test="${pageMaker.prev }">
-                            	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageMaker.startPage-1)}"/>'>[이전]</a>
+                            	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageMaker.startPage-1)}"/>'>이전</a>
                             </c:if>
                             <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
                             	<c:if test="${pageNum eq pageMaker.cri.page}">
@@ -200,7 +202,7 @@ background-color: silver;
                             </c:forEach>
                             <c:if test="${pageMaker.next && pageMaker.endPage >0 }">
                             	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageMaker.endPage+1)}"/>'>
-                                	<span style="font-weight: bold;">[다음]</span>
+                                	<span style="font-weight: bold;">다음</span>
                                 </a>
                             </c:if>
                         </div>

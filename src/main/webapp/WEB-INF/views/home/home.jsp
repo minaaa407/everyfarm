@@ -121,46 +121,6 @@
 		</div>
 		</div>
 	</section>
-
-	<section class="ftco-section ftco-no-pt ftco-no-pb bg-light">
-		<div class="container">
-			<div class="row d-flex">
-				<div class="col-md-6 d-flex">
-					<div
-						class="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-end"
-						style="background-image: url(resources/index/images/about.jpg);">
-						<a href="https://www.youtube.com/watch?v=Vu1LCN8RcjU"
-							class="icon-video popup-vimeo d-flex justify-content-center align-items-center">
-							<span class="icon-play"></span>
-						</a>
-					</div>
-				</div>
-				<div class="col-md-6 pl-md-5">
-					<div class="row justify-content-start py-5">
-						<div class="col-md-12 heading-section ftco-animate">
-							<span class="subheading">Welcome to EVERY FARM</span>
-							<h2 class="mb-4">BEST SEED</h2>
-							<div class="services-wrap">
-								<c:choose>
-									<c:when test="${empty payView}">
-										<div>
-											<p class="services-list">상품이 존재하지 않습니다.</p>
-										</div>
-									</c:when>
-									<c:when test="${!empty payView}">
-										<c:forEach var="payView" items="${payView}">
-											<p class="services-list">${ payView.pay_Seed}</p>
-										</c:forEach>
-									</c:when>
-								</c:choose>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
 	<section class="ftco-section bg-light">
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-3">

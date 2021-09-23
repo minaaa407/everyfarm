@@ -16,7 +16,6 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link
 	href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
 	rel="stylesheet">
@@ -107,20 +106,24 @@ table td, table th {
 #regSearch {
 	text-align: center;
 }
+
 .pagination {
-  display: inline-block;
+	display: inline-block;
 }
+
 .pagination a {
-  float: left;
-  padding: 8px 16px;
-  border-radius:20%;
+	float: left;
+	padding: 8px 16px;
+	border-radius: 20%;
 }
+
 .pagination a.active {
-  background-color: #7971ea;
-  color: white;
+	background-color: #7971ea;
+	color: white;
 }
-.pagination a:hover:not(.active) {
-background-color: silver;
+
+.pagination a:hover:not (.active ) {
+	background-color: silver;
 }
 </style>
 
@@ -242,107 +245,51 @@ function search(){
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
-		<div class="table100">
+				<div class="table100">
 					<table border="1">
 						<colgroup>
 							<col style="width: 50px" />
 							<col style="width: 120px" />
 							<col style="width: 100px" />
-							<col style="width: 100px" />
 							<col style="width: 80px" />
 							<col style="width: 70px" />
 							<col style="width: 70px" />
-							<col style="width: 150px" />
+							<col style="width: 70px" />
 						</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">상품번호</th>
-					<th scope="col">메인이미지</th>
-					<th scope="col">아이디</th>
-					<th scope="col">제목</th>
-					<th scope="col">등록날짜</th>
-					<th scope="col">승인여부</th>
-					<th scope="col">상세보기</th>
-					<th scope="col">삭제</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="p" items="${productlist}">
-					<tr>
-						<td class="content">${p.p_No}</td>
-						<td class="content"><img id='product${p.p_No}'
-							src="/resources/upload/product/${p.p_No}/${p.p_Img}"
-							class="test1" width="90" height="auto" alt="Image ${p.p_No}">
-						</td>
-						<td class="content">${p.p_Id}</td>
-						<td class="content">${p.p_Title}</td>
-						<td class="content">${p.p_Date}</td>
-						<td class="content">${p.p_Accept}</td>
-						<td class="content"><a
-							href="/productdetail?productno=${p.p_No}">상세보기</a></td>
-						<td><button type="button" class="btn btn-sm btn-neutral"
-								onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</tbody>
+						<thead>
+							<tr>
+								<th scope="col">상품번호</th>
+								<th scope="col">메인이미지</th>
+								<th scope="col">제목</th>
+								<th scope="col">등록날짜</th>
+								<th scope="col">승인여부</th>
+								<th scope="col">상세보기</th>
+								<th scope="col">삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="p" items="${productlist}">
+								<tr>
+									<td class="content">${p.p_No}</td>
+									<td class="content"><img id='product${p.p_No}'
+										src="/resources/upload/product/${p.p_No}/${p.p_Img}"
+										class="test1" width="90" height="auto" alt="Image ${p.p_No}">
+									</td>
+									<td class="content">${p.p_Title}</td>
+									<td class="content">${p.p_Date}</td>
+									<td class="content">${p.p_Accept}</td>
+									<td class="content"><a
+										href="/productdetail?productno=${p.p_No}">상세보기</a></td>
+									<td><button type="button" class="btn btn-sm btn-neutral"
+											onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
+								</tr>
+							</c:forEach>
+						</tbody>
 					</table>
-				</div>
-				<br>
-				<div class="col btn-group pagination">
-
-					<c:if test="${pagebeen.pro eq 'true' }">
-						<a id="page${pagebeen.pagestart -1}" style="cursor: pointer"
-							onclick="paging(${pagebeen.pagestart -1})">이전 </a>
-					</c:if>
-
-					<c:forEach var="i" begin="${pagebeen.pagestart}"
-						end="${pagebeen.pageend}" step="1">
-						<a id="page${i}" style="cursor: pointer" onclick="paging(${i })">${i }</a>
-					</c:forEach>
-					<c:if test="${pagebeen.post eq 'true'}">
-						<a id="page${pagebeen.pageend +1}" style="cursor: pointer"
-							onclick="paging(${pagebeen.pageend +1})">다음 </a>
-					</c:if>
-				</div>
-				<!-- form 해당 부분 scrip 이벤트 통해서 자동 전송 처리 -->
-				<form:form commandName="pagebeen" name="myHiddenForm"
-					action="/proAdminListForm" method="post">
-					<input type="hidden" id="selectpage" name="selectpage" value="1">
-					<input type="hidden" id="pagestart" name="pagestart"
-						value="${pagebeen.pagestart}">
-					<input type="hidden" id="pageend" name="pageend"
-						value="${pagebeen.pageend}">
-					<input type="hidden" id="endnumber" name="endnumber"
-						value="${pagebeen.endnumber}">
-					<input type="hidden" id="limit" name="limit"
-						value="${pagebeen.limit}">
-					<input type="hidden" id="offset" name="offset"
-						value="${pagebeen.offset}">
-					<input type="hidden" id="tableindex" name="tableindex"
-						value="${pagebeen.tableindex}">
-					<input type="hidden" id="pagingnumber" name="pagingnumber"
-						value="${pagebeen.pagingnumber}">
-					<input type="hidden" id="pro" name="pro" value="${pagebeen.pro}">
-					<input type="hidden" id="post" name="post" value="${pagebeen.post}">
-					<input type="hidden" id="where" name="where"
-						value="${pagebeen.where}">
-					<input type="hidden" id="wherecolumn" name="wherecolumn"
-						value="${pagebeen.wherecolumn}">
-
-				</form:form>
-				<br>
-				<div id="regSearch">
-					<select name="productselect" id="productselect">
-						<option value="p_No">상품번호</option>
-						<option value="p_Id">아이디</option>
-					</select> <input type="text" name="selectText" id="selectText"> <input
-						type="button" value="검색" onclick="search()">
+					</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
-		<br>
-		<Br>
 </body>
 </html>
