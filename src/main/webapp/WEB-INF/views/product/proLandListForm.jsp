@@ -139,12 +139,6 @@ function LandDelete(p_No) {
 	}
 }
 
-function paging(i){
-	var page = "page" + i;
-	document.getElementById('selectpage').value = i;
-	document.myHiddenForm.submit();
-}
-
 function search(){
 	
 	var select = document.getElementById('productselect').value;

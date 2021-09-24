@@ -107,7 +107,7 @@ input {
 
 
 
-<title>EVERY FARM</title>
+<title>EVERY FARM | 리뷰 수정</title>
 <jsp:include page="/WEB-INF/views/home/header.jsp" />
 </head>
 <body>
