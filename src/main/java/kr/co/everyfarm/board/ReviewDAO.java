@@ -8,6 +8,8 @@ public interface ReviewDAO {
 	
 	List<ReviewBean> paging(Paging paging); // 페이징 , 리스트
 	
+	List<ReviewBean> mypaging(Paging paging); // 페이징 , 리스트
+	
 	List<ReviewBean> mylist(String m_Id); // 마이페이지
 
 	List<ReviewBean> reviewList(); //인덱스
