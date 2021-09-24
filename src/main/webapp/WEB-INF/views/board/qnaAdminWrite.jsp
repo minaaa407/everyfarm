@@ -229,7 +229,9 @@ input::placeholder {
 
 
 
-
+<footer>
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />
+</footer>
 
 
 </body>
