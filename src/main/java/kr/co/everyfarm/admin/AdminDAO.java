@@ -40,5 +40,5 @@ public interface AdminDAO {
 
 	public void farmerY(List<String> yes);
 	
-	public void aDel(List<String> delete);
+	public void aDel(@Param("delete") List<String> delete, @Param("i") int i);
 }
