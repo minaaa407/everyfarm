@@ -18,7 +18,7 @@
 .height {
 height: 602px;
 }
-.chartcenter {
+.center {
     justify-content: center;
 }
 .margin {
@@ -74,8 +74,8 @@ height: 602px;
 				<div class="col-xl-6 mb-5 mb-xl-0">
 					<div class="card bg-gradient-default shadow height chartcenter">
 						<!-- Chart -->
-						<div>
-							<canvas id="myChart" style="width:100%; max-width:800px;"></canvas>
+						<div >
+							<canvas id="myChart" style="width:100%;max-width:800px"></canvas>
 						</div>
 					</div>
 				</div>
@@ -97,20 +97,7 @@ height: 602px;
 								</div>
 							</div>
 						</div>
-						<!-- 차트 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--   Core   -->
-<script src="resources/farmer/js/plugins/jquery/dist/jquery.min.js"></script>
-<script
-	src="resources/farmer/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!--   Optional JS   -->
-<script src="resources/farmer/js/plugins/chart.js/dist/Chart.min.js"></script>
-<script
-	src="resources/farmer/js/plugins/chart.js/dist/Chart.extension.js"></script>
-<!--   Argon JS   -->
-<script src="resources/farmer/js/argon-dashboard.min.js?v=1.1.2"></script>
-<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>	
+		
 
 						<div class="card-body">
 							<!-- Chart -->
@@ -119,15 +106,88 @@ height: 602px;
 							</div>
 						</div>
 					</div>
-							<script>
-OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
-t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
-	ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
-		callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
-		return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
-
-</script>
 							
+						</div>
+					</div>
+				</div>
+			</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- 차트	 -->
+<script type="text/javascript">
+var seedName = ${seedName};
+var seedSum = ${seedSumTotal}; 
+/* var xValues = ["Italy", "France", "Spain", "USA", "Argentina"]; */
+/* var yValues = [55, 49, 44, 24, 15]; */
+var barColors = [
+  "#dda0dd",
+  "#b0e0e6",
+  "#800080",
+  "#ff0000",
+  "#bc8f8f",
+  "#4169e1",
+  "#8b4513",
+  "#fa8072",
+  "#f4a460",
+  "#2e8b57",
+  "#ffff5ee",
+  "#6a5acd",
+  "#708090",
+  "#00ff7f",
+  "#4682b4",
+  "#d2b48c",
+  "#008080"
+];
+
+new Chart("myChart", {
+  type: "doughnut", /* doughnut */
+  data: {
+    labels: seedName,
+    datasets: [{
+      backgroundColor: barColors,
+      data: seedSum
+    }]
+  },
+  options: {
+	responsive: false,
+	maintainAspectRatio: false,
+    title: {
+      display: true,
+      text: "이번달 농작물 판매 수",
+    	  fontSize: 15,
+		      fontColor: '#4e9525'
+    }
+
+  }
+});
+</script>
+							<!-- 차트 -->
+									<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+									<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+									<!--   Core   -->
+									<script src="resources/farmer/js/plugins/jquery/dist/jquery.min.js"></script>
+									<script
+										src="resources/farmer/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+									<!--   Optional JS   -->
+									<script src="resources/farmer/js/plugins/chart.js/dist/Chart.min.js"></script>
+									<script
+										src="resources/farmer/js/plugins/chart.js/dist/Chart.extension.js"></script>
+									<!--   Argon JS   -->
+									<script src="resources/farmer/js/argon-dashboard.min.js?v=1.1.2"></script>
+									<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>	
+
+
+							<script>
+								OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+								t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+									ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+										callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+										return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
+								
+							</script>
+							
+								
+																
 					<script>
 								function nowyear(){
 									var productchar = document.getElementById("productchart");
@@ -174,62 +234,6 @@ t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lin
 
 								}
 								</script>
-						</div>
-					</div>
-				</div>
-			</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<!-- 차트	 -->
-<script type="text/javascript">
-var seedName = ${seedName};
-var seedSum = ${seedSumTotal}; 
-/* var xValues = ["Italy", "France", "Spain", "USA", "Argentina"]; */
-/* var yValues = [55, 49, 44, 24, 15]; */
-var barColors = [
-  "#dda0dd",
-  "#b0e0e6",
-  "#800080",
-  "#ff0000",
-  "#bc8f8f",
-  "#4169e1",
-  "#8b4513",
-  "#fa8072",
-  "#f4a460",
-  "#2e8b57",
-  "#ffff5ee",
-  "#6a5acd",
-  "#708090",
-  "#00ff7f",
-  "#4682b4",
-  "#d2b48c",
-  "#008080"
-];
-
-new Chart("myChart", {
-  type: "doughnut", /* doughnut */
-  data: {
-    labels: seedName,
-    datasets: [{
-      backgroundColor: barColors,
-      data: seedSum
-    }]
-  },
-  options: {
-	responsive: false,
-	maintainAspectRatio: false,
-    title: {
-      display: true,
-      text: "이번달 농작물 판매 수",
-    	  fontSize: 25,
-		      fontColor: '#4e9525'
-    }
-  }
-});
-</script>
-
-
-
 
 </body>
 </html>

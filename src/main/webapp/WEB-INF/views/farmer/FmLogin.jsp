@@ -5,14 +5,31 @@
 
 <html>
 <head>
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link rel="stylesheet" href="resources/index/css/test.css">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <meta charset="UTF-8">
 <title>EveryFarm 농부 | LOGIN</title>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<title>LOGIN</title>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+	crossorigin="anonymous">
+
+<style>
+	.input{
+	
+	padding : 0px;
+	text-indent: 60px;
+	}
+
+</style>
+
 </head>
 <body>
 	<div class="Main-container">
-		<div class="col-md-6 container-login">
+		<div class="col-md-6 container-login" style="padding : 0px">
 			<div class="wrap-login">
 				<form class="login-form" action="farmerLogin" method="post"
 					id="loginBtn">
