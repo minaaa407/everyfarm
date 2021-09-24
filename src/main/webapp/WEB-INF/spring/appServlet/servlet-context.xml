@@ -76,12 +76,16 @@
 		<interceptor>
 			<mapping path="/reviewWrite" />	   <!-- 리뷰 작성 -->
 			<mapping path="/reviewCommWrite" /> <!-- 리뷰 댓글 작성 -->
+			<mapping path="/reviewInsert" />
+			<mapping path="/replyWrite" />
+			<mapping path="/reviewUpdate" />
+			<mapping path="/reviewUpdate1" />
+			<mapping path="/reviewDelete" />
+			<mapping path="/myReview" />
+			<mapping path="/myQnA" />
 			<mapping path="/productbasketchoice" />
 			<mapping path="/PaymentInfo" />
 			<mapping path="/myPayList" />
-
-
-
 			<mapping path="/qnamylist" />
 			<mapping path="/qnawrite" />
 			<mapping path="/qnainsert" />
@@ -98,7 +102,15 @@
 			<beans:ref bean="SessionInterceptor" /><!-- 모든 Logger에 대한 인텁세터 
 				할려면~ /** 하래요 -->
 		</interceptor>
+		
 		<interceptor>
+			<mapping path="/admin" />
+			<mapping path="/adminQnasearch" />
+			<mapping path="/adminQnaList" />
+			<mapping path="/adminMemQnaModify/{no}" />
+			<mapping path="/adminMemQnaupdatet" />
+			<mapping path="/adminFarmerQnaUpdate" />
+			<mapping path="/adminQnadelete/{no}" />
 			<mapping path="/userList" />
 			<mapping path="/farmerList" />
 			<mapping path="/farmerAdd" />
@@ -109,15 +121,9 @@
 			<mapping path="/adminPaymentList" />
 			<mapping path="/adminproductlist" />
 			<mapping path="/adminPayListDelete" />
-			<mapping path="/adminQnasearch" />
-			<mapping path="/adminQnaList" />
-			<mapping path="/adminMemQnaModify/{no}" />
-			<mapping path="/adminMemQnaupdatet" />
-			<mapping path="/adminFarmerQnaUpdate" />
-			<mapping path="/adminQnadelete/{no}" />
-
 			<beans:ref bean="AdminInterceptor" />
 		</interceptor>
+		
 		<interceptor>
 			<mapping path="/farmer" />
 			<mapping path="/farmerQnasearch" />

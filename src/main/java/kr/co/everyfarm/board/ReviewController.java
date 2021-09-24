@@ -107,7 +107,7 @@ public class ReviewController {
 		return "redirect:/reviewList";
 	}
 
-	@RequestMapping(value = "reviewDelete")
+	@RequestMapping(value = "/reviewDelete")
 	public String reviewDelete(ReviewBean reviewBean) {
 		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		revDAO.revDelete(reviewBean);
