@@ -158,18 +158,7 @@ new Chart("myChart", {
   }
 });
 </script>
-
-
-<script>
-								OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
-								t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
-									ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
-										callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
-										return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
-								
-							</script>
-							
-											<!-- 차트 -->
+							<!-- 차트 -->
 									<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 									<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 									<!--   Core   -->
@@ -183,6 +172,18 @@ new Chart("myChart", {
 									<!--   Argon JS   -->
 									<script src="resources/farmer/js/argon-dashboard.min.js?v=1.1.2"></script>
 									<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>	
+
+
+							<script>
+								OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+								t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+									ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+										callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+										return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
+								
+							</script>
+							
+								
 																
 					<script>
 								function nowyear(){
