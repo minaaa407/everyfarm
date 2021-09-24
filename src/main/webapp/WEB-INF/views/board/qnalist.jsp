@@ -16,7 +16,6 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900&display=swap"
         rel="stylesheet">
@@ -400,6 +399,10 @@ $(document).on('click', '[data-toggle="lightbox"]', function(event) {
     $(this).ekkoLightbox();
 });
 
+document.getElementById('a1').className ='nav-item';
+document.getElementById('a2').className ='nav-item';
+document.getElementById('a3').className ='nav-item';
+document.getElementById('a4').className ='nav-item active';
 </script>
                   
     

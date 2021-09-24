@@ -84,6 +84,11 @@ table td, table th {
 .pagination a:hover:not (.active ) {
 	background-color: silver;
 }
+.table100{
+display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
 </style>
 </head>
 <body>
@@ -194,30 +199,26 @@ table td, table th {
 						</div>
 					</div>
 					<div class="pageInfo_wrap">
-						<div class="pageInfo_area">
-							<ul id="pageInfo" class="pageInfo">
-
+							<div id="pageInfo" class="pageInfo btn-group pagination ">
 								<!-- 이전페이지 버튼 -->
 								<c:if test="${pageMaker.prev}">
-									<li class="pageInfo_btn previous"><a
-										href="${pageMaker.startPage-1}">[이전]</a></li>
+									<span class="pageInfo_btn previous"><a
+										href="${pageMaker.startPage-1}">[이전]</a></span>
 								</c:if>
 
 								<!-- 각 번호 페이지 버튼 -->
 								<c:forEach var="num" begin="${pageMaker.startPage}"
 									end="${pageMaker.endPage}">
-									<li class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a
-										href="${num}">${num}</a></li>
+									<span class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a
+										href="${num}">${num}</a></span>
 								</c:forEach>
 
 								<!-- 다음페이지 버튼 -->
 								<c:if test="${pageMaker.next}">
-									<li class="pageInfo_btn next"><a
-										href="${pageMaker.endPage + 1 }">[다음]</a></li>
+									<span class="pageInfo_btn next"><a
+										href="${pageMaker.endPage + 1 }">[다음]</a></span>
 								</c:if>
-
-							</ul>
-						</div>
+							</div>
 					</div>
 					<form id="moveForm" method="get">
 						<input type="hidden" name="pageNum"

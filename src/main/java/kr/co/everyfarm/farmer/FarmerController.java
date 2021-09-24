@@ -432,64 +432,6 @@ public class FarmerController {
 		return "farmer/myPage";
 	}
 
-
-	@RequestMapping(value = "/contact")
-	public String contact() {
-		return "board/contact";
-	}
-
-	@RequestMapping(value = "/contact", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> contact(HttpServletRequest request) {
-		System.out.println("contact post");
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		Properties prop = System.getProperties();
-		prop.put("mail.smtp.starttls.enable", "true");
-		prop.put("mail.smtp.host", "smtp.gmail.com");
-		prop.put("mail.smtp.auth", "true");
-		prop.put("mail.smtp.port", "587");
-
-		Authenticator auth = new MailAuth();
-
-		Session session = Session.getDefaultInstance(prop, auth);
-
-		MimeMessage msg = new MimeMessage(session);
-
-		try {
-			msg.setSentDate(new Date());
-
-			msg.setFrom(new InternetAddress(request.getParameter("email"), request.getParameter("name")));
-			InternetAddress to = new InternetAddress("alsdk9458@gmail.com");
-			msg.setRecipient(Message.RecipientType.TO, to);
-			msg.setSubject(request.getParameter("subject"), "UTF-8");
-			msg.setText(request.getParameter("message"), "UTF-8");
-
-			System.out.println(request.getParameter("email") + ":");
-			System.out.println(request.getParameter("subject") + ":");
-			System.out.println(request.getParameter("message") + ":");
-			System.out.println(request.getParameter("name") + ":");
-
-			Transport.send(msg);
-
-			System.out.println(msg + ":::");
-
-			map.put("url", "/contact");
-			map.put("error", true);
-
-		} catch (AddressException ae) {
-			System.out.println("AddressException : " + ae.getMessage());
-			map.put("error", false);
-		} catch (MessagingException me) {
-			System.out.println("MessagingException : " + me.getMessage());
-			map.put("error", false);
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("UnsupportedEncodingException : " + e.getMessage());
-			map.put("error", false);
-		}
-		return map;
-	}
-
 	@RequestMapping(value = "/myCustomer")
 	public String myCus(PaymentBean paymentBean, Model model, HttpSession session, FarmerBean farmerBean,
 			Paging paging) {

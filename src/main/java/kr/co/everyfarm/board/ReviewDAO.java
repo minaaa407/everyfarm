@@ -2,6 +2,9 @@ package kr.co.everyfarm.board;
 
 import java.util.List;
 
+import kr.co.everyfarm.payment.PaymentBean;
+import kr.co.everyfarm.product.ProductBean;
+
 public interface ReviewDAO {
 
 	List<ReviewBean> list(Paging paging); // 페이징
@@ -30,6 +33,13 @@ public interface ReviewDAO {
 	
 	int revCount(Paging paging); //페이징 관련
 	
+	
+	
+	
+	List<PaymentBean> selectpaymentreview(String m_Id);//reveiw 선택된 아이디에 대한 payment
+	List<ProductBean> selectproductreview(String m_Id);
+	
+	public int productno(int no);
 
 
 }

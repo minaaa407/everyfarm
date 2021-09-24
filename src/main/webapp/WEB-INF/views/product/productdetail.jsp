@@ -350,19 +350,19 @@ function oneqna(qnaid){
 							
 								a +="<tr>";
 								if(onelist.c_Subno > 0){
-									a +="<td style='width:80%;padding-left: 20px;'>";
-									a +="<span style='font-size:20px'>└</span>"+onelist.c_Content+"<br></td>";
+									a +="<td style='padding-left: 20px;'>";
+									a +="<span style='font-size:20px'>└</span>"+onelist.c_Content+"<br><span style='font-size:8px'>"
+									+onelist.c_Date+" "+onelist.c_Id+"</span></td>";
 								}else{
-									a +="<td style='width:80%'>"+onelist.c_Content +"<br></td>";
+									a +="<td style=''>"+onelist.c_Content +"<br><span style='font-size:8px'>"
+									+onelist.c_Date+" "+onelist.c_Id+"</span></td>";
 									
 								}
-								a +="<td  style='width:20%'>";
-								a +=onelist.c_Id+"<br>"+onelist.c_Date+"<br></td><tr></tr><td>";
+								a +="</tr><tr><td>";
 								if( ((onelist.c_Subno==0)&&(${(not empty farmer || not empty admin)}))&&onelist.c_Id !='삭제' ){
 									a +="<input name ='"+onelist.c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton(this.name)' />";
 								}
 														
-								a+="</td><td>";
 								//뒤로가기 방지&& ${member.m_Id} == qnalist[i].c_Id
 								if( ( ${(not empty farmer || not empty admin)} ) && (onelist.c_Id !='삭제')||('${member.m_Id}'==onelist.c_Id)  ){
 									var seq= onelist.c_Seq;
@@ -402,19 +402,20 @@ function ajax(urlpath,bean){
 					for(var i =0; i < qnalist.length; i++){
 						a +="<table style='width:100%'><tr>";
 						if(qnalist[i].c_Subno > 0){
-							a +="<td style='width:80%;padding-left: 20px;'>";
-							a +="<span style='font-size:20px'>└</span>"+qnalist[i].c_Content+"<br></td>";
+							a +="<td style='padding-left: 20px;'>";
+							a +="<span style='font-size:20px'>└</span>"+qnalist[i].c_Content+"<br><span style='font-size:8px'>"
+							+qnalist[i].c_Date+" "+qnalist[i].c_Id+"</span></td>";
 						}else{
-							a +="<td style='width:80%'>"+qnalist[i].c_Content +"<br></td>";
-							
+							a +="<td style=''>"+qnalist[i].c_Content +"<br><span style='font-size:8px'>"
+							+qnalist[i].c_Date+" "+qnalist[i].c_Id+"</span></td>";
 						}
-						a +="<td  style='width:20%'>";
-						a +=qnalist[i].c_Id+"<br>"+qnalist[i].c_Date+"<br></td><tr></tr><td>";
+						
+						a +="</tr><tr><td>";
+						
 						if( ((qnalist[i].c_Subno==0)&&(${(not empty farmer || not empty admin)}))&&qnalist[i].c_Id !='삭제' ){
 							a +="<input name ='"+qnalist[i].c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton('"+qnalist[i].c_Seq+"')' />";
 						}
 						
-						a+="</td><td>";
 						var qid = qnalist[i].c_Id;
 					
 				
@@ -720,6 +721,7 @@ td .mybtn{
 </style>
 
 <script>
+
 			$(document).ready(function () {
 				lnb = $("#lnb").offset().top;
 				  $("div.select > a").click(function () {
@@ -1099,7 +1101,7 @@ td .mybtn{
 		          }
 		        })
 	});
-			
+
 	</script>
 
 </head>
@@ -1111,72 +1113,8 @@ td .mybtn{
 %>					
 
 
-		<div class="container pt-5 pb-4">
-			<div class="row justify-content-between">
-				<div class="col-md-8 order-md-last">
-					<div class="row">
-						<div class="col-md-6 text-center">
-							<a class="navbar-brand" href="index.jsp">EVERY <span>FARM</span></a>
-						</div>
-						<div class="col-md-6 col-lg">
-							<select name="page" onchange="location.href=this.value">
-								<option value="#">홈페이지</option>
-								<option value="/home">USER</option>
-								<option value="/farmerLogin">FARMER</option>
-								<option value="/adminLogin">ADMIN</option>
-							</select>
-						</div>
-						<div>
-							<c:choose>
-								<c:when test="${empty member}">
-									<li><a href="/login">로그인</a></li>
-									<li><a href="/sign">회원가입</a></li>
-								</c:when>
-								<c:when test="${not empty member}">
-									<li>${member.m_Name}님환영합니다.</li>
-									<li><a href="/mypage">내 정보</a></li>
-									<c:choose>
-										<c:when test="${member.m_Pw eq 'KAKAO'}">
-											<li><a href="/klogout">로그아웃</a></li>
-										</c:when>
-										<c:when test="${member.m_Pw eq 'NAVER'}">
-											<li><a href="/nlogout">로그아웃</a></li>
-										</c:when>
-										<c:otherwise>
-											<li><a href="/logout">로그아웃</a></li>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-							</c:choose>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Start NavBar -->
-		<nav
-			class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
-			id="ftco-navbar">
-			<div class="container-fluid">
-
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#ftco-nav" aria-controls="ftco-nav"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="fa fa-bars"></span> Menu
-				</button>
-				<div class="collapse navbar-collapse" id="ftco-nav">
-					<ul class="navbar-nav m-auto">
-						<li class="nav-item active"><a href="index.jsp"
-							class="nav-link">Home</a></li>
-						<li class="nav-item"><a href="/productlist" class="nav-link">농장</a></li>
-						<li class="nav-item"><a href="/reviewList" class="nav-link">REVIEW</a></li>
-						<li class="nav-item"><a href="/qnalist" class="nav-link">Q&A</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	
-	<!-- END nav -->
+	<jsp:include page="/WEB-INF/views/home/header.jsp" />
+		
 
 	<!-- 여기서부터 내용 -->
 
@@ -1260,8 +1198,6 @@ td .mybtn{
 				<div class="col-lg-6 col-md-6">
 					<div class="product__details__text">
 						<h2>${oneproduct.p_Title}</h2>
-						<hr>
-						<h3>평점 : ${f_rate}</h3>
 						<hr>
 						<p>${oneproduct.p_Content}</p>
 						<hr>
@@ -1502,31 +1438,33 @@ td .mybtn{
 													<tr>
 														<c:choose>
 															<c:when test="${q.c_Subno > 0}">
-																<td style="width:80%;padding-left: 20px;">
+																<td style="padding-left: 20px;">
 																	<span style="font-size:20px">└</span>
-																	${q.c_Content }
+																	${q.c_Content}
 																	<br>
+																	<span style='font-size:8px'>
+																	${q.c_Date} ${q.c_Id} 
+																	</span>
 																</td>
    															 </c:when>
    															 <c:otherwise>
-   															 	<td style="width:80%">
+   															 	<td style="">
 																	${q.c_Content }
 																	<br>
+																	<span style='font-size:8px'>
+																	${q.c_Date} ${q.c_Id} 
+																	</span>
 																</td>
    															 </c:otherwise>
 														</c:choose>
-														<td  style="width:20%">
-														${q.c_Id }<br>
-														${q.c_Date }<br>
-														</td>
+														
 													</tr>
 													<tr>
 														<td>
 															<c:if test="${(q.c_Subno == 0 && (not empty farmer || not empty admin))&&q.c_Id !='삭제'}">
 																<input name="${q.c_Seq}" class="qnasubbutton" type="button" value="답글" onclick="qnasubbutton('${q.c_Seq}')" />
 															</c:if>
-														</td>
-														<td>
+														
 															<c:if test="${(not empty farmer || not empty admin ||(not empty member && member.m_Id == q.c_Id))&&q.c_Id !='삭제'}">
 																<input name="${q.c_Seq}" class="updatebutton" type="button" value="수정" onclick="updatebutton('${q.c_Seq}')" />&nbsp;
 																<input name="${q.c_Seq}" class="qnadeletebutton" type="button" value="삭제" onclick="qnadeletebutton('${q.c_Seq}')" />
@@ -1589,106 +1527,9 @@ td .mybtn{
 	<!-- footer -->
 
 
-	<footer class="ftco-footer ftco-bg-dark ftco-section">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="logo">
-							<a href="#">EVERY <span>FARM</span></a>
-						</h2>
-						<p>Far far away, behind the word mountains, far from the
-							countries Vokalia and Consonantia, there live the blind texts.</p>
-						<ul
-							class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="#"><span
-									class="icon-instagram"></span></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4 ml-md-5">
-						<h2 class="ftco-heading-2">Services</h2>
-						<ul class="list-unstyled">
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Garden Care</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Lawn mowing</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Lawn Care</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Gutter Cleaning</a></li>
-							<li><a href="#" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>New Lawn Installation</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Contact information</h2>
-						<div class="block-23 mb-3">
-							<ul>
-								<li><span class="icon icon-map-marker"></span><span
-									class="text">203 Fake St. Mountain View, San Francisco,
-										California, USA</span></li>
-								<li><a href="#"><span class="icon icon-phone"></span><span
-										class="text">+2 392 3929 210</span></a></li>
-								<li><a href="#"><span class="icon icon-envelope"></span><span
-										class="text">info@yourdomain.com</span></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Business Hours</h2>
-						<div class="opening-hours">
-							<h4>Opening Days:</h4>
-							<p class="pl-3">
-								<span>Monday â Friday : 9am to 20 pm</span> <span>Saturday
-									: 9am to 17 pm</span>
-							</p>
-							<h4>Vacations:</h4>
-							<p class="pl-3">
-								<span>All Sunday Days</span> <span>All Official Holidays</span>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 text-center">
-
-					<p>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<script>
-							document.write(new Date().getFullYear());
-						</script>
-						All rights reserved | This template is made with <i
-							class="icon-heart color-danger" aria-hidden="true"></i> by <a
-							href="https://colorlib.com" target="_blank">Colorlib</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					</p>
-				</div>
-			</div>
-		</div>
-	</footer>
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 
 
-
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen">
-		<svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
-	</div>
 
 
 

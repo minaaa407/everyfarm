@@ -59,7 +59,9 @@
 
    <select id="mylist"
       resultType="kr.co.everyfarm.board.ReviewBean">
-      select * from review WHERE rev_Id=#{m_Id}
+       select * from review WHERE rev_Id=#{m_Id}
+
+      
    </select>
 
    <select resultType="kr.co.everyfarm.board.ReviewBean"
@@ -124,5 +126,30 @@
       select * from review order by rev_Readcount desc limit 3
    </select>
    <!-- index -->
+   
+   <!-- 박정빈추가 -->
+   <select id="selectpaymentreview"
+      resultType="kr.co.everyfarm.payment.PaymentBean" parameterType="String">
+
+      select * from payment where (pay_id =#{m_Id}) and 
+      (pay_orderno not in(select rev_Pronum from review where rev_id = #{m_Id}));
+   </select>
+   
+   
+   <select id="selectproductreview"
+      resultType="kr.co.everyfarm.product.ProductBean" parameterType="String">
+      select * from product where (p_no in( select pay_no from payment where (pay_id =#{m_Id}) 
+      and (pay_orderno not in(select rev_Pronum from review where rev_id = #{m_Id})) ));
+   </select>
+   
+      <select id="productno"
+      resultType="int" parameterType="int">
+
+      select pay_no from payment where pay_orderno = #{no};
+   </select>
+   
+   
+   
+   
 
 </mapper>

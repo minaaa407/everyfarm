@@ -16,6 +16,14 @@
 			<div class="wrap-login">
 				<form class="login-form" action="farmerLogin" method="post"
 					id="loginBtn">
+					
+					<div class="login-form-btn-container">
+						<!-- <a class="everyfarm" href="index.jsp">EVERY <span>FARM</span></a> -->
+						<a class="everyfarm" href="index.jsp"><img class="logo" src="/resources/img/everyfarm.png" style="width: 400px;" alt="메인 바로가기"></a>
+					</div>
+					<br>
+					<br>
+					
 					<span class="login-form-title">FARMER's FARM</span>
 
 					<div class="wrap-input">

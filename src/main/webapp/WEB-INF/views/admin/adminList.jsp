@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>EVERY FARM | 회원 리스트</title>
+<title>EVERY FARM | 관리자 리스트</title>
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <style>
@@ -81,8 +81,8 @@ table td, table th {
 	background-color: #7971ea;
 	color: white;
 }
-.pagination a:hover:not(.active) {
-background-color: silver;
+.pagination a:hover:not (.active ) {
+	background-color: silver;
 }
 .table100{
 display: flex;
@@ -120,20 +120,18 @@ display: flex;
 			<div class="wrap-table100">
 				<div>
 					<input class="btn btn-sm btn-neutral" type="button" id="submit"
-						value="선택 삭제" onclick="uDelete()" /> <input
-						onclick="location.href='/userAdd'" type="button" id="submit"
+						value="선택 삭제" onclick="aDelete()" />
+					<input onclick="location.href='/adminSign'" type="button" id="submit"
 						class="btn btn-sm btn-neutral" value="계정 추가">
 				</div>
 				<div class="table100">
-					<table id="userTable" border="1">
+					<table id="adminTable" border="1">
 						<colgroup>
-							<col style="width: 80px" />
-							<col style="width: 80px" />
-							<col style="width: 100px" />
-							<col style="width: 200px" />
-							<col style="width: 150px" />
-							<col style="width: 150px" />
-							<col style="width: 80px" />
+							<col style="width:80px"/>
+							<col style="width:80px"/>
+							<col style="width:100px"/>
+							<col style="width:200px"/>
+							<col style="width:200px"/>
 						</colgroup>
 						<thead>
 							<tr>
@@ -141,38 +139,33 @@ display: flex;
 									name="all" onclick="allChk(this);" /></th>
 								<th scope="col">아이디</th>
 								<th scope="col">성명</th>
-								<th scope="col">주소</th>
-								<th scope="col">전화번호</th>
-								<th scope="col">생년월일</th>
+								<th scope="col">이메일</th>
 								<th scope="col">가입일</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:choose>
-								<c:when test="${empty member}">
+								<c:when test="${empty admin}">
 									<div>
-										<p align="center">회원이 존재하지 않습니다.</p>
+										<p align="center">관리자가 존재하지 않습니다.</p>
 									</div>
 								</c:when>
-								<c:when test="${!empty member}">
-									<c:forEach var="member" items="${member}">
+								<c:when test="${!empty admin}">
+									<c:forEach var="admin" items="${admin}">
 										<tr>
-											<td><input type="checkbox" name="RowCheck"
-												value="${member.m_Id}"></td>
-											<td>${member.m_Id}</td>
-											<td>${member.m_Name}</td>
-											<td>${member.m_Addr}</td>
-											<td>${member.m_Tel}</td>
-											<td>${member.m_Birth}</td>
+											<td><input type="checkbox"
+												name="RowCheck" value="${admin.a_Id}"></td>
+											<td>${admin.a_Id}</td>
+											<td>${admin.a_Name}</td>
+											<td>${admin.a_Email}</td>
 											<td><fmt:formatDate pattern="yyyy-MM-dd"
-													value="${member.m_Date}" /></td>
+													value="${admin.a_Date}" /></td>
 										</tr>
 									</c:forEach>
 								</c:when>
 							</c:choose>
 						</tbody>
 					</table>
-					<br>
 					<div class="search_wrap">
 						<div class="search_area">
 							<select name="type">
@@ -189,7 +182,7 @@ display: flex;
 						</div>
 					</div>
 					<div class="pageInfo_wrap">
-							<div id="pageInfo" class="pageInfo btn-group pagination">
+							<div id="pageInfo" class="pageInfo btn-group pagination ">
 								<!-- 이전페이지 버튼 -->
 								<c:if test="${pageMaker.prev}">
 									<span class="pageInfo_btn previous"><a
@@ -197,9 +190,10 @@ display: flex;
 								</c:if>
 
 								<!-- 각 번호 페이지 버튼 -->
-								<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-									<span class="pageInfo_btn  ${pageMaker.cri.pageNum == num ? "active":"" }"><a
-										href="${num}" style="background-color: #7971ea; color: white;">${num}</a></span>
+								<c:forEach var="num" begin="${pageMaker.startPage}"
+									end="${pageMaker.endPage}">
+									<span class="pageInfo_btn ${pageMaker.cri.pageNum == num ? "active":"" }"><a
+										href="${num}">${num}</a></span>
 								</c:forEach>
 
 								<!-- 다음페이지 버튼 -->
@@ -221,10 +215,7 @@ display: flex;
 		</div>
 	</div>
 
-
-	<!-- 페이징 및 검색!!!!  -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		let moveForm = $("#moveForm");
 		$(".move").on("click", function(e) {
@@ -235,7 +226,7 @@ display: flex;
 		$(".pageInfo a").on("click", function(e) {
 			e.preventDefault();
 			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-			moveForm.attr("action", "/userList");
+			moveForm.attr("action", "/adminList");
 			moveForm.submit();
 		});
 		$(".search_area button").on("click", function(e) {
@@ -255,6 +246,10 @@ display: flex;
 			moveForm.find("input[name='pageNum']").val(1);
 			moveForm.submit();
 		});
+	</script>
+	<!-- 페이징 및 검색!!!!  -->
+
+	<script type="text/javascript">
 		function allChk(obj) {
 			var chkObj = document.getElementsByName("RowCheck");
 			var rowCnt = chkObj.length - 1;
@@ -272,7 +267,7 @@ display: flex;
 				}
 			}
 		}
-		function uDelete() {
+		function aDelete() {
 			var checkArr = [];
 			var list = $("input[name='RowCheck']");
 			for (var i = 0; i < list.length; i++) {
@@ -288,7 +283,7 @@ display: flex;
 					return false;
 				} else {
 					$.ajax({
-						url : "/userDelete",
+						url : "/adminD",
 						type : "POST",
 						dataType : "json",
 						data : {
@@ -297,10 +292,10 @@ display: flex;
 						success : function(result) {
 							if (result.error == true) {
 								alert("삭제 성공.");
-								location.href ="/userList";
+								location.href = "/adminList"
 							} else {
 								alert("삭제 실패.");
-								location.href ="/userList";
+								location.href = "/adminList"
 							}
 						}
 					});
@@ -308,6 +303,5 @@ display: flex;
 			}
 		}
 	</script>
-	<!-- 페이징 및 검색!!!!  -->
 </body>
 </html>

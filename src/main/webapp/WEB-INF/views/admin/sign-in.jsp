@@ -1,10 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html style="background: #b0cd56;">
+
+
+
 
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Sign In | Bootstrap Based Admin Template - Material Design</title>
+    <title>EVERY FARM | 관리자</title>
     <!-- Favicon-->
     <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 
@@ -23,17 +28,45 @@
 
     <!-- Custom Css -->
     <link href="resources/admin/sign/css/style.css" rel="stylesheet">
+    
+<style>
+
+.login-page {
+	background-color :#b0cd56;
+}
+
+.bg-pink {
+    background-color: #358418d4 !important;
+}
+
+.login-page .login-box a {
+	color: #333
+}
+
+</style>
+    
 </head>
 
 <body class="login-page">
-    <div class="login-box">
-        <div class="logo">
-            <a href="javascript:void(0);">Admin<b>Farm</b></a>
+	  <br>
+	  <br>
+	<div class="login-form-btn-container">
+						<!-- <a class="everyfarm" href="index.jsp">EVERY <span>FARM</span></a> -->
+						<a class="everyfarm" href="index.jsp"><img class="logo" src="/resources/img/everyfarm.png" style="width: 400px;background: #b0cd56;" alt="메인 바로가기"></a>
+	</div>
+	<br>
+	<br>
+    <div class="login-box" style="background: #b0cd56;">
+      <br>
+        <div class="logo" style="background: #b0cd56;">
+            <a href="javascript:void(0);">ADMIN's<b> FARM</b></a>
         </div>
+          <br>
         <div class="card">
-            <div class="body">
+            <div class="body" >
                 <form id="sign_in" action="adminLogin" method="POST">
-                    <div class="msg">Sign in to start your session</div>
+              
+                    <div class="msg">EVERY FARM | 관리자</div>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
@@ -50,20 +83,21 @@
                             <input type="password" class="form-control" name="a_Pw" placeholder="Password" required>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
-                        <div class="col-xs-8 p-t-5">
-                            <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
-                            <label for="rememberme">Remember Me</label>
-                        </div>
+                     	<div class="col-xs-4">
+                     	</div>
                         <div class="col-xs-4">
                             <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
                         </div>
+                        <div class="col-xs-4">
+                     	</div>
                     </div>
                     <div class="row m-t-15 m-b--20">
-                        <div class="col-xs-6 align-right">
-                            <a href="/adminFindId">Forgot Password?</a>
+                        <div class="col-xs-12 align-center">
+                            <a href="/adminFindId">Forgot ID?</a>
                         </div>
-                        <div class="col-xs-6 align-right">
+                        <div class="col-xs-12 align-center">
                             <a href="/adminFindPw">Forgot Password?</a>
                         </div>
                     </div>

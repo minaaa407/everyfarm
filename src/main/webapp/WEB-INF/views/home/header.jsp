@@ -16,8 +16,6 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"
 	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="/resources/index/css/animate.css">
 
@@ -105,11 +103,11 @@
 				</button>
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul class="navbar-nav m-auto">
-						<li class="nav-item active"><a href="index.jsp"
+						<li id="a1" class="nav-item active"><a href="index.jsp"
 							class="nav-link" style="font-size:20px">Home</a></li>
-						<li class="nav-item"><a href="/productlist" class="nav-link" style="font-size:20px">농장</a></li>
-						<li class="nav-item"><a href="/reviewList" class="nav-link" style="font-size:20px">REVIEW</a></li>
-						<li class="nav-item"><a href="/qnalist" class="nav-link" style="font-size:20px">Q&A</a></li>
+						<li id="a2" class="nav-item"><a href="/productlist" class="nav-link" style="font-size:20px">농장</a></li>
+						<li id="a3" class="nav-item"><a href="/reviewList" class="nav-link" style="font-size:20px">REVIEW</a></li>
+						<li id="a4" class="nav-item"><a href="/qnalist" class="nav-link" style="font-size:20px">Q&A</a></li>
 					</ul>
 				</div>
 			</div>
