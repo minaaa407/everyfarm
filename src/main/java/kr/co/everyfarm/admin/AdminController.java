@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -592,7 +593,11 @@ public class AdminController {
 		AdminDAO adminDao = sqlSessionTemplate.getMapper(AdminDAO.class);
 
 		List<String> delete = Arrays.asList(checkArr);
-		adminDao.aDel(delete);
+		
+		Random random = new Random();
+		int i = random.nextInt(999999);
+		
+		adminDao.aDel(delete, i);
 		map.put("error", true);
 		
 		return map;

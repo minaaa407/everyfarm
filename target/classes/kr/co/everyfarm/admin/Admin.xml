@@ -163,7 +163,7 @@
 	
 	<update id="aDel" parameterType="java.util.List">
 		UPDATE admin SET
-		a_Id = '삭제된 관리자입니다',
+		a_Id = CONCAT('삭제된 관리자', ${i}, '입니다'),
 		a_Pw = '삭제된 관리자입니다',
 		a_Name = '삭제된 관리자입니다',
 		a_Email = '삭제된 관리자입니다',
