@@ -75,7 +75,7 @@ height: 602px;
 					<div class="card bg-gradient-default shadow height chartcenter">
 						<!-- Chart -->
 						<div>
-							<canvas id="myChart" style="width:100%;max-width:800px"></canvas>
+							<canvas id="myChart" style="width:100%; max-width:800px;"></canvas>
 						</div>
 					</div>
 				</div>
@@ -216,6 +216,8 @@ new Chart("myChart", {
     }]
   },
   options: {
+	responsive: false,
+	maintainAspectRatio: false,
     title: {
       display: true,
       text: "이번달 농작물 판매 수",

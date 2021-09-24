@@ -31,6 +31,12 @@
 	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
 	crossorigin="anonymous"> 	
+
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+	crossorigin="anonymous">
 </head>
 <body>
 	<!-- Start Footer -->
@@ -43,6 +49,7 @@
 							<a href="/home">EVERY <span>FARM</span></a>
 						</h2>
 						<p>농장을 확인하고 작물을 주문해보세요!</p>
+						<br>
 						<p>나만의 농장에서 재배된 신선한 야채를 받아볼 수 있습니다!</p>
 					</div>
 				</div>
@@ -55,7 +62,7 @@
 							<li><a href="/reviewList" class="py-1 d-block"><span
 									class="ion-ios-arrow-forward mr-3"></span>REVIEW</a></li>
 							<li><a href="/qnalist" class="py-1 d-block"><span
-									class="ion-ios-arrow-forward mr-3"></span>Q & A</a></li>
+									class="ion-ios-arrow-forward mr-3"></span>Q n A</a></li>
 						</ul>
 					</div>
 				</div>

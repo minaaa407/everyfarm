@@ -33,12 +33,6 @@
               <i class="ni ni-single-02 text-yellow"></i> 회원관리
             </a>
           </li>
-          
-          <li class="nav-item">
-            <a class="nav-link " href="farmerMypage">
-              <i class="ni ni-bullet-list-67 text-blue"></i> 댓글관리
-            </a>
-          </li>
            <li class="nav-item">
             <a class="nav-link " href="">
               <i class="ni ni-bullet-list-67 text-red"></i> 리뷰관리
@@ -51,7 +45,7 @@
           </li>
            <li class="nav-item">
             <a class="nav-link " href="farmerpaymentlist">
-              <i class="ni ni-bullet-list-67 text-red"></i> 결제내역
+              <i class="ni ni-bullet-list-67 text-yellow"></i> 결제내역
             </a>
           </li>
           <li class="nav-item">

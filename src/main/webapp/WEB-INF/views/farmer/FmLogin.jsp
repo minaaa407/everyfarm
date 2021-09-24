@@ -8,7 +8,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link rel="stylesheet" href="resources/index/css/test.css">
 <meta charset="UTF-8">
-<title>LOGIN</title>
+<title>EveryFarm 농부 | LOGIN</title>
 </head>
 <body>
 	<div class="Main-container">

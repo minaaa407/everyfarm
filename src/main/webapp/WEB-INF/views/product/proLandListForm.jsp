@@ -37,6 +37,7 @@
 <link rel="stylesheet" href="resources/index/css/flaticon.css">
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 </head>
 
 <style>
@@ -153,7 +154,7 @@ function search(){
 
 </script>
 
-<title></title>
+<title>EveryFarm 농부 | 상품관리</title>
 </head>
 
 <body>

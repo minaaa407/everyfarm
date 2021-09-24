@@ -12,10 +12,11 @@
     <meta name="keywords" content="Foodeiblog, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>EveryFarm</title>
+    <title>Foodeiblog | Template</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900&display=swap"
         rel="stylesheet">
@@ -31,7 +32,7 @@
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
-	<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+
 
 <style type="text/css">
 
@@ -288,7 +289,7 @@
                                        					</c:choose>
                                        						<form action="/qnadelete/${q.q_No}" id="delete" name="delete" method="post" >
                                         						<li><button type="submit" style="padding-top: 2.5; padding-bottom: 0px; padding-top: 2px;" class="innerbutton" onclick="qnadelete();">삭제</button></li>
-                                        					</form><!-- btn btn-primary -->
+                                        					</form>
                                     				</c:when>
 					                                <c:when test="${sessionScope.member.getM_Id() ne q.q_Id}">
 													</c:when>
@@ -403,6 +404,7 @@ document.getElementById('a1').className ='nav-item';
 document.getElementById('a2').className ='nav-item';
 document.getElementById('a3').className ='nav-item';
 document.getElementById('a4').className ='nav-item active';
+
 </script>
                   
     
@@ -417,10 +419,8 @@ document.getElementById('a4').className ='nav-item active';
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
- 
-<footer>
-<jsp:include page="/WEB-INF/views/home/footer.jsp" />
-</footer>    
+    
+<jsp:include page="/WEB-INF/views/home/footer.jsp" /> 
 </body>
 
 </html>

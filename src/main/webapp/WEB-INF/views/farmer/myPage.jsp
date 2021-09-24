@@ -11,7 +11,7 @@
 <meta name="viewport"
    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi =medium-dpi">
 
-<title>EVERY FARM</title>
+<title>EveryFarm 농부 | 마이페이지</title>
 
 
 <link
