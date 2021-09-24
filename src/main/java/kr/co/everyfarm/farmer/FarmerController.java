@@ -59,7 +59,92 @@ public class FarmerController {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@RequestMapping(value = "/farmer", method = RequestMethod.GET)
-	public String farmer() {
+	public String farmer(Model model, FarmerBean farmerBean, HttpServletRequest request, HttpServletResponse response) {
+		  HttpSession session = request.getSession();
+	      FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
+	      farmerBean = (FarmerBean)(session.getAttribute("farmer"));
+	      FarmerBean farmer = farmerDAO.flogin(farmerBean);
+
+	      /* 차트 시작. 매개변수에 Model 추가해야함 */
+	      List<String> seedList = Arrays.asList(new String[] { "감자", "고구마", "콩", "배추", "상추", "수박", "오이", "토마토", "호박",
+	            "고추", "마늘", "파", "양파", "무", "당근" });
+	      List<PaymentBean> pno = farmerDAO.searchPno(farmer);
+	      PaymentBean search = new PaymentBean();
+	      PaymentBean oneSeedSum = new PaymentBean();
+	      List<PaymentBean> totalSeedSum = new ArrayList<PaymentBean>();
+	      String seed = "";
+	      int seedSum = 0;
+
+	      for (int i = 0; i < seedList.size(); i++) {
+	         for (int j = 0; j < pno.size(); j++) {
+	            search.setPay_Seed(seedList.get(i));
+	            search.setPay_No(pno.get(j).getPay_No());
+	            oneSeedSum = farmerDAO.seedSum(search);
+	            seedSum += oneSeedSum.getPay_Land();
+	            if (!(oneSeedSum.getPay_Land() == 0)) {
+	               seed = oneSeedSum.getPay_Seed();
+	            }
+	         }
+	         oneSeedSum.setPay_Seed('"' + seed + '"');
+	         oneSeedSum.setPay_Land(seedSum);
+	         totalSeedSum.add(oneSeedSum);
+	         seed = "";
+	         seedSum = 0;
+	      }
+
+	      totalSeedSum = totalSeedSum.stream().sorted(Comparator.comparing(PaymentBean::getPay_Land).reversed())
+	            .collect(Collectors.toList());
+	      List<String> seedName = new ArrayList<String>();
+	      List<Integer> seedSumTotal = new ArrayList<Integer>();
+
+	      System.out.println("totalSeedSum = " + totalSeedSum);
+	      System.out.println("oneSeedSum = " + oneSeedSum);
+
+	      for (int i = 0; i < seedList.size(); i++) {
+	         seedName.add(totalSeedSum.get(i).getPay_Seed());
+	         seedSumTotal.add(totalSeedSum.get(i).getPay_Land());
+	      }
+		 //상품 차트
+		    ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
+			Calendar cal = Calendar.getInstance();
+			int year = cal.get(Calendar.YEAR);	
+		    String farmerid = farmer.getF_Id();
+		    String[] months = {"January","february","march","april","may","june","july"
+		    		,"august","september","october","november","december"};
+			int[] payment = new int[12];
+			int[] payment1 = new int[12];
+			int[] payment2 = new int[12];
+		    for(int i =0; i < months.length; i++) {
+			    HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("farmerid", farmerid);
+				map.put("Month", months[i]);
+				map.put("year", year);
+				payment[i] = productdao.productpaymentchart(map);
+		    }
+		    model.addAttribute("payment",payment);
+		    
+		    for(int i =0; i < months.length; i++) {
+			    HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("farmerid", farmerid);
+				map.put("Month", months[i]);
+				map.put("year", year-1);
+				payment1[i] = productdao.productpaymentchart(map);
+		    }
+		    model.addAttribute("payment1pre",payment1);
+		    
+		    for(int i =0; i < months.length; i++) {
+			    HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("farmerid", farmerid);
+				map.put("Month", months[i]);
+				map.put("year", year-2);
+				payment2[i] = productdao.productpaymentchart(map);
+		    }
+		    model.addAttribute("payment2pre",payment2);
+		    model.addAttribute("seedName", seedName);
+			model.addAttribute("seedSumTotal", seedSumTotal);
+		
+		
+		
 		return "farmer/farmer";
 	}
 
@@ -72,7 +157,7 @@ public class FarmerController {
 	@RequestMapping(value = "/farmerLogin", method = RequestMethod.POST)
 	public String flogin(Model model, FarmerBean farmerBean, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		HttpSession session = request.getSession();
+		  HttpSession session = request.getSession();
 	      FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
 
 	      System.out.println("첫번째:" + farmerBean.getF_Pw());
