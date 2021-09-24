@@ -212,7 +212,14 @@ body {
                      <ul class="meta list list-unstyled">
                         <li class="name">${farmer.f_Name}</li>
                         <li class="email">${farmer.f_Id}</li>
-                        <li><input type="hidden" id="myCus" value="${myCus}" /></li>
+                        <c:choose>
+                        	<c:when test="${empty myCus}">
+                        	<li><input type="hidden" id="myCus" value="${now}" /></li>
+                        	</c:when>
+                        	<c:when test="${!empty myCus}">
+                        		<li><input type="hidden" id="myCus" value="${myCus}" /></li>
+                        	</c:when>
+                        </c:choose>
                      </ul>
                   </div>
                </div>
