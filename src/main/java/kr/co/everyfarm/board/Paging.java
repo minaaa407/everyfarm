@@ -1,3 +1,4 @@
+
 package kr.co.everyfarm.board;
 
 import java.util.Arrays;
@@ -93,6 +94,7 @@ public class Paging {
 		this.f_Id = f_Id;
 	}
 	
+
 	public String getM_Id() {
 		return m_Id;
 	}
