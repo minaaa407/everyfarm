@@ -12,6 +12,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Every Farm : 관리자</title>
 	<style>
+	body{
+	background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
+	}
 	canvas {
         -moz-user-select: none;
         -webkit-user-select: none;
@@ -20,6 +23,13 @@
     .chartD {
     background-color: white;
     box-shadow: 1px 1px 20px lightgrey;
+        display: flex;
+    flex-direction: column;
+    justify-content: center;
+    }
+    .main-content{
+    margin-top: 200px;
+    margin-bottom: 200px;
     }
     </style>
 </head>
@@ -107,38 +117,31 @@
 			</div>
 		</div>
 	</nav>
-	<div class="main-content">
-		<!-- Header -->
-		<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-			<div class="container-fluid">
-				<div class="header-body">
-				</div>
-			</div>
-		</div>
-
-
+	<div class="main-content" >
 		<div class="container-fluid mt--7">
 			<div class="row">
 				<div class="col-xl-8 mb-5 mb-xl-0">
-					<div class="card bg-gradient-default shadow">
-						<div class="card-body">
+					<div>
+						<div class="chartD" style="width: 1600px;">
 							<!-- Chart -->
 							<div class="chart">
 								<!-- Chart wrapper -->
-								<canvas id="userNfarmer" class="chart-canvas"></canvas>
+								<canvas id="userNfarmer" class="chart-canvas" width="1600" height="350"></canvas>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-4">
-					<div class="card shadow">
+			</div>
+			<div class="row mt-5 ">
+			<div class="col-xl-6">
+					<div class="card shadow" style="height: 510px;">
 						<div class="card-header bg-transparent">
 							<div class="row align-items-center">
 								<div class="col">
-									<h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
+									<h6 class="text-uppercase text-muted ls-1 mb-1">Every Farm</h6>
 										<c:set var="today" value="<%=new java.util.Date()%>" />
 										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
-									<h2 id="productyeartext" class="mb-0">Total orders <c:out value="${year}"/> </h2>
+									<h2 id="productyeartext" class="mb-0"> <c:out value="${year}"/>&nbsp;월별 매출액 </h2>
 								</div>
 								<div class="col text-right">
 									<input class="btn btn-sm btn-primary" onclick="pretowyear()" type="button" value="<c:out value="${year-2}" />"/>
@@ -150,22 +153,22 @@
 						<div class="card-body">
 							<!-- Chart -->
 							<div id = "productchart" class="chart">
-								<canvas id="chart-orders2" class="chart-canvas"></canvas>
+								<canvas id="chart-orders2" class="chart-canvas" width="700" height="350"></canvas>
 							</div>
-							
-				
-							
-							
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row mt-5 ">
 			
 				<!-- Chart -->
-							<div class="chartD" id="canvas-holder" style="width:30%">
-								<canvas id="myChart" class="chart-canvas"></canvas>
-								<div>
+							<div class="chartD col-xl-6" id="canvas-holder">
+								<div class="card-header bg-transparent">
+									<h6 class="text-uppercase text-muted ls-1 mb-1">Every Farm</h6>
+										<c:set var="today" value="<%=new java.util.Date()%>" />
+										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
+									<h2 class="productyeartext" class="mb-0"><c:out value="${year}"/>&nbsp;월별 씨앗 판매수 </h2>
+								</div>
+								<canvas id="myChart" class="chart-canvas" width="700" height="350"></canvas>
+							<span style="width: 80px;">
     	<input type="hidden" id="selmonth" value="" />
     	<select id="month" name="month" onchange="javascript:myListener(this);">
     		<option id="monthago8" value="${monthago8}">${monthago8}월</option>
@@ -178,7 +181,7 @@
     		<option id="monthago1" value="${monthago1}">${monthago1}월</option>
     		<option value="${date}" selected="selected">${date}월</option>
     	</select>
-    </div>
+    </span>
 							</div>
 							
 		<input type="hidden" id="array0" value="${array0 }" >
@@ -201,32 +204,6 @@
     
     <!-- Chart -->
 			</div>
-			<!-- Footer -->
-			<footer class="footer">
-				<div class="row align-items-center justify-content-xl-between">
-					<div class="col-xl-6">
-						<div class="copyright text-center text-xl-left text-muted">
-							&copy; 2018 <a href="https://www.creative-tim.com"
-								class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
-						</div>
-					</div>
-					<div class="col-xl-6">
-						<ul
-							class="nav nav-footer justify-content-center justify-content-xl-end">
-							<li class="nav-item"><a href="https://www.creative-tim.com"
-								class="nav-link" target="_blank">Creative Tim</a></li>
-							<li class="nav-item"><a
-								href="https://www.creative-tim.com/presentation"
-								class="nav-link" target="_blank">About Us</a></li>
-							<li class="nav-item"><a href="http://blog.creative-tim.com"
-								class="nav-link" target="_blank">Blog</a></li>
-							<li class="nav-item"><a
-								href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"
-								class="nav-link" target="_blank">MIT License</a></li>
-						</ul>
-					</div>
-				</div>
-			</footer>
 		</div>
 	</div>
 
@@ -293,18 +270,21 @@
 	   data : {
 	      labels : monLb,
 	      datasets : [{
+	    	  label: '회원',
 	         data : mChart,
-	         borderColor : "yellow",
+	         borderColor : "red",
 	         fill : false
 	      }, {
+	    	  label: '농부',
 	         data : fChart,
-	         borderColor : "gray",
+	         borderColor : "blue",
 	         fill : false
 	      } ]
 	   },
 	   options : {
+		   responsive: false,
 	      legend : {
-	         display : false
+	         display : true
 	      }
 	   }
 	});
@@ -408,7 +388,7 @@
       						}]
       					},
       					options : {
-      						responsive : true,
+      						responsive : false,
       						legend: {
       							labels: {
       		                        fontColor: 'rgba(0,0,0,1)',
@@ -419,9 +399,6 @@
       			            },
       						title: {
       						      display: true,
-      						      text: year + "년 월별 씨앗 판매수",
-      						      fontSize: 25,
-      						      fontColor: '#4e9525'
       						    },
       						    scale: {
       					              ticks: {
@@ -469,7 +446,7 @@
       			}]
       		},
       		options : {
-      			responsive : true,
+      			responsive : false,
       			legend: {
       				labels: {
                           fontColor: 'rgba(0,0,0,1)',
@@ -480,8 +457,6 @@
                   },
       			title: {
       			      display: true,
-      			      text: year + "년 월별 씨앗 판매수",
-      			      fontSize: 25,
       			      fontColor: '#4e9525'
       			    },
       			    scale: {
