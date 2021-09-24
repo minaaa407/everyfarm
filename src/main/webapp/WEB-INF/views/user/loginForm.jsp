@@ -18,7 +18,7 @@
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<title>LOGIN</title>
+<title>EVERY FARM | LOGIN</title>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/home/header.jsp" />

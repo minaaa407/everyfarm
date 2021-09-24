@@ -37,7 +37,7 @@ String p_No = request.getParameter("no");
 
 <link rel="stylesheet" href="/resources/qna/style.css">
 
-<title>QnA 글쓰기</title>
+<title>EVERY FARM 관리자 | Q&A 글 수정</title>
 
 <style type="text/css">
 

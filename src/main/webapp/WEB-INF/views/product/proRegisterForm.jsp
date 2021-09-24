@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="kr">
 <head>
-<title>Insert title here</title>
+<title>EveryFarm 농부 | 땅 등록</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -37,6 +37,7 @@
 <link rel="stylesheet" href="resources/index/css/flaticon.css">
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 </head>
 
 <script>

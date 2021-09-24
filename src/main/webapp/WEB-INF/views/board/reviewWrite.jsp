@@ -108,7 +108,7 @@ input {
 	border-bottom: 1px solid #ddd;
 }
 </style>
-<title>EVERY FARM</title>
+<title>EVERY FARM | 리뷰 등록</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/home/header.jsp" />

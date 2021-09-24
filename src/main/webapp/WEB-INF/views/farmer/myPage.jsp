@@ -11,7 +11,7 @@
 <meta name="viewport"
    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi =medium-dpi">
 
-<title>EVERY FARM</title>
+<title>EveryFarm 농부 | 마이페이지</title>
 
 
 <link
@@ -201,6 +201,41 @@ body {
 
 </head>
 <body>
+<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Brand -->
+			<a class="navbar-brand pt-0" href="/farmer"> <img
+				src="resources/farmer/img/brand/brand.jpg" class="navbar-brand-img"
+				alt="...">
+			</a>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Collapse header -->
+				<div class="navbar-collapse-header d-md-none">
+					<div class="row">
+						<div class="col-6 collapse-close">
+							<button type="button" class="navbar-toggler"
+								data-toggle="collapse" data-target="#sidenav-collapse-main"
+								aria-controls="sidenav-main" aria-expanded="false"
+								aria-label="Toggle sidenav">
+								<span></span> <span></span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
+			</div>
+		</div>
+	</nav>
    <div class="container">
       <div class="view-account">
          <section class="module">
@@ -380,6 +415,7 @@ body {
                                  <td class="table__td"><fmt:formatDate
                                        value="${farmer.f_Date}" pattern="yyyy/MM/dd" /> <input
                                     type="hidden" id="now" value="${nowMonth}">
+                                    <input type="hidden" id="myCus" value="${myCus}">
                               </tr>
                            </tbody>
                         </table>
@@ -439,7 +475,7 @@ body {
       var diff = nowD2 - payD2;
       var diffDay = 24 * 60 * 60 * 1000;
       var diffMonth = diffDay * 30;
-      var test = parseInt(diff / diffMonth);
+      var test = parseInt(diff/diffMonth);
       var MinMonth = 6;
       $("#fDel").click(
             function() {

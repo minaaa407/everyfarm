@@ -55,7 +55,7 @@
 	text-decoration: none;
 }
 </style>
-<title>비밀번호 찾기</title>
+<title>EveryFarm 농부 | 비밀번호 찾기</title>
 </head>
 <body>
 	<div class="w3-content w3-container w3-margin-top">

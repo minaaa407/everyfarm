@@ -10,7 +10,7 @@
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Every Farm : 관리자</title>
+<title>EVERY FARM | 관리자</title>
 	<style>
 	body{
 	background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;

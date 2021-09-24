@@ -223,7 +223,7 @@
 		select ifnull(pay_seed,0) as pay_seed,
 		ifnull(sum(pay_land),0) as pay_land
 		from payment where (pay_date
-		BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK)
+		BETWEEN DATE_ADD(NOW(),INTERVAL -1 month)
 		AND NOW())
 		and pay_seed
 		=#{pay_Seed} and pay_no=#{pay_No}

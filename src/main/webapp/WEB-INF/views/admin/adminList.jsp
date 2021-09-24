@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>EVERY FARM | 관리자 리스트</title>
+<title>EVERY FARM 관리자 | 리스트</title>
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <style>

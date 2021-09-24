@@ -10,7 +10,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>Every Farm : 농부</title>
+<title>EVERY FARM | 농부</title>
 	<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 							
 
@@ -18,7 +18,7 @@
 .height {
 height: 602px;
 }
-.chartcenter {
+.center {
     justify-content: center;
 }
 .margin {
@@ -74,7 +74,7 @@ height: 602px;
 				<div class="col-xl-6 mb-5 mb-xl-0">
 					<div class="card bg-gradient-default shadow height chartcenter">
 						<!-- Chart -->
-						<div>
+						<div >
 							<canvas id="myChart" style="width:100%;max-width:800px"></canvas>
 						</div>
 					</div>
@@ -149,12 +149,15 @@ new Chart("myChart", {
     }]
   },
   options: {
+	responsive: false,
+	maintainAspectRatio: false,
     title: {
       display: true,
       text: "이달의 판매량",
-    	  fontSize: 25,
+    	  fontSize: 15,
 		      fontColor: '#4e9525'
     }
+
   }
 });
 </script>

@@ -1,5 +1,4 @@
 
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="keywords" content="Ogani, unica, creative, html">
-<title>EVERY FARM | 리뷰 </title>
+<title>EVERY FARM</title>
 
 <link rel="shortcut icon" type="image/x-icon"
 	href="/resources/editor/connn.ico" />
@@ -480,10 +479,6 @@ a:hover {
 			moveForm.find("input[name='pageNum']").val(1);
 			moveForm.submit();
 		});
-		document.getElementById('a1').className ='nav-item';
-		document.getElementById('a2').className ='nav-item';
-		document.getElementById('a3').className ='nav-item active';
-		document.getElementById('a4').className ='nav-item';
 	</script>
 	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </html>

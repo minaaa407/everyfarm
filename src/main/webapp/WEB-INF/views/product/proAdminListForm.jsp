@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="resources/index/css/flaticon.css">
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 
 </head>
 <style>
@@ -155,7 +156,7 @@ function search(){
 
 </script>
 
-<title></title>
+<title>EVERY FARM 관리자 | 상품관리</title>
 </head>
 
 <body>
@@ -291,7 +292,7 @@ function search(){
 									<td class="content">${p.p_Date}</td>
 									<td class="content">${p.p_Accept}</td>
 									<td class="content"><a
-										href="/productdetail?productno=${p.p_No}">상세보기</a></td>
+										href="/productdetail3?productno=${p.p_No}">상세보기</a></td>
 									<td><a class="btn btn-sm btn-neutral"
 										href="/proRegDetailForm?p_No=${p.p_No}">수정</a>
 										<button type="button" class="btn btn-sm btn-neutral"

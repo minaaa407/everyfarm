@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>EVERY FARM | 상세정보</title>
+<title>EVERY FARM</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -1105,22 +1105,50 @@ td .mybtn{
 	</script>
 
 </head>
-<script>
-	document.oncontextmenu = function(){return false;}
-	
-</script>
-
-
-<body onselectstart = "return false">
+<body>
 
 <%	MemberBean member = ((MemberBean)session.getAttribute("member"));
 	FarmerBean farmer = ((FarmerBean)session.getAttribute("farmer"));
 	AdminBean admin = ((AdminBean)session.getAttribute("admin"));
 %>					
 
-
-	<jsp:include page="/WEB-INF/views/home/header.jsp" />
-		
+<!-- Start NavBar -->
+		<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main" style="z-index: 999">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Brand -->
+			<a class="navbar-brand pt-0" href="/farmer"> <img
+				src="resources/farmer/img/brand/brand.jpg" class="navbar-brand-img"
+				alt="...">
+			</a>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Collapse header -->
+				<div class="navbar-collapse-header d-md-none">
+					<div class="row">
+						<div class="col-6 collapse-close">
+							<button type="button" class="navbar-toggler"
+								data-toggle="collapse" data-target="#sidenav-collapse-main"
+								aria-controls="sidenav-main" aria-expanded="false"
+								aria-label="Toggle sidenav">
+								<span></span> <span></span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
+			</div>
+		</div>
+	</nav>
+	<!-- END nav -->
 
 	<!-- 여기서부터 내용 -->
 
@@ -1139,11 +1167,6 @@ td .mybtn{
 				
 					<c:if test="${not empty farmer || not empty admin}">
 
-
-						<div align="right" class="col-lg-12" id="productupdate">
-							<input type="button" value="수정" onclick="p" />
-						</div>
-						
 						<div align="right" class="col-lg-12" id="productaccept">
 							<c:choose>
 								<c:when test="${oneproduct.p_Accept eq 'Y'}">
@@ -1207,7 +1230,6 @@ td .mybtn{
 						<hr>
 						<p>${oneproduct.p_Content}</p>
 						<hr>
-						
 						<div>
 							<h4>
 								평당 가격 :
@@ -1383,7 +1405,7 @@ td .mybtn{
 				<div id="lnb" style="text-align: center;">
 				   <ul>
 				     <li><a href="#lnbposition" class="sidenav">설명</a></li>
-				     <li><a href="#movereview"  class="sidenav" onclick="move()">댓글</a></li>
+				     <li><a href="#movereview"  class="sidenav" onclick="move()">덧글</a></li>
 				   </ul>
 				 </div>
 				 <br><br>
@@ -1529,20 +1551,6 @@ td .mybtn{
 		</div>
 		
 	</section>
-
-
-	<!-- footer -->
-
-
-<jsp:include page="/WEB-INF/views/home/footer.jsp" />
-
-
-
-
-
-
-
-
 
 	<script src="resources/index/js/jquery.min.js"></script>
 	<script src="resources/index/js/jquery-migrate-3.0.1.min.js"></script>

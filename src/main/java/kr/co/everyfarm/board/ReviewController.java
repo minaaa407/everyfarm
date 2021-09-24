@@ -140,6 +140,24 @@ public class ReviewController {
 		List<ReviewBean> list = dao.mylist(m_Id);
 		model.addAttribute("revList", list);
 		return "user/myReview";
+	}
+	
+
+	@RequestMapping(value = "/myReviewList")
+	public String getReviewMyList2(Model model, HttpServletRequest req, ReviewBean reviewBea, HttpSession session,Paging paging) {
+
+		MemberBean mBean = (MemberBean) session.getAttribute("member");
+		String m_Id = mBean.getM_Id();
+		paging.setM_Id(m_Id);
+
+		ReviewDAO dao = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		int total = dao.revCount(paging);
+		PageMaker pageMake = new PageMaker(paging, total);
+		model.addAttribute("total", total);
+		model.addAttribute("revList", dao.mypaging(paging));
+		model.addAttribute("pageMaker", pageMake);
+		
+		return "board/myReviewList";
 
 	}
 
