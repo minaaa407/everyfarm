@@ -1105,7 +1105,13 @@ td .mybtn{
 	</script>
 
 </head>
-<body>
+<script>
+	document.oncontextmenu = function(){return false;}
+	
+</script>
+
+
+<body onselectstart = "return false">
 
 <%	MemberBean member = ((MemberBean)session.getAttribute("member"));
 	FarmerBean farmer = ((FarmerBean)session.getAttribute("farmer"));
@@ -1201,6 +1207,7 @@ td .mybtn{
 						<hr>
 						<p>${oneproduct.p_Content}</p>
 						<hr>
+						
 						<div>
 							<h4>
 								평당 가격 :
@@ -1376,7 +1383,7 @@ td .mybtn{
 				<div id="lnb" style="text-align: center;">
 				   <ul>
 				     <li><a href="#lnbposition" class="sidenav">설명</a></li>
-				     <li><a href="#movereview"  class="sidenav" onclick="move()">덧글</a></li>
+				     <li><a href="#movereview"  class="sidenav" onclick="move()">댓글</a></li>
 				   </ul>
 				 </div>
 				 <br><br>

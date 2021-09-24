@@ -123,6 +123,7 @@
 			<beans:ref bean="AdminInterceptor" />
 		</interceptor>
 		<interceptor>
+			<mapping path="/farmer" />
 			<mapping path="/farmerpaymentlist" />
 			<mapping path="/farmerMypage" />
 			<mapping path="/myCustomer" />

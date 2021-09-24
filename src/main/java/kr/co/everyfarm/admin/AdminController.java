@@ -413,10 +413,8 @@ public class AdminController {
 	public Map<String, Object> findId(@ModelAttribute AdminBean adminBean) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-
 		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
 		AdminBean admin = dao.findId(adminBean);
-
 		if (admin == null) {
 			map.put("url", "/adminFindId");
 			map.put("error", false);
