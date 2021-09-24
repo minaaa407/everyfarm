@@ -189,6 +189,7 @@ background-color: silver;
  			<div class="container-table100">
  				<div class="wrap-table100">
  					<div class="table100">
+ 					
 						<table border="1">
 						<colgroup>
 							<col style="width:50px"/>
@@ -213,6 +214,13 @@ background-color: silver;
 							</tr>
 						</thead>
 						<tbody>
+							<c:choose>
+							<c:when test="${empty farmerpaymentlist}">
+									<div>
+										<p align="center">결제내역이 존재하지 않습니다.</p>
+									</div>
+							</c:when>
+							<c:when test="${!empty farmerpaymentlist}">
 							<c:forEach var="farmerpay" items="${farmerpaymentlist}">
 							<script>
 							</script>
@@ -229,6 +237,8 @@ background-color: silver;
 									<%-- <button type="button" class="btn btn-primary mr-md-2 py-1 px-2" onclick="location.href='/farmerPaymentListDetail/${pay.pay_Orderno}'">상세</button> --%>
 								</tr>
 							</c:forEach>
+								</c:when>
+						</c:choose>
 						</tbody>
 					</table>
 				</div>

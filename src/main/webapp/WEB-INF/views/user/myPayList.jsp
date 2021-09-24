@@ -10,7 +10,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Every Farm</title>
 
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
 	rel="stylesheet">
@@ -158,7 +158,8 @@ hr{
 		$(document).ready(function() {
 			$('#table').dataTable({
 				language : lang_kor,
-				"lengthMenu": [[3, 5, 10,-1], [3, 5, 10, "전체"]] 
+				"lengthMenu": [[3, 5, 10,-1], [3, 5, 10, "전체"]],
+				columnDefs: [ { "defaultContent": "-", "targets": "_all" } ]
 			});
 		});
 		var lang_kor = {

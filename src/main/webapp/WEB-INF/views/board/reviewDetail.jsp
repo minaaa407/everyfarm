@@ -10,8 +10,10 @@
 	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
 	crossorigin="anonymous">
-	<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.js"></script>
+<link rel="shortcut icon" type="image/x-icon"
+	href="/resources/editor/connn.ico" />
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.11.3.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#btn').click(function() {
@@ -32,7 +34,7 @@
 					rep_Id : rep_Id,
 					rev_No : rev_No,
 					rep_Cont : rep_Cont,
-					rep_Secret :rep_Secret,
+					rep_Secret : rep_Secret,
 					rep_Subno : rep_Subno
 				},
 				success : function(result) {
@@ -45,7 +47,7 @@
 		});
 	});
 </script>
-<title>Insert title here</title>
+<title>EVERY FARM</title>
 <style type="text/css">
 .center {
 	text-align: center;
@@ -91,7 +93,7 @@ span {
 }
 
 .btn2 {
-    border-radius: 4.7px;
+	border-radius: 4.7px;
 	position: relative;
 	left: 93%;
 	color: #fff;
@@ -218,8 +220,6 @@ span {
 									value="${repList.rep_Date}" /></span>
 							<div class="cont2">${repList.rep_Cont}</div></td>
 					</tr>
-					<c:when test="${repList.rep_Secret == Y}">
-					</c:when>
 				</c:forEach>
 			</tbody>
 		</table>
@@ -234,9 +234,9 @@ span {
 									<div>
 										<label><i class="fas fa-caret-right"></i> 이름 : </label> <span>${member.m_Name}<input
 											type="hidden" name="rep_Id" value="${member.m_Name}"></span>
-											<input type="checkbox" name="rep_Secret" id="rep_Secret" value="Y">
-										<input type="hidden" id="rev_No" name="rev_No"
-											value="${revList.rev_No}">
+										<input type="checkbox" name="rep_Secret" id="rep_Secret"
+											value="Y"> <input type="hidden" id="rev_No"
+											name="rev_No" value="${revList.rev_No}">
 									</div>
 									<div class="re_cont">
 										<textarea class="texta" name="rep_Cont"
@@ -269,8 +269,7 @@ span {
 				<c:when test="${member.m_Id  eq revList.rev_Id}">
 					<a href="/reviewUpdate?rev_No=${revList.rev_No}" id="modify"
 						class="btn3">수정하기</a>
-					<a class="btn3" onclick="yes()" id="Btn"
-						>삭제하기</a>
+					<a class="btn3" onclick="yes()" id="Btn">삭제하기</a>
 					<a href="/reviewList" id="list" class="btn3">목록으로</a>
 				</c:when>
 				<c:otherwise>
@@ -281,21 +280,23 @@ span {
 	</div>
 
 	<script type="text/javascript">
-$(document).ready(function() {
-	var no = ${revList.rev_No}
-	$('#Btn').click(function() {
-		var result = confirm('삭제하시겠습니까?');
-		if(result) { //yes 
-			 alert("삭제되었습니다.");
-			  location.href="/reviewDelete?rev_No="+no;
-			   return true;
-		} 
-		else {
-			return false;
-				} 
+		$(document).ready(function() {
+			var no = $
+			{
+				revList.rev_No
+			}
+			$('#Btn').click(function() {
+				var result = confirm('삭제하시겠습니까?');
+				if (result) { //yes 
+					alert("삭제되었습니다.");
+					location.href = "/reviewDelete?rev_No=" + no;
+					return true;
+				} else {
+					return false;
+				}
+			});
 		});
-	});
-</script>
+	</script>
 
 </body>
 <jsp:include page="/WEB-INF/views/home/footer.jsp" />

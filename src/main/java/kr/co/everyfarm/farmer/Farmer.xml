@@ -10,6 +10,19 @@
 		select * from farmer
 	</select>
 
+	<select id="forbestItem"
+		resultType="kr.co.everyfarm.payment.PaymentBean">
+		select pay_no,count(pay_no) from payment group by
+		pay_no
+		limit 3;
+	</select>
+
+	<select id="bestItem" resultType="kr.co.everyfarm.product.ProductBean">
+		select * from product where p_no = #{pay_no};
+	</select>
+
+
+
 	<insert id="fjoin"
 		parameterType="kr.co.everyfarm.farmer.FarmerBean">insert into farmer (f_id,f_name, f_pw, f_Addr,
 		f_tel,f_birth, f_auth, f_sign)Values (#{f_Id}, #{f_Name},
@@ -36,7 +49,7 @@
 		f_Addr = '탈퇴한 농부입니다',
 		f_tel = '탈퇴한 농부입니다',
 		f_Birth = '탈퇴한 농부입니다',
-		f_auth = 'N',
+		f_auth = 'N'
 		WHERE f_id = #{f_Id}
 	</update>
 
@@ -95,11 +108,6 @@
 		select * from farmer where
 		f_id=#{f_Id} and f_name=#{f_Name}
 		and f_tel=#{f_Tel}
-	</select>
-
-	<select id="bestFarmer"
-		resultType="kr.co.everyfarm.farmer.FarmerBean">
-		SELECT * FROM farmer order by f_Rate desc limit 3;
 	</select>
 
 	<insert id="farmerAdd"
@@ -172,7 +180,7 @@
 		from
 		product where p_id =#{f_Id}) order by pay_Date desc limit 1
 	</select>
-	
+
 	<update id="upPwFar">
 		UPDATE farmer SET
 		m_Pw = #{m_Pw}
@@ -212,10 +220,13 @@
 
 	<select id="seedSum"
 		resultType="kr.co.everyfarm.payment.PaymentBean">
-		select ifnull(pay_seed,0) as pay_seed, ifnull(sum(pay_land),0) as pay_land
-		from payment where (pay_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK)
+		select ifnull(pay_seed,0) as pay_seed,
+		ifnull(sum(pay_land),0) as pay_land
+		from payment where (pay_date
+		BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK)
 		AND NOW())
-		and pay_seed =#{pay_Seed} and pay_no=#{pay_No}
+		and pay_seed
+		=#{pay_Seed} and pay_no=#{pay_No}
 
 	</select>
 

@@ -426,8 +426,6 @@ public class FarmerController {
 		PaymentBean myCus = fDAO.fDelDate(paging);
 		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();
-		System.out.println("now:::" + test.format(now));
-		System.out.println("myCUs:::" + test.format(myCus.getPay_Date()));
 		
 		model.addAttribute("myCus", test.format(myCus.getPay_Date()));
 		model.addAttribute("nowMonth",test.format(now));
@@ -485,7 +483,9 @@ public class FarmerController {
 	public String myDelete(FarmerBean farmerbean, HttpSession session) {
 
 		FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
-		dao.fDelete(farmerbean);
+		FarmerBean fBean = (FarmerBean) session.getAttribute("farmer");
+		String f_Id = fBean.getF_Id();		
+		dao.fDelete(f_Id);
 
 		session.invalidate();
 		return "redirect:/farmer";
