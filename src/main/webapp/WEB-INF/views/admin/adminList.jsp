@@ -103,11 +103,6 @@ display: flex;
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="/admin"> <img
-				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
-				alt="...">
-			</a>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Navigation -->

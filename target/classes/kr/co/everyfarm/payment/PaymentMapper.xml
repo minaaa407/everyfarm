@@ -55,14 +55,21 @@
 		from member, product, payment where payment.pay_Id=member.m_Id and
 		payment.pay_No=product.p_No
 		and product.p_Id=#{f_Id}
-		<!-- <include refid="searchCondition"></include> -->
+		<if test="searchType == 't'.toString()">
+			AND product.p_Title LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND payment.pay_Name LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="searchType == 'f'.toString()">
+			AND payment.pay_Seed LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="searchType == ''.toString()">
+			AND (product.p_Title LIKE CONCAT('%', #{keyword},'%') 
+			or payment.pay_Name LIKE CONCAT('%', #{keyword},'%')
+			or payment.pay_Seed LIKE CONCAT('%', #{keyword},'%'))
+		</if>
 	</select>
-	<!-- <sql id="searchCondition"> <if test="searchType != null"> <if test="searchType 
-		== 't'.toString()"> AND r_mid LIKE CONCAT('%', #{keyword},'%') </if> <if 
-		test="searchType == 'c'.toString()"> AND r_pid LIKE CONCAT('%', #{keyword},'%') 
-		</if> <if test="searchType == 'w'.toString()"> AND product.p_name LIKE CONCAT('%', 
-		#{keyword},'%') </if> <if test="searchType == 'tc'.toString()"> AND r_state 
-		LIKE CONCAT('%', #{keyword},'%') </if> </if> </sql> -->
 
 	<select id="farmerpaylist"
 		resultType="kr.co.everyfarm.payment.PaymentBean">
@@ -70,6 +77,7 @@
 		product.p_No,product.p_Title,payment.pay_seed,payment.pay_land,product.p_Img,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
 		from product, payment where product.p_Id=#{f_Id} and
 		payment.pay_No=product.p_No
+		
 	</select>
 
 	<select id="farmerpaylist1"
@@ -78,13 +86,21 @@
 		product.p_No,product.p_Title,payment.pay_seed,payment.pay_land,product.p_Img,payment.pay_Orderno,payment.pay_Totalprice,payment.pay_Deliverymemo,payment.pay_Date,pay_Address,payment.pay_Name,payment.pay_Tel,payment.pay_Email
 		from product, payment where product.p_Id=#{f_Id} and
 		payment.pay_No=product.p_No
-		<!-- <if test="searchType == 't'.toString()"> AND r_mid LIKE CONCAT('%', 
-			#{keyword},'%') </if> <if test="searchType == 'c'.toString()"> AND r_pid 
-			LIKE CONCAT('%', #{keyword},'%') </if> <if test="searchType == 'w'.toString()"> 
-			AND product.p_name LIKE CONCAT('%', #{keyword},'%') </if> <if test="searchType 
-			== 'tc'.toString()"> AND r_state LIKE CONCAT('%', #{keyword},'%') </if> -->
-		<!-- ORDER BY payment.pay_Orderno desc limit #{pageStart}, #{perPageNum} -->
-		ORDER BY payment.pay_Orderno desc
+		<if test="searchType == 't'.toString()">
+			AND product.p_Title LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="searchType == 'c'.toString()">
+			AND payment.pay_Name LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="searchType == 'f'.toString()">
+			AND payment.pay_Seed LIKE CONCAT('%', #{keyword},'%')
+		</if>
+		<if test="searchType == ''.toString()">
+			AND (product.p_Title LIKE CONCAT('%', #{keyword},'%') 
+			or payment.pay_Name LIKE CONCAT('%', #{keyword},'%')
+			or payment.pay_Seed LIKE CONCAT('%', #{keyword},'%'))
+		</if>
+		ORDER BY payment.pay_Date desc
 		limit #{pageStart}, #{perPageNum}
 	</select>
 

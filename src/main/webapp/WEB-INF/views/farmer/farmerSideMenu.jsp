@@ -34,6 +34,11 @@
 	</style>
 </head>
 <body>
+<!-- Brand -->
+			<a class="navbar-brand pt-0" href="/farmer"> <img
+				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
+				alt="...">
+			</a>
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="/farmer"> <i
 				class="ni ni-tv-2 text-primary"></i> 대시보드
@@ -42,13 +47,6 @@
 				<i class="ni ni-box-2 text-blue"></i> 상품관리
 		</a></li>
 
-		<li class="nav-item"><a class="nav-link " href="/myCustomer">
-				<i class="ni ni-single-02 text-yellow"></i> 회원관리
-		</a></li>
-
-		<li class="nav-item"><a class="nav-link " href="/farmerReply"> <i
-				class="ni ni-bullet-list-67 text-red"></i> 리뷰관리
-		</a></li>
 		<li class="nav-item"><a class="nav-link " href="/farmerQnaList">
 				<i class="ni ni-bullet-list-67 text-blue"></i> QnA관리
 		</a></li>

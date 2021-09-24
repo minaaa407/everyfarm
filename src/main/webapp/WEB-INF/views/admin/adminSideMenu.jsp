@@ -26,7 +26,11 @@
 	</style>
 </head>
 <body>
-
+<!-- Brand -->
+			<a class="navbar-brand pt-0" href="/admin"> <img
+				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
+				alt="...">
+			</a>
 <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="/admin">
@@ -56,11 +60,6 @@
           <li class="nav-item">
             <a class="nav-link " href="/farmerList">
               <i class="ni ni-single-02 text-orange"></i> 농부관리
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/adminList">
-              <i class="ni ni-single-02 text-pink"></i> 관리자 목록
             </a>
           </li>
           <li class="nav-item">

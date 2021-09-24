@@ -59,11 +59,6 @@
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
          </button>
-         <!-- Brand -->
-         <a class="navbar-brand pt-0" href="/admin"> <img
-            src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
-            alt="...">
-         </a>
          <!-- User -->
          <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown"><a class="nav-link nav-link-icon"
