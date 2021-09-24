@@ -88,7 +88,7 @@ height: 602px;
 									<h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
 										<c:set var="today" value="<%=new java.util.Date()%>" />
 										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
-									<h2 id="productyeartext" class="mb-0">Total orders <c:out value="${year}"/> </h2>
+									<h2 id="productyeartext" class="mb-0"><c:out value="${year}"/>년 월별 매출</h2>
 								</div>									
 								<div class="col text-right">
 									<input class="btn btn-sm btn-primary" onclick="pretowyear()" type="button" value="<c:out value="${year-2}" />"/>
@@ -151,7 +151,7 @@ new Chart("myChart", {
   options: {
     title: {
       display: true,
-      text: "이번달 농작물 판매 수",
+      text: "이달의 판매량",
     	  fontSize: 25,
 		      fontColor: '#4e9525'
     }
@@ -190,7 +190,7 @@ new Chart("myChart", {
 									var productchar = document.getElementById("productchart");
 									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
 									productchar.innerHTML=text;
-									text = "Total orders <c:out value='${year}'/>";
+									text = "<c:out value='${year}'/>년 월별 매출";
 									document.getElementById("productyeartext").innerHTML=text;
 									
 									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
@@ -205,7 +205,7 @@ new Chart("myChart", {
 									var productchar = document.getElementById("productchart");
 									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
 									productchar.innerHTML=text;
-									text = "Total orders <c:out value='${year-1}'/>";
+									text = "<c:out value='${year-1}'/>년 월별 매출";
 									document.getElementById("productyeartext").innerHTML=text;
 									
 									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
@@ -220,7 +220,7 @@ new Chart("myChart", {
 									var productchar = document.getElementById("productchart");
 									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
 									productchar.innerHTML=text;
-									text = "Total orders <c:out value='${year-2}'/>";
+									text = "<c:out value='${year-2}'/>년 월별 매출";
 									document.getElementById("productyeartext").innerHTML=text;
 									
 									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
