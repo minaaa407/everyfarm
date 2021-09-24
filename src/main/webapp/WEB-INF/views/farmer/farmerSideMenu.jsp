@@ -50,9 +50,9 @@
 		<!-- <li class="nav-item"><a class="nav-link " href="/farmerReply"> <i
 				class="ni ni-bullet-list-67 text-red"></i> 리뷰관리
 		</a></li> -->
-		<!-- <li class="nav-item"><a class="nav-link " href="/farmerQnaList">
+		<li class="nav-item"><a class="nav-link " href="/farmerQnaList">
 				<i class="ni ni-bullet-list-67 text-blue"></i> QnA관리
-		</a></li> -->
+		</a></li>
 		<li class="nav-item"><a class="nav-link "
 			href="farmerpaymentlist"> <i
 				class="ni ni-bullet-list-67 text-red"></i> 결제내역

@@ -469,7 +469,7 @@ public class FarmerController {
 		System.out.println(test.format(now));
 		if (myCus == null) {
 			model.addAttribute("myCus",test.format(now));
-		}else {
+		}else if (myCus != null ){
 			model.addAttribute("myCus", test.format(myCus.getPay_Date()));
 			model.addAttribute("nowMonth",test.format(now));
 		}
