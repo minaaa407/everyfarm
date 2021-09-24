@@ -29,6 +29,11 @@
     <!-- Custom Css -->
     <link href="resources/admin/sign/css/style.css" rel="stylesheet">
     
+    <link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+	crossorigin="anonymous"> 
+    
 <style>
 
 .login-page {
@@ -43,6 +48,13 @@
 	color: #333
 }
 
+.logintitle{
+   font-size: 36px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
 </style>
     
 </head>
@@ -50,7 +62,11 @@
 <body class="login-page">
 	  <br>
 	  <br>
-	<div class="login-form-btn-container">
+	<div class="login-form-btn-container" style="
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+	">
 						<!-- <a class="everyfarm" href="index.jsp">EVERY <span>FARM</span></a> -->
 						<a class="everyfarm" href="index.jsp"><img class="logo" src="/resources/img/everyfarm.png" style="width: 400px;background: #b0cd56;" alt="메인 바로가기"></a>
 	</div>
@@ -59,14 +75,13 @@
     <div class="login-box" style="background: #b0cd56;">
       <br>
         <div class="logo" style="background: #b0cd56;">
-            <a href="javascript:void(0);">ADMIN's<b> FARM</b></a>
+            <span class="logintitle">ADMIN's<b> FARM</b></span>
         </div>
           <br>
         <div class="card">
             <div class="body" >
                 <form id="sign_in" action="adminLogin" method="POST">
-              
-                    <div class="msg">EVERY FARM | 관리자</div>
+              		<br><br>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
@@ -94,12 +109,28 @@
                      	</div>
                     </div>
                     <div class="row m-t-15 m-b--20">
-                        <div class="col-xs-12 align-center">
-                            <a href="/adminFindId">Forgot ID?</a>
+                        <div class="col-xs-6 align-center">
+                            <a href="/adminFindId">아이디 찾기</a>
                         </div>
-                        <div class="col-xs-12 align-center">
-                            <a href="/adminFindPw">Forgot Password?</a>
+                        <div class="col-xs-6 align-center">
+                            <a href="/adminFindPw">비밀번호 찾기</a>
                         </div>
+                        
+                        <div class="col-xs-12 align-center">
+                            <hr>
+                        </div>
+                        
+                        <div class="col-xs-6 align-center">
+	                        <a href="/home" class="ftco-animate py-1 d-block"><span
+										class="fas fa-users"></span>&nbsp;&nbsp;&nbsp;&nbsp;EVERY FARM</a>
+                         </div>
+						
+						<div class="col-xs-6 align-center">
+							<a href="/farmerLogin" class="ftco-animate py-1 d-block"><span
+									class="fas fa-tractor"></span>&nbsp;&nbsp;&nbsp;&nbsp;FARMER's FARM</a>
+                        </div>
+                        
+                        
                     </div>
                 </form>
             </div>

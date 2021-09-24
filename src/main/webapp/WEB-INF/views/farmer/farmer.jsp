@@ -18,7 +18,7 @@
 .height {
 height: 602px;
 }
-.chartcenter {
+.center {
     justify-content: center;
 }
 .margin {
@@ -74,7 +74,7 @@ height: 602px;
 				<div class="col-xl-6 mb-5 mb-xl-0">
 					<div class="card bg-gradient-default shadow height chartcenter">
 						<!-- Chart -->
-						<div>
+						<div >
 							<canvas id="myChart" style="width:100%;max-width:800px"></canvas>
 						</div>
 					</div>
@@ -152,9 +152,10 @@ new Chart("myChart", {
     title: {
       display: true,
       text: "이번달 농작물 판매 수",
-    	  fontSize: 25,
+    	  fontSize: 15,
 		      fontColor: '#4e9525'
     }
+
   }
 });
 </script>

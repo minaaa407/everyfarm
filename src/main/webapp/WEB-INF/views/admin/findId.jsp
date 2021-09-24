@@ -19,7 +19,7 @@
 				dataType : "json",
 				data : {
 					a_Name : $("#a_Name").val(),
-					a_Email : $("#a_Eamil").val()
+					a_Email : $("#a_Email").val()
 				},
 				success : function(result) {
 					if (result.error == false) {

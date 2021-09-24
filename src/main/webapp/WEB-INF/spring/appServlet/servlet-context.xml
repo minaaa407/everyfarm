@@ -119,6 +119,7 @@
 			<beans:ref bean="AdminInterceptor" />
 		</interceptor>
 		<interceptor>
+			<mapping path="/farmer" />
 			<mapping path="/farmerQnasearch" />
 			<mapping path="/farmerQnaList" />
 			<mapping path="/farmerQnaWrite" />
