@@ -2,6 +2,8 @@ package kr.co.everyfarm.payment;
 
 import java.util.List;
 
+import kr.co.everyfarm.board.Paging;
+
 public interface PaymentDAO {
 	
 	public List<PaymentBean> paylist();
@@ -31,7 +33,9 @@ public interface PaymentDAO {
 
 	public int paydelete(List<String> deletelist);
 
-	public List<PaymentBean> mypaylist(String m_Id);
+	public PaymentBean mypaylist(Paging paging);
+	
+	public List<PaymentBean> mypayListuser(String m_Id);
 	
 	// modal test
 	public PaymentBean getSearchData(PaymentBean paymentbean);

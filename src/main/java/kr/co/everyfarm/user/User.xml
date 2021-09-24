@@ -49,7 +49,7 @@
 
 	<update id="mDelete">
 		UPDATE member SET
-		m_Id = '탈퇴한 회원입니다',
+		m_Id = sysdate(),
 		m_Pw = '탈퇴한 회원입니다',
 		m_Name = '탈퇴한 회원입니다',
 		m_Addr = '탈퇴한 회원입니다',
@@ -63,7 +63,8 @@
 		UPDATE member SET
 		m_Id = '탈퇴한 회원입니다',
 		m_Pw = '탈퇴한 회원입니다',
-		m_Name = '탈퇴한 회원입니다',
+		m_Name = '탈퇴한
+		회원입니다',
 		m_Addr = '탈퇴한 회원입니다',
 		m_tel = '탈퇴한 회원입니다',
 		m_Birth = '탈퇴한 회원입니다',
@@ -140,6 +141,12 @@
 	<update id="mNameUpdate">
 		UPDATE member SET
 		m_Name = #{m_Name}
+		where m_id=#{m_Id}
+	</update>
+
+	<update id="mTelUp">
+		UPDATE member SET
+		m_Tel = #{m_Tel}
 		where m_id=#{m_Id}
 	</update>
 
