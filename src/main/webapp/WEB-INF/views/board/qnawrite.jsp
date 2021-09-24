@@ -13,9 +13,7 @@
    int count = pnoTitleList.size();
 %>
 
-<!-- ArrayList<QnABean> qnamodifyrecord = (ArrayList)request.getAttribute("qnamodifyrecord");
-String p_No = request.getParameter("no");
- -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -300,7 +298,9 @@ input::placeholder {
 
 
 
-
+<footer>
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />
+</footer>
 
 </body>
 </html>
