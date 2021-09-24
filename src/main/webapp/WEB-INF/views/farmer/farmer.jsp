@@ -97,20 +97,7 @@ height: 602px;
 								</div>
 							</div>
 						</div>
-						<!-- 차트 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--   Core   -->
-<script src="resources/farmer/js/plugins/jquery/dist/jquery.min.js"></script>
-<script
-	src="resources/farmer/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<!--   Optional JS   -->
-<script src="resources/farmer/js/plugins/chart.js/dist/Chart.min.js"></script>
-<script
-	src="resources/farmer/js/plugins/chart.js/dist/Chart.extension.js"></script>
-<!--   Argon JS   -->
-<script src="resources/farmer/js/argon-dashboard.min.js?v=1.1.2"></script>
-<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>	
+		
 
 						<div class="card-body">
 							<!-- Chart -->
@@ -119,66 +106,12 @@ height: 602px;
 							</div>
 						</div>
 					</div>
-							<script>
-OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
-t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
-	ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
-		callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
-		return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
-
-</script>
 							
-					<script>
-								function nowyear(){
-									var productchar = document.getElementById("productchart");
-									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
-									productchar.innerHTML=text;
-									text = "Total orders <c:out value='${year}'/>";
-									document.getElementById("productyeartext").innerHTML=text;
-									
-									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
-									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
-										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
-											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
-											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
-
-								}
-								
-								function preoneyear(){
-									var productchar = document.getElementById("productchart");
-									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
-									productchar.innerHTML=text;
-									text = "Total orders <c:out value='${year-1}'/>";
-									document.getElementById("productyeartext").innerHTML=text;
-									
-									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
-									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
-										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
-											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
-											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment1pre[0]},${payment1pre[1]},${payment1pre[2]},${payment1pre[3]},${payment1pre[4]},${payment1pre[5]},${payment1pre[6]},${payment1pre[7]},${payment1pre[8]},${payment1pre[9]},${payment1pre[10]},${payment1pre[11]}]}]}}),e.data("chart",a))}();
-
-								}
-								
-								function pretowyear(){
-									var productchar = document.getElementById("productchart");
-									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
-									productchar.innerHTML=text;
-									text = "Total orders <c:out value='${year-2}'/>";
-									document.getElementById("productyeartext").innerHTML=text;
-									
-									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
-									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
-										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
-											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
-											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment2pre[0]},${payment2pre[1]},${payment2pre[2]},${payment2pre[3]},${payment2pre[4]},${payment2pre[5]},${payment2pre[6]},${payment2pre[7]},${payment2pre[8]},${payment2pre[9]},${payment2pre[10]},${payment2pre[11]}]}]}}),e.data("chart",a))}();
-
-								}
-								</script>
 						</div>
 					</div>
 				</div>
 			</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- 차트	 -->
 <script type="text/javascript">
@@ -227,7 +160,76 @@ new Chart("myChart", {
 </script>
 
 
+<script>
+								OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+								t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+									ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+										callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+										return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
+								
+							</script>
+							
+											<!-- 차트 -->
+									<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+									<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+									<!--   Core   -->
+									<script src="resources/farmer/js/plugins/jquery/dist/jquery.min.js"></script>
+									<script
+										src="resources/farmer/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+									<!--   Optional JS   -->
+									<script src="resources/farmer/js/plugins/chart.js/dist/Chart.min.js"></script>
+									<script
+										src="resources/farmer/js/plugins/chart.js/dist/Chart.extension.js"></script>
+									<!--   Argon JS   -->
+									<script src="resources/farmer/js/argon-dashboard.min.js?v=1.1.2"></script>
+									<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>	
+																
+					<script>
+								function nowyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "Total orders <c:out value='${year}'/>";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
 
+								}
+								
+								function preoneyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "Total orders <c:out value='${year-1}'/>";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment1pre[0]},${payment1pre[1]},${payment1pre[2]},${payment1pre[3]},${payment1pre[4]},${payment1pre[5]},${payment1pre[6]},${payment1pre[7]},${payment1pre[8]},${payment1pre[9]},${payment1pre[10]},${payment1pre[11]}]}]}}),e.data("chart",a))}();
+
+								}
+								
+								function pretowyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "Total orders <c:out value='${year-2}'/>";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment2pre[0]},${payment2pre[1]},${payment2pre[2]},${payment2pre[3]},${payment2pre[4]},${payment2pre[5]},${payment2pre[6]},${payment2pre[7]},${payment2pre[8]},${payment2pre[9]},${payment2pre[10]},${payment2pre[11]}]}]}}),e.data("chart",a))}();
+
+								}
+								</script>
 
 </body>
 </html>

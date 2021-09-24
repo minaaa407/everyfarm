@@ -9,6 +9,16 @@
 <link rel="stylesheet" href="resources/index/css/test.css">
 <meta charset="UTF-8">
 <title>LOGIN</title>
+
+<style>
+	.input{
+	
+	padding : 0px;
+	text-indent: 30px;
+	}
+
+</style>
+
 </head>
 <body>
 	<div class="Main-container">
