@@ -27,29 +27,41 @@
               <i class="ni ni-box-2 text-blue"></i> 상품관리
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="farmerpaymentlist">
-              <i class="ni ni-bullet-list-67 text-red"></i> 결제내역
-            </a>
-          </li>
+         
           <li class="nav-item">
             <a class="nav-link " href="myCustomer">
               <i class="ni ni-single-02 text-yellow"></i> 회원관리
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="farmerMypage">
-              <i class="ni ni-circle-08 text-green"></i> 마이페이지
-            </a>
-          </li>
+          
           <li class="nav-item">
             <a class="nav-link " href="farmerMypage">
               <i class="ni ni-bullet-list-67 text-blue"></i> 댓글관리
             </a>
           </li>
+           <li class="nav-item">
+            <a class="nav-link " href="">
+              <i class="ni ni-bullet-list-67 text-red"></i> 리뷰관리
+            </a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link " href="/farmerQnaList">
+              <i class="ni ni-bullet-list-67 text-blue"></i> QnA관리
+            </a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link " href="farmerpaymentlist">
+              <i class="ni ni-bullet-list-67 text-red"></i> 결제내역
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="/proRegisterForm">
-              <i class="ni ni-circle-08 text-pink"></i> 땅등록
+              <i class="ni ni-circle-08 text-pink"></i> 땅 등록
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="farmerMypage">
+              <i class="ni ni-circle-08 text-green"></i> 마이페이지
             </a>
           </li>
           <li class="nav-item">

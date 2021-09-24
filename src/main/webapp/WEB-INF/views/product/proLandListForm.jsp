@@ -256,37 +256,37 @@ function search(){
 							<col style="width: 70px" />
 							<col style="width: 70px" />
 						</colgroup>
-						<thead>
-							<tr>
-								<th scope="col">상품번호</th>
-								<th scope="col">메인이미지</th>
-								<th scope="col">제목</th>
-								<th scope="col">등록날짜</th>
-								<th scope="col">승인여부</th>
-								<th scope="col">상세보기</th>
-								<th scope="col">삭제</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="p" items="${productlist}">
-								<tr>
-									<td class="content">${p.p_No}</td>
-									<td class="content"><img id='product${p.p_No}'
-										src="/resources/upload/product/${p.p_No}/${p.p_Img}"
-										class="test1" width="90" height="auto" alt="Image ${p.p_No}">
-									</td>
-									<td class="content">${p.p_Title}</td>
-									<td class="content">${p.p_Date}</td>
-									<td class="content">${p.p_Accept}</td>
-									<td class="content"><a
-										href="/productdetail?productno=${p.p_No}">상세보기</a></td>
-									<td><button type="button" class="btn btn-sm btn-neutral"
-											onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					</tbody>
+			<thead>
+				<tr>
+					<th scope="col">상품번호</th>
+					<th scope="col">메인이미지</th>
+					<th scope="col">제목</th>
+					<th scope="col">등록날짜</th>
+					<th scope="col">승인여부</th>
+					<th scope="col">상세보기</th>
+					<th scope="col">삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="p" items="${productlist}">
+					<tr>
+						<td class="content">${p.p_No}</td>
+						<td class="content"><img id='product${p.p_No}'
+							src="/resources/upload/product/${p.p_No}/${p.p_Img}"
+							class="test1" width="90" height="auto" alt="Image ${p.p_No}">
+						</td>
+						<td class="content">${p.p_Title}</td>
+						<td class="content">${p.p_Date}</td>
+						<td class="content">${p.p_Accept}</td>
+						<td class="content"><a
+							href="/productdetail?productno=${p.p_No}">상세보기</a></td>
+						<td><button type="button" class="btn btn-sm btn-neutral"
+								onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</tbody>
 					</table>
 				</div>
 			</div>

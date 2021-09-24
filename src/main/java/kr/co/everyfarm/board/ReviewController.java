@@ -55,17 +55,12 @@ public class ReviewController {
 		MemberBean member = (MemberBean) session.getAttribute("member");
 		String m_Id = member.getM_Id();//아이디 검색
 
-
-		
 		ReviewDAO rdao = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		List<PaymentBean> myPay = rdao.selectpaymentreview(m_Id);//뽑아 낸다.
 		List<ProductBean> myProductList = rdao.selectproductreview(m_Id);
 		
 		System.out.println(myPay + "값 확인");
 		//여기에서 for 문 서서 비교해서 날려버린다. 
-		
-		
-		
 		
 		model.addAttribute("myPayList", myPay);//mypay에서 가져오게 만든다이네. 이걸 그냥 집어 넣는다이고. 그러면 중간에 빼내는거 만들어낸다.
 		model.addAttribute("myProductList", myProductList);
@@ -125,8 +120,9 @@ public class ReviewController {
 			@RequestParam("rev_No") int rev_No) {
 		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		revDAO.ReadCount(reviewBean);
-
 		List<ReviewReplyBean> list = revDAO.reply(rev_No);
+		String test = reviewReplyBean.getRep_Id().replaceAll("(?<=.{1}).",	"*");
+		reviewReplyBean.setRep_Id(test);
 		ReviewBean revVO = revDAO.revDetail(reviewBean);
 		model.addAttribute("repList", list);
 		model.addAttribute("revList", revVO);

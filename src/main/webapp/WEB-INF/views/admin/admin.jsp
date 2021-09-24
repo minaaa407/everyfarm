@@ -306,44 +306,76 @@ t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lin
 
 
 <script>
-      var mMonth = ${mMonth};
-      var mChart = mMonth.reverse();
-
-      var fMonth = ${fMonth};
-      var fChart = fMonth.reverse();
-
-      var date = new Date();
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2);
-      var monStr = new Array;
-
-      for (var i = 0; i < 12; i++) {
-         month = date.setMonth(date.getMonth() - i);
-         monStr[i] = year + '-' + month;
-      }
-      var monLb = monStr.reverse();
-
-      new Chart("userNfarmer", {
-         type : "line",
-         data : {
-            labels : monLb,
-            datasets : [{
-               data : mChart,
-               borderColor : "yellow",
-               fill : false
-            }, {
-               data : fChart,
-               borderColor : "gray",
-               fill : false
-            } ]
-         },
-         options : {
-            legend : {
-               display : false
-            }
-         }
-      });
-      
+	var mMonth = ${mMonth};
+	var mChart = mMonth.reverse();
+	
+	var fMonth = ${fMonth};
+	var fChart = fMonth.reverse();
+	
+	var date = new Date();
+	var year = date.getFullYear();
+	
+	var month = ('0' + (date.getMonth() + 1)).slice(-2);
+	
+	var monStr = new Array;
+	
+	for (var i = 0; i < 12; i++) {
+	   month = ((date.getMonth() - i)+1);
+	
+	   if(month == '0'){
+	  	 monStr[i] = (year-1) + '-' + '12';
+	   }else if(month == '-1'){
+	  	 monStr[i] = (year-1) + '-' + '11';
+	   }else if(month == '-2'){
+	  	 monStr[i] = (year-1) + '-' + '10';
+	   }else if(month == '-3'){
+	  	 monStr[i] = (year-1) + '-' + '09';
+	   }else if(month == '-4'){
+	  	 monStr[i] = (year-1) + '-' + '08';
+	   }else if(month == '-5'){
+	  	 monStr[i] = (year-1) + '-' + '07';
+	   }else if(month == '-6'){
+	  	 monStr[i] = (year-1) + '-' + '06';
+	   }else if(month == '-7'){
+	  	 monStr[i] = (year-1) + '-' + '05';
+	   }else if(month == '-8'){
+	  	 monStr[i] = (year-1) + '-' + '04';
+	   }else if(month == '-9'){
+	  	 monStr[i] = (year-1) + '-' + '03';
+	   }else if(month == '-10'){
+	  	 monStr[i] = (year-1) + '-' + '02';
+	   }else if(month == '-11'){
+	  	 monStr[i] = (year-1) + '-' + '01';
+	   }
+	   else{
+	  	 month = ('0' +( (date.getMonth() - i)+1 )).slice(-2);
+	  	 monStr[i] = year + '-' + month;
+	   }
+	   
+	}
+	var monLb = monStr.reverse();
+		
+	new Chart("userNfarmer", {
+	   type : "line",
+	   data : {
+	      labels : monLb,
+	      datasets : [{
+	         data : mChart,
+	         borderColor : "yellow",
+	         fill : false
+	      }, {
+	         data : fChart,
+	         borderColor : "gray",
+	         fill : false
+	      } ]
+	   },
+	   options : {
+	      legend : {
+	         display : false
+	      }
+	   }
+	});
+	      
     	 /*  씨앗 판매개수 chart */
       console.log(1);
       console.log('시작');

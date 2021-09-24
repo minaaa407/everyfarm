@@ -47,6 +47,8 @@ public interface MemberDAO {
 
 	public void mPwdUp(MemberBean memberbean);
 	
+	public void mTelUp(MemberBean memberBean);
+	
 	public void userAdd(MemberBean memberbean);
 	
 }

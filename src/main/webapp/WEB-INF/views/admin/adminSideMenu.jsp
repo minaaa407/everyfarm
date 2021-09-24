@@ -33,6 +33,11 @@
               <i class="ni ni-bullet-list-67 text-yellow"></i> 결제내역
             </a>
           </li>
+            <li class="nav-item">
+            <a class="nav-link " href="/adminQnaList">
+              <i class="ni ni-bullet-list-67 text-yellow"></i> QnA내역
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link " href="/userList">
               <i class="ni ni-single-02 text-red"></i> 회원관리
@@ -44,8 +49,8 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/adminSign">
-              <i class="ni ni-circle-08 text-pink"></i> 관리자 추가
+            <a class="nav-link" href="/adminList">
+              <i class="ni ni-single-02 text-pink"></i> 관리자 목록
             </a>
           </li>
           <li class="nav-item">

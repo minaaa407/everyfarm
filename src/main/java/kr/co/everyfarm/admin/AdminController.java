@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -327,8 +328,6 @@ public class AdminController {
 		System.out.println("두번째:" + adminBean.getA_Pw());
 
 		AdminBean admin = adminDAO.alogin(adminBean);
-		
-
 
 		if (admin != null) {
 			session.setAttribute("admin", admin);
@@ -358,7 +357,7 @@ public class AdminController {
 		if (bindingResult.hasErrors()) {
 			return "admin/sign-up";
 		}
-		return "redirect:/adminSign";
+		return "redirect:/adminList";
 	}
 
 	@RequestMapping(value = "/userList")
@@ -377,12 +376,24 @@ public class AdminController {
 	public String flist(Model model, Paging paging, FarmerBean farmerBean) {
 		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
 
-		int total = dao.mCount(paging);
+		int total = dao.fCount(paging);
 
 		PageMaker pageMake = new PageMaker(paging, total);
 		model.addAttribute("farmer", dao.flist(paging));
 		model.addAttribute("pageMaker", pageMake);
 		return "admin/farmerList";
+	}
+	
+	@RequestMapping(value = "/adminList", method = RequestMethod.GET)
+	public String alist(Model model, Paging paging, AdminBean adminBean) {
+		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
+
+		int total = dao.aCount(paging);
+
+		PageMaker pageMake = new PageMaker(paging, total);
+		model.addAttribute("admin", dao.alist(paging));
+		model.addAttribute("pageMaker", pageMake);
+		return "admin/adminList";
 	}
 
 	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
@@ -569,6 +580,24 @@ public class AdminController {
 		
 		List<String> yes = Arrays.asList(checkArr);
 		farmDao.farmerY(yes);
+		map.put("error", true);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/adminD")
+	@ResponseBody
+	public Map<String, Object> adminDelete(AdminBean adminbean, @RequestParam(value = "checkArr[]") String checkArr) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		AdminDAO adminDao = sqlSessionTemplate.getMapper(AdminDAO.class);
+
+		List<String> delete = Arrays.asList(checkArr);
+		
+		Random random = new Random();
+		int i = random.nextInt(999999);
+		
+		adminDao.aDel(delete, i);
 		map.put("error", true);
 		
 		return map;

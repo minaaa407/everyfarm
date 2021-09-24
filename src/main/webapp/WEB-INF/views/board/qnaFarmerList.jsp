@@ -12,7 +12,7 @@
     <meta name="keywords" content="Foodeiblog, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>QnA 농부</title>
+    <title>EVERY FARM | QnA 농부</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
@@ -141,12 +141,9 @@
             <!-- <div class="d-none d-sm-block container" style="margin-right: 20px;"> -->
             <!--  <div class="d-block d-sm-none container"> -->
            
-                <div class="categories__grid__post">
+                <div class="categories__grid__post" style="border-top-width: 0px; margin-top: 100px;">
                     <div class="row">
-<!--                       <div class="d-none d-sm-block row" style="margin-left: 150px;">-->
-                    <!--  <div class="d-block d-sm-none row"> -->
-                    
-                      <div class="col-lg-12 col-md-12">
+					 <div class="col-lg-12 col-md-12">
                       	<c:choose>   
                  			<c:when test = "${empty productQlist}">
                  				<div class="breadcrumb__text">
@@ -191,23 +188,7 @@
                           </c:when>
                        </c:choose>
                             
-                    
-                            
-                    
-                     <!--   <form method="post" name="qnamodify" action="reservationUpdate.bo">      -->
-                       
-                       <%-- 
-                            <c:choose>   
-                  <c:when test = "${empty buylist}">   
-                     <td colspan="12">내역이 없습니다.</td>
-                  </c:when>
-                  <c:when test = "${buylist != null}">
-                   </c:when>
-                     </c:choose> --%>
-                     
-           <%--  <c:when test = "${empty qnamylist}">   --%>      
-           <!--  <div class="row" style="box-shadow: 0px 2px 10px rgb(0 0 0 / 8%); background-color: white;">
-              <div class="col-lg-12 col-md-12" style="padding-top: 50px;"> -->
+                  
 				<c:choose>   
                  	<c:when test = "${empty productQlist}">
                  	 <div class="row" style="box-shadow: 0px 2px 10px rgb(0 0 0 / 8%); background-color: white; margin-bottom: 140px;padding-bottom: 50px;">
