@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
-<title>Every Farm : 상세내역</title>
+<title>EVERY FARM 관리자 | 상세내역</title>
 <style>
 .modal { 
 	position:absolute; 

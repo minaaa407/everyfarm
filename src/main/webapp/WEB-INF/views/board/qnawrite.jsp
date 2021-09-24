@@ -38,7 +38,7 @@
 <link rel="stylesheet" href="/resources/qna/style.css">
 
 
-<title>QnA 글쓰기</title>
+<title>EVERY FARM | QnA 글쓰기</title>
 
 <style type="text/css">
 

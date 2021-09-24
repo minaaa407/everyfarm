@@ -48,6 +48,7 @@ import kr.co.everyfarm.board.ReviewBean;
 import kr.co.everyfarm.payment.PaymentBean;
 import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.product.ProductqnaBean;
+import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.user.EmailBean;
 import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.UserPw;

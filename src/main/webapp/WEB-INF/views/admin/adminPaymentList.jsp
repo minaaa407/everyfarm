@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 
-<title>EVERY FARM | 결제내역 - 관리자</title>
+<title>EVERY FARM 관리자 | 결제내역</title>
 <style>
 td, th {
 border-color:#9ea4ca;

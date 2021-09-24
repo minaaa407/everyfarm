@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="resources/index/css/test.css">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <meta charset="UTF-8">
+<title>EveryFarm 농부 | LOGIN</title>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <title>LOGIN</title>

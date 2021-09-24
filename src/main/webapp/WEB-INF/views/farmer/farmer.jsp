@@ -149,6 +149,8 @@ new Chart("myChart", {
     }]
   },
   options: {
+	responsive: false,
+	maintainAspectRatio: false,
     title: {
       display: true,
       text: "이번달 농작물 판매 수",
