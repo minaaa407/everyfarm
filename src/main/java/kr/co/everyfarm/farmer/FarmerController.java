@@ -550,9 +550,14 @@ public class FarmerController {
 		PaymentBean myCus = fDAO.fDelDate(paging);
 		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();
-		
-		model.addAttribute("myCus", test.format(myCus.getPay_Date()));
-		model.addAttribute("nowMonth",test.format(now));
+		System.out.println(test.format(myCus.getPay_Date()));
+		System.out.println(test.format(now));
+		if (myCus == null) {
+			model.addAttribute("myCus",test.format(now));
+		}else if (myCus != null ){
+			model.addAttribute("myCus", test.format(myCus.getPay_Date()));
+			model.addAttribute("nowMonth",test.format(now));
+		}
 		return "farmer/myPage";
 	}
 

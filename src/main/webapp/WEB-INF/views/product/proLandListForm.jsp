@@ -279,7 +279,7 @@ function search(){
 						<td class="content">${p.p_Date}</td>
 						<td class="content">${p.p_Accept}</td>
 						<td class="content"><a
-							href="/productdetail?productno=${p.p_No}">상세보기</a></td>
+							href="/productdetail2?productno=${p.p_No}">상세보기</a></td>
 						<td><button type="button" class="btn btn-sm btn-neutral"
 								onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
 					</tr>

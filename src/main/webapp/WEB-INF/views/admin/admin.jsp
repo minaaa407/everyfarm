@@ -22,10 +22,16 @@
     }
     .chartD {
     background-color: white;
-    box-shadow: 1px 1px 20px lightgrey;
+    box-shadow: 1px 1px 10px grey;
         display: flex;
     flex-direction: column;
     justify-content: center;
+    }
+    .chartA {
+    background-color: white;
+    box-shadow: 1px 1px 10px grey;
+        display: flex;
+    flex-direction: column;
     }
     .main-content{
     margin-top: 200px;
@@ -122,9 +128,15 @@
 			<div class="row">
 				<div class="col-xl-8 mb-5 mb-xl-0">
 					<div>
-						<div class="chartD" style="width: 1600px;">
+						<div class="chartA" style="width: 1600px; height:500px">
 							<!-- Chart -->
 							<div class="chart">
+							<div class="card-header bg-transparent">
+									<h6 class="text-uppercase text-muted ls-1 mb-1">Every Farm</h6>
+										<c:set var="today" value="<%=new java.util.Date()%>" />
+										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
+									<h2 class="productyeartext" class="mb-0">월별 가입자 수 </h2>
+								</div>
 								<!-- Chart wrapper -->
 								<canvas id="userNfarmer" class="chart-canvas" width="1600" height="350"></canvas>
 							</div>
@@ -134,7 +146,7 @@
 			</div>
 			<div class="row mt-5 ">
 			<div class="col-xl-6">
-					<div class="card shadow" style="height: 510px;">
+					<div class="card shadow" style="height: 510px; ">
 						<div class="card-header bg-transparent">
 							<div class="row align-items-center">
 								<div class="col">
@@ -165,7 +177,7 @@
 									<h6 class="text-uppercase text-muted ls-1 mb-1">Every Farm</h6>
 										<c:set var="today" value="<%=new java.util.Date()%>" />
 										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
-									<h2 class="productyeartext" class="mb-0"><c:out value="${year}"/>&nbsp;월별 씨앗 판매수 </h2>
+									<h2 class="productyeartext" class="mb-0"><c:out value="${year}"/>&nbsp;월별 씨앗 판매 수 </h2>
 								</div>
 								<canvas id="myChart" class="chart-canvas" width="700" height="350"></canvas>
 							<span style="width: 80px;">
