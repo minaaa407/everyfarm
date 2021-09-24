@@ -26,59 +26,76 @@ height: 602px;
     }
 </style>
 </head>
-
-<body>
-   <nav
-      class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
-      id="sidenav-main">
-      <div class="container-fluid">
-         <!-- Toggler -->
-         <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-         </button>
-         <!-- Collapse -->
-         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-            <!-- Navigation -->
-            <jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
-         </div>
-      </div>
-   </nav>
-   <div class="main-content">
-      <!-- Header -->
-      <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-      </div>
-      <div class="container-fluid" style="display: flex; justify-content: space-around;">
-         <div class="row">
-            <div class="col-xl-4 mb-5 mb-xl-0">
-               <div class="card bg-gradient-default shadow height chartcenter" style="width: 400px; height: 550px;">
-                  <!-- Chart -->
-                  <div >
-                     <canvas id="myChart" style="width:400px;height:400px;max-width:400px; margin-top: 50px;"></canvas>
-                  </div>
-               </div>
-            </div>
-         
-            <div class="col-xl-8 ">
-               <div class="card shadow height" style="height: 550px;">
-                  <div class="card-header bg-transparent">
-                     <div class="row align-items-center">
-                        <div class="col">
-                           <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                              <c:set var="today" value="<%=new java.util.Date()%>" />
-                              <c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
-                           <h2 id="productyeartext" class="mb-0">Total orders <c:out value="${year}"/> </h2>
-                        </div>                           
-                        <div class="col text-right">
-                           <input class="btn btn-sm btn-primary" onclick="pretowyear()" type="button" value="<c:out value="${year-2}" />"/>
-                           <input class="btn btn-sm btn-primary" onclick="preoneyear()" type="button" value="<c:out value="${year-1}" />"/>
-                           <input class="btn btn-sm btn-primary" onclick="nowyear()" type="button" value="<c:out value="${year}" />"/>
-                        </div>
-                     </div>
-                  </div>
-      
-
+<body class="">
+	<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Brand -->
+			<a class="navbar-brand pt-0" href="/farmer"> <img
+				src="resources/farmer/img/brand/brand.jpg" class="navbar-brand-img"
+				alt="...">
+			</a>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Collapse header -->
+				<div class="navbar-collapse-header d-md-none">
+					<div class="row">
+						<div class="col-6 collapse-close">
+							<button type="button" class="navbar-toggler"
+								data-toggle="collapse" data-target="#sidenav-collapse-main"
+								aria-controls="sidenav-main" aria-expanded="false"
+								aria-label="Toggle sidenav">
+								<span></span> <span></span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
+			</div>
+		</div>
+	</nav>
+	<div class="main-content">
+		<!-- Header -->
+		<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+			<div class="container-fluid">
+			</div>
+		</div>
+		<div class="container-fluid mt--7">
+			<div class="row">
+				<div class="col-xl-6 mb-5 mb-xl-0">
+					<div class="card bg-gradient-default shadow height chartcenter">
+						<!-- Chart -->
+						<div >
+							<canvas id="myChart" style="width:100%;max-width:800px"></canvas>
+						</div>
+					</div>
+				</div>
+			
+				<div class="col-xl-6 ">
+					<div class="card shadow height">
+						<div class="card-header bg-transparent">
+							<div class="row align-items-center">
+								<div class="col">
+									<h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
+										<c:set var="today" value="<%=new java.util.Date()%>" />
+										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
+									<h2 id="productyeartext" class="mb-0"><c:out value="${year}"/>년 월별 매출</h2>
+								</div>									
+								<div class="col text-right">
+									<input class="btn btn-sm btn-primary" onclick="pretowyear()" type="button" value="<c:out value="${year-2}" />"/>
+									<input class="btn btn-sm btn-primary" onclick="preoneyear()" type="button" value="<c:out value="${year-1}" />"/>
+									<input class="btn btn-sm btn-primary" onclick="nowyear()" type="button" value="<c:out value="${year}" />"/>
+								</div>
+							</div>
+						</div>
                   <div class="card-body">
                      <!-- Chart -->
                      <div id = "productchart" class="chart ">
@@ -131,9 +148,9 @@ new Chart("myChart", {
   options: {
     title: {
       display: true,
-      text: "이번달 농작물 판매 수",
-         fontSize: 20,
-            fontColor: '#4e9525'
+      text: "이달의 판매량",
+    	  fontSize: 15,
+		      fontColor: '#4e9525'
     }
 
   }
@@ -155,60 +172,60 @@ new Chart("myChart", {
                            <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>   
 
 
-                     <script>
-                        OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
-                        t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
-                           ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
-                              callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
-                              return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
-                        
-                     </script>
-                     
-                        
-                                                
-               <script>
-                        function nowyear(){
-                           var productchar = document.getElementById("productchart");
-                           var text = "<canvas id='chart-orders2' class='chart-canvas'>";
-                           productchar.innerHTML=text;
-                           text = "Total orders <c:out value='${year}'/>";
-                           document.getElementById("productyeartext").innerHTML=text;
-                           
-                           OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
-                           t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
-                              ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
-                                 callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
-                                 return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
+							<script>
+								OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+								t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+									ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+										callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+										return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
+								
+							</script>
+							
+								
+																
+					<script>
+								function nowyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "<c:out value='${year}'/>년 월별 매출";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment[0]},${payment[1]},${payment[2]},${payment[3]},${payment[4]},${payment[5]},${payment[6]},${payment[7]},${payment[8]},${payment[9]},${payment[10]},${payment[11]}]}]}}),e.data("chart",a))}();
 
-                        }
-                        
-                        function preoneyear(){
-                           var productchar = document.getElementById("productchart");
-                           var text = "<canvas id='chart-orders2' class='chart-canvas'>";
-                           productchar.innerHTML=text;
-                           text = "Total orders <c:out value='${year-1}'/>";
-                           document.getElementById("productyeartext").innerHTML=text;
-                           
-                           OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
-                           t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
-                              ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
-                                 callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
-                                 return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment1pre[0]},${payment1pre[1]},${payment1pre[2]},${payment1pre[3]},${payment1pre[4]},${payment1pre[5]},${payment1pre[6]},${payment1pre[7]},${payment1pre[8]},${payment1pre[9]},${payment1pre[10]},${payment1pre[11]}]}]}}),e.data("chart",a))}();
+								}
+								
+								function preoneyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "<c:out value='${year-1}'/>년 월별 매출";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment1pre[0]},${payment1pre[1]},${payment1pre[2]},${payment1pre[3]},${payment1pre[4]},${payment1pre[5]},${payment1pre[6]},${payment1pre[7]},${payment1pre[8]},${payment1pre[9]},${payment1pre[10]},${payment1pre[11]}]}]}}),e.data("chart",a))}();
 
-                        }
-                        
-                        function pretowyear(){
-                           var productchar = document.getElementById("productchart");
-                           var text = "<canvas id='chart-orders2' class='chart-canvas'>";
-                           productchar.innerHTML=text;
-                           text = "Total orders <c:out value='${year-2}'/>";
-                           document.getElementById("productyeartext").innerHTML=text;
-                           
-                           OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
-                           t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
-                              ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
-                                 callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
-                                 return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment2pre[0]},${payment2pre[1]},${payment2pre[2]},${payment2pre[3]},${payment2pre[4]},${payment2pre[5]},${payment2pre[6]},${payment2pre[7]},${payment2pre[8]},${payment2pre[9]},${payment2pre[10]},${payment2pre[11]}]}]}}),e.data("chart",a))}();
+								}
+								
+								function pretowyear(){
+									var productchar = document.getElementById("productchart");
+									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
+									productchar.innerHTML=text;
+									text = "<c:out value='${year-2}'/>년 월별 매출";
+									document.getElementById("productyeartext").innerHTML=text;
+									
+									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
+									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
+										ticks:{callback:function(e){if(!(e%10))return e}}}]},tooltips:{
+											callbacks:{label:function(e,a){var t=a.datasets[e.datasetIndex].label||"",o=e.yLabel,n="";
+											return 1<a.datasets.length&&(n+='<span class="popover-body-label mr-auto">'+t+"</span>"),n+='<span class="popover-body-value">'+o+"</span>"}}}},data:{labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],datasets:[{label:"Sales",data:[${payment2pre[0]},${payment2pre[1]},${payment2pre[2]},${payment2pre[3]},${payment2pre[4]},${payment2pre[5]},${payment2pre[6]},${payment2pre[7]},${payment2pre[8]},${payment2pre[9]},${payment2pre[10]},${payment2pre[11]}]}]}}),e.data("chart",a))}();
 
                         }
                         </script>
