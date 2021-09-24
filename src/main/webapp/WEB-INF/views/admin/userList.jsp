@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>EVERY FARM | 회원 리스트</title>
+<title>EVERY FARM 관리자 | 회원 리스트</title>
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <style>
@@ -81,23 +81,14 @@ table td, table th {
 	background-color: #7971ea;
 	color: white;
 }
-.pagination
- 
-a
-:hover
-:not
- 
-(
-.active
- 
-)
-{
-background-color
-:
- 
-silver
-;
+.pagination a:hover:not(.active) {
+background-color: silver;
 }
+.table100{
+display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
 </style>
 </head>
 <body>
@@ -181,6 +172,7 @@ silver
 							</c:choose>
 						</tbody>
 					</table>
+					<br>
 					<div class="search_wrap">
 						<div class="search_area">
 							<select name="type">
@@ -197,30 +189,25 @@ silver
 						</div>
 					</div>
 					<div class="pageInfo_wrap">
-						<div class="pageInfo_area">
-							<ul id="pageInfo" class="pageInfo">
-
+							<div id="pageInfo" class="pageInfo btn-group pagination">
 								<!-- 이전페이지 버튼 -->
 								<c:if test="${pageMaker.prev}">
-									<li class="pageInfo_btn previous"><a
-										href="${pageMaker.startPage-1}">[이전]</a></li>
+									<span class="pageInfo_btn previous"><a
+										href="${pageMaker.startPage-1}">[이전]</a></span>
 								</c:if>
 
 								<!-- 각 번호 페이지 버튼 -->
-								<c:forEach var="num" begin="${pageMaker.startPage}"
-									end="${pageMaker.endPage}">
-									<li class="pageInfo_btn  ${pageMaker.cri.pageNum == num ? "active":"" }"><a
-										href="${num}" style="background-color: #7971ea; color: white;">${num}</a></li>
+								<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+									<span class="pageInfo_btn  ${pageMaker.cri.pageNum == num ? "active":"" }"><a
+										href="${num}" style="background-color: #7971ea; color: white;">${num}</a></span>
 								</c:forEach>
 
 								<!-- 다음페이지 버튼 -->
 								<c:if test="${pageMaker.next}">
-									<li class="pageInfo_btn next"><a
-										href="${pageMaker.endPage + 1 }">[다음]</a></li>
+									<span class="pageInfo_btn next"><a
+										href="${pageMaker.endPage + 1 }">[다음]</a></span>
 								</c:if>
-
-							</ul>
-						</div>
+							</div>
 					</div>
 					<form id="moveForm" method="get">
 						<input type="hidden" name="pageNum"

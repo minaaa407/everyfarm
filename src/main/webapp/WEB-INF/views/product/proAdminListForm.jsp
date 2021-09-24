@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+
 <link
 	href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
 	rel="stylesheet">
@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="resources/index/css/flaticon.css">
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 
 </head>
 <style>
@@ -155,7 +156,7 @@ function search(){
 
 </script>
 
-<title></title>
+<title>EVERY FARM 관리자 | 상품관리</title>
 </head>
 
 <body>
@@ -291,7 +292,7 @@ function search(){
 									<td class="content">${p.p_Date}</td>
 									<td class="content">${p.p_Accept}</td>
 									<td class="content"><a
-										href="/productdetail?productno=${p.p_No}">상세보기</a></td>
+										href="/productdetail3?productno=${p.p_No}">상세보기</a></td>
 									<td><a class="btn btn-sm btn-neutral"
 										href="/proRegDetailForm?p_No=${p.p_No}">수정</a>
 										<button type="button" class="btn btn-sm btn-neutral"
@@ -302,19 +303,33 @@ function search(){
 					</table>
 				</div>
 				<br>
+				<div id="regSearch">
+					<select name="productselect" id="productselect">
+						<option value="p_No">상품번호</option>
+						<option value="p_Id">아이디</option>
+					</select> <input type="text" name="selectText" id="selectText"> <input
+						type="button" value="검색" onclick="search()">
+				</div>
+				<br>
 				<div class="row">
 				<div class="col btn-group pagination">
 					<c:if test="${pagebeen.pro eq 'true' }">
-						<a id="page${pagebeen.pagestart -1}" style="cursor: pointer"
+						<a id="page${pagebeen.pagestart -1}" style="cursor: pointer;"
 							onclick="paging(${pagebeen.pagestart -1})">이전 </a>
 					</c:if>
 
-					<c:forEach var="i" begin="${pagebeen.pagestart}"
-						end="${pagebeen.pageend}" step="1">
-						<a id="page${i}" style="cursor: pointer" onclick="paging(${i })">${i }</a>
+					<c:forEach var="i" begin="${pagebeen.pagestart}" end="${pagebeen.pageend}" step="1">
+						<c:choose>
+							<c:when test="${pagebeen.selectpage eq i}">
+								<a id="page${i}" style="cursor: pointer; background-color: #7971ea; color: white;" onclick="paging(${i })">${i }</a>
+							</c:when>
+							<c:otherwise>
+							   <a id="page${i}" style="cursor: pointer;" onclick="paging(${i })">${i }</a>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 					<c:if test="${pagebeen.post eq 'true'}">
-						<a id="page${pagebeen.pageend +1}" style="cursor: pointer"
+						<a id="page${pagebeen.pageend +1}" style="cursor: pointer;"
 							onclick="paging(${pagebeen.pageend +1})">다음 </a>
 					</c:if>
 				</div>
@@ -346,13 +361,6 @@ function search(){
 
 				</form:form>
 				<br>
-				<div id="regSearch">
-					<select name="productselect" id="productselect">
-						<option value="p_No">상품번호</option>
-						<option value="p_Id">아이디</option>
-					</select> <input type="text" name="selectText" id="selectText"> <input
-						type="button" value="검색" onclick="search()">
-				</div>
 			</div>
 		</div>
 		<br>

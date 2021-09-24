@@ -10,7 +10,7 @@
     <meta name="keywords" content="Foodeiblog, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>QnA 관리자</title>
+    <title>EVERY FARM 관리자 | QnA 내역</title>
 
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -45,7 +45,7 @@
 <body style="overflow-x: hidden">
 
 <div class="row">
-<div class="col-lg-2 col-md-2">
+<div class="col-lg-1 col-md-1">
  <!-- Navigation -->
       <nav
       class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
@@ -131,12 +131,12 @@
    </nav>
    </div>
 
-<div class="col-lg-10 col-md-10" style="background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;">
+<div class="col-lg-11 col-md-11" style="background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important; padding-left: 150px;">
    <!-- Categories Section Begin -->
     <section class="categories categories-grid spad" style="padding-top: 0; padding-bottom: 50px;">
         <div class="categories__post">
            <div class="container" style="margin-left: 55px; margin-right: 0px; padding-right: 90px;">
-                <div class="categories__grid__post">
+                <div class="categories__grid__post" style="border-top-width: 0px; margin-top: 100px;">
                     <div class="row">
                         
                    
@@ -340,7 +340,7 @@
      </div>
    </section>
    
-    <div style="display: block; text-align: center; padding-bottom: 10px;">		
+    <div style="display: block; text-align: center; padding-bottom: 10px; width: 1130px; padding-left: 0px;">		
 		<c:choose>
    			<c:when test="${paging.startPage != 1 && paging.q_Content != null}">	
    				<a class="paging" href="/adminQnasearch?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}">[이전]</a>

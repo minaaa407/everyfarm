@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>EVERY FARM 관리자 | 농부 리스트</title>
+<title>EVERY FARM 관리자 | 관리자 리스트</title>
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <style>
@@ -120,25 +120,18 @@ display: flex;
 			<div class="wrap-table100">
 				<div>
 					<input class="btn btn-sm btn-neutral" type="button" id="submit"
-						value="선택 삭제" onclick="fDelete()" />
-					<input onclick="location.href='/farmerAdd'" type="button" id="submit"
+						value="선택 삭제" onclick="aDelete()" />
+					<input onclick="location.href='/adminSign'" type="button" id="submit"
 						class="btn btn-sm btn-neutral" value="계정 추가">
-					<input onclick="fSign()" type="button" id="submit"
-						class="btn btn-sm btn-neutral" value="가입 승인">
 				</div>
 				<div class="table100">
-					<table id="farmerTable" border="1">
+					<table id="adminTable" border="1">
 						<colgroup>
 							<col style="width:80px"/>
 							<col style="width:80px"/>
 							<col style="width:100px"/>
 							<col style="width:200px"/>
-							<col style="width:150px"/>
-							<col style="width:150px"/>
-							<col style="width:80px"/>
-							<col style="width:150px"/>
-							<col style="width:150px"/>
-							<col style="width:80px"/>
+							<col style="width:200px"/>
 						</colgroup>
 						<thead>
 							<tr>
@@ -146,37 +139,27 @@ display: flex;
 									name="all" onclick="allChk(this);" /></th>
 								<th scope="col">아이디</th>
 								<th scope="col">성명</th>
-								<th scope="col">주소</th>
-								<th scope="col">전화번호</th>
-								<th scope="col">생년월일</th>
-								<th scope="col">별점</th>
+								<th scope="col">이메일</th>
 								<th scope="col">가입일</th>
-								<th scope="col">인증서</th>
-								<th scope="col">승인여부</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:choose>
-								<c:when test="${empty farmer}">
+								<c:when test="${empty admin}">
 									<div>
-										<p align="center">회원이 존재하지 않습니다.</p>
+										<p align="center">관리자가 존재하지 않습니다.</p>
 									</div>
 								</c:when>
-								<c:when test="${!empty farmer}">
-									<c:forEach var="farmer" items="${farmer}">
+								<c:when test="${!empty admin}">
+									<c:forEach var="admin" items="${admin}">
 										<tr>
 											<td><input type="checkbox"
-												name="RowCheck" value="${farmer.f_Id}"></td>
-											<td>${farmer.f_Id}</td>
-											<td>${farmer.f_Name}</td>
-											<td>${farmer.f_Addr}</td>
-											<td>${farmer.f_Tel}</td>
-											<td>${farmer.f_Birth}</td>
-											<td>${farmer.f_Rate}</td>
+												name="RowCheck" value="${admin.a_Id}"></td>
+											<td>${admin.a_Id}</td>
+											<td>${admin.a_Name}</td>
+											<td>${admin.a_Email}</td>
 											<td><fmt:formatDate pattern="yyyy-MM-dd"
-													value="${farmer.f_Date}" /></td>
-											<td>${farmer.f_Auth}</td>
-											<td>${farmer.f_Sign}</td>
+													value="${admin.a_Date}" /></td>
 										</tr>
 									</c:forEach>
 								</c:when>
@@ -243,7 +226,7 @@ display: flex;
 		$(".pageInfo a").on("click", function(e) {
 			e.preventDefault();
 			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-			moveForm.attr("action", "/farmerList");
+			moveForm.attr("action", "/adminList");
 			moveForm.submit();
 		});
 		$(".search_area button").on("click", function(e) {
@@ -284,7 +267,7 @@ display: flex;
 				}
 			}
 		}
-		function fDelete() {
+		function aDelete() {
 			var checkArr = [];
 			var list = $("input[name='RowCheck']");
 			for (var i = 0; i < list.length; i++) {
@@ -300,7 +283,7 @@ display: flex;
 					return false;
 				} else {
 					$.ajax({
-						url : "/farmerD",
+						url : "/adminD",
 						type : "POST",
 						dataType : "json",
 						data : {
@@ -309,46 +292,10 @@ display: flex;
 						success : function(result) {
 							if (result.error == true) {
 								alert("삭제 성공.");
-								location.href = "/farmerList"
+								location.href = "/adminList"
 							} else {
 								alert("삭제 실패.");
-								location.href = "/farmerList"
-							}
-						}
-					});
-				}
-			}
-		}
-		
-		function fSign() {
-			var checkArr = [];
-			var list = $("input[name='RowCheck']");
-			for (var i = 0; i < list.length; i++) {
-				if (list[i].checked) {
-					checkArr.push(list[i].value);
-				}
-			}
-			if (checkArr.length == 0) {
-				alert("선택된 계정이 없습니다.");
-			} else {
-				var chk = confirm("해당 계정의 가입을 승인하시겠습니까?");
-				if (!chk) {
-					return false;
-				} else {
-					$.ajax({
-						url : "/farmerY",
-						type : "POST",
-						dataType : "json",
-						data : {
-							checkArr : checkArr
-						},
-						success : function(result) {
-							if (result.error == true) {
-								alert("승인 완료.");
-								location.href = "/farmerList"
-							} else {
-								alert("승인 실패.");
-								location.href = "/farmerList"
+								location.href = "/adminList"
 							}
 						}
 					});

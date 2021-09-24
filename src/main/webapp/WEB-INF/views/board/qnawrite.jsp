@@ -13,9 +13,7 @@
    int count = pnoTitleList.size();
 %>
 
-<!-- ArrayList<QnABean> qnamodifyrecord = (ArrayList)request.getAttribute("qnamodifyrecord");
-String p_No = request.getParameter("no");
- -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +38,7 @@ String p_No = request.getParameter("no");
 <link rel="stylesheet" href="/resources/qna/style.css">
 
 
-<title>QnA 글쓰기</title>
+<title>EVERY FARM | QnA 글쓰기</title>
 
 <style type="text/css">
 
@@ -300,7 +298,9 @@ input::placeholder {
 
 
 
-
+<footer>
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />
+</footer>
 
 </body>
 </html>

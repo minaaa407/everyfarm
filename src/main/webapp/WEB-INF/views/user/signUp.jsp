@@ -29,29 +29,34 @@
 label.error {
 	position: inherit;
 }
-
+ul{
+border : none;
+}
 .error {
 	color: red;
 }
-</style>
+ul li{
+	padding: 0px; 0px;
+}
 
+.container{
+background:none;
+}
+
+
+</style>
+<jsp:include page="/WEB-INF/views/home/header.jsp" />
 </head>
-<body>
+<body style="padding-bottom: 0px;padding-top: 0px;">
 
 	<div class="main">
 
 		<div class="container">
-			<div class="signup-content">
-				<div class="signup-img">
-					<img src="resources/sign/images/join.jpg" alt="">
-					<div class="signup-img-content">
-						<h2>Register now</h2>
-						<p>while seats are available !</p>
-					</div>
-				</div>
+			<div class="signup-content" style="display: flex;align-content: stretch;justify-content: space-around;">
 				<div class="signup-form">
 					<form:form method="POST" commandName="memberBean"
-						class="register-form" id="register-form" action="/sign">
+						class="register-form" id="register-form" action="/sign" style="
+    padding-right: 80px;">
 						<div class="form-row">
 							<div class="form-group">
 								<div class="form-input">
@@ -361,6 +366,7 @@ label.error {
 	<script
 		src="resources/sign/vendor/jquery-validation/dist/additional-methods.min.js"></script>
 	<script src="resources/sign/js/main.js"></script>
+	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </body>
 <!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>

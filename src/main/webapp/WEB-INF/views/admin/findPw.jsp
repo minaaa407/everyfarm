@@ -13,7 +13,7 @@
 	$(function(){
 		$("#findBtn").click(function(){
 			$.ajax({
-				url : "/findPw",
+				url : "/adminFindPw",
 				type : "POST",
 				dataType: "json", 
 				data : {
@@ -54,7 +54,7 @@
   text-decoration: none;
 }
 </style>
-<title>비밀번호 찾기</title>
+<title>EVERY FARM 관리자 | 비밀번호 찾기</title>
 </head>
 <body>
 	<div class="w3-content w3-container w3-margin-top">
@@ -73,7 +73,7 @@
 				</p>
 				<p>
 					<label>이메일</label>
-					<input class="w3-input" type="text" id="a_Eamil" name="a_Eamil" placeholder="이메일" required>
+					<input class="w3-input" type="text" id="a_Email" name="a_Email" placeholder="이메일" required>
 				</p>
 				<p class="w3-center">
 					<button type="button" id="findBtn" class="w3-button w3-hover-white w3-ripple w3-margin-top w3-round mybtn">찾기</button>

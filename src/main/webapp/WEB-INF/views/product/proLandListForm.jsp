@@ -16,7 +16,6 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link
 	href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
 	rel="stylesheet">
@@ -38,6 +37,7 @@
 <link rel="stylesheet" href="resources/index/css/flaticon.css">
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 </head>
 
 <style>
@@ -107,28 +107,42 @@ table td, table th {
 #regSearch {
 	text-align: center;
 }
+
 .pagination {
-  display: inline-block;
+	display: inline-block;
+	 justify-content: center;
 }
+
 .pagination a {
-  float: left;
-  padding: 8px 16px;
-  border-radius:20%;
+	float: left;
+	padding: 8px 16px;
+	border-radius: 20%;
 }
+
 .pagination a.active {
-  background-color: #7971ea;
-  color: white;
+	background-color: #7971ea;
+	color: white;
 }
 .pagination a:hover:not(.active) {
 background-color: silver;
 }
+}
 </style>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
 
 <script>
 function LandDelete(p_No) {
 	if (confirm('삭제하시겠습니까?')) {
 		location.href='LandDelete?p_No=' + p_No;
 	}
+}
+
+function paging(i){
+	var page = "page" + i;
+	document.getElementById('selectpage').value = i;
+	document.myHiddenForm.submit();
 }
 
 function search(){
@@ -147,10 +161,9 @@ function search(){
 	document.myHiddenForm.submit();
 }
 
-
 </script>
 
-<title></title>
+<title>EveryFarm 농부 | 상품관리</title>
 </head>
 
 <body>
@@ -242,7 +255,7 @@ function search(){
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
-		<div class="table100">
+				<div class="table100">
 					<table border="1">
 						<colgroup>
 							<col style="width: 50px" />
@@ -251,58 +264,73 @@ function search(){
 							<col style="width: 80px" />
 							<col style="width: 70px" />
 							<col style="width: 70px" />
-							<col style="width: 150px" />
+							<col style="width: 70px" />
 						</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">상품번호</th>
-					<th scope="col">메인이미지</th>
-					
-					<th scope="col">제목</th>
-					<th scope="col">등록날짜</th>
-					<th scope="col">승인여부</th>
-					<th scope="col">상세보기</th>
-					<th scope="col">삭제</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="p" items="${productlist}">
-					<tr>
-						<td class="content">${p.p_No}</td>
-						<td class="content"><img id='product${p.p_No}'
-							src="/resources/upload/product/${p.p_No}/${p.p_Img}"
-							class="test1" width="90" height="auto" alt="Image ${p.p_No}">
-						</td>
-						<td class="content">${p.p_Title}</td>
-						<td class="content">${p.p_Date}</td>
-						<td class="content">${p.p_Accept}</td>
-						<td class="content"><a
-							href="/productdetail?productno=${p.p_No}">상세보기</a></td>
-						<td><button type="button" class="btn btn-sm btn-neutral"
-								onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</tbody>
+						<thead>
+							<tr>
+								<th scope="col">상품번호</th>
+								<th scope="col">메인이미지</th>
+								<th scope="col">제목</th>
+								<th scope="col">등록날짜</th>
+								<th scope="col">승인여부</th>
+								<th scope="col">상세보기</th>
+								<th scope="col">삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="p" items="${productlist}">
+								<tr>
+									<td class="content">${p.p_No}</td>
+									<td class="content"><img id='product${p.p_No}'
+										src="/resources/upload/product/${p.p_No}/${p.p_Img}"
+										class="test1" width="120" height="80" alt="Image ${p.p_No}">
+									</td>
+									<td class="content">${p.p_Title}</td>
+									<td class="content">${p.p_Date}</td>
+									<td class="content">${p.p_Accept}</td>
+									<td class="content"><a
+										href="/productdetail2?productno=${p.p_No}">상세보기</a></td>
+									<td><button type="button" class="btn btn-sm btn-neutral"
+											onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
+								</tr>
+							</c:forEach>
+						</tbody>
 					</table>
 				</div>
 				<br>
-				<div class="col btn-group pagination">
+				<div id="regSearch">
+					<select name="productselect" id="productselect">
+						<option value="p_No">상품번호</option>
+					</select> <input type="text" name="selectText" id="selectText"> <input
+						type="button" value="검색" onclick="search()">
+				</div>
+				<br>
+				<div class="row">
+					<div class="col btn-group pagination">
+						<c:if test="${pagebeen.pro eq 'true' }">
+							<a id="page${pagebeen.pagestart -1}" style="cursor: pointer;"
+								onclick="paging(${pagebeen.pagestart -1})">이전 </a>
+						</c:if>
 
-					<c:if test="${pagebeen.pro eq 'true' }">
-						<a id="page${pagebeen.pagestart -1}" style="cursor: pointer"
-							onclick="paging(${pagebeen.pagestart -1})">이전 </a>
-					</c:if>
-
-					<c:forEach var="i" begin="${pagebeen.pagestart}"
-						end="${pagebeen.pageend}" step="1">
-						<a id="page${i}" style="cursor: pointer" onclick="paging(${i })">${i }</a>
-					</c:forEach>
-					<c:if test="${pagebeen.post eq 'true'}">
-						<a id="page${pagebeen.pageend +1}" style="cursor: pointer"
-							onclick="paging(${pagebeen.pageend +1})">다음 </a>
-					</c:if>
+						<c:forEach var="i" begin="${pagebeen.pagestart}"
+							end="${pagebeen.pageend}" step="1">
+							<c:choose>
+								<c:when test="${pagebeen.selectpage eq i}">
+									<a id="page${i}"
+										style="cursor: pointer; background-color: #7971ea; color: white;"
+										onclick="paging(${i })">${i }</a>
+								</c:when>
+								<c:otherwise>
+									<a id="page${i}" style="cursor: pointer;"
+										onclick="paging(${i })">${i }</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${pagebeen.post eq 'true'}">
+							<a id="page${pagebeen.pageend +1}" style="cursor: pointer;"
+								onclick="paging(${pagebeen.pageend +1})">다음 </a>
+						</c:if>
+					</div>
 				</div>
 				<!-- form 해당 부분 scrip 이벤트 통해서 자동 전송 처리 -->
 				<form:form commandName="pagebeen" name="myHiddenForm"
@@ -331,16 +359,8 @@ function search(){
 
 				</form:form>
 				<br>
-				<div id="regSearch">
-					<select name="productselect" id="productselect">
-						<option value="p_No">상품번호</option>
-						<option value="p_Id">아이디</option>
-					</select> <input type="text" name="selectText" id="selectText"> <input
-						type="button" value="검색" onclick="search()">
-				</div>
 			</div>
 		</div>
-		<br>
-		<Br>
+		<br> <Br>
 </body>
 </html>

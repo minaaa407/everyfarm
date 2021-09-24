@@ -11,7 +11,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>Checkout example for Bootstrap</title>
+<title>EveryFarm 농부</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link

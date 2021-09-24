@@ -16,6 +16,8 @@ public interface AdminDAO {
 
 	List<FarmerBean> flist(Paging paging);
 
+	List<AdminBean> alist(Paging paging);
+
 	public void ajoin(AdminBean adminBean);
 
 	public AdminBean alogin(AdminBean adminBean);
@@ -34,5 +36,9 @@ public interface AdminDAO {
 
 	int fCount(Paging paging);
 
+	int aCount(Paging paging);
+
 	public void farmerY(List<String> yes);
+	
+	public void aDel(@Param("delete") List<String> delete, @Param("i") int i);
 }

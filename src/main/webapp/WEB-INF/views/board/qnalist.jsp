@@ -289,7 +289,7 @@
                                        					</c:choose>
                                        						<form action="/qnadelete/${q.q_No}" id="delete" name="delete" method="post" >
                                         						<li><button type="submit" style="padding-top: 2.5; padding-bottom: 0px; padding-top: 2px;" class="innerbutton" onclick="qnadelete();">삭제</button></li>
-                                        					</form><!-- btn btn-primary -->
+                                        					</form>
                                     				</c:when>
 					                                <c:when test="${sessionScope.member.getM_Id() ne q.q_Id}">
 													</c:when>
@@ -400,6 +400,11 @@ $(document).on('click', '[data-toggle="lightbox"]', function(event) {
     $(this).ekkoLightbox();
 });
 
+document.getElementById('a1').className ='nav-item';
+document.getElementById('a2').className ='nav-item';
+document.getElementById('a3').className ='nav-item';
+document.getElementById('a4').className ='nav-item active';
+
 </script>
                   
     
@@ -415,7 +420,7 @@ $(document).on('click', '[data-toggle="lightbox"]', function(event) {
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
     
-    
+<jsp:include page="/WEB-INF/views/home/footer.jsp" /> 
 </body>
 
 </html>
