@@ -139,20 +139,24 @@ function LandDelete(p_No) {
 	}
 }
 
+
+
 function search(){
 	
 	var select = document.getElementById('productselect').value;
 	
 	var text = document.getElementById('selectText').value;
-	if(select == "p_Id"){
-		text = "%" + text + "%";
-	}else{
-		text = text;
-	}
 	document.getElementById('where').value = select;
 	document.getElementById('wherecolumn').value= text;
 	
 	document.myHiddenForm.submit();
+}
+
+function paging(i){
+	
+	document.getElementById('selectpage').value = i;
+	document.myHiddenForm.submit();
+	
 }
 
 </script>
@@ -241,9 +245,16 @@ function search(){
 	</nav>
 
 	<br>
+	<br>
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
+			<div class="col-lg-12" align="right">
+					<a class="btn btn-sm btn-neutral" href="/ProNFlist">승인전 </a> 
+					<a class="btn btn-sm btn-neutral" href="/ProYFList">승인후 </a> 
+					<a href="/proLandListForm?" class="btn btn-sm btn-neutral">전체보기 </a>
+				</div>
+				<br>
 				<div class="table100">
 					<table border="1">
 						<colgroup>
@@ -278,7 +289,7 @@ function search(){
 									<td class="content">${p.p_Date}</td>
 									<td class="content">${p.p_Accept}</td>
 									<td class="content"><a
-										href="/productdetail2?productno=${p.p_No}">상세보기</a></td>
+										href="/productdetailfarmer?productno=${p.p_No}">상세보기</a></td>
 									<td><button type="button" class="btn btn-sm btn-neutral"
 											onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
 								</tr>
@@ -323,7 +334,7 @@ function search(){
 				</div>
 				<!-- form 해당 부분 scrip 이벤트 통해서 자동 전송 처리 -->
 				<form:form commandName="pagebeen" name="myHiddenForm"
-					action="/proAdminListForm" method="post">
+					action="/proLandListForm" method="post">
 					<input type="hidden" id="selectpage" name="selectpage" value="1">
 					<input type="hidden" id="pagestart" name="pagestart"
 						value="${pagebeen.pagestart}">
@@ -345,10 +356,18 @@ function search(){
 						value="${pagebeen.where}">
 					<input type="hidden" id="wherecolumn" name="wherecolumn"
 						value="${pagebeen.wherecolumn}">
-
+					<input type="hidden" id="where2" name="where2"
+						value="${pagebeen.where2}">
+					<input type="hidden" id="wherecolumn2" name="wherecolumn2"
+						value="${pagebeen.wherecolumn2}">
+					<input type="hidden" id="where3" name="where3"
+						value="${pagebeen.where2}">
+					<input type="hidden" id="wherecolumn3" name="wherecolumn3"
+						value="${pagebeen.wherecolumn3}">
 				</form:form>
 				<br>
 			</div>
+		</div>
 		</div>
 		<br> <Br>
 </body>

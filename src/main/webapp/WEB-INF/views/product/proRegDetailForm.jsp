@@ -57,13 +57,16 @@
 </script>
 
 <style>
+
+
 table {
-	width: 52%;
+	border-spacing: 1;
 	border-collapse: collapse;
-	text-align: left;
-	line-height: 1.5;
-	vertical-align: middle;
-	margin: auto;
+	border-radius: 10px;
+	overflow: hidden;
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
 }
 
 thead th {
@@ -71,6 +74,7 @@ thead th {
 	font-weight: bold;
 	vertical-align: top;
 	color: black;
+	background: #efefef
 	border-bottom: 3px solid black;
 }
 
@@ -88,7 +92,7 @@ tbody td {
 </style>
 </head>
 <body>
-		<!-- Navigation -->
+	<!-- Navigation -->
 	<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
 		id="sidenav-main">
@@ -197,11 +201,8 @@ tbody td {
 				</tr>
 				<tr>
 					<td style="width: 20%;"><label> 메인 이미지 </label></td>
-					<td style="text-align: left;"><img id='product${p.p_No}'
-						src="/resources/upload/product/${p.p_No}/${p.p_Img}" class="test1"
-						width="90" height="auto" alt="Image ${p.p_No}"><input
-						name="p_Img1" type="file" accept="img/*" /> <input type="hidden"
-						name="p_Img" value=""></td>
+					<td style="text-align: left;"><input name="p_Img1" type="file"
+						accept="img/*" /> <input type="hidden" name="p_Img" value=""></td>
 				</tr>
 				<tr>
 					<td style="width: 20%;"><input type='button' value='서브사진 등록'

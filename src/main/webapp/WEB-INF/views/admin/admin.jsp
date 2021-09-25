@@ -71,7 +71,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="main-content" >
+	<div class="main-content" style="margin-left:0px;">
 		<div class="container-fluid mt--7">
 			<div class="row">
 				<div class="col-xl-8 mb-5 mb-xl-0">
@@ -125,7 +125,7 @@
 									<h6 class="text-uppercase text-muted ls-1 mb-1">Every Farm</h6>
 										<c:set var="today" value="<%=new java.util.Date()%>" />
 										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
-									<h2 class="productyeartext" class="mb-0"><c:out value="${year}"/>&nbsp;월별 씨앗 판매 수 </h2>
+									<h2 class="productyeartext" class="mb-0"><c:out value="${year}"/>&nbsp;월별  </h2>
 								</div>
 								<canvas id="myChart" class="chart-canvas" width="700" height="350"></canvas>
 							<span style="width: 80px;">
