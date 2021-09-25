@@ -221,7 +221,7 @@ function search(){
 		</div>
 	</nav>
 
-	<h2>상품 리스트</h2>
+	<br>
 	<br>
 	<div class="limiter">
 		<div class="container-table100">
@@ -339,6 +339,7 @@ function search(){
 				</form:form>
 				<br>
 			</div>
+		</div>
 		</div>
 		<br>
 		<Br>
