@@ -132,17 +132,12 @@
         <div class="categories__post">
            <div class="container" style="margin-left: 55px; margin-right: 0px; padding-right: 90px;">
                 <div class="categories__grid__post" style="border-top-width: 0px; margin-top: 100px;">
-                    <div class="row">
-                        
-                   
-                        
-                      <div class="col-lg-12 col-md-12">
+                 
                       
                        <c:choose>   
                  		<c:when test = "${empty productQlist}">
                  			<div class="breadcrumb__text">
-<!-- 								<h2 style="color:#988d8d; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;"><span style="padding-right: 10px;">QnA </span>게시판</h2>                           	
- -->							</div>
+							</div>
 						 	<div style="display: flex;justify-content: flex-end;margin-bottom: 10px;">
 						 		<button type="submit" class="site-btn" style="border-radius: 5px; background-color: #5e72e4;" onClick="location.href='/adminQnaList'">전체보기</button>
 							</div>
@@ -150,8 +145,7 @@
                  		<c:when test = "${productQlist != null}">
                       
                          <div class="breadcrumb__text" style="margin-bottom: 10px;">
-<!--                               <h2 style="color:#988d8d; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;"><span style="padding-right: 10px;">QnA </span>게시판</h2>
- -->                                <div class="breadcrumb__option">
+                                <div class="breadcrumb__option">
                                   <div style="display: flex; justify-content: space-between;">
                                    <form action="adminQnasearch" method="post">
          								<select name="searchBox" style="height: 35px;"> <!-- style="padding: 7px 11px;" -->
@@ -185,20 +179,7 @@
                             </c:when>
                          </c:choose>
                             
-                     <!--   <form method="post" name="qnamodify" action="reservationUpdate.bo">      -->
-                       
-                       <%-- 
-                            <c:choose>   
-                  <c:when test = "${empty buylist}">   
-                     <td colspan="12">내역이 없습니다.</td>
-                  </c:when>
-                  <c:when test = "${buylist != null}">
-                   </c:when>
-                     </c:choose> --%>
-                     
-           <%--  <c:when test = "${empty qnamylist}">   --%>            
-         		<!-- <div class="row" style="box-shadow: 0px 2px 10px rgb(0 0 0 / 8%); background-color: white;">
-                    <div class="col-lg-12 col-md-12" style="padding-top: 50px;">       -->         
+                            
                         <c:choose>   
                  		<c:when test = "${empty productQlist}">
                  		<div class="row" style="box-shadow: 0px 2px 10px rgb(0 0 0 / 8%); background-color: white; margin-bottom: 140px;padding-bottom: 50px;">
@@ -274,9 +255,7 @@
                                          			<li style="margin-right: 10px;"><button type="button"  class="innerbutton" 
                                          				onclick="location.href='/adminMemQnaModify/${q.q_No}'" style="background: #ffffff; border-color: #a79e9e;">고객 글 수정</button></li>
                                          
-                                         <%--  <div class="collapse" id="collapseExample${i-1}"> --%>
-                                           			 </ul>
-                                           <%--  <p>${q.q_Content}</p> --%>
+                                       
                                         </div>
                                         
                                         <div class="collapse" id="collapseExample${i-1}">
@@ -285,15 +264,8 @@
                                        			${q.q_Content}
                                        		</div>
                                        		
-                                         	<%-- <button type="button"  class="btn btn-primary" style="margin-left: 15px; width: 687px;"
-                                         		onclick="location.href='/adminMemQnaModify/${q.q_No}'">고객 글 수정하기</button> --%>
-                                          		
-										
-                                        <%--  <button type="button"  class="btn btn-primary" 
-                                         	onclick="location.href='/qnamodify?no=${q.q_No}'">수정하기</button> --%>
-                                         			
-														
-                                 <c:choose>
+                                         				
+                                 		<c:choose>
                    								<c:when test="${q.q_Magdate != null}">
                    						           <div class="single-post__leave__comment">
                      								<div class="widget__title" style="margin-bottom: 10px;">
@@ -319,20 +291,17 @@
                         			 </div>
                       			</div>
                   			</div>
-                  <!-- </div> -->  
-               
+                  
                    <br>
     
                 </c:forEach>
                 </c:when>
              </c:choose>
-             </div>
-            </div>
+            
             </div>
           </div>
          </div>
-       </div>
-     </div>
+     
    </section>
    
     <div style="display: block; text-align: center; padding-bottom: 10px; width: 1130px; padding-left: 0px;">		
@@ -362,7 +331,6 @@
 				<a class="paging" href="/adminQnasearch?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}">[다음]</a>
 			</c:when>
 			<c:when test="${paging.endPage != paging.lastPage && empty paging.q_Content}">
-		<%-- <c:if test="${paging.endPage != paging.lastPage}"> --%>
 				<a class="paging" href="/adminQnaList?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">[다음]</a>
 			</c:when>
 		</c:choose>

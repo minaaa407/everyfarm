@@ -142,8 +142,7 @@
                       	<c:choose>   
                  			<c:when test = "${empty productQlist}">
                  				<div class="breadcrumb__text">
-<!--                                  <h2 style="color:#988d8d; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;"><span style="padding-right: 10px;">QnA </span>게시판</h2>
- -->                           		</div>
+                           		</div>
                            		<div style="display: flex;justify-content: flex-end;margin-bottom: 10px;">
                                    	  <button type="submit" class="site-btn" style="border-radius: 5px; background-color: #5e72e4;" onClick="location.href='/farmerQnaList'">전체보기</button>
         						</div>
@@ -151,8 +150,7 @@
                  			<c:when test = "${productQlist != null}">
                       
                          	<div class="breadcrumb__text" style="margin-bottom: 10px;">
-<!--                                  <h2 style="color:#988d8d; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;"><span style="padding-right: 10px;">QnA </span>게시판</h2>
- -->                                <div class="breadcrumb__option">
+                                <div class="breadcrumb__option">
                                   <div style="display: flex; justify-content: space-between;">
                                    <form action="farmerQnasearch" method="post">
          								<select name="searchBox" style="height: 35px;"> <!-- style="padding: 7px 11px;" -->
@@ -256,9 +254,7 @@
                                            		</c:when>
                                          	</c:choose>
                                          
-                                         <%--  <div class="collapse" id="collapseExample${i-1}"> --%>
                                             </ul>
-                                           <%--  <p>${q.q_Content}</p> --%>
                                         </div>
                                         
                                         <div class="collapse" id="collapseExample${i-1}">
@@ -305,7 +301,6 @@
                         </div>
                       </div>
                     </div>
-                  <!-- </div> -->  
                    
                    <br>
               
@@ -349,7 +344,6 @@
 				<a class="paging" href="/farmerQnasearch?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}">&gt;</a>
 			</c:when>
 			<c:when test="${paging.endPage != paging.lastPage && empty paging.q_Content}">
-		<%-- <c:if test="${paging.endPage != paging.lastPage}"> --%>
 				<a class="paging" href="/farmerQnaList?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&gt;</a>
 			</c:when>
 		</c:choose>
