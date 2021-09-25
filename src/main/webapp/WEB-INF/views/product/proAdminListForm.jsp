@@ -340,6 +340,7 @@ function search(){
 				<br>
 			</div>
 		</div>
+		</div>
 		<br>
 		<Br>
 </body>
