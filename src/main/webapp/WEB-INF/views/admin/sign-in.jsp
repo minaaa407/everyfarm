@@ -109,28 +109,17 @@
                      	</div>
                     </div>
                     <div class="row m-t-15 m-b--20">
-                        <div class="col-xs-6 align-center">
-                            <a href="/adminFindId">아이디 찾기</a>
-                        </div>
-                        <div class="col-xs-6 align-center">
-                            <a href="/adminFindPw">비밀번호 찾기</a>
-                        </div>
-                        
                         <div class="col-xs-12 align-center">
                             <hr>
                         </div>
-                        
                         <div class="col-xs-6 align-center">
-	                        <a href="/home" class="ftco-animate py-1 d-block"><span
-										class="fas fa-users"></span>&nbsp;&nbsp;&nbsp;&nbsp;EVERY FARM</a>
+	                        <a href="/home" class="ftco-animate py-1 d-block">
+					<span class="fas fa-users"></span>&nbsp;&nbsp;&nbsp;&nbsp;EVERY FARM</a>
                          </div>
-						
-						<div class="col-xs-6 align-center">
-							<a href="/farmerLogin" class="ftco-animate py-1 d-block"><span
-									class="fas fa-tractor"></span>&nbsp;&nbsp;&nbsp;&nbsp;FARMER's FARM</a>
+			<div class="col-xs-6 align-center">
+				<a href="/farmerLogin" class="ftco-animate py-1 d-block"><span
+					class="fas fa-tractor"></span>&nbsp;&nbsp;&nbsp;&nbsp;FARMER's FARM</a>
                         </div>
-                        
-                        
                     </div>
                 </form>
             </div>
