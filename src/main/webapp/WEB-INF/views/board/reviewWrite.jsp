@@ -9,8 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="shortcut icon" type="image/x-icon"
-	href="/resources/editor/connn.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <!--  CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -19,11 +18,10 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+
 <!-- 썸머노트 -->
 <link rel="stylesheet" href="/resources/editor/css/summernote-lite.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
-	rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
 
 
@@ -37,12 +35,11 @@
 	vertical-align: middle;
 }
 
-.note-modal-title {
+.note-modal-title{
 	visibility: hidden;
 }
-
-.note-modal-title:before {
-	visibility: visible;
+.note-modal-title:before{
+	visibility:visible;
 	display: block;
 	content: '이미지 업로드';
 }
@@ -99,26 +96,23 @@ input {
 	padding: 5px 10%;
 	transition: background, color 1s;
 }
-
 .btn2:hover {
 	border-radius: 4.7px;
 	color: #fff;
 	background: #000;
 }
-
-.pro {
+.pro{
 	border-bottom: 1px solid #ddd;
-	border-left: 1px solid #ddd;
+    border-left: 1px solid #ddd;
 }
-
-.proNum {
+.proNum{
 	border-bottom: 1px solid #ddd;
 }
 </style>
 <title>EVERY FARM | 리뷰 등록</title>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/home/header.jsp" />
+<jsp:include page="/WEB-INF/views/home/header.jsp" />
 
 	<div class="row">
 		<div class="col-md-2"></div>
@@ -141,16 +135,15 @@ input {
 							<td><input type="text" value="${member.m_Name}"
 								class="form-control" name="rev_Name" readonly></td>
 							<th class="pro"><div>상품</div></th>
-							<td class="proNum"><select required="required"
-								id="rev_ProNum" name="rev_ProNum" onchange="chageLangSelect()">
+							<td class="proNum"><select required="required" id ="rev_ProNum" name="rev_ProNum" onchange="chageLangSelect()">
 									<option value="">상품을 선택해주세요.</option>
 									<c:forEach items="${myPayList}" var="mp" varStatus="status">
-										<option value="${mp.pay_Orderno}">주문 번호 :
-											<c:out value="${mp.pay_Orderno}"></c:out>
-											${myProductList[status.index].p_Title}
-											<fmt:formatDate value="${mp.pay_Date}" type="date" /></option>
+										<option value="${mp.pay_Orderno}" >주문 번호 : <c:out value="${mp.pay_Orderno}"></c:out> ${myProductList[status.index].p_Title} 
+										<fmt:formatDate value="${mp.pay_Date}" type="date"/></option>
 									</c:forEach>
-							</select> <input type="hidden" name="pay_No" id="pay_No" value="" /></td>
+							</select>
+							<input type="hidden" name="pay_No" id="pay_No" value="" />
+							</td>
 						</tr>
 						<tr>
 							<th><div>제목</div></th>
@@ -186,14 +179,14 @@ input {
 
 						<tr>
 							<th><div>내용</div></th>
-							<td colspan="3"><textarea id="summernote" rows="10"
-									cols="30" name="rev_Cont" required style="width: 100%;"></textarea></td>
+							<td colspan="3"><textarea id="summernote" rows="10" cols="30"
+									name="rev_Cont" required style="width: 100%;"></textarea></td>
 						</tr>
 						<tr>
 
 							<td colspan="2" class="text-center"><button type="submit"
-									id="save" class="btn2">작성완료</button>
-								<button type="reset" class="btn2">다시작성</button>
+								id="save"  class="btn2">작성완료</button> <button type="reset"
+								 class="btn2">다시작성</button>
 								<button type="button" class="btn2"
 									onclick="location.href='/reviewList'">게시글 목록</button></td>
 						</tr>
@@ -207,72 +200,72 @@ input {
 		src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
-	<!-- 썸머노트 -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-	<script src="/resources/editor/js/summernote-lite.js"></script>
-	<script src="/resources/editor/js/lang/summernote-ko-KR.js"></script>
 
-	<script type="text/javascript">
-		var toolbar = [
-				[ 'fontname', [ 'fontname' ] ],
-				[ 'fontsize', [ 'fontsize' ] ],
-				[
-						'style',
-						[ 'bold', 'italic', 'underline', 'strikethrough',
-								'clear' ] ],
-				[ 'color', [ 'forecolor', 'color' ] ],
-				[ 'table', [ 'table' ] ],
-				[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
-				[ 'height', [ 'height' ] ],
-				[ 'view', [ 'fullscreen', 'help' ] ] ];
+<!-- 썸머노트 -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/resources/editor/js/summernote-lite.js"></script>
+<script src="/resources/editor/js/lang/summernote-ko-KR.js"></script>
 
-		var setting = {
-			placeholder : '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.',
-			height : 600,
-			minHeight : null,
-			maxHeight : null,
-			focus : false,
-			fontNames : [ 'Arial', 'Arial Black', 'Comic Sans MS',
-					'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체' ],
-			fontSizes : [ '8', '9', '10', '11', '12', '14', '16', '18', '20',
-					'22', '24', '28', '30', '36', '50', '72' ],
-			callbacks : {
-				onImageUpload : function(files, editor, welEditable) {
-					// 파일 업로드(다중업로드를 위해 반복문 사용)
-					for (var i = files.length - 1; i >= 0; i--) {
-						uploadSummernoteImageFile(files[i], this);
-					}
-				}
-			}
-		};
 
-		$('#summernote').summernote(setting);
-
-		function uploadSummernoteImageFile(file, el) {
-			data = new FormData();
-			data.append("file", file);
-			$.ajax({
-				data : data,
-				type : "POST",
-				url : "uploadSummernoteImageFile",
-				contentType : false,
-				enctype : 'multipart/form-data',
-				processData : false,
-				success : function(data) {
-					$(el).summernote('editor.insertImage', data.url);
-				}
-			});
-		}
-
-		function chageLangSelect() {
-
-			var pno = document.getElementById('rev_ProNum').value;
-			document.getElementById('pay_No').value = pno;
-		}
-	</script>
+<script type="text/javascript">
+     
+        var  toolbar = [
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['view', ['fullscreen', 'help']]
+			  ];
+        
+        var setting = {
+        		placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.', 
+                height: 600,
+                minHeight: null,
+                maxHeight: null,
+                focus: false,
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+    			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+                callbacks : { 
+                	onImageUpload : function(files, editor, welEditable) {
+                // 파일 업로드(다중업로드를 위해 반복문 사용)
+                for (var i = files.length - 1; i >= 0; i--) {
+                uploadSummernoteImageFile(files[i],
+                this);
+                		}
+                	}
+                }
+             };
+        
+            $('#summernote').summernote(setting);
+            
+            function uploadSummernoteImageFile(file, el) {
+    			data = new FormData();
+    			data.append("file", file);
+    			$.ajax({
+    				data : data,
+    				type : "POST",
+    				url : "uploadSummernoteImageFile",
+    				contentType : false,
+    				enctype : 'multipart/form-data',
+    				processData : false,
+    				success : function(data) {
+    					$(el).summernote('editor.insertImage', data.url);
+    				}
+    			});
+    		}
+            
+            
+function chageLangSelect(){
+	
+	var pno = document.getElementById('rev_ProNum').value;
+	document.getElementById('pay_No').value = pno;
+}
+  </script>
 
 
 </body>
-<jsp:include page="/WEB-INF/views/home/footer.jsp" />
+	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </html>

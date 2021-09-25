@@ -506,8 +506,13 @@ public class UserController {
 		PaymentBean forDel = payDAO.mypaylist(paging);
 		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();
+		String form = test.format("2019-03-17");
+		if(forDel == null) {
+			model.addAttribute("payDay",test.format(form));
+		}else if (forDel != null) {
+			model.addAttribute("payDay",test.format(forDel.getPay_Date()));
+		}
 		
-		model.addAttribute("payDay",test.format(forDel.getPay_Date()));
 		model.addAttribute("now", test.format(now));
 		return "user/myPage";
 	}
