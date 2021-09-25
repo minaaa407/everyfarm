@@ -9,8 +9,11 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+
+
 <title>EVERY FARM 농부 | 결제내역 </title>
 <style>
+
 td, th {
 border-color:#9ea4ca;
 }
@@ -84,9 +87,6 @@ background-color: silver;
 </style>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-1">
 <!-- Navigation -->
 		<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
@@ -103,11 +103,6 @@ background-color: silver;
 				<!-- Collapse header -->
 				<div class="navbar-collapse-header d-md-none">
 					<div class="row">
-						<div class="col-6 collapse-brand">
-							<a href="./index.html"> <img
-								src="resources/farmer/img/brand/blue.png">
-							</a>
-						</div>
 						<div class="col-6 collapse-close">
 							<button type="button" class="navbar-toggler"
 								data-toggle="collapse" data-target="#sidenav-collapse-main"
@@ -118,13 +113,12 @@ background-color: silver;
 						</div>
 					</div>
 				</div>
+				<!-- Navigation -->
 				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
 	</nav>
-	</div>
 	<!-- Navigation -->
-	<div class="col-md-11">
 		<div class="limiter">
  			<div class="container-table100">
  				<div class="wrap-table100">
@@ -231,9 +225,6 @@ background-color: silver;
 				</div>
 				<!-- 페이징 end -->
 				</div>
-			</div>
-			</div>
-			</div>
 			</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

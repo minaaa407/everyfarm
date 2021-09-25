@@ -71,7 +71,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="main-content" >
+	<div class="main-content" style="margin-left:0px;">
 		<div class="container-fluid mt--7">
 			<div class="row">
 				<div class="col-xl-8 mb-5 mb-xl-0">
