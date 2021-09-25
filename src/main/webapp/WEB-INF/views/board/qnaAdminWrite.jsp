@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@page import="kr.co.everyfarm.user.MemberBean"%>
 <%@page import="kr.co.everyfarm.board.QnABean"%>
 <%@page import="java.util.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<% 
-   List<QnABean> qnamodifyrecord = (List)request.getAttribute("qnamodifyrecord");
-   List<QnABean> pnoTitleList = (List)request.getAttribute("pnoTitleList");
-   int count = pnoTitleList.size();
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%
+	List<QnABean> qnamodifyrecord = (List) request.getAttribute("qnamodifyrecord");
+	List<QnABean> pnoTitleList = (List) request.getAttribute("pnoTitleList");
+	int count = pnoTitleList.size();
 %>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -40,66 +40,64 @@
     
   	<link rel="stylesheet" href="/resources/editor/css/summernote-lite.css">
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-
+  
 <style type="text/css">
-
 .errorMsg {
 	color: red;
 	font-style: italic;
-} 
+}
 
 input::placeholder {
-  color: red;
-  font-style: italic;
+	color: red;
+	font-style: italic;
 }
 
 .my-control {
-    display: block;
-    outline:none;
-    width: 100%;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143; 
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); */
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
+	display: block;
+	outline: none;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%);
+	box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%); */
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
+		ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
+		.15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
 .c-control {
 	display: block;
-    outline:none;
-    width: 100%;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 16px;
-    line-height: 1.42857143; 
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); */
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
-    
-    
+	outline: none;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 16px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%);
+	box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%); */
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
+		ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
+		.15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
-
-
 </style>
 
 </head>
-
 <body style="overflow-x: hidden">
 
 <div class="row">
@@ -270,38 +268,8 @@ input::placeholder {
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<!-- 썸머노트 -->
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="/resources/editor/js/summernote-lite.js"></script>
-<script src="/resources/editor/js/lang/summernote-ko-KR.js"></script>
-
-
-
-
 
 <script type="text/javascript">
-
-     
-        $('#summernote').summernote({
-         /*  placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.', */
-          height: 600,
-          minHeight: null,
-          maxHeight: null,
-          focus: false,
-          toolbar: [
-			    ['fontname', ['fontname']],
-			    ['fontsize', ['fontsize']],
-			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-			    ['color', ['forecolor','color']],
-			    ['table', ['table']],
-			    ['para', ['ul', 'ol', 'paragraph']],
-			    ['height', ['height']],
-			    ['view', ['fullscreen', 'help']]
-			  ],
-			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-          
-	 });
  
         function select(e) {
 			// 선택된 데이터의 텍스트값 가져오기
@@ -313,7 +281,6 @@ input::placeholder {
 		}
     
   </script>
-  
 </body>
 
 </html>

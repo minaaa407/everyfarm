@@ -4,7 +4,21 @@
 <html>
 <head>
 <meta charset="utf-8" />
-
+<!-- Modal -->
+<link rel="stylesheet"
+   href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+   href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+   href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+   href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script
+   src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+   src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!-- Modal -->
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
 	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
@@ -26,6 +40,9 @@
 <link href="resources/farmer/css/argon-dashboard.css?v=1.1.2"
 	rel="stylesheet" />
 	<style>
+	body{
+	padding-left:250px;
+	}
 	.sep{
 	    border-top: 1px solid lightgray;
     margin-top: 30px;

@@ -97,9 +97,37 @@
 		select count(*) from product where p_Accept = 'Y' 		
 	</select>
 	
-		<select id="listacceptncount" resultType="int">
+	<select id="listacceptncount" resultType="int">
 		select count(*) from product where p_Accept = 'N' 		
 	</select>
+	
+	
+	
+	
+	<select id="farmerlistacceptcount" resultType="int" parameterType="kr.co.everyfarm.product.PageBeen">
+		select count(*) from product where p_Accept = 'Y' and (${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) and (${where3} = #{wherecolumn3})	 		
+	</select>
+	
+	<select id="farmerlistacceptncount" resultType="int" parameterType="kr.co.everyfarm.product.PageBeen">
+		select count(*) from product where (p_Accept = 'N') and (${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) and (${where3} = #{wherecolumn3})			
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		<select id="farmerlistcount" resultType="int" parameterType="kr.co.everyfarm.product.PageBeen">
+		select count(*) from product  where ((${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) and (${where3} = #{wherecolumn3}))	
+	</select>
+	
+	
 	
 	<select id="listacceptpageing" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
 		select p_id,p_no,p_title,p_content,p_Mainimage,p_Subimage,p_imagedetail,p_landprice,p_main,p_sub,p_seedprice,p_manpay,p_delivery,p_date,p_accept, p_seedcount from
@@ -124,23 +152,48 @@
    <select id="desclist" resultType="kr.co.everyfarm.product.ProductBean">
 	      select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
 	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product   
-	      where p_Accept ='Y' order by p_No asc limit #{limit}  offset #{offset};
+	      where p_Accept ='Y' order by p_No desc limit #{limit}  offset #{offset};
    </select>   
    
    <select id="asclist" resultType="kr.co.everyfarm.product.ProductBean">
 	      select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
 	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product   
-	      where p_Accept ='N' order by p_No asc limit #{limit}  offset #{offset};
+	      where p_Accept ='N' order by p_No desc limit #{limit}  offset #{offset};
    </select>
+   
+   
+   	<select id="farmerproductlist" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product
+		  where (${where} = #{wherecolumn}) and (${where2} = #{wherecolumn2})  order by p_No desc limit #{limit}  offset #{offset};		
+	</select>
+	
+	
+	 <select id="farmerproductlistY" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product
+		  where ((${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) and (${where3} = #{wherecolumn3}))  order by p_No desc limit #{limit}  offset #{offset};		
+	</select>
+	
+	
+	 <select id="farmerproductlistN" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.PageBeen">
+		select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
+		p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product
+		  where ((${where} like #{wherecolumn}) and (${where2} like #{wherecolumn2}) and(${where3} = #{wherecolumn3}))  order by p_No desc limit #{limit}  offset #{offset};		
+	</select>
+   
+   
+   
+   
    
    <select id="info" resultType="kr.co.everyfarm.product.ProductBean">
      	 select* from product where p_No = #{p_No}      
    </select>
 
 
-   <select id="listland" resultType="kr.co.everyfarm.product.ProductBean" parameterType="String" >
+   <select id="listland" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.ProductBean" >
 	      select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
-	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product where p_Id = #{p_Id}
+	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product where (${where3} like #{wherecolumn3}) and (${where2} like #{wherecolumn2}) and (${where} like #{wherecolumn}) order by p_No desc limit #{limit} offset #{offset};
    </select>
    
    <select resultType="kr.co.everyfarm.product.ProductBean"

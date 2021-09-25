@@ -9,86 +9,79 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <style>
-.modal {
-	position: absolute;
-	width: 50%;
-	height: 50%;
-	background: rgba(0, 0, 0, 0.8);
-	top: 0;
-	left: 0;
-	display: none;
-}
 td, th {
-	border-color: #9ea4ca;
+border-color:#9ea4ca;
 }
-body {
-	background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
+body{
+background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 }
 .limiter {
-	width: 100%;
-	margin: 0 auto;
+  margin: 0 auto;
 }
+
 .container-table100 {
-	width: 100%;
-	min-height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-wrap: wrap;
-	flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
+
 .wrap-table100 {
-	width: 1170px;
+  width: 1170px;
+  padding-bottom: 20px;
 }
+
 table {
-	border-spacing: 1;
-	border-collapse: collapse;
-	border-radius: 10px;
-	overflow: hidden;
-	width: 100%;
-	margin: 0 auto;
-	position: relative;
+  border-spacing: 1;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+  width: 1170px;
 }
 table * {
-	position: relative;
+  position: relative;
 }
 table td, table th {
-	padding-left: 8px;
+  padding-left: 8px;
 }
 table thead tr {
-	height: 60px;
-	background: #efefef
+  height: 60px;
+  background: #efefef
 }
 table tbody tr {
-	height: 50px;
-	background-color: rgba(255, 255, 255, 0.4);
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+table tbody tr:hover {
+  height: 50px;
+  color: white;
+  background-color: #7971ea;
 }
 table tbody tr:last-child {
-	border: 0;
+  border: 0;
 }
 table td, table th {
-	text-align: center;
+  text-align: center;
 }
 .pagination {
-	display: inline-block;
+  display: inline-block;
 }
 .pagination a {
-	float: left;
-	padding: 8px 16px;
-	border-radius: 20%;
+  float: left;
+  padding: 8px 16px;
+  border-radius:20%;
 }
 .pagination a.active {
-	background-color: #7971ea;
-	color: white;
+  background-color: #7971ea;
+  color: white;
 }
 .pagination a:hover:not(.active) {
 background-color: silver;
 }
-.table100{
-display: flex;
-    flex-direction: column;
-    align-items: center;
-    }
 </style>
 </head>
 <body>
@@ -110,6 +103,7 @@ display: flex;
 			</div>
 		</div>
 	</nav>
+	
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
@@ -122,13 +116,13 @@ display: flex;
 				<div class="table100">
 					<table id="userTable" border="1">
 						<colgroup>
-							<col style="width: 80px" />
-							<col style="width: 80px" />
-							<col style="width: 100px" />
-							<col style="width: 200px" />
-							<col style="width: 150px" />
-							<col style="width: 150px" />
-							<col style="width: 80px" />
+							<col style="width: 5%"/>
+							<col style="width: 25%"/>
+							<col style="width: 10%"/>
+							<col style="width: 30%"/>
+							<col style="width: 10%"/>
+							<col style="width: 10%"/>
+							<col style="width: 10%"/>
 						</colgroup>
 						<thead>
 							<tr>
@@ -215,7 +209,6 @@ display: flex;
 			</div>
 		</div>
 	</div>
-
 
 	<!-- 페이징 및 검색!!!!  -->
 	<script

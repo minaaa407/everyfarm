@@ -35,6 +35,9 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
 
 <style type="text/css">
+body{
+background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
+}
 .paging{
 	padding: 8px 16px;
     border-radius: 20%;
@@ -46,97 +49,30 @@
 <body style="overflow-x: hidden">
 
 
- <div class="row">
-<div class="col-lg-1 col-md-1">
  <!-- Navigation -->
-      <nav
-      class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
-      id="sidenav-main" style="z-index: 1;">
-      <div class="container-fluid">
-         <!-- Toggler -->
-         <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-         </button>
-         <!-- User -->
-         <ul class="nav align-items-center d-md-none">
-            <li class="nav-item dropdown"><a class="nav-link nav-link-icon"
-               href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-               aria-expanded="false"> <i class="ni ni-bell-55"></i>
-            </a>
-               <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
-                  aria-labelledby="navbar-default_dropdown_1">
-                  <a class="dropdown-item" href="#">Action</a> <a
-                     class="dropdown-item" href="#">Another action</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-               </div></li>
-            <li class="nav-item dropdown"><a class="nav-link" href="#"
-               role="button" data-toggle="dropdown" aria-haspopup="true"
-               aria-expanded="false">
-                  <div class="media align-items-center">
-                     <span class="avatar avatar-sm rounded-circle"> <img
-                        alt="Image placeholder"
-                        src="resources/admin/img/theme/team-1-800x800.jpg">
-                     </span>
-                  </div>
-            </a>
-               <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-                  <div class=" dropdown-header noti-title">
-                     <h6 class="text-overflow m-0">Welcome!</h6>
-                  </div>
-                  <a href="./examples/profile.html" class="dropdown-item"> <i
-                     class="ni ni-single-02"></i> <span>My profile</span>
-                  </a> <a href="./examples/profile.html" class="dropdown-item"> <i
-                     class="ni ni-settings-gear-65"></i> <span>Settings</span>
-                  </a> <a href="./examples/profile.html" class="dropdown-item"> <i
-                     class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-                  </a> <a href="./examples/profile.html" class="dropdown-item"> <i
-                     class="ni ni-support-16"></i> <span>Support</span>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i>
-                     <span>Logout</span>
-                  </a>
-               </div></li>
-         </ul>
-         <!-- Collapse -->
-         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-            <!-- Collapse header -->
-            <div class="navbar-collapse-header d-md-none">
-               <div class="row">
-                  <div class="col-6 collapse-brand">
-                     <a href="./index.html"> <img
-                        src="resources/admin/img/brand/blue.png">
-                     </a>
-                  </div>
-                  <div class="col-6 collapse-close">
-                     <button type="button" class="navbar-toggler"
-                        data-toggle="collapse" data-target="#sidenav-collapse-main"
-                        aria-controls="sidenav-main" aria-expanded="false"
-                        aria-label="Toggle sidenav">
-                        <span></span> <span></span>
-                     </button>
-                  </div>
-               </div>
-            </div>
-            <!-- Navigation -->
-            <jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
-         </div>
-      </div>
-   </nav>
-   </div>
+	<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
+			</div>
+		</div>
+	</nav>
 
-<div class="col-lg-11 col-md-11" style="background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important; padding-left: 150px;">
     <!-- Categories Section Begin -->
-    <section class="categories categories-grid spad" style="padding-top: 0; padding-bottom: 50px; min-height: 100vh;">
+    <section class="categories categories-grid spad">
         <div class="categories__post">
-         <div class="container" style="margin-left: 55px; margin-right: 0px; padding-right: 90px;">
-            <!-- <div class="d-none d-sm-block container" style="margin-right: 20px;"> -->
-            <!--  <div class="d-block d-sm-none container"> -->
-           
-                <div class="categories__grid__post" style="border-top-width: 0px; margin-top: 100px;">
+         <div class="container">
+                <div class="categories__grid__post">
                     <div class="row">
 					 <div class="col-lg-12 col-md-12">
                       	<c:choose>   
@@ -312,8 +248,6 @@
   				</div>
               </div>
 			</div>
-		</div>
-	</div>
 </section>
 
    

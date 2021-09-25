@@ -37,6 +37,25 @@
 </head>
 
 <body class="signup-page">
+<!-- Navigation -->
+	<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
+			</div>
+		</div>
+	</nav>
+	
 	<div class="signup-box">
 		<div class="logo">
 			<a href="javascript:void(0);">User&nbsp;<b>TEST</b></a>

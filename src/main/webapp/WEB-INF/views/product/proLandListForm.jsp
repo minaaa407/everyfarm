@@ -139,20 +139,24 @@ function LandDelete(p_No) {
 	}
 }
 
+
+
 function search(){
 	
 	var select = document.getElementById('productselect').value;
 	
 	var text = document.getElementById('selectText').value;
-	if(select == "p_Id"){
-		text = "%" + text + "%";
-	}else{
-		text = text;
-	}
 	document.getElementById('where').value = select;
 	document.getElementById('wherecolumn').value= text;
 	
 	document.myHiddenForm.submit();
+}
+
+function paging(i){
+	
+	document.getElementById('selectpage').value = i;
+	document.myHiddenForm.submit();
+	
 }
 
 </script>
@@ -172,68 +176,8 @@ function search(){
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<!-- User -->
-			<ul class="nav align-items-center d-md-none">
-				<li class="nav-item dropdown"><a class="nav-link nav-link-icon"
-					href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <i class="ni ni-bell-55"></i>
-				</a>
-					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
-						aria-labelledby="navbar-default_dropdown_1">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
-					</div></li>
-				<li class="nav-item dropdown"><a class="nav-link" href="#"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">
-						<div class="media align-items-center">
-							<span class="avatar avatar-sm rounded-circle"> <img
-								alt="Image placeholder"
-								src="resources/admin/img/theme/team-1-800x800.jpg">
-							</span>
-						</div>
-				</a>
-					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-						<div class=" dropdown-header noti-title">
-							<h6 class="text-overflow m-0">Welcome!</h6>
-						</div>
-						<a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-single-02"></i> <span>My profile</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-settings-gear-65"></i> <span>Settings</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-support-16"></i> <span>Support</span>
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i>
-							<span>Logout</span>
-						</a>
-					</div></li>
-			</ul>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
-				<!-- Collapse header -->
-				<div class="navbar-collapse-header d-md-none">
-					<div class="row">
-						<div class="col-6 collapse-brand">
-							<a href="./index.html"> <img
-								src="resources/admin/img/brand/blue.png">
-							</a>
-						</div>
-						<div class="col-6 collapse-close">
-							<button type="button" class="navbar-toggler"
-								data-toggle="collapse" data-target="#sidenav-collapse-main"
-								aria-controls="sidenav-main" aria-expanded="false"
-								aria-label="Toggle sidenav">
-								<span></span> <span></span>
-							</button>
-						</div>
-					</div>
-				</div>
 				<!-- Navigation -->
 				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
 			</div>
@@ -241,9 +185,16 @@ function search(){
 	</nav>
 
 	<br>
+	<br>
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
+			<div class="col-lg-12" align="right">
+					<a class="btn btn-sm btn-neutral" href="/ProNFlist">승인전 </a> 
+					<a class="btn btn-sm btn-neutral" href="/ProYFList">승인후 </a> 
+					<a href="/proLandListForm?" class="btn btn-sm btn-neutral">전체보기 </a>
+				</div>
+				<br>
 				<div class="table100">
 					<table border="1">
 						<colgroup>
@@ -278,7 +229,7 @@ function search(){
 									<td class="content">${p.p_Date}</td>
 									<td class="content">${p.p_Accept}</td>
 									<td class="content"><a
-										href="/productdetail2?productno=${p.p_No}">상세보기</a></td>
+										href="/productdetailfarmer?productno=${p.p_No}">상세보기</a></td>
 									<td><button type="button" class="btn btn-sm btn-neutral"
 											onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
 								</tr>
@@ -323,7 +274,7 @@ function search(){
 				</div>
 				<!-- form 해당 부분 scrip 이벤트 통해서 자동 전송 처리 -->
 				<form:form commandName="pagebeen" name="myHiddenForm"
-					action="/proAdminListForm" method="post">
+					action="/proLandListForm" method="post">
 					<input type="hidden" id="selectpage" name="selectpage" value="1">
 					<input type="hidden" id="pagestart" name="pagestart"
 						value="${pagebeen.pagestart}">
@@ -345,10 +296,18 @@ function search(){
 						value="${pagebeen.where}">
 					<input type="hidden" id="wherecolumn" name="wherecolumn"
 						value="${pagebeen.wherecolumn}">
-
+					<input type="hidden" id="where2" name="where2"
+						value="${pagebeen.where2}">
+					<input type="hidden" id="wherecolumn2" name="wherecolumn2"
+						value="${pagebeen.wherecolumn2}">
+					<input type="hidden" id="where3" name="where3"
+						value="${pagebeen.where2}">
+					<input type="hidden" id="wherecolumn3" name="wherecolumn3"
+						value="${pagebeen.wherecolumn3}">
 				</form:form>
 				<br>
 			</div>
+		</div>
 		</div>
 		<br> <Br>
 </body>

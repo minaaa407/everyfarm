@@ -171,48 +171,6 @@ function search(){
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<!-- User -->
-			<ul class="nav align-items-center d-md-none">
-				<li class="nav-item dropdown"><a class="nav-link nav-link-icon"
-					href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <i class="ni ni-bell-55"></i>
-				</a>
-					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
-						aria-labelledby="navbar-default_dropdown_1">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
-					</div></li>
-				<li class="nav-item dropdown"><a class="nav-link" href="#"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">
-						<div class="media align-items-center">
-							<span class="avatar avatar-sm rounded-circle"> <img
-								alt="Image placeholder"
-								src="resources/admin/img/theme/team-1-800x800.jpg">
-							</span>
-						</div>
-				</a>
-					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-						<div class=" dropdown-header noti-title">
-							<h6 class="text-overflow m-0">Welcome!</h6>
-						</div>
-						<a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-single-02"></i> <span>My profile</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-settings-gear-65"></i> <span>Settings</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-support-16"></i> <span>Support</span>
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i>
-							<span>Logout</span>
-						</a>
-					</div></li>
-			</ul>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Navigation -->
@@ -221,7 +179,7 @@ function search(){
 		</div>
 	</nav>
 
-	<h2>상품 리스트</h2>
+	<br>
 	<br>
 	<div class="limiter">
 		<div class="container-table100">
@@ -262,14 +220,14 @@ function search(){
 									<td class="content">${p.p_No}</td>
 									<td class="content"><img id='product${p.p_No}'
 										src="/resources/upload/product/${p.p_No}/${p.p_Img}"
-										class="test1" width="90" height="70" alt="Image ${p.p_No}">
+										class="test1" width="120" height="80" alt="Image ${p.p_No}">
 									</td>
 									<td class="content">${p.p_Id}</td>
 									<td class="content">${p.p_Title}</td>
 									<td class="content">${p.p_Date}</td>
 									<td class="content">${p.p_Accept}</td>
 									<td class="content"><a
-										href="/productdetail3?productno=${p.p_No}">상세보기</a></td>
+										href="/productdetailadmin?productno=${p.p_No}">상세보기</a></td>
 									<td><a class="btn btn-sm btn-neutral"
 										href="/proRegDetailForm?p_No=${p.p_No}">수정</a>
 										<button type="button" class="btn btn-sm btn-neutral"
@@ -339,6 +297,7 @@ function search(){
 				</form:form>
 				<br>
 			</div>
+		</div>
 		</div>
 		<br>
 		<Br>
