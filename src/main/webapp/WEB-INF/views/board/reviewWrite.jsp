@@ -18,6 +18,7 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+
 <!-- 썸머노트 -->
 <link rel="stylesheet" href="/resources/editor/css/summernote-lite.css">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -199,14 +200,14 @@ input {
 		src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
+
 <!-- 썸머노트 -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="/resources/editor/js/summernote-lite.js"></script>
 <script src="/resources/editor/js/lang/summernote-ko-KR.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function() {
 
+<script type="text/javascript">
      
         var  toolbar = [
 			    ['fontname', ['fontname']],
@@ -239,7 +240,6 @@ $(document).ready(function() {
              };
         
             $('#summernote').summernote(setting);
-            });
             
             function uploadSummernoteImageFile(file, el) {
     			data = new FormData();
@@ -263,9 +263,6 @@ function chageLangSelect(){
 	var pno = document.getElementById('rev_ProNum').value;
 	document.getElementById('pay_No').value = pno;
 }
-
-            
-            
   </script>
 
 

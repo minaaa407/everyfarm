@@ -2,7 +2,9 @@ package kr.co.everyfarm.user;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -100,15 +102,12 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String mlogin(MemberBean memberBean, HttpServletRequest request) {
-		System.out.println("login:: post");
 
 		HttpSession session = request.getSession();
 		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
 
-		System.out.println("첫번째:" + memberBean.getM_Pw());
 		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
 		memberBean.setM_Pw(encryPassword);
-		System.out.println("두번째:" + memberBean.getM_Pw());
 
 		MemberBean member = memberDAO.mlogin(memberBean);
 
@@ -124,14 +123,10 @@ public class UserController {
 	@RequestMapping(value = "/user/callback", method = RequestMethod.GET)
 	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
 			MemberBean memberBean) throws IOException, ParseException {
-		System.out.println("여기는 callback session : " + session);
-		System.out.println("여기는 callback state : " + state);
-		System.out.println("여기는 callback code : " + code);
 
 		OAuth2AccessToken oauthToken;
 
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
-		System.out.println("oauthToken쪽 : " + oauthToken);
 		// 1. 로그인 사용자 정보를 읽어온다.
 		apiResult = naverLoginBO.getUserProfile(oauthToken); // String형식의 json데이터
 
@@ -154,13 +149,9 @@ public class UserController {
 		String birth = bYear + "-" + bDay;
 		mobile = mobile.replace("-", "");
 
-		System.out.println("네이버 ID : " + id);
-		System.out.println("이름 : " + name);
-		System.out.println("모바일" + mobile);
 
 		if (response_obj.get("id") != null) {
 			// 4.파싱 닉네임 세션으로 저장
-			System.out.println("4번 주석");
 			session.setAttribute("m_Id", id); // 세션 생성
 			session.setAttribute("m_Name", name);
 			session.setAttribute("m_Tel", mobile);
@@ -226,10 +217,8 @@ public class UserController {
 		memberBean.setM_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
 				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
 
-		System.out.println("첫번째:" + memberBean.getM_Pw());
 		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
 		memberBean.setM_Pw(encryPassword);
-		System.out.println("두번째:" + memberBean.getM_Pw());
 
 		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
 		memberDAO.mjoin(memberBean);
@@ -501,10 +490,17 @@ public class UserController {
 		PaymentBean forDel = payDAO.mypaylist(paging);
 		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();
-		System.out.println(test.format(forDel.getPay_Date()));
-		System.out.println(test.format(now));
+		String day = "2019-03-17";
 		
-		model.addAttribute("payDay",test.format(forDel.getPay_Date()));
+		
+		if(forDel == null) {
+			model.addAttribute("payDay", test.format(day));
+			
+		}else if (forDel != null) {
+			
+			model.addAttribute("payDay",test.format(forDel.getPay_Date()));
+			
+		}
 		model.addAttribute("now", test.format(now));
 		return "user/myPage";
 	}
@@ -521,7 +517,6 @@ public class UserController {
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		
 		memDao.mUpdate(memberbean);
-		System.out.println(memberbean);
 
 		return "redirect:/home";
 	}
@@ -542,7 +537,6 @@ public class UserController {
 
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		memDao.mPwdUp(memberbean);
-		System.out.println(memberbean);
 
 		return "redirect:/home";
 	}
@@ -555,7 +549,6 @@ public class UserController {
 
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		memDao.mAddrUpdate(memberbean);
-		System.out.println(memberbean);
 
 		return "redirect:/home";
 	}
@@ -566,7 +559,6 @@ public class UserController {
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		memberbean.setM_Name(request.getParameter("m_Name"));
 		memDao.mNameUpdate(memberbean);
-		System.out.println(memberbean);
 
 		return "redirect:/home";
 	}

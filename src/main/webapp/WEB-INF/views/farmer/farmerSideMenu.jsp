@@ -46,7 +46,9 @@
 		<li class="nav-item"><a class="nav-link " href="/proLandListForm ">
 				<i class="ni ni-box-2 text-blue"></i> 상품관리
 		</a></li>
-
+	<li class="nav-item"><a class="nav-link " href="/farmerReviewList">
+				<i class="ni ni-bullet-list-67 text-blue"></i> 리뷰관리
+		</a></li>
 		<li class="nav-item"><a class="nav-link " href="/farmerQnaList">
 				<i class="ni ni-bullet-list-67 text-blue"></i> QnA관리
 		</a></li>

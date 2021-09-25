@@ -160,7 +160,6 @@ input {
 <script src="resources/editor/js/lang/summernote-ko-KR.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function() {
 	
 	var no = ${revList.rev_No}
 	$('#Btn').click(function() {
@@ -207,7 +206,6 @@ $(document).ready(function() {
              };
         
             $('#summernote').summernote(setting);
-            });
             
             function uploadSummernoteImageFile(file, el) {
     			data = new FormData();

@@ -213,14 +213,28 @@ span {
 		<table class="board_view2">
 			<colgroup width="*" />
 			<tbody>
+			<c:choose>
+			<c:when test="${!empty repList}">
 				<c:forEach items="${repList}" var="repList">
 					<tr>
 						<td class="testing"><span><em>${repList.rep_Id}</em></span> <span
 							class="date"><fmt:formatDate pattern="yy-MM-dd hh:mm"
 									value="${repList.rep_Date}" /></span>
 							<div class="cont2">${repList.rep_Cont}</div></td>
+						<td><button type="button" onclick="replyDel()">삭제</button>
+							<input type="hidden" value="${repList.rep_No}" id="rep_No"> </td>
+						
 					</tr>
 				</c:forEach>
+				</c:when>
+				<c:when test="${empty repList}">
+					<tr>
+						<td>
+							<span><em>작성된 댓글이 없습니다.</em></span>
+						</td>
+					</tr>
+				</c:when>
+				</c:choose>
 			</tbody>
 		</table>
 		<table class="board_view">
@@ -280,22 +294,24 @@ span {
 	</div>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			var no = $
-			{
-				revList.rev_No
-			}
-			$('#Btn').click(function() {
-				var result = confirm('삭제하시겠습니까?');
-				if (result) { //yes 
-					alert("삭제되었습니다.");
+			function yes() {
+				var rev_No = document.getElementById("rev_No").value;
+				if (confirm("정말 삭제하시겠습니까?") == true) { //yes 
 					location.href = "/reviewDelete?rev_No=" + no;
-					return true;
 				} else {
 					return false;
 				}
-			});
-		});
+			}
+	</script>
+	<script type="text/javascript">
+		function replyDel() {
+			var rep_No = document.getElementById("rep_No").value;
+			if(confirm("정말 삭제하시겠습니까?") == true){
+				location.href = "/replyDelete?rep_No=" + rep_No
+			}else{
+				return false;
+			}
+		}
 	</script>
 
 </body>

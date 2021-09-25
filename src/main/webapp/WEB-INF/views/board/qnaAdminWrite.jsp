@@ -185,9 +185,6 @@ input::placeholder {
 <script src="/resources/editor/js/lang/summernote-ko-KR.js"></script>
 
 
-
-
-
 <script type="text/javascript">
 
      
