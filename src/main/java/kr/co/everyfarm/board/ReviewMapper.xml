@@ -4,6 +4,19 @@
 
 <mapper namespace="kr.co.everyfarm.board.ReviewDAO">
 
+	<select id="mypaging"
+		resultType="kr.co.everyfarm.board.ReviewBean">
+		SELECT * FROM (
+		SELECT rev_no, rev_Name, rev_Id, rev_Title, rev_Cont, rev_Readcount,
+		rev_Date, rev_Rate, rev_ProNum
+		FROM review WHERE rev_Id = #{m_Id}
+		<if test="keyword != null">
+			<include refid="pageSearch"></include>
+		</if>
+		) as T1 ORDER BY rev_date DESC
+		LIMIT #{skip},#{amount}
+	</select>
+
    <sql id="pageSearch">
       <trim prefix="where(" suffix=")" prefixOverrides="OR">
          <foreach collection="typeArr" item="type">
@@ -148,8 +161,6 @@
       select pay_no from payment where pay_orderno = #{no};
    </select>
    
-   
-   
-   
+
 
 </mapper>

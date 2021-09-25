@@ -18,7 +18,7 @@
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<title>LOGIN</title>
+<title>EVERY FARM | LOGIN</title>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/home/header.jsp" />
@@ -48,14 +48,14 @@
 					<div class="login-form-btn-container">
 						<a
 							href="https://kauth.kakao.com/oauth/authorize
-            ?client_id=498888e1cfaa9f3669cf117f84502ba4&redirect_uri=http://localhost:8090/kakaoLogin&response_type=code">
+            ?client_id=498888e1cfaa9f3669cf117f84502ba4&redirect_uri=http://www.everyfarm.shop/kakaoLogin&response_type=code">
 							<img alt="카카오로그인버튼" style="width: 250px;height: 55px;" src="/resources/img/kakaologin.png">
 						</a>
 					</div>
 					<div class="login-form-btn-container">
 						<%
 							String clientId = "Ql4Y2VZqHjqj9oNnoWts";//애플리케이션 클라이언트 아이디값";
-							String redirectURI = URLEncoder.encode("http://localhost:8090/user/callback", "UTF-8");
+							String redirectURI = URLEncoder.encode("http://www.everyfarm.shop/user/callback", "UTF-8");
 							SecureRandom random = new SecureRandom();
 							String state = new BigInteger(130, random).toString();
 							String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";

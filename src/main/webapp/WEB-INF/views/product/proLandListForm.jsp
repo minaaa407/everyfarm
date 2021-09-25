@@ -37,6 +37,7 @@
 <link rel="stylesheet" href="resources/index/css/flaticon.css">
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 </head>
 
 <style>
@@ -151,9 +152,16 @@ function search(){
 	document.myHiddenForm.submit();
 }
 
+function paging(i){
+	
+	document.getElementById('selectpage').value = i;
+	document.myHiddenForm.submit();
+	
+}
+
 </script>
 
-<title></title>
+<title>EveryFarm 농부 | 상품관리</title>
 </head>
 
 <body>
@@ -168,11 +176,6 @@ function search(){
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="/admin"> <img
-				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
-				alt="...">
-			</a>
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
 				<li class="nav-item dropdown"><a class="nav-link nav-link-icon"
@@ -242,9 +245,15 @@ function search(){
 	</nav>
 
 	<br>
+	<br>
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
+			<div class="col-lg-12" align="right">
+					<a class="btn btn-sm btn-neutral" href="/ProNFlist">승인전 </a> 
+					<a class="btn btn-sm btn-neutral" href="/ProYFList">승인후 </a> 
+					<a href="/proLandListForm?" class="btn btn-sm btn-neutral">전체보기 </a>
+				</div>
 				<br>
 				<div class="table100">
 					<table border="1">
@@ -347,10 +356,18 @@ function search(){
 						value="${pagebeen.where}">
 					<input type="hidden" id="wherecolumn" name="wherecolumn"
 						value="${pagebeen.wherecolumn}">
-
+					<input type="hidden" id="where2" name="where2"
+						value="${pagebeen.where2}">
+					<input type="hidden" id="wherecolumn2" name="wherecolumn2"
+						value="${pagebeen.wherecolumn2}">
+					<input type="hidden" id="where3" name="where3"
+						value="${pagebeen.where2}">
+					<input type="hidden" id="wherecolumn3" name="wherecolumn3"
+						value="${pagebeen.wherecolumn3}">
 				</form:form>
 				<br>
 			</div>
+		</div>
 		</div>
 		<br> <Br>
 </body>

@@ -11,7 +11,7 @@
 <meta name="viewport"
    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi =medium-dpi">
 
-<title>EVERY FARM</title>
+<title>EveryFarm 농부 | 마이페이지</title>
 
 
 <link
@@ -30,21 +30,6 @@
 <!-- 사이드 추가-->
 
 
-<!-- Modal -->
-<link rel="stylesheet"
-   href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-   href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet"
-   href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script
-   src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script
-   src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<!-- Modal -->
 
 
 <link rel="stylesheet" href="resources/user/css/mypage.css">
@@ -201,6 +186,36 @@ body {
 
 </head>
 <body>
+<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Collapse header -->
+				<div class="navbar-collapse-header d-md-none">
+					<div class="row">
+						<div class="col-6 collapse-close">
+							<button type="button" class="navbar-toggler"
+								data-toggle="collapse" data-target="#sidenav-collapse-main"
+								aria-controls="sidenav-main" aria-expanded="false"
+								aria-label="Toggle sidenav">
+								<span></span> <span></span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
+			</div>
+		</div>
+	</nav>
    <div class="container">
       <div class="view-account">
          <section class="module">
@@ -212,7 +227,14 @@ body {
                      <ul class="meta list list-unstyled">
                         <li class="name">${farmer.f_Name}</li>
                         <li class="email">${farmer.f_Id}</li>
-                        <li><input type="hidden" id="myCus" value="${myCus}" /></li>
+                        <c:choose>
+                        	<c:when test="${empty myCus}">
+                        	<li><input type="hidden" id="myCus" value="${now}" /></li>
+                        	</c:when>
+                        	<c:when test="${!empty myCus}">
+                        		<li><input type="hidden" id="myCus" value="${myCus}" /></li>
+                        	</c:when>
+                        </c:choose>
                      </ul>
                   </div>
                </div>
@@ -373,6 +395,7 @@ body {
                                  <td class="table__td"><fmt:formatDate
                                        value="${farmer.f_Date}" pattern="yyyy/MM/dd" /> <input
                                     type="hidden" id="now" value="${nowMonth}">
+                                    <input type="hidden" id="myCus" value="${myCus}">
                               </tr>
                            </tbody>
                         </table>
@@ -432,7 +455,7 @@ body {
       var diff = nowD2 - payD2;
       var diffDay = 24 * 60 * 60 * 1000;
       var diffMonth = diffDay * 30;
-      var test = parseInt(diff / diffMonth);
+      var test = parseInt(diff/diffMonth);
       var MinMonth = 6;
       $("#fDel").click(
             function() {

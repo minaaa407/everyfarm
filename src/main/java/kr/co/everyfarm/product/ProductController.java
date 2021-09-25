@@ -475,12 +475,18 @@ public class ProductController {
 	      String P_Id = farmer.getF_Id();
 	      System.out.println("확인");
 	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-	      System.out.println("확인1");
-	      pagebeen.setWhere2("p_Id");
-	      pagebeen.setWherecolumn2(P_Id);
-	      List<ProductBean> listland = dao.listland(pagebeen);
-	      int selecttotalindex = listland.size();
+	      pagebeen.setWhere3("p_Id");
+	      pagebeen.setWherecolumn3(P_Id);
+	      System.out.println(pagebeen.getSelectpage() + "값 얼만");
+	      System.out.println(pagebeen + "pagebeen 확인");
+	      int selecttotalindex = dao.farmerlistcount(pagebeen);
+	      System.out.println(selecttotalindex + "값 나온거 얼마임?");
+	      
+	      pagebeen.setLimit(10);
 	      pagebeen.setTableindex(selecttotalindex);
+	      
+	      List<ProductBean> listland = dao.listland(pagebeen);
+	      
 	      model.addAttribute("productlist", listland);
 	      model.addAttribute("pagebeen",pagebeen);
 	      return "product/proLandListForm";
@@ -632,6 +638,61 @@ public class ProductController {
 	      model.addAttribute("pagebeen", pagebeen);
 	      
 	      return "product/proAdminListForm";
+	   }
+	   
+	   
+	   @RequestMapping(value = "/ProYFList")
+	   public String getProYFList(Model model,HttpServletRequest request) {
+		  FarmerBean farmer = (FarmerBean) request.getSession().getAttribute("farmer");
+		  String P_Id = farmer.getF_Id();
+	      PageBeen pagebeen = new PageBeen();
+	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+	      int limit = 10;
+	      pagebeen.setLimit(limit);
+
+	      
+	      
+	      
+	      pagebeen.setWhere2("p_Accept");
+	      pagebeen.setWherecolumn2("Y");
+	      pagebeen.setWhere3("p_Id");
+	      pagebeen.setWherecolumn3(P_Id);
+	      
+	      int selecttotalindex = dao.farmerlistacceptcount(pagebeen);
+	      pagebeen.setTableindex(selecttotalindex);
+	      List<ProductBean> productasclist = dao.farmerproductlistY(pagebeen);
+	      model.addAttribute("productp_Accept", "AcceptY");
+	      model.addAttribute("productlist", productasclist);
+	      model.addAttribute("pagebeen", pagebeen);
+	      
+	      
+	      return "product/proLandListForm";
+	   }
+	        
+	   @RequestMapping(value = "/ProNFlist")
+	   public String getProNFList(Model model,HttpServletRequest request) {
+		  FarmerBean farmer = (FarmerBean) request.getSession().getAttribute("farmer");
+	      String P_Id = farmer.getF_Id();
+	      PageBeen pagebeen = new PageBeen(); 
+	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+	      int limit = 10;
+	      pagebeen.setLimit(limit);
+	      System.out.println(pagebeen.getWhere() + "첫번째where");
+	      System.out.println(pagebeen.getWherecolumn() + "첫번째where");
+	      pagebeen.setWhere2("p_Accept");
+	      pagebeen.setWherecolumn2("N");
+	      pagebeen.setWhere3("p_Id");
+	      pagebeen.setWherecolumn3(P_Id);
+	      
+	      
+	      int selecttotalindex = dao.farmerlistacceptncount(pagebeen);
+	      pagebeen.setTableindex(selecttotalindex);
+	      List<ProductBean> productdesclist = dao.farmerproductlistN(pagebeen);
+	      System.out.println(productdesclist.size() + "크기 얼마? ㅕㅁㅊ개 나온거?");
+	      model.addAttribute("productp_Accept", "AcceptN");
+	      model.addAttribute("productlist", productdesclist);
+	      model.addAttribute("pagebeen", pagebeen);
+	      return "product/proLandListForm";
 	   }
 
 	   @RequestMapping("/ProDelete")

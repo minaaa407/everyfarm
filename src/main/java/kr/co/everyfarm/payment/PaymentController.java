@@ -285,8 +285,6 @@ public class PaymentController {
 	      pageMaker.setTotalCount(totalCount);
 	      // 모델에 추가
 	      model.addAttribute("pageMaker", pageMaker);
-	      System.out.println("페이리스트 = " + paymentlist.get(0));
-		    System.out.println("페이리스트 = " + paymentlist.toString());
 	      System.out.println("-----어드민페이먼트리스트 끝------");
 		return "admin/adminPaymentList";
 	}
@@ -310,6 +308,7 @@ public class PaymentController {
 	      pageMaker.setTotalCount(totalCount);
 	      // 모델에 추가
 	      model.addAttribute("pageMaker", pageMaker);
+	      System.out.println("-----어드민페이먼트리스트 끝------");
 		return "admin/adminPaymentList";
 	}
 
@@ -360,13 +359,6 @@ public class PaymentController {
 	}
 	
 	
-//	@RequestMapping(value = "/farmerPayListDelete/{Orderno}")
-//	public String farmerPayListDelete(@PathVariable int Orderno, Model model) {
-//		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
-//		int payListDelete = dao.paydelete(Orderno);
-//		System.out.println(payListDelete);
-//		return "redirect:/farmerPaymentList";
-//	}
 
 	@RequestMapping(value = "/adminListDetail/{Orderno}", method = RequestMethod.GET)
 	public String adminListDetail(@PathVariable int Orderno, Model model) {

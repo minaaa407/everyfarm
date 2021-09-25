@@ -47,7 +47,7 @@
 		});
 	});
 </script>
-<title>EVERY FARM</title>
+<title>EVERY FARM | 리뷰 상세</title>
 <style type="text/css">
 .center {
 	text-align: center;

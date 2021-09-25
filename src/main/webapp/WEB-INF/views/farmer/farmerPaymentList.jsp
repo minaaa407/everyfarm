@@ -9,8 +9,11 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
-<title>EveryFarm | 결제내역 </title>
+
+
+<title>EVERY FARM 농부 | 결제내역 </title>
 <style>
+
 td, th {
 border-color:#9ea4ca;
 }
@@ -84,9 +87,6 @@ background-color: silver;
 </style>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-1">
 <!-- Navigation -->
 		<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
@@ -98,63 +98,11 @@ background-color: silver;
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="/farmer"> <img
-				src="resources/farmer/img/brand/brand.jpg" class="navbar-brand-img"
-				alt="...">
-			</a>
-			<!-- User -->
-			<ul class="nav align-items-center d-md-none">
-				<li class="nav-item dropdown"><a class="nav-link nav-link-icon"
-					href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <i class="ni ni-bell-55"></i>
-				</a>
-					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
-						aria-labelledby="navbar-default_dropdown_1">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
-					</div></li>
-				<li class="nav-item dropdown"><a class="nav-link" href="#"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false">
-						<div class="media align-items-center">
-							<span class="avatar avatar-sm rounded-circle"> <img
-								alt="Image placeholder"
-								src="resources/farmer/img/theme/team-1-800x800.jpg">
-							</span>
-						</div>
-				</a>
-					<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-						<div class=" dropdown-header noti-title">
-							<h6 class="text-overflow m-0">Welcome!</h6>
-						</div>
-						<a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-single-02"></i> <span>My profile</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-settings-gear-65"></i> <span>Settings</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-calendar-grid-58"></i> <span>Activity</span>
-						</a> <a href="./examples/profile.html" class="dropdown-item"> <i
-							class="ni ni-support-16"></i> <span>Support</span>
-						</a>
-						<div class="dropdown-divider"></div>
-						<a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i>
-							<span>Logout</span>
-						</a>
-					</div></li>
-			</ul>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Collapse header -->
 				<div class="navbar-collapse-header d-md-none">
 					<div class="row">
-						<div class="col-6 collapse-brand">
-							<a href="./index.html"> <img
-								src="resources/farmer/img/brand/blue.png">
-							</a>
-						</div>
 						<div class="col-6 collapse-close">
 							<button type="button" class="navbar-toggler"
 								data-toggle="collapse" data-target="#sidenav-collapse-main"
@@ -165,26 +113,12 @@ background-color: silver;
 						</div>
 					</div>
 				</div>
-				<!-- Form -->
-				<form class="mt-4 mb-3 d-md-none">
-					<div class="input-group input-group-rounded input-group-merge">
-						<input type="search"
-							class="form-control form-control-rounded form-control-prepended"
-							placeholder="Search" aria-label="Search">
-						<div class="input-group-prepend">
-							<div class="input-group-text">
-								<span class="fa fa-search"></span>
-							</div>
-						</div>
-					</div>
-				</form>
+				<!-- Navigation -->
 				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
 	</nav>
-	</div>
 	<!-- Navigation -->
-	<div class="col-md-11">
 		<div class="limiter">
  			<div class="container-table100">
  				<div class="wrap-table100">
@@ -192,6 +126,7 @@ background-color: silver;
  					
 						<table border="1">
 						<colgroup>
+							<col style="width:50px"/>
 							<col style="width:50px"/>
 							<col style="width:30px"/>
 							<col style="width:30px"/>
@@ -203,6 +138,7 @@ background-color: silver;
 						</colgroup>
 						<thead>
 							<tr>
+								<th scope="col">농장명</th>
 								<th scope="col">주문자명</th>
 								<th scope="col">땅평수</th>
 								<th scope="col">씨앗</th>
@@ -226,6 +162,7 @@ background-color: silver;
 							</script>
 							<fmt:formatDate var="pay_Date" value="${farmerpay.pay_Date }" pattern="yyyy-MM-dd"/>
 								<tr>
+									<td>${farmerpay.p_Title }</td>
 									<td>${farmerpay.pay_Name }</td>
 									<td>${farmerpay.pay_Land }평</td>
 									<td>${farmerpay.pay_Seed }</td>
@@ -244,6 +181,23 @@ background-color: silver;
 				</div>
 			</div>
 			
+			<form id="sort" name="rentSearch" method="post"
+                                 action="/farmerpaymentlist">
+
+                              <select id="searchType" name="searchType">
+                                    <option value="">전체검색</option>
+                                    <option value="t" <c:if test="${pageMaker.cri.searchType eq 't'}">selected </c:if>>농장명</option>
+                                    <option value="c" <c:if test="${pageMaker.cri.searchType eq 'c'}"> selected </c:if>>주문자명</option>
+                                    <option value="f" <c:if test="${pageMaker.cri.searchType eq 'f'}"> selected </c:if>>농작물명</option>
+                                 </select>&nbsp;
+                                 <input type="text" id="keyword" name="keyword"  
+                                    value="${pageMaker.cri.keyword}" placeholder="검색어를 입력하세요" />&nbsp;
+                        
+                                 <button id="button" class="btn waves-effect waves-light btn-outline">검색</button>&nbsp;
+                                 <input type="button" id="button" class="btn waves-effect waves-light btn-outline" value="전체보기" onClick="location.href='/farmerpaymentlist';">&nbsp;
+                              </form>
+                              
+                              <br>
 			<!-- 페이징 start -->
 				<div class="row">
                     	<div class="col btn-group pagination">
@@ -269,11 +223,8 @@ background-color: silver;
                             </c:if>
                         </div>
 				</div>
-				<!-- 페이징 start -->
+				<!-- 페이징 end -->
 				</div>
-			</div>
-			</div>
-			</div>
 			</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

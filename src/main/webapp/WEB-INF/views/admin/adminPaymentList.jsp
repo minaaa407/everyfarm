@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 
-<title>EVERY FARM | 결제내역 - 관리자</title>
+<title>EVERY FARM 관리자 | 결제내역</title>
 <style>
 td, th {
 border-color:#9ea4ca;
@@ -105,11 +105,6 @@ background-color: silver;
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="/admin"> <img
-				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
-				alt="...">
-			</a>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Navigation -->
@@ -170,8 +165,8 @@ background-color: silver;
 
                               <select id="searchType" name="searchType">
                                     <option value="">전체검색</option>
-                                    <option value="t" <c:if test="${pageMaker.cri.searchType eq 't'}">selected </c:if>>농부이름</option>
-                                    <option value="c" <c:if test="${pageMaker.cri.searchType eq 'c'}"> selected </c:if>>회원이름</option>
+                                    <option value="t" <c:if test="${pageMaker.cri.searchType eq 't'}">selected </c:if>>농부명</option>
+                                    <option value="c" <c:if test="${pageMaker.cri.searchType eq 'c'}"> selected </c:if>>주문자명</option>
                                  </select>&nbsp;
                                  <input type="text" id="keyword" name="keyword"  
                                     value="${pageMaker.cri.keyword}" placeholder="검색어를 입력하세요" />&nbsp;

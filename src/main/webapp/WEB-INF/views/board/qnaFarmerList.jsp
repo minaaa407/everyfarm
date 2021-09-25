@@ -12,7 +12,7 @@
     <meta name="keywords" content="Foodeiblog, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>EVERY FARM | QnA 농부</title>
+    <title>EVERY FARM 농부 | Q&A 관리</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
@@ -35,6 +35,9 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
 
 <style type="text/css">
+body{
+background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
+}
 .paging{
 	padding: 8px 16px;
     border-radius: 20%;
@@ -46,8 +49,6 @@
 <body style="overflow-x: hidden">
 
 
- <div class="row">
-<div class="col-lg-1 col-md-1">
  <!-- Navigation -->
       <nav
       class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
@@ -59,11 +60,6 @@
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
          </button>
-         <!-- Brand -->
-         <a class="navbar-brand pt-0" href="/admin"> <img
-            src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
-            alt="...">
-         </a>
          <!-- User -->
          <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown"><a class="nav-link nav-link-icon"
@@ -131,17 +127,12 @@
          </div>
       </div>
    </nav>
-   </div>
 
-<div class="col-lg-11 col-md-11" style="background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important; padding-left: 150px;">
     <!-- Categories Section Begin -->
-    <section class="categories categories-grid spad" style="padding-top: 0; padding-bottom: 50px; min-height: 100vh;">
+    <section class="categories categories-grid spad">
         <div class="categories__post">
-         <div class="container" style="margin-left: 55px; margin-right: 0px; padding-right: 90px;">
-            <!-- <div class="d-none d-sm-block container" style="margin-right: 20px;"> -->
-            <!--  <div class="d-block d-sm-none container"> -->
-           
-                <div class="categories__grid__post" style="border-top-width: 0px; margin-top: 100px;">
+         <div class="container">
+                <div class="categories__grid__post">
                     <div class="row">
 					 <div class="col-lg-12 col-md-12">
                       	<c:choose>   
@@ -322,8 +313,6 @@
   				</div>
               </div>
 			</div>
-		</div>
-	</div>
 </section>
 
    

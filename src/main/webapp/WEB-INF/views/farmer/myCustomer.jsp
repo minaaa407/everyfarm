@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>EVERY FARM | 회원 리스트</title>
+<title>EVERY FARM 농부 | 회원 리스트</title>
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <style>
@@ -98,11 +98,6 @@ table td, table th {
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="/farmer"> <img
-				src="resources/farmer/img/brand/brand.jpg" class="navbar-brand-img"
-				alt="...">
-			</a>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Collapse header -->

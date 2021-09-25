@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="resources/index/css/flaticon.css">
 <link rel="stylesheet" href="resources/index/css/icomoon.css">
 <link rel="stylesheet" href="resources/index/css/style.css">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 
 </head>
 <style>
@@ -155,7 +156,7 @@ function search(){
 
 </script>
 
-<title></title>
+<title>EVERY FARM 관리자 | 상품관리</title>
 </head>
 
 <body>
@@ -170,11 +171,6 @@ function search(){
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="/admin"> <img
-				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
-				alt="...">
-			</a>
 			<!-- User -->
 			<ul class="nav align-items-center d-md-none">
 				<li class="nav-item dropdown"><a class="nav-link nav-link-icon"
@@ -219,31 +215,13 @@ function search(){
 			</ul>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
-				<!-- Collapse header -->
-				<div class="navbar-collapse-header d-md-none">
-					<div class="row">
-						<div class="col-6 collapse-brand">
-							<a href="./index.html"> <img
-								src="resources/admin/img/brand/blue.png">
-							</a>
-						</div>
-						<div class="col-6 collapse-close">
-							<button type="button" class="navbar-toggler"
-								data-toggle="collapse" data-target="#sidenav-collapse-main"
-								aria-controls="sidenav-main" aria-expanded="false"
-								aria-label="Toggle sidenav">
-								<span></span> <span></span>
-							</button>
-						</div>
-					</div>
-				</div>
 				<!-- Navigation -->
 				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
 	</nav>
 
-	<h2>상품 리스트</h2>
+	<br>
 	<br>
 	<div class="limiter">
 		<div class="container-table100">
@@ -361,6 +339,7 @@ function search(){
 				</form:form>
 				<br>
 			</div>
+		</div>
 		</div>
 		<br>
 		<Br>
