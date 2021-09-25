@@ -11,7 +11,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>EVERY FARM</title>
+<title>EVERY FARM | 나의 Q&A</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
 <link
@@ -56,6 +56,7 @@
 
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/home/header.jsp" />
 	<div class="container">
 		<div class="view-account">
 			<section class="module">
@@ -150,7 +151,7 @@
 		</div>
 	</div>
 
-
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </body>
 
 <script type="text/javascript"

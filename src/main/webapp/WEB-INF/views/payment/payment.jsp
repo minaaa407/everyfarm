@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>EveryFarm : 결제</title>
+<title>EVERY FARM | 결제</title>
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -192,7 +192,7 @@ margin-bottom:10px;
 	<div clss="col">
 				<div class="orderStep">
 			        <ul class="ulStep">
-						<li class="order1">01 - 장바구니</li>
+						<li class="order1"><a href="/basket">01 - 장바구니</a></li>
 			            <li class="order1 select">02 - 주문서작성</li>
 			            <li class="order1">03 - 결제완료</li>
 			        </ul>
@@ -379,7 +379,7 @@ margin-bottom:10px;
                 		<th scope="row" class="th">이메일 <img src="https://img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수"/></th>
 						<td>
 							<input id="mail1" name="mail1" size="14" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9()]/gi,'');" required="required"/>@
-							<input id="mail2" name="mail2" size="14" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9()]/gi,'');" required="required"/>
+							<input id="mail2" name="mail2" size="14" value="" type="text" onKeyup="this.value=this.value.replace(/[^a-zA-Z0-9()]/gi,.'');" required="required"/>
 							<select id="mail" name="mail">
 							<option value="" selected="selected">- 이메일 선택 -</option>
 							<option value="naver.com">naver.com</option>
@@ -435,7 +435,7 @@ margin-bottom:10px;
 		</div>
 	</div>
 	<script>
-	
+	console.log('----start----');
 function submit() {
 	
 	
@@ -446,12 +446,16 @@ function submit() {
 			var address = address2 + ', ' + address3 + ' (' + address1 + ')';
 			document.getElementById('Ad').value=address;
 			console.log(address + 2);
-	
+			
+			console.log('----이름 시작----');
 	const payname = document.getElementById('Name1').value;
 	document.getElementById('pay_Name').value = payname;
 	console.log(payname + 1);
 	console.log(payname);
-	
+	alert(payname);
+			console.log('----이름 끝----');
+
+			console.log('----전화번호 시작----');
 	const paytel = document.getElementById('tel').value;
 	const paytel1 = document.getElementById('tel1').value;
 	const paytel2 = document.getElementById('tel2').value;
@@ -459,13 +463,17 @@ function submit() {
 	document.getElementById('pay_Tel').value = paytelmix;
 	console.log(paytelmix + 2);
 	console.log(paytelmix);
+			console.log('----전화번호 끝----');
 	
+			console.log('----이메일 시작----');
 	const payemail1 = document.getElementById('mail1').value;
 	const payemail2 = document.getElementById('mail2').value;
-	const payemail = mail1 + '@' + mail2;
+	const payemail = payemail1 + '@' + payemail2;
 	document.getElementById('pay_Email').value = payemail;
+	alert(payemail);
 	console.log(payemail + 3);
 	console.log(payemail);
+	console.log('----이메일 끝----');
 	
 	document.getElementById('pay_Deliverymemo').value=document.getElementById('dm').value;
 	
@@ -498,65 +506,9 @@ function submit() {
 		
 		
 		// 구매동의 체크박스
-			
-	
-			
-			
-			
-	
-/* var check = 0;
-var allcheck = $("input:checkbox[id='list0']").length;
-var $checkok = 0;
-var arr = [];
-var checktrue = false;
-
-$(document).on('click','#all',function(){
-console.log("전체 체크박스 개수" + allcheck);
-	if($("#all").prop("checked")){
-		$("input[id='list0']").prop("checked",true);
-		} else {
-		$("input[id='list0']").prop("checked",false);	
-		}
-	});
-	
-$(document).on('click','input[id=list0]',function(){
-	if($('input[id=list0]:checked').length==$('input[id=list0]').length){
-    	$('#all').prop('checked',true);
-    }else{
-        $('#all').prop('checked',false);
-    }
-});
-
-
-function checkdelete() {
-    	 var check = $("input:checkbox[name='list0']:checked").length;
-    	 var allcheck = $("input:checkbox[name='list0']").length;
-    	 console.log(check + "개");
-    	 arr.length = 0;
-    	 var check2 = $("input:checkbox[name='list0']:checked");
-		 var pno = [];
-		 if(check == 0) {
-			 alert("선택하신 상품이 없습니다. 삭제를 원하시는 상품을 선택해주세요.");
-		 } else {
-			 if (confirm('선택하신 상품을 삭제하시겠습니까?')) {
-				 for (const i = 0; i < check; i++) {
-					 check2.parent().parent().remove();
-					 $('#all').prop('checked',false);
-					 var paylist = document.querySelectorAll("#list0");
-					 console.log(paylist);
-					 var paylistLength = paylist.length;
-					 console.log(paylistLength);
-				 }
-
-			 } else {
-				 return false;
-			 }
-		 } 
-		console.log("체크가능개수" + allcheck);
-	}	 */
-
 	
 	// 우편번호 자르기
+	console.log('----우편번호 시작----');
 	var post = '${Member.m_Addr }';
 	var lastpost = post.slice(-6, -1);
 	var firstpost = post.slice(0, -7);
@@ -571,26 +523,28 @@ function checkdelete() {
 	console.log(lastpost);
 	document.getElementById('postcode').value = lastpost;
 	document.getElementById('raddr1').value = firstpost;
-	
+	console.log('----우편번호 끝----');
 	
 	// 이메일
-	
+	console.log('----이메일 시작----');
 	var email = '${Member.m_Id }';
 	var strArray = email.split('@');
 	console.log(email);
 	console.log("이메일");
 	console.log(strArray[0] + ', ' + strArray[1]);
 	
-	document.getElementById('mail1').value = strArray[0];
-	var mail1 = document.getElementById('mail1').value;
-	document.getElementById('mail2').value = strArray[1];
-	var mail2 = document.getElementById('mail2').value;
+	var mail1 = strArray[0];
+	var mail2 = strArray[1];
 	console.log(mail1 + mail2);
+	console.log('----이메일 끝----');
 	
 	// 전화번호
+	console.log('----전화번호 시작----');
 	var tel = '${fn:substring(Member.m_Tel,0,3) }';
 	var tel1 = '${fn:substring(Member.m_Tel,3,7) }';
 	var tel2 = '${fn:substring(Member.m_Tel,7,11) }';
+	console.log(tel + tel1 + tel2);
+	console.log('----전화번호 끝----');
 	
 	$(document).ready(function(){
 		var name = '${Member.m_Name }';
