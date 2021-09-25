@@ -63,8 +63,8 @@ public class FarmerController {
 	public String farmer(Model model, FarmerBean farmerBean, HttpServletRequest request, HttpServletResponse response) {
 		  HttpSession session = request.getSession();
 	      FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
-	      farmerBean = (FarmerBean)(session.getAttribute("farmer"));
-	      FarmerBean farmer = farmerDAO.flogin(farmerBean);
+	      FarmerBean farmer = (FarmerBean) session.getAttribute("farmer");
+	      
 
 	      /* 차트 시작. 매개변수에 Model 추가해야함 */
 	      List<String> seedList = Arrays.asList(new String[] { "감자", "고구마", "콩", "배추", "상추", "수박", "오이", "토마토", "호박",
@@ -144,8 +144,6 @@ public class FarmerController {
 		    model.addAttribute("seedName", seedName);
 			model.addAttribute("seedSumTotal", seedSumTotal);
 		
-		
-		
 		return "farmer/farmer";
 	}
 
@@ -168,8 +166,6 @@ public class FarmerController {
 
 	      FarmerBean farmer = farmerDAO.flogin(farmerBean);
 
-
-		 
 		if (farmer != null) {
 			if (farmer.getF_Sign().equals("N")) {
 				response.setContentType("text/html; charset=UTF-8");
