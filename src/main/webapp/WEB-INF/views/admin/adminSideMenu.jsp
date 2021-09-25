@@ -63,7 +63,7 @@
             </a>
 		</li>
 	<li class="nav-item">
-            <a class="nav-link " href="/adminQnaList">
+            <a class="nav-link " href="">
               <i class="ni ni-bullet-list-67 text-yellow"></i> 리뷰관리
             </a>
 		</li>
