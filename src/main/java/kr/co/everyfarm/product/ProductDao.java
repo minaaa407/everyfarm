@@ -39,5 +39,5 @@ public interface ProductDao {
 	List<ProductBean> viewList();
 	
 	public ProductBean productinfo(String p_No);
-	public List<ProductBean> listland(String p_id);
+	public List<ProductBean> listland(PageBeen pagebeen);
 }

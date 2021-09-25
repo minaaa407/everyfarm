@@ -138,9 +138,9 @@
    </select>
 
 
-   <select id="listland" resultType="kr.co.everyfarm.product.ProductBean" parameterType="String" >
+   <select id="listland" resultType="kr.co.everyfarm.product.ProductBean" parameterType="kr.co.everyfarm.product.ProductBean" >
 	      select p_Id,p_No,p_Title,p_Content,p_Img,p_Subimg1,p_Subimg2,p_Subimg3,p_Subimg4,p_Imgdetail1,p_Imgdetail2,p_Imgdetail3,
-	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product where p_Id = #{p_Id}
+	      p_Imgdetail4,p_Landprice,p_Manpay,p_Date, p_Accept from product where (${where2} = #{wherecolumn2}) and (${where} like #{wherecolumn}) 
    </select>
    
    <select resultType="kr.co.everyfarm.product.ProductBean"

@@ -180,7 +180,7 @@ public class ProductController {
 	      
 	   }
 	   
-	   @RequestMapping(value="/productdetail2")
+	   @RequestMapping(value="/productdetailfarmer")
 	   public String gettest(Model model, @RequestParam("productno") String productno
 		         ,@ModelAttribute ("basketbean") BasketBean basketbean,HttpServletRequest request,
 		         MemberBean memberBean) {
@@ -224,7 +224,7 @@ public class ProductController {
 	      model.addAttribute("qnalist",qnalist);
 	      model.addAttribute("f_rate",f_rate);
 	      model.addAttribute("oneproduct",oneproduct);
-	      return "/product/productdetail2";
+	      return "/product/productdetailfarmer";
 	      
 	   }
 	// 테스트 해당 아래 사항 죽음
@@ -473,12 +473,17 @@ public class ProductController {
 	         @ModelAttribute("pagebeen") PageBeen pagebeen) {
 	      FarmerBean farmer = (FarmerBean) request.getSession().getAttribute("farmer");
 	      String P_Id = farmer.getF_Id();
+	      System.out.println("확인");
 	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
-	      List<ProductBean> listland = dao.listland(P_Id);
+	      System.out.println("확인1");
+	      pagebeen.setWhere2("p_Id");
+	      pagebeen.setWherecolumn2(P_Id);
+	      List<ProductBean> listland = dao.listland(pagebeen);
 	      int selecttotalindex = listland.size();
+	      pagebeen.setTableindex(selecttotalindex);
 	      model.addAttribute("productlist", listland);
+	      model.addAttribute("pagebeen",pagebeen);
 	      return "product/proLandListForm";
-
 	   }
 
 	   @RequestMapping(value = "/ProductRegister", method = RequestMethod.POST) // 농장등록 여기서 동작함.
@@ -725,5 +730,53 @@ public class ProductController {
 
 	      return "redirect:/proAdminListForm";
 	   }
-
+	   
+	   @RequestMapping(value="/productdetailadmin")
+	   public String gettest2(Model model, @RequestParam("productno") String productno
+		         ,@ModelAttribute ("basketbean") BasketBean basketbean,HttpServletRequest request,
+		         MemberBean memberBean) {
+	      List<BasketBean> list = basketbean.getBasketbeanList();
+	      
+	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+	      int p_No = Integer.parseInt(productno);
+	      ProductBean oneproduct = dao.onelist(p_No);
+	      //product id 값 가져오고 그 다음  farmer 평점 가져오기.
+	      
+	      HttpSession session = request.getSession();
+	      memberBean = (MemberBean)session.getAttribute("member");//Farmer,admin,member 처리.
+	      //rate 가져오기.
+	      float f_rate = dao.productfrate(p_No);
+	      //view 카운터 올리기
+	      int p_View = dao.viewpno(p_No);
+	      p_View= p_View+1;
+	      ProductBean productbean = new ProductBean();
+	      productbean.setP_No(p_No);
+	      productbean.setP_View(p_View);
+	      dao.updateview(productbean);
+	      //view 카운터 올리기
+	      
+	      if(memberBean != null) {
+	         
+	         model.addAttribute("mid",memberBean.getM_Id());
+	      }else {
+	         model.addAttribute("mid","");
+	      }
+	      //아래 댓글
+	      ProductqnaDAO dao2 = sqlSessionTemplate.getMapper(ProductqnaDAO.class);
+	      PageBeen pagebeen = new PageBeen();
+	      int qnacount = dao2.productqnalistcount(productno);
+	      pagebeen.setLimit(10);
+	      pagebeen.setTableindex(qnacount);
+	      pagebeen.setWherecolumn(productno);
+	      List<ProductqnaBean> qnalist = dao2.productqnalist(pagebeen);
+	      
+	      model.addAttribute("p_No",p_No);
+	      model.addAttribute("pagebeen",pagebeen);
+	      model.addAttribute("qnalist",qnalist);
+	      model.addAttribute("f_rate",f_rate);
+	      model.addAttribute("oneproduct",oneproduct);
+	      return "/product/productdetailadmin";
+	      
+	   }
+	   
 	}
