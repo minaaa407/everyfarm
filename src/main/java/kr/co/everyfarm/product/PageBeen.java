@@ -16,6 +16,8 @@ public class PageBeen {
 	String wherecolumn;
 	String where2;
 	String wherecolumn2;
+	String where3;
+	String wherecolumn3;
 	String orderby;
 	String ascdesc;
 	
@@ -204,6 +206,19 @@ public class PageBeen {
 	}
 	public void setAscdesc(String ascdesc) {
 		this.ascdesc = ascdesc;
+	}
+	
+	public String getWhere3() {
+		return where3;
+	}
+	public void setWhere3(String where3) {
+		this.where3 = where3;
+	}
+	public String getWherecolumn3() {
+		return wherecolumn3;
+	}
+	public void setWherecolumn3(String wherecolumn3) {
+		this.wherecolumn3 = wherecolumn3;
 	}
 	@Override
 	public String toString() {
