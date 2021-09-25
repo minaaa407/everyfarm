@@ -469,7 +469,7 @@ public class UserController {
 
 		session.invalidate();
 
-		return "home/home";
+		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/klogout", method = RequestMethod.GET)
@@ -479,7 +479,7 @@ public class UserController {
 		session.removeAttribute("access_Token");
 		session.removeAttribute("m_Id");
 
-		return "home/home";
+		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/nlogout", method = RequestMethod.GET)
@@ -488,7 +488,7 @@ public class UserController {
 		session.removeAttribute(apiResult);
 		session.invalidate();
 
-		return "home/home";
+		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/mypage")
