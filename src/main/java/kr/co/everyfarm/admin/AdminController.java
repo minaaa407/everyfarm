@@ -1,25 +1,15 @@
 package kr.co.everyfarm.admin;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +30,6 @@ import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.farmer.FarmerDAO;
 import kr.co.everyfarm.payment.PaymentDAO;
 import kr.co.everyfarm.product.ProductDao;
-import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.MemberBean;
 import kr.co.everyfarm.user.MemberDAO;
 import kr.co.everyfarm.user.UserPw;
@@ -316,7 +304,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-	public String alogin(AdminBean adminBean, HttpServletRequest request) {
+	public String alogin(AdminBean adminBean, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("login:: post");
 
 		HttpSession session = request.getSession();
@@ -333,7 +321,11 @@ public class AdminController {
 			session.setAttribute("admin", admin);
 			return "redirect:/admin";
 		} else {
-			return "redirect:/adminLogin";
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('아이디 혹은 비밀번호가 일치하지 않습니다. 다시 확인해주세요.'); history.back();</script>");
+			out.flush();
+			return null;
 		}
 	}
 
@@ -365,7 +357,7 @@ public class AdminController {
 	public String logout(HttpSession session) {
 
 		session.invalidate();
-		return "admin/sign-in";
+		return "redirect:/adminLogin";
 	}
 
 	@RequestMapping(value = "/farmerAdd", method = RequestMethod.GET)

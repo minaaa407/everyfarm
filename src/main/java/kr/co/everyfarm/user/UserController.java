@@ -1,6 +1,7 @@
 package kr.co.everyfarm.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -99,7 +100,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String mlogin(MemberBean memberBean, HttpServletRequest request) {
+	public String mlogin(MemberBean memberBean, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("login:: post");
 
 		HttpSession session = request.getSession();
@@ -116,7 +117,11 @@ public class UserController {
 			session.setAttribute("member", member);
 			return "redirect:/home";
 		} else {
-			return "redirect:/login";
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('아이디 혹은 비밀번호가 일치하지 않습니다. 다시 확인해주세요.'); history.back();</script>");
+			out.flush();
+			return null;
 		}
 	}
 
