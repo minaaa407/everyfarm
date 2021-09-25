@@ -287,7 +287,7 @@ a:hover {
 			<div class="text">
 				<div id="product_order_list" class="tit-conf">
 					<h2
-						style="color: #988d8d; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold;">
+						style="color: #988d8d; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 80px; font-size: 40px; font-weight: bold; margin-top: 0px; margin-bottom: 0px;">
 						<span style="padding-right: 10px; color: #f4952f;">리뷰</span> 게시판
 					</h2>
 				</div>
@@ -316,7 +316,7 @@ a:hover {
 						<button class="search btn btn-primary">검색</button>
 					</div>
 				</div>
-				<div class="ttc">
+				<div class="ttc" style="left: 810px;">
 					<button type="submit" class="site-btn" style="border-radius: 5px;"
 						onclick="location.href='/reviewWrite'">글쓰기</button>
 					<c:choose>

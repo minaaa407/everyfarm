@@ -337,29 +337,6 @@ public class AdminController {
 		}
 	}
 
-	@RequestMapping(value = "/adminSign", method = RequestMethod.GET)
-	public String sign(Model model) {
-		model.addAttribute("adminBean", new AdminBean());
-		return "admin/sign-up";
-	}
-
-	@RequestMapping(value = "/adminSign", method = RequestMethod.POST)
-	public String sign(AdminBean adminBean, BindingResult bindingResult, HttpServletRequest request) {
-
-		System.out.println("첫번째:" + adminBean.getA_Pw());
-		String encryPassword = UserPw.encrypt(adminBean.getA_Pw());
-		adminBean.setA_Pw(encryPassword);
-		System.out.println("두번째:" + adminBean.getA_Pw());
-
-		AdminDAO adminDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
-		adminDAO.ajoin(adminBean);
-
-		if (bindingResult.hasErrors()) {
-			return "admin/sign-up";
-		}
-		return "redirect:/adminList";
-	}
-
 	@RequestMapping(value = "/userList")
 	public String mlist(Model model, Paging paging, MemberBean memberBean) {
 		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
@@ -384,115 +361,11 @@ public class AdminController {
 		return "admin/farmerList";
 	}
 	
-	@RequestMapping(value = "/adminList", method = RequestMethod.GET)
-	public String alist(Model model, Paging paging, AdminBean adminBean) {
-		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
-
-		int total = dao.aCount(paging);
-
-		PageMaker pageMake = new PageMaker(paging, total);
-		model.addAttribute("admin", dao.alist(paging));
-		model.addAttribute("pageMaker", pageMake);
-		return "admin/adminList";
-	}
-
 	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 
 		session.invalidate();
 		return "admin/sign-in";
-	}
-
-	@RequestMapping(value = "/adminFindId", method = RequestMethod.GET)
-	public String findId() {
-		return "/admin/findId";
-	}
-
-	@RequestMapping(value = "/adminFindId", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> findId(@ModelAttribute AdminBean adminBean) {
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
-		AdminBean admin = dao.findId(adminBean);
-		if (admin == null) {
-			map.put("url", "/adminFindId");
-			map.put("error", false);
-		} else {
-			map.put("url", "/adminLogin");
-			map.put("memId", admin.getA_Id());
-			map.put("error", true);
-		}
-
-		return map;
-	}
-
-	@RequestMapping(value = "/adminFindPw", method = RequestMethod.GET)
-	public String findPw() {
-		return "/admin/findPw";
-	}
-
-	@RequestMapping(value = "/adminFindPw", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> findPw(@ModelAttribute AdminBean adminBean, HttpServletResponse response) {
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
-		AdminBean admin = dao.findPw(adminBean);
-
-		if (admin == null) {
-			map.put("url", "/adminFindPw");
-			map.put("error", false);
-		} else {
-			String pw = "";
-			for (int i = 0; i < 12; i++) {
-				pw += (char) ((Math.random() * 26) + 97);
-			}
-
-			adminBean.setA_Pw(pw);
-
-			Properties prop = System.getProperties();
-			prop.put("mail.smtp.starttls.enable", "true");
-			prop.put("mail.smtp.host", "smtp.gmail.com");
-			prop.put("mail.smtp.auth", "true");
-			prop.put("mail.smtp.port", "587");
-
-			Authenticator auth = new MailAuth();
-
-			Session session = Session.getDefaultInstance(prop, auth);
-
-			MimeMessage msg = new MimeMessage(session);
-
-			try {
-				msg.setSentDate(new Date());
-
-				msg.setFrom(new InternetAddress("alsdk9458@gmail.com", "EVERYFARM"));
-				InternetAddress to = new InternetAddress(adminBean.getA_Email());
-				msg.setRecipient(Message.RecipientType.TO, to);
-				msg.setSubject("EVERYFARM", "UTF-8");
-				msg.setText("안녕하세요 EVERY FARM 관리자님." + "\n\n" + adminBean.getA_Id() + "관리자님의 임시 비밀번호는 "
-						+ adminBean.getA_Pw() + "입니다." + "\n해당 비밀번호로 로그인 후 반드시 비밀번호 변경을 해주시기 바랍니다." + "\n감사합니다.",
-						"UTF-8");
-
-				Transport.send(msg);
-
-				String encryPassword = UserPw.encrypt(adminBean.getA_Pw());
-				adminBean.setA_Pw(encryPassword);
-
-				dao.upPw(adminBean);
-
-			} catch (AddressException ae) {
-				System.out.println("AddressException : " + ae.getMessage());
-			} catch (MessagingException me) {
-				System.out.println("MessagingException : " + me.getMessage());
-			} catch (UnsupportedEncodingException e) {
-				System.out.println("UnsupportedEncodingException : " + e.getMessage());
-			}
-
-			map.put("url", "/adminLogin");
-			map.put("error", true);
-		}
-		return map;
 	}
 
 	@RequestMapping(value = "/farmerAdd", method = RequestMethod.GET)
@@ -583,22 +456,4 @@ public class AdminController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/adminD")
-	@ResponseBody
-	public Map<String, Object> adminDelete(AdminBean adminbean, @RequestParam(value = "checkArr[]") String checkArr) {
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		AdminDAO adminDao = sqlSessionTemplate.getMapper(AdminDAO.class);
-
-		List<String> delete = Arrays.asList(checkArr);
-		
-		Random random = new Random();
-		int i = random.nextInt(999999);
-		
-		adminDao.aDel(delete, i);
-		map.put("error", true);
-		
-		return map;
-	}
-
 }
