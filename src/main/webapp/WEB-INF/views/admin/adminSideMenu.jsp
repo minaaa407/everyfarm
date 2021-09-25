@@ -18,9 +18,6 @@
   <!-- CSS Files -->
   <link href="/resources/admin/css/argon-dashboard.css?v=1.1.2" rel="stylesheet" />
 <style>
-body{
-	padding-left:250px;
-	}
 	.sep{
 	    border-top: 1px solid lightgray;
     margin-top: 30px;
@@ -31,7 +28,7 @@ body{
 <body>
 <!-- Brand -->
 			<a class="navbar-brand pt-0" href="/admin"> <img
-				src="/resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
+				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
 				alt="...">
 			</a>
 <ul class="navbar-nav">
@@ -50,7 +47,17 @@ body{
               <i class="ni ni-bullet-list-67 text-yellow"></i> 결제내역
             </a>
           </li>
-	 <li class="nav-item">
+          <li class="nav-item">
+            <a class="nav-link " href="/adminReviewList">
+              <i class="ni ni-bullet-list-67 text-yellow"></i> 리뷰 내역
+            </a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link " href="/adminQnaList">
+              <i class="ni ni-bullet-list-67 text-yellow"></i> QnA내역
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link " href="/userList">
               <i class="ni ni-single-02 text-red"></i> 회원관리
             </a>
@@ -60,16 +67,6 @@ body{
               <i class="ni ni-single-02 text-orange"></i> 농부관리
             </a>
           </li>
-            <li class="nav-item">
-            <a class="nav-link " href="/adminQnaList">
-              <i class="ni ni-bullet-list-67 text-yellow"></i> Q&A관리
-            </a>
-		</li>
-	<li class="nav-item">
-            <a class="nav-link " href="">
-              <i class="ni ni-bullet-list-67 text-yellow"></i> 리뷰관리
-            </a>
-		</li>
           <li class="nav-item">
             <a class="nav-link" href="/adminLogout">
               <i class="ni ni-key-25 text-info"></i> 로그아웃
