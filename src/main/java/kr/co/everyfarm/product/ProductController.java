@@ -473,6 +473,7 @@ public class ProductController {
 	         @ModelAttribute("pagebeen") PageBeen pagebeen) {
 	      FarmerBean farmer = (FarmerBean) request.getSession().getAttribute("farmer");
 	      String P_Id = farmer.getF_Id();
+	      System.out.println("확인");
 	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 	      pagebeen.setWhere3("p_Id");
 	      pagebeen.setWherecolumn3(P_Id);

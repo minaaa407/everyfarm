@@ -139,16 +139,13 @@ function LandDelete(p_No) {
 	}
 }
 
+
+
 function search(){
 	
 	var select = document.getElementById('productselect').value;
 	
 	var text = document.getElementById('selectText').value;
-	if(select == "p_Id"){
-		text = "%" + text + "%";
-	}else{
-		text = text;
-	}
 	document.getElementById('where').value = select;
 	document.getElementById('wherecolumn').value= text;
 	
