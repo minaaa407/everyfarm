@@ -43,12 +43,9 @@ public class BasketController {
 	public String basketDelete(@RequestParam String[] bno, BasketBean basket, Model model, HttpServletRequest request) {
 		
 		BasketDAO dao = sqlSessionTemplate.getMapper(BasketDAO.class);
-		for(int i=0 ; i<bno.length; i++) {
-			System.out.println("BasketController bno i : " + bno[i]);
-		}
+	
 		
 		List<String> deletenolist = Arrays.asList(bno);
-		System.out.println("BasketController deletenolist: "+deletenolist);
 		int basketdelete = dao.delete(deletenolist);
 		return "redirect:/basket";
 	}
@@ -95,9 +92,7 @@ public class BasketController {
 		}
 		
 		model.addAttribute("Member", basketList);
-		System.out.println("BasketController 1 : "+ basketList);
 		model.addAttribute("memBasket", memBasket);
-		System.out.println("BasketController : " + memBasket);
 		return "payment/payment";
 	}
 	
@@ -105,7 +100,6 @@ public class BasketController {
 	public String basketUpdate(@RequestParam int bno, @RequestParam int land, @RequestParam int price, 
 			@RequestParam int[] checkindex, BasketBean basket, Model model, HttpServletRequest request, RedirectAttributes redirectuse) {
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
-		System.out.println("들어옴");
 		BasketDAO dao = sqlSessionTemplate.getMapper(BasketDAO.class);
 		String id = member.getM_Id();
 		basket.setB_Id(id);

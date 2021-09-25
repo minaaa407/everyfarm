@@ -28,7 +28,6 @@ import com.google.gson.JsonObject;
 import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.farmer.FarmerDAO;
 import kr.co.everyfarm.payment.PaymentBean;
-import kr.co.everyfarm.payment.PaymentDAO;
 import kr.co.everyfarm.product.ProductBean;
 import kr.co.everyfarm.user.MemberBean;
 
@@ -121,9 +120,10 @@ public class ReviewController {
 		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		revDAO.ReadCount(reviewBean);
 		List<ReviewReplyBean> list = revDAO.reply(rev_No);
-		String test = reviewReplyBean.getRep_Id().replaceAll("(?<=.{1}).",	"*");
-		reviewReplyBean.setRep_Id(test);
 		ReviewBean revVO = revDAO.revDetail(reviewBean);
+		
+		String name = revVO.getRev_Name().replaceAll("(?<=.{1}).",	"*");
+		revVO.setRev_Name(name);
 		model.addAttribute("repList", list);
 		model.addAttribute("revList", revVO);
 
@@ -208,5 +208,66 @@ public class ReviewController {
 		 String a = jsonObject.toString();
 		return a;
 	}
+	
+	@RequestMapping(value = "/adminReviewList")
+	public String getReviewListforAdmin(Model model, ReviewBean reviewBean, Paging paging) {
+		ReviewDAO dao = sqlSessionTemplate.getMapper(ReviewDAO.class);
+
+		int total = dao.revCount(paging);
+		PageMaker pageMake = new PageMaker(paging, total);
+		model.addAttribute("total", total);
+		model.addAttribute("revList", dao.paging(paging));
+		model.addAttribute("pageMaker", pageMake);
+		return "admin/adminReviewList";
+	}
+	@RequestMapping(value = "/adminReviewUpdate", method = RequestMethod.GET)
+	public String getReviewUpdate(ReviewBean reviewBean, Model model,@RequestParam("rev_No") int rev_No) {
+		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		ReviewBean revVO = revDAO.revDetail(reviewBean);
+		List<ReviewReplyBean> list = revDAO.reply(rev_No);
+		model.addAttribute("rep",list);
+		model.addAttribute("revList", revVO);
+		return "admin/adminReviewUpdate";
+	}
+	
+	@RequestMapping(value = "/adminReviewDelete" , method = RequestMethod.POST)
+	public String getReviewDelete(ReviewBean reviewBean, Model model) {
+		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		revDAO.adminDel(reviewBean);
+		
+		return "redirect:/adminReviewList";
+	}
+	
+	@RequestMapping(value = "/adminReviewDetail")
+	public String getReviewDetail1(ReviewBean reviewBean, Model model,@RequestParam("rev_No") int rev_No) {
+		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		ReviewBean revVO = revDAO.revDetail(reviewBean);
+		List<ReviewReplyBean> list = revDAO.reply(rev_No);
+		System.out.println(list);
+		model.addAttribute("repList",list);
+		model.addAttribute("revList", revVO);
+		
+		return "admin/adminReviewDetail";
+	}
+	
+	@RequestMapping(value = "/farmerReviewList")
+	public String getReviewListforFarmer(Model model, ReviewBean reviewBean, Paging paging, HttpSession session) {
+		FarmerBean proB = (FarmerBean) session.getAttribute("farmer");
+		String f_Id = proB.getF_Id();
+		
+		ReviewDAO dao = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		List<ProductBean> flist = dao.farmerReivew(f_Id);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("re", flist);
+		
+		int total = dao.revCount(paging);
+		PageMaker pageMake = new PageMaker(paging, total);
+		model.addAttribute("total", total);
+		model.addAttribute("revList", dao.farmerReviews(paging));
+		model.addAttribute("pageMaker", pageMake);
+		return "farmer/farmerReviewList";
+	}
+	
 
 }

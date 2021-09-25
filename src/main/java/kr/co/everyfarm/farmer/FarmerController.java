@@ -178,7 +178,11 @@ public class FarmerController {
 				return "redirect:/farmer";
 			}
 		} else {
-			return "farmer/FmLogin";
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('아이디 혹은 비밀번호가 일치하지 않습니다. 다시 확인해주세요.'); history.back();</script>");
+			out.flush();
+			return null;
 		}
 	}
 
@@ -450,9 +454,8 @@ public class FarmerController {
 
 	@RequestMapping(value = "/farmerLogout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-
 		session.invalidate();
-		return "farmer/FmLogin";
+		return "redirect:/farmerLogin";
 	}
 
 	@RequestMapping(value = "/farmerMypage")

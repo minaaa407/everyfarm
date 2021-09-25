@@ -1,6 +1,7 @@
 package kr.co.everyfarm.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -99,7 +100,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String mlogin(MemberBean memberBean, HttpServletRequest request) {
+	public String mlogin(MemberBean memberBean, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("login:: post");
 
 		HttpSession session = request.getSession();
@@ -116,7 +117,11 @@ public class UserController {
 			session.setAttribute("member", member);
 			return "redirect:/home";
 		} else {
-			return "redirect:/login";
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('아이디 혹은 비밀번호가 일치하지 않습니다. 다시 확인해주세요.'); history.back();</script>");
+			out.flush();
+			return null;
 		}
 	}
 
@@ -469,7 +474,7 @@ public class UserController {
 
 		session.invalidate();
 
-		return "home/home";
+		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/klogout", method = RequestMethod.GET)
@@ -479,7 +484,7 @@ public class UserController {
 		session.removeAttribute("access_Token");
 		session.removeAttribute("m_Id");
 
-		return "home/home";
+		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/nlogout", method = RequestMethod.GET)
@@ -488,7 +493,7 @@ public class UserController {
 		session.removeAttribute(apiResult);
 		session.invalidate();
 
-		return "home/home";
+		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/mypage")
@@ -501,6 +506,11 @@ public class UserController {
 		PaymentBean forDel = payDAO.mypaylist(paging);
 		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();
+//		String form = test.format("2019-03-17");
+//		if(forDel == null) {
+//			model.addAttribute("payDay",test.format(form));
+//		}else if (forDel != null) {
+//		}
 		
 		model.addAttribute("payDay",test.format(forDel.getPay_Date()));
 		model.addAttribute("now", test.format(now));
