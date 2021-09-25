@@ -47,12 +47,7 @@
               <i class="ni ni-bullet-list-67 text-yellow"></i> 결제내역
             </a>
           </li>
-            <li class="nav-item">
-            <a class="nav-link " href="/adminQnaList">
-              <i class="ni ni-bullet-list-67 text-yellow"></i> QnA내역
-            </a>
-          </li>
-          <li class="nav-item">
+	 <li class="nav-item">
             <a class="nav-link " href="/userList">
               <i class="ni ni-single-02 text-red"></i> 회원관리
             </a>
@@ -62,6 +57,16 @@
               <i class="ni ni-single-02 text-orange"></i> 농부관리
             </a>
           </li>
+            <li class="nav-item">
+            <a class="nav-link " href="/adminQnaList">
+              <i class="ni ni-bullet-list-67 text-yellow"></i> Q&A관리
+            </a>
+		</li>
+	<li class="nav-item">
+            <a class="nav-link " href="/adminQnaList">
+              <i class="ni ni-bullet-list-67 text-yellow"></i> 리뷰관리
+            </a>
+		</li>
           <li class="nav-item">
             <a class="nav-link" href="/adminLogout">
               <i class="ni ni-key-25 text-info"></i> 로그아웃
