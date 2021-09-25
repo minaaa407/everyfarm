@@ -34,36 +34,24 @@ height: 602px;
 </head>
 
 <body class="">
-   <nav
-      class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
-      id="sidenav-main">
-      <div class="container-fluid">
-         <!-- Toggler -->
-         <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-         </button>
-         <!-- Collapse -->
-         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-            <!-- Collapse header -->
-            <div class="navbar-collapse-header d-md-none">
-               <div class="row">
-                  <div class="col-6 collapse-close">
-                     <button type="button" class="navbar-toggler"
-                        data-toggle="collapse" data-target="#sidenav-collapse-main"
-                        aria-controls="sidenav-main" aria-expanded="false"
-                        aria-label="Toggle sidenav">
-                        <span></span> <span></span>
-                     </button>
-                  </div>
-               </div>
-            </div>
-            <!-- Navigation -->
-            <jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
-         </div>
-      </div>
-   </nav>
+ <!-- Navigation -->
+	<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
+			</div>
+		</div>
+	</nav>
    <div class="main-content bodyH">
       <div class="container-fluid mt--7" style="display: flex; justify-content: space-around;">
          <div class="row">

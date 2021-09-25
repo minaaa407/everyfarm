@@ -41,6 +41,7 @@
 </head>
 
 <body>
+<!-- Navigation -->
 	<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
 		id="sidenav-main">
@@ -53,24 +54,12 @@
 			</button>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
-				<!-- Collapse header -->
-				<div class="navbar-collapse-header d-md-none">
-					<div class="row">
-						<div class="col-6 collapse-close">
-							<button type="button" class="navbar-toggler"
-								data-toggle="collapse" data-target="#sidenav-collapse-main"
-								aria-controls="sidenav-main" aria-expanded="false"
-								aria-label="Toggle sidenav">
-								<span></span> <span></span>
-							</button>
-						</div>
-					</div>
-				</div>
 				<!-- Navigation -->
 				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
 	</nav>
+	
 	<div class="main-content" style="margin-left:0px;">
 		<div class="container-fluid mt--7">
 			<div class="row">

@@ -106,7 +106,7 @@ tbody td {
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Navigation -->
-				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
 	</nav>

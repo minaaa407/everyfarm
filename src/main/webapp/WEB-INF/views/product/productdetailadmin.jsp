@@ -10,9 +10,9 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<title>EVERY FARM</title>
+<title>EVERY FARM | 상품 상세페이지</title>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -1137,10 +1137,10 @@ td .mybtn {
 		AdminBean admin = ((AdminBean) session.getAttribute("admin"));
 	%>
 
-	<!-- Start NavBar -->
+	<!-- Navigation -->
 	<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
-		id="sidenav-main" style="z-index: 999">
+		id="sidenav-main">
 		<div class="container-fluid">
 			<!-- Toggler -->
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -1148,32 +1148,13 @@ td .mybtn {
 				aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<!-- Brand -->
-			<a class="navbar-brand pt-0" href="/farmer"> <img
-				src="resources/farmer/img/brand/brand.jpg" class="navbar-brand-img"
-				alt="...">
-			</a>
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
-				<!-- Collapse header -->
-				<div class="navbar-collapse-header d-md-none">
-					<div class="row">
-						<div class="col-6 collapse-close">
-							<button type="button" class="navbar-toggler"
-								data-toggle="collapse" data-target="#sidenav-collapse-main"
-								aria-controls="sidenav-main" aria-expanded="false"
-								aria-label="Toggle sidenav">
-								<span></span> <span></span>
-							</button>
-						</div>
-					</div>
-				</div>
 				<!-- Navigation -->
-				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
 	</nav>
-	<!-- END nav -->
 
 	<!-- 여기서부터 내용 -->
 

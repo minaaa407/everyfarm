@@ -22,12 +22,10 @@ body{
 background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 }
 .limiter {
-  width: 100%;
   margin: 0 auto;
 }
 
 .container-table100 {
-  width: 100%;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -46,9 +44,9 @@ table {
   border-collapse: collapse;
   border-radius: 10px;
   overflow: hidden;
-  width: 100%;
   margin: 0 auto;
   position: relative;
+  width: 1170px;
 }
 table * {
   position: relative;
@@ -120,13 +118,13 @@ background-color: silver;
 					<div class="table100">
 					<table border="1">
 				<colgroup>
-					<col style="width:30px" />
-					<col style="width:100px"/>
-					<col style="width:80px"/>
-					<col style="width:130px"/>
-					<col style="width:80px"/>
-					<col style="width:80px"/>
-					<col style="width:80px"/>
+					<col style="width:5%" />
+					<col style="width:20%"/>
+					<col style="width:10%"/>
+					<col style="width:15%"/>
+					<col style="width:10%"/>
+					<col style="width:25%"/>
+					<col style="width:15%"/>
 				</colgroup>
 				<thead>
 					<tr>
