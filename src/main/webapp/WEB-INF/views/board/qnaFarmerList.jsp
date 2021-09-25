@@ -63,7 +63,7 @@ background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Navigation -->
-				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
 	</nav>
