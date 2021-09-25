@@ -53,7 +53,7 @@
 			href="farmerpaymentlist"> <i
 				class="ni ni-bullet-list-67 text-red"></i> 결제내역
 		</a></li>
-		<li class="nav-item"><a class="nav-link " href="/">
+		<li class="nav-item"><a class="nav-link " href="/farmerReply">
 				<i class="ni ni-bullet-list-67 text-blue"></i> 리뷰관리
 		</a></li>
 		<li class="nav-item"><a class="nav-link " href="/farmerQnaList">
