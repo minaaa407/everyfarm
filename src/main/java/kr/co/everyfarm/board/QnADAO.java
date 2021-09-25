@@ -50,12 +50,6 @@ public interface QnADAO {
 	
 	public String productId(int pno);
 	
-
-//	public List<String> pnoList();
-//	
-//	public List<String> titleList();
-	
-	
 	public List<QnABean> productPnoTitleList();
 	
 	public List<QnABean> productMylist(PagingBean vo);
@@ -90,8 +84,6 @@ public interface QnADAO {
 	
 	public List<QnABean> searchIdfarmer(QnABean qna);
 	
-	//	public List<QnABean> searchEach(QnABean qna);
-	
 	public int insert(QnABean qna);
 	
 	public int qnomax();
@@ -99,23 +91,21 @@ public interface QnADAO {
 	public int insertAdmin(QnAadminBean qna);
 	
 	public int update(QnABean qna);
-	
-	public int updateAdmin(QnAadminBean qna);
+
+	public int updateAdmin(QnABean qna);
 	
 	public int adminWrite(QnABean qna);
 	
 	public int delete(int q_No);
 	
 	public int deleteAdmin(int q_No);
-//farmer
-//	public List<QnABean> productByfarmer(PagingBean vo);
 	
 	public List<QnABean> productQlistFarmer(PagingBean vo);
 	
 	public int farmerWrite(QnABean qna);
 	
 	public int countfarmerQnaList(FarmerBean farmer);
-	
+
 	
 	
 	
