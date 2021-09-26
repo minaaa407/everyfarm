@@ -7,7 +7,7 @@
 <%@page import="kr.co.everyfarm.user.MemberBean"%>
 <%@page import="kr.co.everyfarm.farmer.FarmerBean"%>
 <%@page import="kr.co.everyfarm.admin.AdminBean"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -1167,7 +1167,7 @@ td .mybtn{
 								alt="">
 						</div>
 						<div class="product__details__pic__slider owl-carousel">
-							<c:if test="${not empty oneproduct.p_Subimg1}">
+							<c:if test="${fn:length(oneproduct.p_Subimg1) gt 3}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
@@ -1175,7 +1175,7 @@ td .mybtn{
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
 							</c:if>
-							<c:if test="${not empty oneproduct.p_Subimg2}">
+							<c:if test="${fn:length(oneproduct.p_Subimg2) gt 3}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
@@ -1183,7 +1183,7 @@ td .mybtn{
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
 							</c:if>
-							<c:if test="${not empty oneproduct.p_Subimg3}">
+							<c:if test="${fn:length(oneproduct.p_Subimg3) gt 3}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
@@ -1191,7 +1191,7 @@ td .mybtn{
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
 							</c:if>
-							<c:if test="${not empty oneproduct.p_Subimg4}">
+							<c:if test="${fn:length(oneproduct.p_Subimg4) gt 3}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
