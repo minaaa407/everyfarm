@@ -49,11 +49,6 @@
 </script>
 <title>EVERY FARM | 리뷰 상세</title>
 <style type="text/css">
-
-body {
-	background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
-		height: 969px;
-}
 .center {
 	text-align: center;
 	color: #000;
@@ -201,7 +196,7 @@ span {
 			</div>
 		</div>
 	</nav>
-	<form method="post" action="/replyWrite" class="form">
+	<form method="post" action="/farmerReplyWrite" class="form">
 		<table class="board_view">
 			<thead>
 				<tr>
@@ -344,4 +339,5 @@ span {
 	</script>
 
 </body>
+<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </html>
