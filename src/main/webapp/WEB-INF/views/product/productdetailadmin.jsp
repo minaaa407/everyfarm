@@ -7,7 +7,7 @@
 <%@page import="kr.co.everyfarm.user.MemberBean"%>
 <%@page import="kr.co.everyfarm.farmer.FarmerBean"%>
 <%@page import="kr.co.everyfarm.admin.AdminBean"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -1168,7 +1168,7 @@ td .mybtn{
 					</div>
 				</c:if>
 
-				<div class="col-lg-6 col-md-6" id="maindiv">
+								<div class="col-lg-6 col-md-6" id="maindiv">
 					<div class="product__details__pic">
 						<div class="product__details__pic__item">
 							<img class="product__details__pic__item--large" id="selectimg"
@@ -1176,30 +1176,38 @@ td .mybtn{
 								alt="">
 						</div>
 						<div class="product__details__pic__slider owl-carousel">
+							<c:if test="${fn:length(oneproduct.p_Subimg1) gt 3}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							</c:if>
+							<c:if test="${fn:length(oneproduct.p_Subimg2) gt 3}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							</c:if>
+							<c:if test="${fn:length(oneproduct.p_Subimg3) gt 3}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							</c:if>
+							<c:if test="${fn:length(oneproduct.p_Subimg4) gt 3}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							</c:if>
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"

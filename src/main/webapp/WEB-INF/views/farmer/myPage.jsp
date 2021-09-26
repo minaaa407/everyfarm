@@ -627,8 +627,7 @@ body {
                                  }*/
                                  },
                                  submitHandler : function(frm) {
-                                    location
-                                          .replace('/farmerDelete');
+                                    location.replace('');
                                     form.submit();
                                     frm.submit(); //유효성  통과하면 submit();
                                  },
