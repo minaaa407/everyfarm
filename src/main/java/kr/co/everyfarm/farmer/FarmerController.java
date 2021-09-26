@@ -48,7 +48,6 @@ import kr.co.everyfarm.board.ReviewBean;
 import kr.co.everyfarm.payment.PaymentBean;
 import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.product.ProductqnaBean;
-import kr.co.everyfarm.product.ProductDao;
 import kr.co.everyfarm.user.EmailBean;
 import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.UserPw;
@@ -98,9 +97,6 @@ public class FarmerController {
 	      List<String> seedName = new ArrayList<String>();
 	      List<Integer> seedSumTotal = new ArrayList<Integer>();
 
-	      System.out.println("totalSeedSum = " + totalSeedSum);
-	      System.out.println("oneSeedSum = " + oneSeedSum);
-
 	      for (int i = 0; i < seedList.size(); i++) {
 	         seedName.add(totalSeedSum.get(i).getPay_Seed());
 	         seedSumTotal.add(totalSeedSum.get(i).getPay_Land());
@@ -149,7 +145,6 @@ public class FarmerController {
 
 	@RequestMapping(value = "/farmerLogin", method = RequestMethod.GET)
 	public String flogin() {
-		System.out.println("login:: get");
 		return "farmer/FmLogin";
 	}
 
@@ -189,7 +184,6 @@ public class FarmerController {
 	@RequestMapping(value = "/farmerSign", method = RequestMethod.GET)
 	public String sign(Model model) {
 		model.addAttribute("farmerBean", new FarmerBean());
-
 		return "farmer/signUp";
 	}
 
@@ -197,8 +191,6 @@ public class FarmerController {
 	public String sign(FarmerBean farmerBean, @RequestParam(value = "f_Auth2", required = false) MultipartFile file,
 			HttpServletRequest request) {
 
-		System.out.println("동작되었는가???");
-		System.out.println(farmerBean + "bean 값은");
 		farmerBean.setF_Sign("N");
 		farmerBean.setF_Addr(request.getParameter("Addr2") + request.getParameter("Addr3")
 				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
@@ -305,13 +297,10 @@ public class FarmerController {
 			map.put("error", true);
 
 		} catch (AddressException ae) {
-			System.out.println("AddressException : " + ae.getMessage());
 			map.put("error", false);
 		} catch (MessagingException me) {
-			System.out.println("MessagingException : " + me.getMessage());
 			map.put("error", false);
 		} catch (UnsupportedEncodingException e) {
-			System.out.println("UnsupportedEncodingException : " + e.getMessage());
 			map.put("error", false);
 		}
 		return map;
@@ -529,7 +518,6 @@ public class FarmerController {
 
 	@RequestMapping(value = "/farmerDelete")
 	public String myDelete(FarmerBean farmerbean, HttpSession session) {
-		System.out.println("탈퇴 간다!!!!!!!!!!");
 		FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		FarmerBean fBean = (FarmerBean) session.getAttribute("farmer");
 		String f_Id = fBean.getF_Id();		
@@ -548,7 +536,7 @@ public class FarmerController {
 		FarmerDAO Dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		Dao.upPwFar(farmerBean);
 
-		return "redirect:/home";
+		return "redirect:/farmerMypage";
 	}
 
 	@RequestMapping(value = "/farmerAddrUpdate")
@@ -558,22 +546,18 @@ public class FarmerController {
 				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
 
 		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
-		System.out.println(farmerBean + "값 도대체 뭐인거야????");
 		memDao.upAddr(farmerBean);
 		
-		return "redirect:/home";
+		return "redirect:/farmerMypage";
 	}
 
 	@RequestMapping(value = "/farmerInfoNameUpdate")
 	public String farmerChange3(FarmerBean farmerBean, HttpSession session, HttpServletRequest request) {
-		System.out.println("동작되는가???");
-		System.out.println("동작되는가???2");
-		System.out.println("동작되는가???3");
+
 		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
-		System.out.println(farmerBean + "값 변경");
 		memDao.upName(farmerBean);
 
-		return "redirect:/home";
+		return "redirect:/farmerMypage";
 	}
 
 	@RequestMapping(value = "/farmerInfoTelUpdate")
@@ -581,7 +565,7 @@ public class FarmerController {
 
 		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		memDao.upTel(farmerBean);
-		return "redirect:/home";
+		return "redirect:/farmerMypage";
 	}
 
 }
