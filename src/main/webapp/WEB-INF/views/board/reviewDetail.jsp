@@ -244,7 +244,7 @@ span {
 					<td class="das">
 						<div>
 							<c:choose>
-								<c:when test="${!empty member.m_Id}">
+								<c:when test="${!empty member.m_Id or !empty farmer.f_Id}">
 									<div>
 										<label><i class="fas fa-caret-right"></i> 이름 : </label> <span>${member.m_Name}<input
 											type="hidden" name="rep_Id" value="${member.m_Name}"></span>

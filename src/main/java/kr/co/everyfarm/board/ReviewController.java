@@ -253,21 +253,18 @@ public class ReviewController {
 	@RequestMapping(value = "/farmerReviewList")
 	public String getReviewListforFarmer(Model model, ReviewBean reviewBean, Paging paging, HttpSession session) {
 		FarmerBean proB = (FarmerBean) session.getAttribute("farmer");
-		String f_Id = proB.getF_Id();
-		
+		String p_Id = proB.getF_Id();
+		paging.setP_Id(p_Id);
 		ReviewDAO dao = sqlSessionTemplate.getMapper(ReviewDAO.class);
-		List<ProductBean> flist = dao.farmerReivew(f_Id);
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("re", flist);
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		map.put("re", flist);
 		
-		int total = dao.revCount(paging);
+		int total = dao.farmerReviewscount(p_Id);
 		PageMaker pageMake = new PageMaker(paging, total);
 		model.addAttribute("total", total);
 		model.addAttribute("revList", dao.farmerReviews(paging));
 		model.addAttribute("pageMaker", pageMake);
-		return "farmer/farmerReviewList";
+		return "farmer/farmerMyReviewList";
 	}
-	
-
 }

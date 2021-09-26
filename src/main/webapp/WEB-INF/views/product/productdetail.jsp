@@ -1167,30 +1167,38 @@ td .mybtn{
 								alt="">
 						</div>
 						<div class="product__details__pic__slider owl-carousel">
+							<c:if test="${not empty oneproduct.p_Subimg1}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							</c:if>
+							<c:if test="${not empty oneproduct.p_Subimg2}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							</c:if>
+							<c:if test="${not empty oneproduct.p_Subimg3}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							</c:if>
+							<c:if test="${not empty oneproduct.p_Subimg4}">
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								alt=""
 								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
 								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							</c:if>
 							<img
 								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
 								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"

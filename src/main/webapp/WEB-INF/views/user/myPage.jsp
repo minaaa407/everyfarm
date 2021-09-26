@@ -13,7 +13,8 @@
 
 <title>EVERY FARM | 마이페이지</title>
 
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+<link rel="shortcut icon" type="image/x-icon"
+	href="/resources/editor/connn.ico" />
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
 	rel="stylesheet">
@@ -201,7 +202,7 @@ body {
 
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/home/header.jsp" />
+	<jsp:include page="/WEB-INF/views/home/header.jsp" />
 	<div class="container">
 		<div class="view-account">
 			<section class="module">
@@ -306,9 +307,9 @@ body {
 									<tbody id="Name_modify_on1" style="display: none;">
 										<tr>
 											<th class="table__th">이름</th>
-											<td class="table__td"><input type="text" name="m_Name" max="5"
-												id="m_Name" placeholder="변경할 이름" class="form-control"
-												style="display: inline;" required>
+											<td class="table__td"><input type="text" name="m_Name"
+												max="5" id="m_Name" placeholder="변경할 이름"
+												class="form-control" style="display: inline;" required>
 												<button class="btn btn-style-1" type="submit"
 													formaction="/myInfoNameUpdate">
 													<span class="edit">변경</span>
@@ -328,8 +329,8 @@ body {
 									<tbody id="Tel_modify_on" style="display: none;">
 										<tr>
 											<th class="table__th">연락처</th>
-											<td class="table_td"><input type="tel" name="m_Tel" max="11"
-												required id="m_Tel" placeholder="('-'제외 입력해주세요.)"
+											<td class="table_td"><input type="tel" name="m_Tel"
+												max="11" required id="m_Tel" placeholder="('-'제외 입력해주세요.)"
 												class="form-control" />
 												<button class="btn btn-style-1" type="submit"
 													formaction="/myInfoTelUpdate">
@@ -394,9 +395,9 @@ body {
 										<tr>
 											<th class="table__th">가입 날짜</th>
 											<td class="table__td"><fmt:formatDate
-													value="${member.m_Date}" pattern="yyyy/MM/dd" />
-											<input type="hidden" id="myCus" value="${payDay}">
-											<input type="hidden" id="now" value="${now}">
+													value="${member.m_Date}" pattern="yyyy/MM/dd" /> <input
+												type="hidden" id="myCus" value="${payDay}"> <input
+												type="hidden" id="now" value="${now}">
 										</tr>
 									</tbody>
 								</table>
@@ -433,10 +434,18 @@ body {
 				<div class="modal-footer justify-content-center">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">취 소</button>
-						<form action="/myInfoDelete" method="post">
-							<button name="m_Id" value="${member.m_Id}" id="mDel"
-								type="submit" class="btn btn-danger">탈
-								퇴</button></form>
+					<form action="/myInfoDelete" method="post" name="toDel">
+						<c:choose>
+							<c:when test="${!empty myCus}">
+								<button name="m_Id" value="${member.m_Id}" id="mDel"
+									type="submit" class="btn btn-danger">탈 퇴</button>
+							</c:when>
+							<c:otherwise>
+								<button name="m_Id" value="${member.m_Id}" onclick="mDel2()"
+									type="submit" class="btn btn-danger">탈 퇴</button>
+							</c:otherwise>
+						</c:choose>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -446,28 +455,36 @@ body {
 
 
 <script type="text/javascript">
-   $(function() {
-      var pay = document.getElementById("myCus").value;
-      var now = document.getElementById("now").value;
-      var payD = pay.split('-');
-      var nowD = now.split('-');
-      var payD2 = new Date(payD[0], payD[1], payD[2]);
-      var nowD2 = new Date(nowD[0], nowD[1], nowD[2]);
-      var diff = nowD2 - payD2;
-      var diffDay = 24 * 60 * 60 * 1000;
-      var diffMonth = diffDay * 30;
-      var test = parseInt(diff / diffMonth);
-      var MinMonth = 6;
-      $("#mDel").click(
-            function() {
-               if (test < MinMonth) {
-                  alert("6개월 내 주문내역이 있어 탈퇴할 수 없습니다.");
-                  return false;
-               } else {
-                  return true;
-               }
-            });
-   });
+	function mDel2() {
+		if(confirm("정말 탈퇴하시겠습니끼?") == true ){
+			document.toDel.submit();
+			alert("이용해 주셔서 감사합니다.");
+		}else{
+		return false;
+		}
+	}
+	
+	$(function() {
+		var pay = document.getElementById("myCus").value;
+		var now = document.getElementById("now").value;
+		var payD = pay.split('-');
+		var nowD = now.split('-');
+		var payD2 = new Date(payD[0], payD[1], payD[2]);
+		var nowD2 = new Date(nowD[0], nowD[1], nowD[2]);
+		var diff = nowD2 - payD2;
+		var diffDay = 24 * 60 * 60 * 1000;
+		var diffMonth = diffDay * 30;
+		var test = parseInt(diff / diffMonth);
+		var MinMonth = 6;
+		$("#mDel").click(function() {
+			if (test < MinMonth) {
+				alert("6개월 내 주문내역이 있어 탈퇴할 수 없습니다.");
+				return false;
+			} else {
+				return true;
+			}
+		});
+	});
 </script>
 
 <script type="text/javascript">
@@ -570,7 +587,8 @@ body {
 <script src="http://code.jquery.com/jquery-1.3.2.min.js"></script>
 <script
 	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 	$('#DeleteBtn').click(function() {

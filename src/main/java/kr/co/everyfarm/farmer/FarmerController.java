@@ -529,7 +529,7 @@ public class FarmerController {
 
 	@RequestMapping(value = "/farmerDelete")
 	public String myDelete(FarmerBean farmerbean, HttpSession session) {
-
+		System.out.println("탈퇴 간다!!!!!!!!!!");
 		FarmerDAO dao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		FarmerBean fBean = (FarmerBean) session.getAttribute("farmer");
 		String f_Id = fBean.getF_Id();		
@@ -558,15 +558,19 @@ public class FarmerController {
 				+ request.getParameter("Addr4") + "(" + request.getParameter("Addr1") + ")");
 
 		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		System.out.println(farmerBean + "값 도대체 뭐인거야????");
 		memDao.upAddr(farmerBean);
-
+		
 		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/farmerInfoNameUpdate")
 	public String farmerChange3(FarmerBean farmerBean, HttpSession session, HttpServletRequest request) {
-
+		System.out.println("동작되는가???");
+		System.out.println("동작되는가???2");
+		System.out.println("동작되는가???3");
 		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		System.out.println(farmerBean + "값 변경");
 		memDao.upName(farmerBean);
 
 		return "redirect:/home";
