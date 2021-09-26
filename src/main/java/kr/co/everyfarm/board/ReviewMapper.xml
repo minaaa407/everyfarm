@@ -88,8 +88,7 @@
 
 	<select id="reply"
 		resultType="kr.co.everyfarm.board.ReviewReplyBean">
-		SELECT * FROM r_reply WHERE rev_No = #{rev_No} ORDER BY
-		rep_Date
+		SELECT * FROM r_reply WHERE rev_No = #{rev_No} ORDER BY rep_Date
 	</select>
 
 	<insert id="insert"

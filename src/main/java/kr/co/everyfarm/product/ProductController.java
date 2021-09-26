@@ -786,6 +786,7 @@ public class ProductController {
 	            e.printStackTrace();
 	         }
 	      }
+	      System.out.println(productbean + "값 확인임.");
 	      dao.update(productbean);
 	      model.addAttribute("P_No", productbean.getP_No());
 

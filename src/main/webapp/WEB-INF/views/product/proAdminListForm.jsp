@@ -36,6 +36,19 @@
 
 </head>
 <style>
+
+
+@media screen and (min-width: 950px){
+	div#table100{
+		display : "" ;
+	}
+	.mobiletalbe{
+		display :none;
+	}
+}
+
+
+
 td, th {
 	border-color: #9ea4ca;
 }
@@ -60,7 +73,7 @@ body {
 }
 
 .wrap-table100 {
-	width: 1170px;
+	width: 90%
 }
 
 table {
@@ -154,6 +167,16 @@ function search(){
 	document.myHiddenForm.submit();
 }
 
+window.onresize = function(event){
+	  var innerWidth = window.innerWidth;
+	  if(innerWidth <= "950"){
+		  document.getElementById('table100').style.display ="none"
+	  }else{
+		  document.getElementById('table100').style.display =""
+	  }
+
+}
+
 </script>
 
 <title>EVERY FARM 관리자 | 상품관리</title>
@@ -190,17 +213,17 @@ function search(){
 					<a href="/proAdminListForm?" class="btn btn-sm btn-neutral">전체보기 </a>
 				</div>
 				<br>
-				<div class="table100">
+				<div id ="table100" class="table100">
 					<table border="1">
 						<colgroup>
-							<col style="width: 50px" />
-							<col style="width: 120px" />
-							<col style="width: 100px" />
-							<col style="width: 100px" />
-							<col style="width: 80px" />
-							<col style="width: 70px" />
-							<col style="width: 70px" />
-							<col style="width: 150px" />
+							<col style="width: 5%" />
+							<col style="width: 18%" />
+							<col style="width: 14%" />
+							<col style="width: 18%" />
+							<col style="width: 12%" />
+							<col style="width: 10%" />
+							<col style="width: 11%" />
+							<col style="width: 12%" />
 						</colgroup>
 						<thead>
 							<tr>
@@ -237,6 +260,56 @@ function search(){
 						</tbody>
 					</table>
 				</div>
+				<div>
+					<c:forEach var="p" items="${productlist}">
+					<div class="mobiletalbe" >
+							<table border="1" style="width:90%">
+									<tbody>
+										<tr>
+											<td style="width: 30%;background: white;">번호</td>
+											<td style="width: 70%" class="content">${p.p_No}</td>
+										</tr>
+										<tr>
+											<td style="background: white;">메인이미지</td>
+											<td class="content"><img id='product${p.p_No}'
+													src="/resources/upload/product/${p.p_No}/${p.p_Img}"
+													class="test1" width="120" height="80" alt="Image ${p.p_No}">
+												</td>
+										</tr>
+										<tr>
+											<td style="background: white;">아이디</td>
+											<td class="content">${p.p_Id}</td>
+										</tr>
+										<tr>
+											<td style="background: white;">제목</td>
+											<td class="content">${p.p_Title}</td>
+										</tr>
+										<tr>
+											<td style="background: white;">등록날짜</td>
+											<td class="content">${p.p_Date}</td>
+										</tr>
+										<tr>
+											<td style="background: white;">승인여부</td>
+											<td class="content">${p.p_Accept}</td>
+										</tr>
+										<tr>
+											<td style="background: white;">상세보기</td>
+											<td class="content"><a
+													href="/productdetailfarmer?productno=${p.p_No}">상세보기</a></td>
+										</tr>
+										<tr>
+											<td style="background: white;">삭제</td>
+											<td><button type="button" class="btn btn-sm btn-neutral"
+														onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
+										</tr>
+									</tbody>
+								</table>
+								<br>
+								<br>
+						</div>	
+						</c:forEach>
+					</div>
+				
 				<br>
 				<div id="regSearch">
 					<select name="productselect" id="productselect">
@@ -302,4 +375,15 @@ function search(){
 		<br>
 		<Br>
 </body>
+<script>
+
+var innerWidth2 = window.innerWidth;
+
+if(innerWidth2 <= "950"){
+	  document.getElementById('table100').style.display ="none"
+}else{
+	  document.getElementById('table100').style.display =""
+}
+
+</script>
 </html>

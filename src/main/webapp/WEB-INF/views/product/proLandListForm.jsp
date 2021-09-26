@@ -42,7 +42,7 @@
 
 <style>
 
-@media screen and (min-width: 768px){
+@media screen and (min-width: 950px){
 	div#table100{
 		display : "" ;
 	}
@@ -77,7 +77,7 @@ body {
 }
 
 .wrap-table100 {
-width: 75%
+width: 100%
 }
 
 
@@ -177,7 +177,7 @@ function paging(i){
 }
 window.onresize = function(event){
 	  var innerWidth = window.innerWidth;
-	  if(innerWidth <= "768"){
+	  if(innerWidth <= "950"){
 		  document.getElementById('table100').style.display ="none"
 	  }else{
 		  document.getElementById('table100').style.display =""
@@ -230,12 +230,12 @@ window.onresize = function(event){
 				<div id ="table100" class="table100">
 					<table border="1">
 						<colgroup>
-							<col style="width: 10%" />
+							<col style="width: 12%" />
 							<col style="width: 20%" />
 							<col style="width: 20%" />
-							<col style="width: 20%" />
-							<col style="width: 10%" />
-							<col style="width: 10%" />
+							<col style="width: 15%" />
+							<col style="width: 12%" />
+							<col style="width: 11%" />
 							<col style="width: 10%" />
 						</colgroup>
 						<thead>
@@ -272,38 +272,38 @@ window.onresize = function(event){
 				<div>
 					<c:forEach var="p" items="${productlist}">
 					<div class="mobiletalbe" >
-							<table border="1" >
+							<table border="1" style="width:75%">
 									<tbody>
 										<tr>
-											<td style="width: 15%">상품 번호</td>
+											<td style="width: 15%;background: white;">상품 번호</td>
 											<td style="width: 15%" class="content">${p.p_No}</td>
 										</tr>
 										<tr>
-											<td>메인이미지</td>
+											<td style="background: white;">메인이미지</td>
 											<td class="content"><img id='product${p.p_No}'
 													src="/resources/upload/product/${p.p_No}/${p.p_Img}"
 													class="test1" width="120" height="80" alt="Image ${p.p_No}">
 												</td>
 										</tr>
 										<tr>
-											<td>제목</td>
+											<td style="background: white;">제목</td>
 											<td class="content">${p.p_Title}</td>
 										</tr>
 										<tr>
-											<td>등록날짜</td>
+											<td style="background: white;">등록날짜</td>
 											<td class="content">${p.p_Date}</td>
 										</tr>
 										<tr>
-											<td>승인여부</td>
+											<td style="background: white;">승인여부</td>
 											<td class="content">${p.p_Accept}</td>
 										</tr>
 										<tr>
-											<td>상세보기</td>
+											<td style="background: white;">상세보기</td>
 											<td class="content"><a
 													href="/productdetailfarmer?productno=${p.p_No}">상세보기</a></td>
 										</tr>
 										<tr>
-											<td>상세보기</td>
+											<td style="background: white;">삭제</td>
 											<td><button type="button" class="btn btn-sm btn-neutral"
 														onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
 										</tr>
@@ -398,7 +398,7 @@ window.onresize = function(event){
 
 var innerWidth2 = window.innerWidth;
 
-if(innerWidth2 <= "768"){
+if(innerWidth2 <= "950"){
 	  document.getElementById('table100').style.display ="none"
 }else{
 	  document.getElementById('table100').style.display =""

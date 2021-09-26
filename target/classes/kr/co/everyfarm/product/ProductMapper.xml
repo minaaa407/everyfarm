@@ -141,7 +141,7 @@
 	      p_Subimg4=#{p_Subimg4},p_Imgdetail1=#{p_Imgdetail1},
 	      p_Imgdetail2=#{p_Imgdetail2},p_Imgdetail3=#{p_Imgdetail3},
 	      p_Imgdetail4=#{p_Imgdetail4},p_Landprice=#{p_Landprice},
-	      p_Manpay=#{p_Manpay},
+	      p_Manpay=#{p_Manpay}
 	      where p_no = #{p_No}   
    </update>
    
