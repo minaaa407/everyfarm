@@ -114,7 +114,7 @@
 			
 				<!-- Chart -->
 							<div class="chartD col-xl-6" style="padding-left: 0px; padding-right: 0px; width: 800px;">
-								<iframe src="http://localhost:8090/iTest" width="800" height="505"></iframe>
+								<iframe src="http://everyfarm.shop/iTest" width="800" height="505"></iframe>
 							</div>
     		<!-- Chart -->
 			</div>

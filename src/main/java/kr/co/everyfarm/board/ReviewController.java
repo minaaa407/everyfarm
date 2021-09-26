@@ -52,11 +52,15 @@ public class ReviewController {
 	@RequestMapping("/reviewWrite")
 	public String getReviewWrite(HttpSession session, PaymentBean paymentbean, Model model, FarmerBean farmerBean) {
 		MemberBean member = (MemberBean) session.getAttribute("member");
-		String m_Id = member.getM_Id();//아이디 검색
+		String m_Id = member.getM_Id();
 
 		ReviewDAO rdao = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		List<PaymentBean> myPay = rdao.selectpaymentreview(m_Id);//뽑아 낸다.
 		List<ProductBean> myProductList = rdao.selectproductreview(m_Id);
+		
+		
+		
+		
 		
 		System.out.println(myPay + "값 확인");
 		//여기에서 for 문 서서 비교해서 날려버린다. 
@@ -266,5 +270,16 @@ public class ReviewController {
 		model.addAttribute("revList", dao.farmerReviews(paging));
 		model.addAttribute("pageMaker", pageMake);
 		return "farmer/farmerMyReviewList";
+	}
+	@RequestMapping(value = "/farmerReviewDetail")
+	public String getReviewDetail2(ReviewBean reviewBean, Model model,@RequestParam("rev_No") int rev_No) {
+		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		ReviewBean revVO = revDAO.revDetail(reviewBean);
+		List<ReviewReplyBean> list = revDAO.reply(rev_No);
+		System.out.println(list);
+		model.addAttribute("repList",list);
+		model.addAttribute("revList", revVO);
+		
+		return "farmer/farmerReviewDetail";
 	}
 }

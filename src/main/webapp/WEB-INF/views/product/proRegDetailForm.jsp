@@ -131,10 +131,10 @@ tbody td {
 					<tr>
 						<td colspan="1" style="width: 20%;"><label>작성자</label></td>
 						<td colspan="3"><input type="text" style="text-align: left;"
-							name="p_Id" value="${productinfo.p_Id}" maxlength="50" required
-							autofocus> <input type="hidden" name="p_No"
-							value="${productinfo.p_No}"> <input type="hidden"
-							name="p_Accept" value="${productinfo.p_Accept}"></td>
+							name="p_Id" value="${productinfo.p_Id}" maxlength="50" readonly>
+							<input type="hidden" name="p_No" value="${productinfo.p_No}">
+							<input type="hidden" name="p_Accept"
+							value="${productinfo.p_Accept}"></td>
 
 					</tr>
 					<tr>

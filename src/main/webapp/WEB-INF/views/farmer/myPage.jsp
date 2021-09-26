@@ -40,6 +40,8 @@
 /* 모달 시작 */
 body {
    font-family: 'Varela Round', sans-serif;
+   background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
+   height: 948px;
 }
 
 .modal-confirm {
@@ -182,6 +184,9 @@ body {
    border: 5px solid #73757c;
    background-color: #73757c;
 }
+.view{
+background-color: rgba(255, 255, 255, 0.4);
+}
 </style>
 
 </head>
@@ -205,7 +210,7 @@ body {
 		</div>
 	</nav>
    <div class="container">
-      <div class="view-account">
+      <div class="view-account view">
          <section class="module">
             <div class="module-inner">
                <div class="side-bar">

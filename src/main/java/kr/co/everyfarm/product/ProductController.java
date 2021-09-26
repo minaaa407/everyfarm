@@ -473,14 +473,10 @@ public class ProductController {
 	         @ModelAttribute("pagebeen") PageBeen pagebeen) {
 	      FarmerBean farmer = (FarmerBean) request.getSession().getAttribute("farmer");
 	      String P_Id = farmer.getF_Id();
-	      System.out.println("확인");
 	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 	      pagebeen.setWhere3("p_Id");
 	      pagebeen.setWherecolumn3(P_Id);
-	      System.out.println(pagebeen.getSelectpage() + "값 얼만");
-	      System.out.println(pagebeen + "pagebeen 확인");
 	      int selecttotalindex = dao.farmerlistcount(pagebeen);
-	      System.out.println(selecttotalindex + "값 나온거 얼마임?");
 	      
 	      pagebeen.setLimit(10);
 	      pagebeen.setTableindex(selecttotalindex);
@@ -601,12 +597,12 @@ public class ProductController {
 
 	   }
 	   
-	   @RequestMapping("/AdRegDetailForm")
+	   @RequestMapping("/proAdDetailForm")
 	   public String getAdRegDetail(Model model, @RequestParam int p_No) {
 	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 	      ProductBean productinfo = dao.info(p_No);
 	      model.addAttribute("productinfo", productinfo);
-	      return "product/proRegDetailForm";
+	      return "product/proAdDetailForm";
 
 	   }
 
@@ -710,6 +706,7 @@ public class ProductController {
 
 	      return "redirect:/proAdminListForm";
 	   }
+	   
 
 	   @RequestMapping("/LandDelete")
 	   public String getLandDelete(@RequestParam int p_No) {
@@ -797,8 +794,6 @@ public class ProductController {
 				}
 			}
 			dao.update(productbean);
-			System.out.println(productbean);
-			System.out.println("수정 확인");
 			model.addAttribute("P_No", productbean.getP_No());
 
 			return "redirect:/proLandListForm";
@@ -932,8 +927,6 @@ public class ProductController {
 				}
 			}
 			dao.update(productbean);
-			System.out.println(productbean);
-			System.out.println("수정 확인");
 			model.addAttribute("P_No", productbean.getP_No());
 
 			return "redirect:/proAdminListForm";

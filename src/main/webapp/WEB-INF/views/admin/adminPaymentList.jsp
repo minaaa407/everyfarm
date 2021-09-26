@@ -95,6 +95,22 @@ table td, table th {
 background-color: silver;
 }
 
+.site-btn {
+	border-radius: 5px;
+	position: relative;
+	font-size: 15px;
+	color: #000000;
+	font-weight: 800;
+	text-transform: uppercase;
+	display: inline-block;
+	padding: 13px 26px 12px;
+	border: none;
+	padding-left: 13px;
+	padding-right: 13px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	margin-right: 10px;
+}
 </style>
 
 </head>
@@ -164,7 +180,7 @@ background-color: silver;
 						</table>
 					</div>
 						</div>
-
+<br>
 				
 				<form id="sort" name="rentSearch" method="post"
                                  action="/adminPaymentList">

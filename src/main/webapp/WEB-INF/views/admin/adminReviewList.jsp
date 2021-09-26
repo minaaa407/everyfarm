@@ -86,38 +86,7 @@ table td, table th {
 	text-align: center;
 }
 
-.bef-list {
-	text-align: center;
-	margin-bottom: 20px;
-	border-top: 0px;
-	border-radius: 11px;
-	padding: 0;
-	margin: 0;
-}
-
-.list-end {
-	border-right: 1px solid rgba(0, 0, 0, 0.05);
-	border-bottom-left-radius: 11px;
-	border-top-left-radius: 11px;
-	margin-bottom: 20px;
-	padding: 0;
-	margin: 0;
-	color: #000000;
-}
-
-.list-start {
-	border-top-right-radius: 11px;
-	border-bottom-right-radius: 11px;
-	margin-bottom: 20px;
-	padding: 0;
-	margin: 0;
-	color: #000000;
-}
 /* a 태그 CSS 하는중 */
-a:link {
-	color: black;
-	text-decoration: none;
-}
 
 a:visited {
 	color: black;
@@ -132,18 +101,13 @@ a:hover {
 .pageInfo li {
 	float: left;
 	font-size: 13px;
-	margin-left: 18px;
-	padding: 7px;
 	font-weight: 500;
 }
 
 .pageInfo_btn {
-	padding: 8px 16px;
 	border-radius: 20%;
-	color: #555555;
-	margin: 3px;
-	font: 8pt verdana;
 	list-style-type: none;
+	padding: 8px 1px;
 }
 
 .pageInfo_btn  a {
@@ -153,19 +117,21 @@ a:hover {
 	border-radius: 20%;
 }
 
-.pageInfo_btn active {
+.pageInfo_btn:hover {
+	background-color: silver;
+}
+
+
+.active a {
 	background-color: #7971ea;
 	color: white;
 }
-
-.search {
-	position: relative;
-	left: 30%;
-	cursor: pointer;
-	width: 50px;
-	border: 0px solid #c3c3c3;
-	background-color: white;
+.cen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
 
 .txt {
 	font-size: 13px;
@@ -184,11 +150,6 @@ a:hover {
 	width: 10%;
 }
 
-.title {
-	text-align: left;
-	padding-left: 3%;
-}
-
 .tdname {
 	width: 17%;
 }
@@ -197,20 +158,6 @@ a:hover {
 	width: 13%;
 }
 
-.type {
-	position: relative;
-	margin: auto;
-	left: 30%;
-	width: 10%;
-}
-
-.keyword {
-	position: relative;
-	margin: auto;
-	left: 30%;
-	width: 20%;
-	height: 27px;
-}
 
 .searchBtn {
 	top: -20px;
@@ -218,20 +165,8 @@ a:hover {
 	position: absolute;
 }
 
-.btn1 {
-	position: relative;
-	left: 32%;
-	top: 1%;
-}
-
-.pageInfo_area {
-	position: relative;
-	left: 38%;
-}
-
 .pageInfo_btn:hover {
 	background-color: silver;
-	transition: all ease 0.5s 0s;
 }
 
 .pageInfo_btn {
@@ -246,7 +181,6 @@ a:hover {
 .site-btn {
 	border-radius: 5px;
 	position: relative;
-	left: 31%;
 	font-size: 15px;
 	color: #000000;
 	font-weight: 800;
@@ -260,31 +194,6 @@ a:hover {
 	padding-top: 10px;
 	margin-right: 10px;
 }
-
-.btn.btn-primary {
-	background: #4e9525 !important;
-	border: 1px solid #4e9525 !important;
-	color: #fff !important;
-	position: relative;
-	left: 30%;
-	top: 1%;
-	width: 60px;
-	height: 32px;
-	text-align: center;
-}
-
-.search_wrap {
-	position: relative;
-	/* right: 27%; */
-	top: 20px;
-}
-
-.ttc {
-	position: relative;
-	top: 13.5%;
-	left: 80%;
-}
-/* 페이징 버튼 꾸미는중 0902~ */
 
 
 /* CSS 작업중 삭제 XXXXXXXX */
@@ -390,7 +299,8 @@ a:hover {
 							</c:choose>
 						</tbody>
 					</table>
-
+					<br>
+					<div class="cen">
 					<div class="search_wrap">
 						<div class="search_area">
 							<select name="type" class="type">
@@ -446,7 +356,7 @@ a:hover {
 							</ul>
 						</div>
 					</div>
-
+					</div>
 				</div>
 			</div>
 		</div>
