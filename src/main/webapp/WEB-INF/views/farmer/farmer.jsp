@@ -28,7 +28,7 @@ height: 602px;
     margin-top: 50px;
     }
     .bodyH{
-    height: 965px;
+    height: 968px;
     display: flex;
     align-items: center;
     }
