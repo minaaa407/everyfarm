@@ -49,6 +49,11 @@
 </script>
 <title>EVERY FARM | 리뷰 상세</title>
 <style type="text/css">
+
+body {
+	background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
+		height: 969px;
+}
 .center {
 	text-align: center;
 	color: #000;
@@ -171,16 +176,36 @@ span {
 
 .form {
 	padding-top: 3%;
+	position: relative;
+    display: inherit;
+    width: 70%;
+    margin: auto;
 }
 </style>
-<jsp:include page="/WEB-INF/views/home/header.jsp" />
 </head>
 <body>
+<nav
+		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+		id="sidenav-main">
+		<div class="container-fluid">
+			<!-- Toggler -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Collapse -->
+			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+				<!-- Navigation -->
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
+			</div>
+		</div>
+	</nav>
 	<form method="post" action="/replyWrite" class="form">
 		<table class="board_view">
 			<thead>
 				<tr>
-					<th class="for-thead"><div class="center">${revList.rev_Title}</div></th>
+					<th class="for-thead"><div >${revList.rev_Title}</div></th>
 				</tr>
 			</thead>
 
@@ -222,7 +247,7 @@ span {
 									value="${repList.rep_Date}" /></span>
 							<div class="cont2">${repList.rep_Cont}</div></td>
 						<td><button type="button" onclick="replyDel()">삭제</button>
-							<input type="hidden" value="${repList.rep_No}" id="rep_No"> </td>
+							 </td>
 						
 					</tr>
 				</c:forEach>
@@ -244,10 +269,24 @@ span {
 					<td class="das">
 						<div>
 							<c:choose>
-								<c:when test="${!empty member.m_Id or !empty farmer.f_Id}">
+								<c:when test="${!empty member.m_Id}">
 									<div>
 										<label><i class="fas fa-caret-right"></i> 이름 : </label> <span>${member.m_Name}<input
 											type="hidden" name="rep_Id" value="${member.m_Name}"></span>
+										<input type="hidden" id="rev_No"
+											name="rev_No" value="${revList.rev_No}">
+									</div>
+									<div class="re_cont">
+										<textarea class="texta" name="rep_Cont"
+											placeholder="내용을 입력해주세요."></textarea>
+										<button type="submit" name="btn" id="btn" class="btn2">댓글
+											쓰기</button>
+									</div>
+								</c:when>
+								<c:when test="${!empty farmer.f_Id}">
+								<div>
+										<label><i class="fas fa-caret-right"></i> 이름 : </label> <span>${farmer.f_Name}<input
+											type="hidden" name="rep_Id" value="${farmer.f_Name}"></span>
 										<input type="checkbox" name="rep_Secret" id="rep_Secret"
 											value="Y"> <input type="hidden" id="rev_No"
 											name="rev_No" value="${revList.rev_No}">
@@ -279,21 +318,11 @@ span {
 	</form>
 	<div class="link">
 		<div>
-			<c:choose>
-				<c:when test="${member.m_Id  eq revList.rev_Id}">
-					<a href="/reviewUpdate?rev_No=${revList.rev_No}" id="modify"
-						class="btn3">수정하기</a>
-					<a class="btn3" onclick="yes()" id="Btn">삭제하기</a>
-					<a href="/reviewList" id="list" class="btn3">목록으로</a>
-				</c:when>
-				<c:otherwise>
-					<a href="/reviewList" id="list" class="btn3">목록으로</a>
-				</c:otherwise>
-			</c:choose>
+					<a href="/farmerReviewList" id="list" class="btn3">목록으로</a>
 		</div>
 	</div>
 
-	<script type="text/javascript">
+<!-- 	<script type="text/javascript">
 			function yes() {
 				var rev_No = document.getElementById("rev_No").value;
 				if (confirm("정말 삭제하시겠습니까?") == true) { //yes 
@@ -302,7 +331,7 @@ span {
 					return false;
 				}
 			}
-	</script>
+	</script> -->
 	<script type="text/javascript">
 		function replyDel() {
 			var rep_No = document.getElementById("rep_No").value;
@@ -315,5 +344,4 @@ span {
 	</script>
 
 </body>
-<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </html>

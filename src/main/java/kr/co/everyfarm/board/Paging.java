@@ -9,17 +9,19 @@ public class Paging {
 	private int amount;
 
 	private int skip;
-
+	
 	private String keyword;
-
+	
 	private String type;
 
 	private String[] typeArr;
-
+	
 	private String f_Id;
 	
 	private String m_Id;
-
+	
+	private String p_Id;
+	
 	public Paging() {
 		this(1, 10);
 		this.skip = 0;
@@ -102,13 +104,25 @@ public class Paging {
 	public void setM_Id(String m_Id) {
 		this.m_Id = m_Id;
 	}
+	
+	
+
+	public String getP_Id() {
+		return p_Id;
+	}
+
+	public void setP_Id(String p_Id) {
+		this.p_Id = p_Id;
+	}
 
 	@Override
 	public String toString() {
 		return "Paging [pageNum=" + pageNum + ", amount=" + amount + ", skip=" + skip + ", keyword=" + keyword
 				+ ", type=" + type + ", typeArr=" + Arrays.toString(typeArr) + ", f_Id=" + f_Id + ", m_Id=" + m_Id
-				+ "]";
+				+ ", p_Id=" + p_Id + "]";
 	}
+
+
 
 
 }

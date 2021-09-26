@@ -44,8 +44,6 @@ public interface ReviewDAO {
 	
 	int adminDel(ReviewBean reviewBean);
 	
-	List<ProductBean> farmerReivew(String f_Id);
-	
 	List<ReviewBean> farmerReviews(Paging paging);
 
 }
