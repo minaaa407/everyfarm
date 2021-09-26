@@ -112,7 +112,7 @@ tbody td {
 	</nav>
 
 	<form:form enctype="multipart/form-data" commandName="product"
-		action="/proUpdate" method="post">
+		action="/AdproUpdate" method="post">
 		<table>
 			<thead>
 				<tr>

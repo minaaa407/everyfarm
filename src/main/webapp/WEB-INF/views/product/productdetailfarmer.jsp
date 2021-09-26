@@ -14,13 +14,10 @@
 <head>
 <title>EVERY FARM</title>
 <meta charset="utf-8">
-
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<link rel="shortcut icon" type="image/x-icon"
-	href="/resources/editor/connn.ico" />
-<link
+<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+<link 
 	href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
 	rel="stylesheet">
 <link
@@ -29,10 +26,8 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- 아이콘링크 -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
-	crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" 
+integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
 <link rel="stylesheet" href="resources/index/css/animate.css">
 
@@ -58,9 +53,9 @@
 	type="text/css">
 <link rel="stylesheet" href="resources/product/css/dd.css"
 	type="text/css" />
-
-
-
+	
+	
+	
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -244,9 +239,9 @@ function listChange(){
 //아래 댓글임
 
 function qnainsert(page){
-	var uid = '<%=(MemberBean) session.getAttribute("member")%>';
-	var fid = '<%=(FarmerBean) session.getAttribute("farmer")%>';
-	var aid = '<%=(AdminBean) session.getAttribute("admin")%>';
+	var uid = '<%=(MemberBean)session.getAttribute("member")%>';
+	var fid = '<%=(FarmerBean)session.getAttribute("farmer")%>';
+	var aid = '<%=(AdminBean)session.getAttribute("admin")%>';
 	if((uid == "null") &&(fid == "null")&&(aid == "null")){
 		alert("로그인 후 댓글을 달 수 있습니다.");
 		
@@ -355,19 +350,19 @@ function oneqna(qnaid){
 							
 								a +="<tr>";
 								if(onelist.c_Subno > 0){
-									a +="<td style='width:80%;padding-left: 20px;'>";
-									a +="<span style='font-size:20px'>└</span>"+onelist.c_Content+"<br></td>";
+									a +="<td style='padding-left: 20px;'>";
+									a +="<span style='font-size:20px'>└</span>"+onelist.c_Content+"<br><span style='font-size:8px'>"
+									+onelist.c_Date+" "+onelist.c_Id+"</span></td>";
 								}else{
-									a +="<td style='width:80%'>"+onelist.c_Content +"<br></td>";
+									a +="<td style=''>"+onelist.c_Content +"<br><span style='font-size:8px'>"
+									+onelist.c_Date+" "+onelist.c_Id+"</span></td>";
 									
 								}
-								a +="<td  style='width:20%'>";
-								a +=onelist.c_Id+"<br>"+onelist.c_Date+"<br></td><tr></tr><td>";
+								a +="</tr><tr><td>";
 								if( ((onelist.c_Subno==0)&&(${(not empty farmer || not empty admin)}))&&onelist.c_Id !='삭제' ){
 									a +="<input name ='"+onelist.c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton(this.name)' />";
 								}
 														
-								a+="</td><td>";
 								//뒤로가기 방지&& ${member.m_Id} == qnalist[i].c_Id
 								if( ( ${(not empty farmer || not empty admin)} ) && (onelist.c_Id !='삭제')||('${member.m_Id}'==onelist.c_Id)  ){
 									var seq= onelist.c_Seq;
@@ -407,19 +402,20 @@ function ajax(urlpath,bean){
 					for(var i =0; i < qnalist.length; i++){
 						a +="<table style='width:100%'><tr>";
 						if(qnalist[i].c_Subno > 0){
-							a +="<td style='width:80%;padding-left: 20px;'>";
-							a +="<span style='font-size:20px'>└</span>"+qnalist[i].c_Content+"<br></td>";
+							a +="<td style='padding-left: 20px;'>";
+							a +="<span style='font-size:20px'>└</span>"+qnalist[i].c_Content+"<br><span style='font-size:8px'>"
+							+qnalist[i].c_Date+" "+qnalist[i].c_Id+"</span></td>";
 						}else{
-							a +="<td style='width:80%'>"+qnalist[i].c_Content +"<br></td>";
-							
+							a +="<td style=''>"+qnalist[i].c_Content +"<br><span style='font-size:8px'>"
+							+qnalist[i].c_Date+" "+qnalist[i].c_Id+"</span></td>";
 						}
-						a +="<td  style='width:20%'>";
-						a +=qnalist[i].c_Id+"<br>"+qnalist[i].c_Date+"<br></td><tr></tr><td>";
+						
+						a +="</tr><tr><td>";
+						
 						if( ((qnalist[i].c_Subno==0)&&(${(not empty farmer || not empty admin)}))&&qnalist[i].c_Id !='삭제' ){
 							a +="<input name ='"+qnalist[i].c_Seq+"' class='qnasubbutton' type='button' value='답글' onclick='qnasubbutton('"+qnalist[i].c_Seq+"')' />";
 						}
 						
-						a+="</td><td>";
 						var qid = qnalist[i].c_Id;
 					
 				
@@ -465,33 +461,35 @@ function ajax(urlpath,bean){
 
 </script>
 <style>
-.product__pagination a, .blog__pagination a {
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	border: 1px solid #b2b2b2;
-	font-size: 14px;
-	color: #b2b2b2;
-	font-weight: 700;
-	line-height: 28px;
-	text-align: center;
-	margin-right: 16px;
-	-webkit-transition: all, 0.3s;
-	-moz-transition: all, 0.3s;
-	-ms-transition: all, 0.3s;
-	-o-transition: all, 0.3s;
-	transition: all, 0.3s;
-}
 
+.product__pagination a, .blog__pagination a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #b2b2b2;
+    font-size: 14px;
+    color: #b2b2b2;
+    font-weight: 700;
+    line-height: 28px;
+    text-align: center;
+    margin-right: 16px;
+    -webkit-transition: all, 0.3s;
+    -moz-transition: all, 0.3s;
+    -ms-transition: all, 0.3s;
+    -o-transition: all, 0.3s;
+    transition: all, 0.3s;
+}
 .product__pagination, .blog__pagination {
-	padding-top: 10px;
+    padding-top: 10px;
 }
 
 .product__pagination a:hover, .blog__pagination a:hover {
-	background: #7fad39;
-	border-color: #7fad39;
-	color: #ffffff;
+    background: #7fad39;
+    border-color: #7fad39;
+    color: #ffffff;
 }
+
+
 
 .product__details__pic__item--large {
 	position: relative;
@@ -519,7 +517,6 @@ function ajax(urlpath,bean){
 	border: solid 0.5px #212529;
 	transition: all 0.5s ease-in-out 0s;
 }
-
 .mybtn:hover {
 	background: #4CAF00;
 	color: #fff;
@@ -536,15 +533,13 @@ function ajax(urlpath,bean){
 	border: solid 0.5px #212529;
 	transition: all 0.5s ease-in-out 0s;
 }
-
 .mybtn2:hover {
 	background: #C40000;
 	color: #fff;
 	text-decoration: none;
 }
 
-.qnasubbutton, .updatebutton, .qnadeletebutton, #qnaupdate,
-	#qnaupdateexit {
+.qnasubbutton, .updatebutton, .qnadeletebutton,#qnaupdate,#qnaupdateexit{
 	padding: 0;
 	display: inline;
 	border-radius: 4px;
@@ -555,16 +550,14 @@ function ajax(urlpath,bean){
 	transition: all 0.5s ease-in-out 0s;
 	width: 60px
 }
-
-.qnasubbutton:hover, .updatebutton:hover, .qnadeletebutton:hover #qnaupdate:hover,
-	#qnaupdateexit:hover {
+.qnasubbutton:hover, .updatebutton:hover, .qnadeletebutton:hover #qnaupdate:hover, #qnaupdateexit:hover{
 	background: #4CAF00;
 	color: #fff;
 	text-decoration: none;
 	width: 60px
 }
 
-#qnaupdate, #qnaupdateexit {
+#qnaupdate,#qnaupdateexit{
 	padding: 0;
 	display: inline;
 	border-radius: 4px;
@@ -575,103 +568,81 @@ function ajax(urlpath,bean){
 	transition: all 0.5s ease-in-out 0s;
 	width: 100px
 }
-
-#qnaupdate:hover, #qnaupdateexit:hover {
+#qnaupdate:hover, #qnaupdateexit:hover{
 	background: #4CAF00;
 	color: #fff;
 	text-decoration: none;
 	width: 100px
 }
+
+
 
 .fa, .fab, .fad, .fal, .far, .fas {
 	cursor: pointer;
+	
 }
 
-i.fa-minus-circle:hover {
-	color: #119300;
+i.fa-minus-circle:hover{
+	color : #119300;
 }
 
-i.fa-minus-circle:active {
-	color: #21AF23;
+i.fa-minus-circle:active{
+	color : #21AF23;
 }
 
-i.fa-minus-circle {
-	color: green;
+i.fa-minus-circle{
+	color : green;
 }
 
-i.fa-plus-circle:hover {
-	color: #119300;
+
+i.fa-plus-circle:hover{
+	color : #119300;
 }
 
-i.fa-plus-circle:active {
-	color: #21AF23;
+i.fa-plus-circle:active{
+	color : #21AF23;
 }
 
-i.fa-plus-circle {
-	color: green;
+i.fa-plus-circle{
+	color : green;
 }
 
-.owl-item img {
-	height: 60px;
+.owl-item img{
+
+height:60px;
+
 }
 
-a.sidenav {
+
+a.sidenav{
 	color: #FFFFFF;
 	font-size: 14px;
-	padding-left: 20px;
-	padding-right: 20px;
-	text-transform: uppercase;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-transform: uppercase;
 }
 
 a.sidenav:hover, focus {
-	color: yellow;
+    color: yellow;
 }
 
-.owl-carousel .owl-item img {
-	width: 115%;
+.owl-carousel .owl-item img{
+	width:115%;
 }
 
-<!--
-메뉴바 -->#header {
-	width: 100%;
-	height: 600px;
-	line-height: 600px;
-	font-size: 60px;
-	background: red;
-	transition: background 0.6s;
-	text-align: center;
-}
 
-#lnb.fixed {
-	position: fixed;
-	left: 0;
-	top: 0;
-	width: 100%;
-	z-index: 99;
-}
 
-#lnb ul {
-	font-size: 0;
-	line-height: 0;
-	background: #4e9525;
-}
+<!--메뉴바 -->
 
-#lnb li {
-	display: inline-block;
-	vertical-align: top;
-	padding: 20px 0;
-	font-size: 25px;
-	text-align: center;
-}
 
-#container {
-	width: 100%;
-	height: 1500px;
-	line-height: 1500px;
-	font-size: 60px;
-	background: blue;
-	text-align: center;
-}
+#header{width: 100%; height:600px; line-height: 600px; font-size: 60px; background:red; transition: background 0.6s; text-align: center;}
+#lnb.fixed{position: fixed; left: 0; top: 0; width: 100%; z-index:99;}
+#lnb ul{font-size:0; line-height: 0; background: #4e9525;}
+#lnb li{display: inline-block; vertical-align: top; padding: 20px 0; font-size: 25px; text-align: center;}
+#container{width:100%; height:1500px; line-height: 1500px; font-size: 60px; background: blue; text-align: center;}
+
+
+
 </style>
 
 
@@ -718,27 +689,39 @@ ul {
 	padding-left: 0px;
 }
 
-td .mybtn {
+td .mybtn{
 	width: 100pt;
 }
 
-@media screen and (max-width: 768px) {
-	div.select {
-		width: 250px;
-	}
-	.onlyNumber {
-		width: 50px;
-	}
-	td {
-		font-size: 90%
-	}
-	td .mybtn {
-		width: 80pt;
-	}
+.onlyNumber{
+  width: 40px;
+  text-align : center;
 }
+}
+
+@media screen and (max-width: 768px) {
+	div.select{
+	width: 250px;
+	}
+	.onlyNumber{
+	  width: 40px;
+	  text-align : center;
+	}
+	td{
+	font-size: 90%
+	}
+	td .mybtn{
+	width: 80pt;
+	}
+
+}
+
+
+
 </style>
 
 <script>
+
 			$(document).ready(function () {
 				lnb = $("#lnb").offset().top;
 				  $("div.select > a").click(function () {
@@ -787,14 +770,17 @@ td .mybtn {
 							
 							    text += '<table id="'+rowid+'"style="width: 100%;">';
 								text += '<tr><td>'+product+ '</td><td></td></tr>' ;
-								text += '<tr><td><i class="fas fa-minus-circle" style="font-size:24px; vertical-align: middle;"></i>';
+								text += '<tr><td><i class="fas fa-minus-circle" style="font-size:24px; vertical-align: middle;"></i>&nbsp;&nbsp;';
 								text += '<input class="onlyNumber" type=text min=1  name=productamout value='+amout+' size=10>';
-								text += '<i class="fas fa-plus-circle" style="font-size:24px; vertical-align: middle;"></i>';	
+								text += '&nbsp;&nbsp;<span class="landfont">평</span>&nbsp;&nbsp;<i class="fas fa-plus-circle" style="font-size:24px; vertical-align: middle;"></i>';	
 								text += '</td><td>'+cn1+'</td>';
 								text += '<td><i class="fas fa-times" style="vertical-align: middle;"></i></td></tr></table>';
 								document.getElementById('table1').innerHTML=text;
 								var size = document.getElementsByName("productamout").length;
 								var a1 = 0;
+								
+								
+				
 								
 									for(var i = 0; i < size; i++){				
 										a2 = document.getElementsByName("productamout")[i].value;
@@ -929,7 +915,7 @@ td .mybtn {
 							  var b_Land = ("b_Land" + product);
 						      var b_Totalprice = ("b_Totalprice" + product);
 						      document.getElementById(b_Land).value= number;
-							  document.getElementById(b_Totalprice).value= (number)*(${oneproduct.p_Landprice});
+							  document.getElementById(b_Totalprice).value= (number)*(${oneproduct.p_Landprice}+${oneproduct.p_Manpay});
 							  
 						  }
 						if(size>0){
@@ -961,7 +947,7 @@ td .mybtn {
 							  var b_Land = ("b_Land" + product);
 						      var b_Totalprice = ("b_Totalprice" + product);
 						      document.getElementById(b_Land).value= number;
-							  document.getElementById(b_Totalprice).value= (number)*(${oneproduct.p_Landprice});
+						      document.getElementById(b_Totalprice).value= (number)*(${oneproduct.p_Landprice}+${oneproduct.p_Manpay});
 							  
 						 }
 				  }
@@ -1115,7 +1101,7 @@ td .mybtn {
 		          }
 		        })
 	});
-			
+
 	</script>
 
 </head>
@@ -1191,391 +1177,372 @@ td .mybtn {
 							</c:choose>
 						</div>
 
-						<div class="col-lg-6 col-md-6" id="maindiv">
-							<div class="product__details__pic">
-								<div class="product__details__pic__item">
-									<img class="product__details__pic__item--large" id="selectimg"
-										src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
-										alt="">
-								</div>
-								<div class="product__details__pic__slider owl-carousel">
-									<img
-										data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
-										src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
-										alt=""
-										name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
-										style="cursor: pointer" onclick="selectimg(this.name)">
-									<img
-										data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
-										src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
-										alt=""
-										name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
-										style="cursor: pointer" onclick="selectimg(this.name)">
-									<img
-										data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
-										src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
-										alt=""
-										name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
-										style="cursor: pointer" onclick="selectimg(this.name)">
-									<img
-										data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
-										src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
-										alt=""
-										name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
-										style="cursor: pointer" onclick="selectimg(this.name)">
-									<img
-										data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
-										src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
-										alt=""
-										name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
-										style="cursor: pointer" onclick="selectimg(this.name)">
-								</div>
-							</div>
+				<div class="col-lg-6 col-md-6" id="maindiv">
+					<div class="product__details__pic">
+						<div class="product__details__pic__item">
+							<img class="product__details__pic__item--large" id="selectimg"
+								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
+								alt="">
 						</div>
-
-						<div class="col-lg-6 col-md-6">
-							<div class="product__details__text">
-								<h2>${oneproduct.p_Title}</h2>
-								<hr>
-								<h3>평점 : ${f_rate}</h3>
-								<hr>
-								<p>${oneproduct.p_Content}</p>
-								<hr>
-								<div>
-									<h4>
-										1평 작물가 :
-										<fmt:formatNumber value="${oneproduct.p_Landprice }"
-											pattern="#,###" />
-										원
-									</h4>
-
-								</div>
-								<div>
-									<h4>
-										1평 노동비 :
-										<fmt:formatNumber value="${oneproduct.p_Manpay }"
-											pattern="#,###" />
-										원
-									</h4>
-								</div>
-								<hr>
-
-
-								<div>
-
-									<!-- 상품 리스트 선택 -->
-
-									<div class="select"
-										style="position: relative; line-height: 35px; width: 250px">
-										<a href="#" id="aaa" onClick="test()"> <img height="50px"
-											width="50px" src="/resources/product/img/감자.png"><span
-											id="productname">감자</span></a>
-										<ul>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/감자.png" />감자</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/고구마.png" />고구마</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/콩.png" />콩</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/배추.png" />배추</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/상추.png" />상추</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/수박.png" />수박</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/오이.png" />오이</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/토마토.png" />토마토</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/호박.png" />호박</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/고추.png" />고추</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/마늘.png" />마늘</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/파.png" />파</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/양파.png" />양파</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/무.png" />무</li>
-											<li onClick="listChange()"><img height="50px"
-												width="50px" src="/resources/product/img/당근.png" />당근</li>
-										</ul>
-
-									</div>
-								</div>
-								<br>
-
-								<form>
-
-									<i class="fas fa-minus-circle"
-										style='font-size: 24px; vertical-align: middle;'> </i><input
-										class="onlyNumber" id="iniamout" type=text min=1 name=amount
-										value=1 size=10><i class="fas fa-plus-circle"
-										style='font-size: 24px; vertical-align: middle;'></i> <input
-										id="selectproduct" style="width: 50px;" type=button
-										class="mybtn" value="선택" onClick="selectproduct()">
-								</form>
-
-								<ol id="productbasket" style="display: none;">
-
-
-								</ol>
-
-								<br /> <br />
-								<div id="area" class="col-lg-12"
-									style="height: 52px; display: none"></div>
-
-
-
-								<div id="table1" class="table1"></div>
-								<br>
-								<table id="totaltable"
-									style="width: 100%; display: none; table-layout: fixed;">
-									<tr style="border: 0.1px; border-top: solid #9e9c9c;">
-										<td style="width: 30%; text-align: left; font-size: 16px;">
-											<span>구입작물</span>
-										</td>
-										<td style="width: 70%; text-align: right"><span
-											style="font-size: 16px;" id="totalproduct"></span></td>
-									</tr>
-
-									<tr>
-										<td style="text-align: left; font-size: 16px;"><span>인건비</span>
-										</td>
-										<td style="text-align: right"><span
-											style="font-size: 16px;" id="totalmanpay"></span></td>
-									</tr>
-									<tr style="border: 0.1px; border-top: solid #9e9c9c;">
-										<td style="text-align: left; font-size: 24px;"><span>총
-												가격</span></td>
-										<td style="text-align: right"><span
-											style="font-size: 24px;" id="total"></span></td>
-									</tr>
-									<tr>
-										<td>
-											<button type="button" class="mybtn" style="cursor: pointer;"
-												onClick="basket()" value="장바구니">장바구니</button>
-										</td>
-										<td style="text-align: right">
-											<button type="button" class="mybtn" style="cursor: pointer;"
-												type="button" onClick="payment()" value="결제">결제</button>
-										</td>
-									</tr>
-								</table>
-								<!-- 
-					                    <input type="button" onClick="document.myHiddenForm.submit()" value="장바구니"/>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-					                    <input type="button" onClick="document.myHiddenForm2.submit()" value="결제"/>
-					                     -->
-							</div>
-							<div id="lnbposition"></div>
-
-							<form:form commandName="basketbean" id="myHiddenForm"
-								name="myHiddenForm" action="/productbasketchoice" method="post">
-								<c:forTokens var="seed" items="${seedlist}" delims=","
-									varStatus="num">
-									<input type="hidden" id="b_Id${seed}"
-										name="basketbeanList[${num.index}].b_Id" value="${mid}">
-									<input type="hidden" id="b_Pno${seed}"
-										name="basketbeanList[${num.index}].b_Pno"
-										value="${oneproduct.p_No}">
-									<input type="hidden" id="b_Land${seed}"
-										name="basketbeanList[${num.index}].b_Land" value="0">
-									<input type="hidden" id="b_Seed${seed}"
-										name="basketbeanList[${num.index}].b_Seed" value="${seed}">
-									<input type="hidden" id="b_Totalprice${seed}"
-										name="basketbeanList[${num.index}].b_Totalprice" value="0">
-									<input type="hidden" id="p_Img${seed}"
-										name="basketbeanList[${num.index}].p_Img"
-										value="${oneproduct.p_Img}">
-									<input type="hidden" id="p_Title${seed}"
-										name="basketbeanList[${num.index}].p_Title"
-										value="${oneproduct.p_Title}">
-									<input type="hidden" id="p_Manpay${seed}"
-										name="basketbeanList[${num.index}].p_Manpay"
-										value="${oneproduct.p_Manpay}">
-									<input type="hidden" id="p_Landprice${seed}"
-										name="basketbeanList[${num.index}].p_Landprice"
-										value="${oneproduct.p_Landprice}">
-								</c:forTokens>
-
-							</form:form>
-
+						<div class="product__details__pic__slider owl-carousel">
+							<img
+								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
+								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
+								alt=""
+								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg1}"
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
+								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
+								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
+								alt=""
+								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg2}"
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
+								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
+								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
+								alt=""
+								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg3}"
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
+								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
+								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
+								alt=""
+								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Subimg4}"
+								style="cursor: pointer" onclick="selectimg(this.name)"> 
+							<img
+								data-imgbigurl="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
+								src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
+								alt=""
+								name="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Img}"
+								style="cursor: pointer" onclick="selectimg(this.name)">
 						</div>
-
-
-
-
 					</div>
-
 				</div>
 
+				<div class="col-lg-6 col-md-6">
+					<div class="product__details__text">
+						<h2>${oneproduct.p_Title}</h2>
+						<hr>
+						
+						<div>
+							<h4>
+								평당 가격 :
+								<fmt:formatNumber value="${oneproduct.p_Landprice }"
+									pattern="#,###" />
+								원
+							</h4>
+							
+						</div>
+						<div>
+							<h4>
+								평당 인건비:
+								<fmt:formatNumber value="${oneproduct.p_Manpay }"
+									pattern="#,###" />
+								원
+							</h4>
+						</div>
+						<hr>
+						
+
+						<div>
+
+							<!-- 상품 리스트 선택 -->
+
+							<div class="select"
+								style="position: relative; line-height: 35px; width: 250px">
+								<a href="#" id="aaa" onClick="test()"> <img height="50px"
+									width="50px" src="/resources/product/img/감자.png"><span
+									id="productname">감자</span></a>
+								<ul>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/감자.png" />감자</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/고구마.png" />고구마</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/콩.png" />콩</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/배추.png" />배추</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/상추.png" />상추</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/수박.png" />수박</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/오이.png" />오이</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/토마토.png" />토마토</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/호박.png" />호박</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/고추.png" />고추</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/마늘.png" />마늘</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/파.png" />파</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/양파.png" />양파</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/무.png" />무</li>
+									<li onClick="listChange()"><img height="50px" width="50px"
+										src="/resources/product/img/당근.png" />당근</li>
+								</ul>
+
+							</div>
+						</div>
+						<br>
+
+						<form>
+							
+							<i class="fas fa-minus-circle" style='font-size:24px; vertical-align: middle;'>&nbsp;
+							</i><input class="onlyNumber" id="iniamout" type=text min=1  name=amount value=1 size=10>
+							&nbsp;<span class="landfont">평</span>&nbsp;
+							<i class="fas fa-plus-circle" style='font-size:24px; vertical-align: middle;'></i>
+							&nbsp;<input id="selectproduct" style="width: 50px;" type=button class="mybtn" value="선택" onClick="selectproduct()">
+						</form>
+
+						<ol id="productbasket" style="display:none;">
 
 
+						</ol>
 
+						<br/><br/>
+						<div id="area" class="col-lg-12" style="height: 52px; display: none"></div>
+								
+
+						
+							<div id="table1" class="table1">
+							</div>
+						<br>
+					    <table id="totaltable" style="width: 100%;display: none; table-layout:fixed;">
+					    <tr style="border: 0.1px;border-top: solid #9e9c9c;">
+						    <td style="width:30%; text-align: left;font-size: 16px;">
+							<span>구입농작물</span>
+							</td>
+							<td style="width:70%;text-align:right">
+							<span style="font-size: 16px;" id="totalproduct"></span>
+							</td>
+						</tr>
+					    
+					    <tr>
+						    <td style="text-align: left;font-size: 16px;">
+							<span>인건비</span>
+							</td>
+							<td style="text-align:right">
+							<span style=" font-size: 16px;" id="totalmanpay"></span>
+							</td>
+						</tr>
+						<tr style="border: 0.1px;border-top: solid #9e9c9c;">
+							<td style="text-align: left;font-size: 24px;">
+							<span>총 가격</span>
+							</td>
+							<td style="text-align:right">
+							<span style="font-size: 24px;" id="total"></span>
+							</td>
+						</tr>
+						 <tr>
+					    <td>
+						<button type="button" class="mybtn"
+							style=" cursor: pointer;" onClick="basket()"
+							value="장바구니">장바구니</button>
+						</td>
+						<td style="text-align:right">
+						<button type="button" class="mybtn"
+							style=" cursor: pointer;" type="button"
+							onClick="payment()" value="결제">결제</button>
+						</td>
+						</tr>	
+						</table>
+						<!-- 
+                    <input type="button" onClick="document.myHiddenForm.submit()" value="장바구니"/>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                    <input type="button" onClick="document.myHiddenForm2.submit()" value="결제"/>
+                     -->
+					</div>
+					<div id="lnbposition"></div>
+					
+					<form:form commandName="basketbean" id="myHiddenForm"
+							name="myHiddenForm" action="/productbasketchoice" method="post">
+							<c:forTokens var="seed" items="${seedlist}" delims=","
+								varStatus="num">
+								<input type="hidden" id="b_Id${seed}"
+									name="basketbeanList[${num.index}].b_Id" value="${mid}">
+								<input type="hidden" id="b_Pno${seed}"
+									name="basketbeanList[${num.index}].b_Pno"
+									value="${oneproduct.p_No}">
+								<input type="hidden" id="b_Land${seed}"
+									name="basketbeanList[${num.index}].b_Land" value="0">
+								<input type="hidden" id="b_Seed${seed}"
+									name="basketbeanList[${num.index}].b_Seed" value="${seed}">
+								<input type="hidden" id="b_Totalprice${seed}"
+									name="basketbeanList[${num.index}].b_Totalprice" value="0">
+								<input type="hidden" id="p_Img${seed}"
+									name="basketbeanList[${num.index}].p_Img"
+									value="${oneproduct.p_Img}">
+								<input type="hidden" id="p_Title${seed}"
+									name="basketbeanList[${num.index}].p_Title"
+									value="${oneproduct.p_Title}">
+								<input type="hidden" id="p_Manpay${seed}"
+									name="basketbeanList[${num.index}].p_Manpay"
+									value="${oneproduct.p_Manpay}">
+								<input type="hidden" id="p_Landprice${seed}"
+									name="basketbeanList[${num.index}].p_Landprice"
+									value="${oneproduct.p_Landprice}">
+							</c:forTokens>
+
+						</form:form>
+						
+				</div>
+		</div>
+		
+	</div>
 				<!-- 메뉴바?? -->
-
+				
 				<div id="lnbcenter"></div>
 				<div id="lnb" style="text-align: center;">
-					<ul>
-						<li><a href="#lnbposition" class="sidenav">설명</a></li>
-						<li><a href="#movereview" class="sidenav" onclick="move()">덧글</a></li>
-					</ul>
-				</div>
-				<br> <br>
-				<div id="nonecenter" style="height: 59px; display: none;"></div>
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="product__details__tab">
+				   <ul>
+				     <li><a href="#lnbposition" class="sidenav">설명</a></li>
+				     <li><a href="#movereview"  class="sidenav" onclick="move()">댓글</a></li>
+				   </ul>
+				 </div>
+				 <br><br>
+				 <div id="nonecenter" style="height: 59px;display: none;"></div>
+		<div class="container">
+			<div class="row">				 
+				<div class="col-lg-12">
+					<div class="product__details__tab">
+							<div class="tab-pane active" id="tabs-1" role="tabpanel">
+								<div class="product__details__tab__desc"
+									style="text-align: center;">
+								<p style="font-size:24px;color:black">${oneproduct.p_Content}</p>
+									<c:if test="${not empty oneproduct.p_Imgdetail1}">
+										<img style="max-width: 100%;"
+											src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}"
+											alt="${oneproduct.p_Imgdetail1}"
+											title="${oneproduct.p_Imgdetail1}">
+										<br>
+									</c:if>
 
+									<c:if test="${not empty oneproduct.p_Imgdetail2}">
+										<img style="max-width: 100%;"
+											src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail2}"
+											alt="${oneproduct.p_Imgdetail1}"
+											title="${oneproduct.p_Imgdetail1}">
+										<br>
+									</c:if>
 
-								<div class="tab-pane active" id="tabs-1" role="tabpanel">
-									<div class="product__details__tab__desc"
-										style="text-align: center;">
+									<c:if test="${not empty oneproduct.p_Imgdetail3}">
+										<img style="max-width: 100%;"
+											src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail3}"
+											alt="${oneproduct.p_Imgdetail1}"
+											title="${oneproduct.p_Imgdetail1}">
+										<br>
+									</c:if>
 
-										<c:if test="${not empty oneproduct.p_Imgdetail1}">
-											<img style="max-width: 100%;"
-												src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail1}"
-												alt="${oneproduct.p_Imgdetail1}"
-												title="${oneproduct.p_Imgdetail1}">
-											<br>
-										</c:if>
+									<c:if test="${not empty oneproduct.p_Imgdetail4}">
+										<img style="max-width: 100%;"
+											src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail4}"
+											alt="${oneproduct.p_Imgdetail1}"
+											title="${oneproduct.p_Imgdetail1}">
+										<br>
+									</c:if>
 
-										<c:if test="${not empty oneproduct.p_Imgdetail2}">
-											<img style="max-width: 100%;"
-												src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail2}"
-												alt="${oneproduct.p_Imgdetail1}"
-												title="${oneproduct.p_Imgdetail1}">
-											<br>
-										</c:if>
-
-										<c:if test="${not empty oneproduct.p_Imgdetail3}">
-											<img style="max-width: 100%;"
-												src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail3}"
-												alt="${oneproduct.p_Imgdetail1}"
-												title="${oneproduct.p_Imgdetail1}">
-											<br>
-										</c:if>
-
-										<c:if test="${not empty oneproduct.p_Imgdetail4}">
-											<img style="max-width: 100%;"
-												src="resources/upload/product/${oneproduct.p_No}/${oneproduct.p_Imgdetail4}"
-												alt="${oneproduct.p_Imgdetail1}"
-												title="${oneproduct.p_Imgdetail1}">
-											<br>
-										</c:if>
-
-
-									</div>
-								</div>
-								<div id="movereview"></div>
-								<br>
-								<hr />
-								<div class="tab-pane" id="tabs-3" role="tabpanel">
-									<div class="qnatalbe" id="qnatalbe">
-
-
-										<c:forEach var="q" items="${qnalist }" varStatus="status">
-											<table style="width: 100%">
-												<tr>
-													<c:choose>
-														<c:when test="${q.c_Subno > 0}">
-															<td style="width: 80%; padding-left: 20px;"><span
-																style="font-size: 20px">└</span> ${q.c_Content } <br>
-															</td>
-														</c:when>
-														<c:otherwise>
-															<td style="width: 80%">${q.c_Content }<br>
-															</td>
-														</c:otherwise>
-													</c:choose>
-													<td style="width: 20%">${q.c_Id }<br> ${q.c_Date }<br>
-													</td>
-												</tr>
-												<tr>
-													<td><c:if
-															test="${(q.c_Subno == 0 && (not empty farmer || not empty admin))&&q.c_Id !='삭제'}">
-															<input name="${q.c_Seq}" class="qnasubbutton"
-																type="button" value="답글"
-																onclick="qnasubbutton('${q.c_Seq}')" />
-														</c:if></td>
-													<td><c:if
-															test="${(not empty farmer || not empty admin ||(not empty member && member.m_Id == q.c_Id))&&q.c_Id !='삭제'}">
-															<input name="${q.c_Seq}" class="updatebutton"
-																type="button" value="수정"
-																onclick="updatebutton('${q.c_Seq}')" />&nbsp;
-																			<input name="${q.c_Seq}" class="qnadeletebutton"
-																type="button" value="삭제"
-																onclick="qnadeletebutton('${q.c_Seq}')" />
-														</c:if></td>
-												</tr>
-											</table>
-											<div>
-												<hr />
-											</div>
-										</c:forEach>
-
-
-
-									</div>
-
-
-									<div align="center" class="product__pagination" id="pagesystem">
-
-										<c:if test="${pagebeen.pro eq 'true' }">
-											<a id="page${pagebeen.pagestart -1}" style="cursor: pointer"
-												onclick="pagebutton(${pagebeen.pagestart -1})">이전 </a>
-										</c:if>
-
-										<c:if test="${pagebeen.pagestart != '0' }">
-											<c:forEach var="i" begin="${pagebeen.pagestart}"
-												end="${pagebeen.pageend}" step="1">
-												<a id="page${i}" style="cursor: pointer"
-													onclick="pagebutton(${i })">${i }</a>
-											</c:forEach>
-										</c:if>
-
-										<c:if test="${pagebeen.post eq 'true'}">
-											<a id="page${pagebeen.pageend +1}" style="cursor: pointer"
-												onclick="pagebutton(${pagebeen.pageend +1})">다음 </a>
-										</c:if>
-
-									</div>
-
-									<hr>
-									<table>
-										<tr>
-											<td colspan="1"><label>댓글 내용</label></td>
-											<td><textarea rows="2" cols="150" class="form-control"
-													id="c_Content" name="c_Content" placeholder="* 내용을 입력하세요."
-													required></textarea></td>
-										</tr>
-										<tr>
-											<td><input id="qnainsert" name="1" type="submit"
-												class="btn btn-dark" value="댓글 작성"
-												onclick="qnainsert(this.name)">&nbsp;&nbsp;</td>
-										</tr>
-									</table>
-									<hr>
-									<br>
+								
 								</div>
 							</div>
-
+							<div id="movereview"></div>
+							<br>
+							<hr/>
+							<div class="tab-pane" id="tabs-3" role="tabpanel">
+									<div class="qnatalbe" id="qnatalbe">
+										
+										
+											<c:forEach var="q" items="${qnalist }" varStatus="status">
+												<table style="width:100%">
+													<tr>
+														<c:choose>
+															<c:when test="${q.c_Subno > 0}">
+																<td style="padding-left: 20px;">
+																	<span style="font-size:20px">└</span>
+																	${q.c_Content}
+																	<br>
+																	<span style='font-size:8px'>
+																	${q.c_Date} ${q.c_Id} 
+																	</span>
+																</td>
+   															 </c:when>
+   															 <c:otherwise>
+   															 	<td style="">
+																	${q.c_Content }
+																	<br>
+																	<span style='font-size:8px'>
+																	${q.c_Date} ${q.c_Id} 
+																	</span>
+																</td>
+   															 </c:otherwise>
+														</c:choose>
+														
+													</tr>
+													<tr>
+														<td>
+															<c:if test="${(q.c_Subno == 0 && (not empty farmer || not empty admin))&&q.c_Id !='삭제'}">
+																<input name="${q.c_Seq}" class="qnasubbutton" type="button" value="답글" onclick="qnasubbutton('${q.c_Seq}')" />
+															</c:if>
+														
+															<c:if test="${(not empty farmer || not empty admin ||(not empty member && member.m_Id == q.c_Id))&&q.c_Id !='삭제'}">
+																<input name="${q.c_Seq}" class="updatebutton" type="button" value="수정" onclick="updatebutton('${q.c_Seq}')" />&nbsp;
+																<input name="${q.c_Seq}" class="qnadeletebutton" type="button" value="삭제" onclick="qnadeletebutton('${q.c_Seq}')" />
+															</c:if>
+														</td>
+													</tr>
+												</table>
+												<div>
+													<hr/>
+												</div>							                        
+					                       </c:forEach> 
+										
+										
+										
+									</div>
+									
+								
+										<div align="center" class="product__pagination" id="pagesystem">
+	                    
+						                	<c:if test="${pagebeen.pro eq 'true' }">
+											    <a id = "page${pagebeen.pagestart -1}" style="cursor:pointer" onclick="pagebutton(${pagebeen.pagestart -1})">이전 </a>
+											</c:if>
+												  
+											<c:if test="${pagebeen.pagestart != '0' }">
+												<c:forEach var="i" begin="${pagebeen.pagestart}" end="${pagebeen.pageend}" step="1">
+													<a id = "page${i}" style="cursor:pointer" onclick="pagebutton(${i })">${i }</a>  
+												</c:forEach>    
+											</c:if>
+											
+										    <c:if test="${pagebeen.post eq 'true'}">
+											    <a id = "page${pagebeen.pageend +1}" style="cursor:pointer" onclick="pagebutton(${pagebeen.pageend +1})">다음 </a>
+											</c:if>
+											
+					                    </div>
+						
+									<hr>
+										<table>
+											<tr>
+												<td colspan="1"><label>댓글 내용</label></td>
+												<td><textarea rows="2" cols="150" class="form-control"
+														id="c_Content" name="c_Content" placeholder="* 내용을 입력하세요." required></textarea></td>
+											</tr>
+											<tr>
+											<td><input id="qnainsert" name="1" type="submit" class="btn btn-dark" value="댓글 작성" onclick="qnainsert(this.name)">&nbsp;&nbsp;</td>
+											</tr>
+										</table>
+								<hr>
+								<br>
+							</div>
 						</div>
-
-					</div>
+					
 				</div>
-
-
-
+				
 			</div>
 		</div>
+		
 	</section>
-
-
-	<!-- footer -->
 
 
 	<footer class="ftco-footer ftco-bg-dark ftco-section">
