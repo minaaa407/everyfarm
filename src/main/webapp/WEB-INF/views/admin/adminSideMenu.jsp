@@ -25,6 +25,10 @@
 <link href="/resources/admin/css/argon-dashboard.css?v=1.1.2"
 	rel="stylesheet" />
 <style>
+body {
+	padding-left: 250px;
+}
+
 .sep {
 	border-top: 1px solid lightgray;
 	margin-top: 30px;
