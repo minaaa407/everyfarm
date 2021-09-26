@@ -141,7 +141,10 @@ background-color: silver;
 }
 }
 
+.nav-item:nth-child(){
+	
 
+}
 
 
 </style>
@@ -150,6 +153,11 @@ background-color: silver;
 
 
 <script>
+
+
+
+
+
 function LandDelete(p_No) {
 	if (confirm('삭제하시겠습니까?')) {
 		location.href='LandDelete?p_No=' + p_No;
@@ -184,7 +192,6 @@ window.onresize = function(event){
 	  }
 
 }
-
 
 
 </script>
