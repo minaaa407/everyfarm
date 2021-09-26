@@ -115,9 +115,6 @@
 			<mapping path="/farmerList" />
 			<mapping path="/farmerAdd" />
 			<mapping path="/userAdd" />
-			<mapping path="/userDelete" />
-			<mapping path="/farmerD" />
-			<mapping path="/farmerY" />
 			<mapping path="/adminPaymentList" />
 			<mapping path="/adminproductlist" />
 			<mapping path="/adminPayListDelete" />

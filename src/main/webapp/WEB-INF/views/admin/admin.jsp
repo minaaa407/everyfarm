@@ -94,7 +94,7 @@
 									<h6 class="text-uppercase text-muted ls-1 mb-1">Every Farm</h6>
 										<c:set var="today" value="<%=new java.util.Date()%>" />
 										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
-									<h2 id="productyeartext" class="mb-0"> <c:out value="${year}"/>&nbsp;월별 매출액 </h2>
+									<h2 id="productyeartext" class="mb-0"> <c:out value="${year}"/> 월별 매출 통계</h2>
 								</div>
 								<div class="col text-right">
 									<input class="btn btn-sm btn-primary" onclick="pretowyear()" type="button" value="<c:out value="${year-2}" />"/>
@@ -233,7 +233,7 @@
 									var productchar = document.getElementById("productchart");
 									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
 									productchar.innerHTML=text;
-									text = "Total orders <c:out value='${year}'/>";
+									text = "<c:out value='${year}'/> 월별 매출 통계";
 									document.getElementById("productyeartext").innerHTML=text;
 									
 									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
@@ -248,7 +248,7 @@
 									var productchar = document.getElementById("productchart");
 									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
 									productchar.innerHTML=text;
-									text = "Total orders <c:out value='${year-1}'/>";
+									text = "<c:out value='${year-1}'/> 월별 매출 통계";
 									document.getElementById("productyeartext").innerHTML=text;
 									
 									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
@@ -263,7 +263,7 @@
 									var productchar = document.getElementById("productchart");
 									var text = "<canvas id='chart-orders2' class='chart-canvas'>";
 									productchar.innerHTML=text;
-									text = "Total orders <c:out value='${year-2}'/>";
+									text = "<c:out value='${year-2}'/> 월별 매출 통계";
 									document.getElementById("productyeartext").innerHTML=text;
 									
 									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');

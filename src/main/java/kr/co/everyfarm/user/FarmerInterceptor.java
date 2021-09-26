@@ -23,7 +23,7 @@ public class FarmerInterceptor extends HandlerInterceptorAdapter {
 		PrintWriter printwriter = response.getWriter();
 
 		if (httpSession.getAttribute("farmer") == null) {
-			printwriter.print("<script charset=UTF-8>alert('로그인 후 이용가능합니다.농부'); location.href=\"/farmerLogin\"</script>");
+			printwriter.print("<script charset=UTF-8>alert('로그인 후 이용가능합니다.'); location.href=\"/farmerLogin\"</script>");
 			return false;
 		}
 		return true;
