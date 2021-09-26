@@ -20,9 +20,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet" type="text/css">
 
-<!-- Bootstrap Core Css -->
-<link href="resources/admin/sign/plugins/bootstrap/css/bootstrap.css"
-	rel="stylesheet">
+
 
 <!-- Waves Effect Css -->
 <link href="resources/admin/sign/plugins/node-waves/waves.css"
@@ -34,9 +32,44 @@
 
 <!-- Custom Css -->
 <link href="resources/admin/sign/css/style.css" rel="stylesheet">
+<style>
+
+@media (min-width: 768px){
+	#sidenav-collapse-main {
+	padding-left: 1rem;
+    padding-right: 1rem;
+    
+	}
+	
+	#sidenav-collapse-main a.navbar-brand{
+		text-align: left;
+    
+	}
+	
+	#sidenav-collapse-main a.nav-link{
+		padding : 0.65rem 1.5rem;
+    	margin-top: 0px;
+    	margin-left: 8px;
+	}
+	
+	
+	
+	.navbar-vertical.navbar-expand-md .navbar-brand{
+	text-align: left;
+	}
+}
+
+.ls-closed .navbar-brand {
+    margin-left: 27px;
+}
+
+
+</style>
+
 </head>
 
-<body class="signup-page">
+<body class="signup-page" style="
+    background: #b0cd56">
 <!-- Navigation -->
 	<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
@@ -95,7 +128,19 @@
 			</div>
 		</div>
 	</div>
-
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+				<!--   Core   -->
+				<script src="resources/farmer/js/plugins/jquery/dist/jquery.min.js"></script>
+				<script
+					src="resources/farmer/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+				<!--   Optional JS   -->
+				<script src="resources/farmer/js/plugins/chart.js/dist/Chart.min.js"></script>
+				<script
+					src="resources/farmer/js/plugins/chart.js/dist/Chart.extension.js"></script>
+				<!--   Argon JS   -->
+				<script src="resources/farmer/js/argon-dashboard.min.js?v=1.1.2"></script>
+				<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>	
 	<!-- Jquery Core Js -->
 	<script src="resources/admin/sign/plugins/jquery/jquery.min.js"></script>
 

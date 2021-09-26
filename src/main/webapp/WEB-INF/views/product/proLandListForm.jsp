@@ -41,6 +41,18 @@
 </head>
 
 <style>
+
+@media screen and (min-width: 768px){
+	div#table100{
+		display : "" ;
+	}
+	.mobiletalbe{
+		display :none;
+	}
+}
+
+
+
 td, th {
 	border-color: #9ea4ca;
 }
@@ -65,8 +77,9 @@ body {
 }
 
 .wrap-table100 {
-	width: 1170px;
+width: 75%
 }
+
 
 table {
 	border-spacing: 1;
@@ -127,6 +140,10 @@ table td, table th {
 background-color: silver;
 }
 }
+
+
+
+
 </style>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
@@ -158,6 +175,17 @@ function paging(i){
 	document.myHiddenForm.submit();
 	
 }
+window.onresize = function(event){
+	  var innerWidth = window.innerWidth;
+	  if(innerWidth <= "768"){
+		  document.getElementById('table100').style.display ="none"
+	  }else{
+		  document.getElementById('table100').style.display =""
+	  }
+
+}
+
+
 
 </script>
 
@@ -186,25 +214,29 @@ function paging(i){
 
 	<br>
 	<br>
-	<div class="limiter">
+<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
 			<div class="col-lg-12" align="right">
+				<br>
+				<br>
+				<br>
+				<br>
 					<a class="btn btn-sm btn-neutral" href="/ProNFlist">승인전 </a> 
 					<a class="btn btn-sm btn-neutral" href="/ProYFList">승인후 </a> 
 					<a href="/proLandListForm?" class="btn btn-sm btn-neutral">전체보기 </a>
 				</div>
 				<br>
-				<div class="table100">
+				<div id ="table100" class="table100">
 					<table border="1">
 						<colgroup>
-							<col style="width: 50px" />
-							<col style="width: 120px" />
-							<col style="width: 100px" />
-							<col style="width: 80px" />
-							<col style="width: 70px" />
-							<col style="width: 70px" />
-							<col style="width: 70px" />
+							<col style="width: 10%" />
+							<col style="width: 20%" />
+							<col style="width: 20%" />
+							<col style="width: 20%" />
+							<col style="width: 10%" />
+							<col style="width: 10%" />
+							<col style="width: 10%" />
 						</colgroup>
 						<thead>
 							<tr>
@@ -237,6 +269,56 @@ function paging(i){
 						</tbody>
 					</table>
 				</div>
+				<div>
+					<c:forEach var="p" items="${productlist}">
+					<div class="mobiletalbe" >
+							<table border="1" >
+									<tbody>
+										<tr>
+											<td style="width: 15%">상품 번호</td>
+											<td style="width: 15%" class="content">${p.p_No}</td>
+										</tr>
+										<tr>
+											<td>메인이미지</td>
+											<td class="content"><img id='product${p.p_No}'
+													src="/resources/upload/product/${p.p_No}/${p.p_Img}"
+													class="test1" width="120" height="80" alt="Image ${p.p_No}">
+												</td>
+										</tr>
+										<tr>
+											<td>제목</td>
+											<td class="content">${p.p_Title}</td>
+										</tr>
+										<tr>
+											<td>등록날짜</td>
+											<td class="content">${p.p_Date}</td>
+										</tr>
+										<tr>
+											<td>승인여부</td>
+											<td class="content">${p.p_Accept}</td>
+										</tr>
+										<tr>
+											<td>상세보기</td>
+											<td class="content"><a
+													href="/productdetailfarmer?productno=${p.p_No}">상세보기</a></td>
+										</tr>
+										<tr>
+											<td>상세보기</td>
+											<td><button type="button" class="btn btn-sm btn-neutral"
+														onclick="javascript:LandDelete(${p.p_No})">삭제</button></td>
+										</tr>
+									</tbody>
+								</table>
+								<br>
+								<br>
+						</div>	
+						</c:forEach>
+					</div>
+				
+				
+				
+				
+				
 				<br>
 				<div id="regSearch">
 					<select name="productselect" id="productselect">
@@ -309,6 +391,19 @@ function paging(i){
 			</div>
 		</div>
 		</div>
+
 		<br> <Br>
 </body>
+<script>
+
+var innerWidth2 = window.innerWidth;
+
+if(innerWidth2 <= "768"){
+	  document.getElementById('table100').style.display ="none"
+}else{
+	  document.getElementById('table100').style.display =""
+}
+
+</script>
+
 </html>

@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@page import="kr.co.everyfarm.user.MemberBean"%>
 <%@page import="kr.co.everyfarm.board.QnABean"%>
 <%@page import="java.util.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%
-	List<QnABean> qnamodifyrecord = (List) request.getAttribute("qnamodifyrecord");
-	List<QnABean> pnoTitleList = (List) request.getAttribute("pnoTitleList");
-	int count = pnoTitleList.size();
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<% 
+   List<QnABean> qnamodifyrecord = (List)request.getAttribute("qnamodifyrecord");
+   List<QnABean> pnoTitleList = (List)request.getAttribute("pnoTitleList");
+   int count = pnoTitleList.size();
 %>
 <!DOCTYPE html>
-<html>
+<html lang="zxx">
 
 <head>
     <meta charset="UTF-8">
@@ -38,88 +38,150 @@
     <link rel="stylesheet" href="/resources/qna/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/qna/css/style.css" type="text/css">
     
-  	<link rel="stylesheet" href="/resources/editor/css/summernote-lite.css">
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-  
+<!-- 썸머노트  	<link rel="stylesheet" href="/resources/editor/css/summernote-lite.css">
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> -->
+
 <style type="text/css">
+
 .errorMsg {
 	color: red;
 	font-style: italic;
-}
+} 
 
 input::placeholder {
-	color: red;
-	font-style: italic;
+  color: red;
+  font-style: italic;
 }
 
 .my-control {
-	display: block;
-	outline: none;
-	width: 100%;
-	height: 34px;
-	padding: 6px 12px;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #555;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%);
-	box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%); */
-	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
-		ease-in-out .15s;
-	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
-		.15s;
-	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    display: block;
+    outline:none;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143; 
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); */
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
 }
 
 .c-control {
 	display: block;
-	outline: none;
-	width: 100%;
-	height: 34px;
-	padding: 6px 12px;
-	font-size: 16px;
-	line-height: 1.42857143;
-	color: #555;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%);
-	box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%); */
-	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
-		ease-in-out .15s;
-	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
-		.15s;
-	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    outline:none;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 16px;
+    line-height: 1.42857143; 
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); */
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
+    
+    
 }
+
+
 </style>
 
 </head>
+
 <body style="overflow-x: hidden">
 
 <div class="row">
 <div class="col-lg-1 col-md-1">
-<!-- Navigation -->
-	<nav
-		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
-		id="sidenav-main">
-		<div class="container-fluid">
-			<!-- Toggler -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<!-- Collapse -->
-			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
-				<!-- Navigation -->
-				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
-			</div>
-		</div>
-	</nav>
+ <!-- Navigation -->
+      <nav
+      class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
+      id="sidenav-main" style="z-index: 1;">
+      <div class="container-fluid">
+         <!-- Toggler -->
+         <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+         <!-- User -->
+         <ul class="nav align-items-center d-md-none">
+            <li class="nav-item dropdown"><a class="nav-link nav-link-icon"
+               href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false"> <i class="ni ni-bell-55"></i>
+            </a>
+               <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
+                  aria-labelledby="navbar-default_dropdown_1">
+                  <a class="dropdown-item" href="#">Action</a> <a
+                     class="dropdown-item" href="#">Another action</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Something else here</a>
+               </div></li>
+            <li class="nav-item dropdown"><a class="nav-link" href="#"
+               role="button" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false">
+                  <div class="media align-items-center">
+                     <span class="avatar avatar-sm rounded-circle"> <img
+                        alt="Image placeholder"
+                        src="resources/admin/img/theme/team-1-800x800.jpg">
+                     </span>
+                  </div>
+            </a>
+               <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                  <div class=" dropdown-header noti-title">
+                     <h6 class="text-overflow m-0">Welcome!</h6>
+                  </div>
+                  <a href="./examples/profile.html" class="dropdown-item"> <i
+                     class="ni ni-single-02"></i> <span>My profile</span>
+                  </a> <a href="./examples/profile.html" class="dropdown-item"> <i
+                     class="ni ni-settings-gear-65"></i> <span>Settings</span>
+                  </a> <a href="./examples/profile.html" class="dropdown-item"> <i
+                     class="ni ni-calendar-grid-58"></i> <span>Activity</span>
+                  </a> <a href="./examples/profile.html" class="dropdown-item"> <i
+                     class="ni ni-support-16"></i> <span>Support</span>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a href="#!" class="dropdown-item"> <i class="ni ni-user-run"></i>
+                     <span>Logout</span>
+                  </a>
+               </div></li>
+         </ul>
+         <!-- Collapse -->
+         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+            <!-- Collapse header -->
+            <div class="navbar-collapse-header d-md-none">
+               <div class="row">
+                  <div class="col-6 collapse-brand">
+                     <a href="./index.html"> <img
+                        src="resources/admin/img/brand/blue.png">
+                     </a>
+                  </div>
+                  <div class="col-6 collapse-close">
+                     <button type="button" class="navbar-toggler"
+                        data-toggle="collapse" data-target="#sidenav-collapse-main"
+                        aria-controls="sidenav-main" aria-expanded="false"
+                        aria-label="Toggle sidenav">
+                        <span></span> <span></span>
+                     </button>
+                  </div>
+               </div>
+            </div>
+            <!-- Navigation -->
+            <jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
+         </div>
+      </div>
+   </nav>
    </div>
 
 <div class="col-lg-11 col-md-11" style="background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important; padding-left: 150px;">
@@ -201,26 +263,51 @@ input::placeholder {
    </div>
  </div>  
    
-   
-   
+   <!-- 썸머노트
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="/resources/editor/js/summernote-lite.js"></script>
+<script src="/resources/editor/js/lang/summernote-ko-KR.js"></script> -->
+
+<script type="text/javascript">
+function select(e) {
+	// 선택된 데이터의 텍스트값 가져오기
+	const text = e.options[e.selectedIndex].text;
+	const delText = text + " 기재로 인하여 수정되었습니다.";
+	
+	// 선택한 텍스트 출력
+	document.getElementById('summernote').innerHTML = delText;
+}
+     
+        $('#summernote').summernote({
+         /*  placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.', */
+          height: 600,
+          minHeight: null,
+          maxHeight: null,
+          focus: false,
+          toolbar: [
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+          
+	 });
+ 
+     
+    
+  </script>
+  
+</body>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
-<script type="text/javascript">
- 
-        function select(e) {
-			// 선택된 데이터의 텍스트값 가져오기
-			const text = e.options[e.selectedIndex].text;
-			const delText = text + " 기재로 인하여 삭제되었습니다.";
-			
-			// 선택한 텍스트 출력
-			document.getElementById('summernote').innerHTML = delText;
-		}
-    
-  </script>
-</body>
 
 </html>

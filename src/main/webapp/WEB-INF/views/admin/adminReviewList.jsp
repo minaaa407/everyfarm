@@ -512,5 +512,4 @@ a:hover {
 		document.getElementById('a3').className = 'nav-item active';
 		document.getElementById('a4').className = 'nav-item';
 	</script>
-	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </html>

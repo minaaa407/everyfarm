@@ -35,9 +35,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
 
 <style type="text/css">
-body{
-background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
-}
+
 .paging{
 	padding: 8px 16px;
     border-radius: 20%;
@@ -68,6 +66,7 @@ background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 		</div>
 	</nav>
 
+<div class="color" style="background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;">
     <!-- Categories Section Begin -->
     <section class="categories categories-grid spad">
         <div class="categories__post">
@@ -251,7 +250,7 @@ background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 </section>
 
    
-  <div style="display: block; text-align: center; padding-bottom: 10px; width: 1130px; padding-left: 0px;">		
+  <div style="display: block; text-align: center; padding-bottom: 10px; padding-left: 0px;">		
 		<c:choose>
    			<c:when test="${paging.startPage != 1 && paging.q_Content != null}">	
    				<a class="paging" href="/farmerQnasearch?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}">&lt;</a>
@@ -282,6 +281,8 @@ background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 			</c:when>
 		</c:choose>
 		
+ 	</div>
+ 	
  	</div>
 	</div>
 	</div>
