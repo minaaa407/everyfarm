@@ -114,7 +114,6 @@ public class AdminController {
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
 	public String alogin(AdminBean adminBean, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		System.out.println("login:: post");
 
 		HttpSession session = request.getSession();
 		AdminDAO adminDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
@@ -270,8 +269,6 @@ public class AdminController {
 	public String iTest(Model model, FarmerBean farmerBean, MemberBean memberBean) {
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
 
-		System.out.println("---- 씨앗 차트 시작 ----");
-
 		DecimalFormat dfmonth = new DecimalFormat("00");
 		DecimalFormat dfyear = new DecimalFormat("0000");
 		Calendar cal = Calendar.getInstance();
@@ -286,17 +283,6 @@ public class AdminController {
 		String monthago7 = dfmonth.format(cal.get(Calendar.MONTH) - 6);
 		String monthago8 = dfmonth.format(cal.get(Calendar.MONTH) - 7);
 
-		System.out.println("현재 년 = " + year);
-		System.out.println("현재 월 = " + date);
-		System.out.println("1달 전 = " + monthago1);
-		System.out.println("2달 전 = " + monthago2);
-		System.out.println("3달 전 = " + monthago3);
-		System.out.println("4달 전 = " + monthago4);
-		System.out.println("5달 전 = " + monthago5);
-		System.out.println("6달 전 = " + monthago6);
-		System.out.println("7달 전 = " + monthago7);
-		System.out.println("8달 전 = " + monthago8);
-
 		model.addAttribute("year", year);
 		model.addAttribute("date", date);
 		model.addAttribute("monthago1", monthago1);
@@ -309,91 +295,76 @@ public class AdminController {
 		model.addAttribute("monthago8", monthago8);
 
 		Integer countA = dao.countA(date);
-		System.out.println(countA);
 		int countAA = 0;
 		if (countA != null) {
 			countAA = dao.countA(date);
 		}
 		Integer countB = dao.countB(date);
-		System.out.println(countB);
 		int countBB = 0;
 		if (countB != null) {
 			countBB = dao.countB(date);
 		}
 		Integer countC = dao.countC(date);
-		System.out.println(countC);
 		int countCC = 0;
 		if (countC != null) {
 			countCC = dao.countC(date);
 		}
 		Integer countD = dao.countD(date);
-		System.out.println(countD);
 		int countDD = 0;
 		if (countD != null) {
 			countDD = dao.countD(date);
 		}
 		Integer countE = dao.countE(date);
-		System.out.println(countE);
 		int countEE = 0;
 		if (countE != null) {
 			countEE = dao.countE(date);
 		}
 		Integer countF = dao.countF(date);
-		System.out.println(countF);
 		int countFF = 0;
 		if (countF != null) {
 			countFF = dao.countF(date);
 		}
 		Integer countG = dao.countG(date);
-		System.out.println(countG);
 		int countGG = 0;
 		if (countG != null) {
 			countGG = dao.countG(date);
 		}
 		Integer countH = dao.countH(date);
-		System.out.println(countH);
 		int countHH = 0;
 		if (countH != null) {
 			countHH = dao.countH(date);
 		}
 		Integer countI = dao.countI(date);
-		System.out.println(countI);
 		int countII = 0;
 		if (countI != null) {
 			countII = dao.countI(date);
 		}
 		Integer countJ = dao.countJ(date);
-		System.out.println(countJ);
 		int countJJ = 0;
 		if (countJ != null) {
 			countJJ = dao.countJ(date);
 		}
 		Integer countK = dao.countK(date);
-		System.out.println(countK);
 		int countKK = 0;
 		if (countK != null) {
 			countKK = dao.countK(date);
 		}
 		Integer countL = dao.countL(date);
-		System.out.println(countL);
 		int countLL = 0;
 		if (countL != null) {
 			countLL = dao.countL(date);
 		}
 		Integer countM = dao.countM(date);
-		System.out.println(countM);
 		int countMM = 0;
 		if (countM != null) {
 			countMM = dao.countM(date);
 		}
 		Integer countN = dao.countN(date);
-		System.out.println(countN);
 		int countNN = 0;
 		if (countN != null) {
 			countNN = dao.countN(date);
 		}
 		Integer countO = dao.countO(date);
-		System.out.println(countO);
 		int countOO = 0;
 		if (countO != null) {
 			countOO = dao.countO(date);
@@ -402,7 +373,6 @@ public class AdminController {
 		int[] array = { countAA, countBB, countCC, countDD, countEE, countFF, countGG, countHH, countII, countJJ,
 				countKK, countLL, countMM, countNN, countOO };
 
-		System.out.println("A = " + countAA);
 
 		for (int i = 0; i < array.length; i++) {
 			model.addAttribute("array0", array[0]);
@@ -421,7 +391,6 @@ public class AdminController {
 			model.addAttribute("array13", array[13]);
 			model.addAttribute("array14", array[14]);
 		}
-		System.out.println("---- 씨앗 차트 끝 ----");
 		return "admin/iTest";
 	}
 
@@ -432,9 +401,7 @@ public class AdminController {
 
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
 
-		System.out.println("---- changemonth 시작 ----");
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("선택한 달 = " + selectmonth + "월");
 
 		if (selectmonth == null) {
 			map.put("url", "admin");
@@ -444,91 +411,76 @@ public class AdminController {
 			model.addAttribute("selectmonth", selectmonth);
 
 			Integer countA = dao.countA(selectmonth);
-			System.out.println(countA);
 			int countAA = 0;
 			if (countA != null) {
 				countAA = dao.countA(selectmonth);
 			}
 			Integer countB = dao.countB(selectmonth);
-			System.out.println(countB);
 			int countBB = 0;
 			if (countB != null) {
 				countBB = dao.countB(selectmonth);
 			}
 			Integer countC = dao.countC(selectmonth);
-			System.out.println(countC);
 			int countCC = 0;
 			if (countC != null) {
 				countCC = dao.countC(selectmonth);
 			}
 			Integer countD = dao.countD(selectmonth);
-			System.out.println(countD);
 			int countDD = 0;
 			if (countD != null) {
 				countDD = dao.countD(selectmonth);
 			}
 			Integer countE = dao.countE(selectmonth);
-			System.out.println(countE);
 			int countEE = 0;
 			if (countE != null) {
 				countEE = dao.countE(selectmonth);
 			}
 			Integer countF = dao.countF(selectmonth);
-			System.out.println(countF);
 			int countFF = 0;
 			if (countF != null) {
 				countFF = dao.countF(selectmonth);
 			}
 			Integer countG = dao.countG(selectmonth);
-			System.out.println(countG);
 			int countGG = 0;
 			if (countG != null) {
 				countGG = dao.countG(selectmonth);
 			}
 			Integer countH = dao.countH(selectmonth);
-			System.out.println(countH);
 			int countHH = 0;
 			if (countH != null) {
 				countHH = dao.countH(selectmonth);
 			}
 			Integer countI = dao.countI(selectmonth);
-			System.out.println(countI);
 			int countII = 0;
 			if (countI != null) {
 				countII = dao.countI(selectmonth);
 			}
 			Integer countJ = dao.countJ(selectmonth);
-			System.out.println(countJ);
 			int countJJ = 0;
 			if (countJ != null) {
 				countJJ = dao.countJ(selectmonth);
 			}
 			Integer countK = dao.countK(selectmonth);
-			System.out.println(countK);
 			int countKK = 0;
 			if (countK != null) {
 				countKK = dao.countK(selectmonth);
 			}
 			Integer countL = dao.countL(selectmonth);
-			System.out.println(countL);
 			int countLL = 0;
 			if (countL != null) {
 				countLL = dao.countL(selectmonth);
 			}
 			Integer countM = dao.countM(selectmonth);
-			System.out.println(countM);
 			int countMM = 0;
 			if (countM != null) {
 				countMM = dao.countM(selectmonth);
 			}
 			Integer countN = dao.countN(selectmonth);
-			System.out.println(countN);
 			int countNN = 0;
 			if (countN != null) {
 				countNN = dao.countN(selectmonth);
 			}
 			Integer countO = dao.countO(selectmonth);
-			System.out.println(countO);
 			int countOO = 0;
 			if (countO != null) {
 				countOO = dao.countO(selectmonth);
@@ -537,7 +489,6 @@ public class AdminController {
 			int[] array = { countAA, countBB, countCC, countDD, countEE, countFF, countGG, countHH, countII, countJJ,
 					countKK, countLL, countMM, countNN, countOO };
 
-			System.out.println("A = " + countA);
 
 			map.put("sarray0", array[0]);
 			map.put("sarray1", array[1]);
@@ -555,7 +506,6 @@ public class AdminController {
 			map.put("sarray13", array[13]);
 			map.put("sarray14", array[14]);
 			map.put("error", true);
-			System.out.println("---- changemonth 끝 ----");
 		}
 		return map;
 	}
