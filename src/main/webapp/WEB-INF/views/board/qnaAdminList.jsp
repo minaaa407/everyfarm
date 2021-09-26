@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="kr.co.everyfarm.farmer.FarmerBean"%>
+<% FarmerBean farmer  = (FarmerBean) request.getSession().getAttribute("farmer"); %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -10,11 +12,11 @@
     <meta name="keywords" content="Foodeiblog, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>EVERY FARM 관리자 | Q&A 리스트</title>
+    <title>EVERY FARM 관리자 | Q&A 관리</title>
 
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900&display=swap"
         rel="stylesheet">
@@ -26,9 +28,9 @@
     <link rel="stylesheet" href="/resources/qna/css/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="/resources/qna/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/qna/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="/resources/qna/css/style.css" type="text/css">
-    
-    <!-- 이미지 클릭시 확대 -->
+    <link rel="stylesheet" href="/resources/qna/css/style.css?1" type="text/css">
+
+	<!-- 이미지 클릭시 확대 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
 
@@ -44,9 +46,8 @@
 
 <body style="overflow-x: hidden">
 
-<div class="row">
-<div class="col-lg-1 col-md-1">
-  <!-- Navigation -->
+
+ <!-- Navigation -->
 	<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
 		id="sidenav-main">
@@ -64,17 +65,17 @@
 			</div>
 		</div>
 	</nav>
-   </div>
 
-<div class="col-lg-11 col-md-11" style="background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important; padding-left: 150px;">
-   <!-- Categories Section Begin -->
-    <section class="categories categories-grid spad" style="padding-top: 0; padding-bottom: 50px;">
+<div class="color" style="background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;">
+    <!-- Categories Section Begin -->
+    <section class="categories categories-grid spad">
         <div class="categories__post">
-           <div class="container" style="margin-left: 55px; margin-right: 0px; padding-right: 90px;">
-                <div class="categories__grid__post" style="border-top-width: 0px; margin-top: 100px;">
-                 
-                      
-                       <c:choose>   
+         <div class="container">
+                <div class="categories__grid__post">
+                    <div class="row">
+					 <div class="col-lg-12 col-md-12">
+					 
+                      <c:choose>   
                  		<c:when test = "${empty productQlist}">
                  			<div class="breadcrumb__text">
 							</div>
@@ -119,8 +120,8 @@
                             </c:when>
                          </c:choose>
                             
-                            
-                        <c:choose>   
+                  
+				       <c:choose>   
                  		<c:when test = "${empty productQlist}">
                  		<div class="row" style="box-shadow: 0px 2px 10px rgb(0 0 0 / 8%); background-color: white; margin-bottom: 140px;padding-bottom: 50px;">
                     <div class="col-lg-12 col-md-12" style="padding-top: 50px;">      
@@ -237,14 +238,16 @@
                 </c:forEach>
                 </c:when>
              </c:choose>
-            
-            </div>
-          </div>
-         </div>
-     
-   </section>
+             
+                   </div>
+                  </div>
+  				</div>
+              </div>
+			</div>
+</section>
+
    
-    <div style="display: block; text-align: center; padding-bottom: 10px; width: 1130px; padding-left: 0px;">		
+  <div style="display: block; text-align: center; padding-bottom: 10px; padding-left: 0px;">		
 		<c:choose>
    			<c:when test="${paging.startPage != 1 && paging.q_Content != null}">	
    				<a class="paging" href="/adminQnasearch?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}&searchBox=${paging.q_Ptitle}&searchText=${paging.q_Content}&searchAnswer=${paging.q_Answer}">[이전]</a>
@@ -276,10 +279,10 @@
 		</c:choose>
 		
 	</div>
-   </div>
- </div>  
-   
-   
+ 	
+ 	</div>
+	</div>
+	</div>
    
 <script type="text/javascript">
 
@@ -299,7 +302,7 @@ $(document).on('click', '[data-toggle="lightbox"]', function(event) {
 </script>
                   
     
-    <!-- Js Plugins -->
+     <!-- Js Plugins -->
     <script src="/resources/qna/js/jquery-3.3.1.min.js"></script>
     <script src="/resources/qna/js/bootstrap.min.js"></script>
     <script src="/resources/qna/js/jquery.slicknav.js"></script>
@@ -311,6 +314,7 @@ $(document).on('click', '[data-toggle="lightbox"]', function(event) {
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+
 </body>
 
 </html>

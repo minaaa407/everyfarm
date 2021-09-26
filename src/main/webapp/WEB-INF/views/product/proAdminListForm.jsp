@@ -252,7 +252,7 @@ window.onresize = function(event){
 									<td class="content"><a
 										href="/productdetailadmin?productno=${p.p_No}">상세보기</a></td>
 									<td><a class="btn btn-sm btn-neutral"
-										href="/proRegDetailForm?p_No=${p.p_No}">수정</a>
+										href="/AdRegDetailForm?p_No=${p.p_No}">수정</a>
 										<button type="button" class="btn btn-sm btn-neutral"
 											onclick="javascript:proDelete(${p.p_No})">삭제</button></td>
 								</tr>

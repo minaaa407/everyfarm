@@ -68,21 +68,41 @@ table tbody tr:last-child {
 table td, table th {
   text-align: center;
 }
-.pagination {
-  display: inline-block;
+
+.pageInfo li {
+	float: left;
+	font-size: 13px;
+	font-weight: 500;
 }
-.pagination a {
-  float: left;
-  padding: 8px 16px;
-  border-radius:20%;
+
+.pageInfo_btn {
+	border-radius: 20%;
+	list-style-type: none;
+	padding: 8px 1px;
 }
-.pagination a.active {
-  background-color: #7971ea;
-  color: white;
+
+.pageInfo_btn  a {
+	color: #5e72e4;
+	font-size: 18px;
+	padding: 8px 15px;
+	border-radius: 20%;
 }
-.pagination a:hover:not(.active) {
-background-color: silver;
+
+.pageInfo_btn:hover {
+	background-color: silver;
 }
+
+
+.active a {
+	background-color: #7971ea;
+	color: white;
+}
+.cen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 </style>
 </head>
 <body>
@@ -163,6 +183,7 @@ background-color: silver;
 						</tbody>
 					</table>
 					<br>
+					<div class="cen">
 					<div class="search_wrap">
 						<div class="search_area">
 							<select name="type">
@@ -179,25 +200,28 @@ background-color: silver;
 						</div>
 					</div>
 					<div class="pageInfo_wrap">
-							<div id="pageInfo" class="pageInfo btn-group pagination">
+							<div class="pageInfo_area">
+							<ul id="pageInfo" class="pageInfo">
 								<!-- 이전페이지 버튼 -->
 								<c:if test="${pageMaker.prev}">
-									<span class="pageInfo_btn previous"><a
-										href="${pageMaker.startPage-1}">[이전]</a></span>
+									<li class="pageInfo_btn previous"><a
+										href="${pageMaker.startPage-1}">◀ 이전</a></li>
 								</c:if>
 
 								<!-- 각 번호 페이지 버튼 -->
 								<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-									<span class="pageInfo_btn  ${pageMaker.cri.pageNum == num ? "active":"" }"><a
-										href="${num}" style="background-color: #7971ea; color: white;">${num}</a></span>
+									<li class="pageInfo_btn  ${pageMaker.cri.pageNum == num ? "active":"" }"><a
+										href="${num}">${num}</a></li>
 								</c:forEach>
 
 								<!-- 다음페이지 버튼 -->
 								<c:if test="${pageMaker.next}">
-									<span class="pageInfo_btn next"><a
-										href="${pageMaker.endPage + 1 }">[다음]</a></span>
+									<li class="pageInfo_btn next"><a
+										href="${pageMaker.endPage + 1 }">다음 ▶</a></li>
 								</c:if>
+								</ul>
 							</div>
+					</div>
 					</div>
 					<form id="moveForm" method="get">
 						<input type="hidden" name="pageNum"

@@ -15,6 +15,13 @@
                      
 
 <style>
+@media only screen 
+    and (max-width: 760px), (min-device-width: 768px) 
+    and (max-device-width: 1024px)  {
+      .bodyH{
+      margin-top:150px;
+      }
+   }
 body{
 	background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 	}

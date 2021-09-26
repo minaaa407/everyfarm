@@ -10,13 +10,10 @@
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="/resources/admin/css/argon-dashboard.css?v=1.1.2"
+	rel="stylesheet" />
 <title>EVERY FARM | 관리자</title>
 	<style>
-	canvas {
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-    }
     .chartD {
     background-color: white;
     box-shadow: 1px 1px 10px grey;
@@ -24,18 +21,18 @@
     flex-direction: column;
     justify-content: center;
     }
-    .chartA {
-    background-color: white;
-    box-shadow: 1px 1px 10px grey;
-        display: flex;
-    flex-direction: column;
-    }
     </style>
 </head>
 
 <body>
-				<!-- Chart -->
-								<canvas id="myChart" class="chart-canvas" width="700" height="350"></canvas>
+				<!-- Chart --><div class="pad chartD">
+								<div class="card-header bg-transparent">
+									<h6 class="text-uppercase text-muted ls-1 mb-1">EVERY FARM</h6>
+										<c:set var="today" value="<%=new java.util.Date()%>" />
+										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
+									<h2 class="productyeartext" class="mb-0"><c:out value="${year}"/>&nbsp;월별 판매량</h2>
+								<canvas id="myChart" class="chart-canvas" width="750" height="380"></canvas>
+								</div>
 							<span style="width: 80px;">
     	<input type="hidden" id="selmonth" value="" />
     	<select id="month" name="month" onchange="javascript:myListener(this);">
@@ -68,7 +65,7 @@
 	    <input type="hidden" id="array14" value="${array14 }" >
  
 	    <input type="hidden" id="year" value="${year}" >
-    
+    </div>
     <!-- Chart -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
