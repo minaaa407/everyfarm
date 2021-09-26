@@ -722,7 +722,7 @@ td .mybtn{
 
 <script>
 
-			$(document).ready(function () {
+			$(document).ready(function () {	
 				lnb = $("#lnb").offset().top;
 				  $("div.select > a").click(function () {
 					  $(this).next("ul").toggle();
