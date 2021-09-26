@@ -172,7 +172,7 @@ span {
 				<table class="table table-striped">
 					<tr>
 						<th><div>작성자</div></th>
-						<td><input type="text" class="form-control" value="관리자"
+						<td><input type="text" class="form-control" value="${revList.rev_Name}"
 							name="rev_Name" readonly></td>
 					</tr>
 					<tr>

@@ -247,7 +247,6 @@ public class ReviewController {
 		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		ReviewBean revVO = revDAO.revDetail(reviewBean);
 		List<ReviewReplyBean> list = revDAO.reply(rev_No);
-		System.out.println(list);
 		model.addAttribute("repList",list);
 		model.addAttribute("revList", revVO);
 		
