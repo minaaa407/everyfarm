@@ -434,6 +434,15 @@
 		where q_No=#{q_No}
 	</update>  <!-- q_Img -->
 	
+	<update id="updateAdmin" parameterType="kr.co.everyfarm.board.QnABean">
+		update qnatofarmer set q_Title=#{q_Title}, 
+		<if test="q_Img != null">
+			q_Img=#{q_Img},
+    	</if>
+		q_Content=#{q_Content}, q_Secret=#{q_Secret}
+		where q_No=#{q_No}
+	</update>
+
 	<update id="adminWrite" parameterType="kr.co.everyfarm.board.QnABean">
 		update qna set q_answer=1, q_magdate=now(), q_magcontent =#{q_Magcontent} where q_No=#{q_No}
 	</update>
@@ -441,13 +450,7 @@
 	<delete id="delete" parameterType="int">
 		delete from qnatofarmer where q_No=#{no}
 	</delete>
-
 	
-<!-- farmer	 -->
-<!-- 	<select id ="productByfarmer" resultType="kr.co.everyfarm.board.QnABean">
-   		 SELECT p_No as q_Pno FROM product where p_Id=#{f_Id}
-  	</select>  -->
-  	
   	<select id ="countfarmerQnaList" resultType="int">
    		 SELECT count(*) FROM qnatofarmer where q_Pid=#{f_Id}
   	</select> 
@@ -461,21 +464,11 @@
    					ORDER BY q_no DESC
     			) RESULT
     	WHERE RN BETWEEN #{start} AND #{end}	
-	</select> <!-- q_img -->
+	</select>
   	
     <update id="farmerWrite" parameterType="kr.co.everyfarm.board.QnABean">
 		update qnatofarmer set q_answer=1, q_magdate=now(), q_Pid=#{q_Pid}, q_magcontent =#{q_Magcontent} where q_No=#{q_No}
 	</update>
-  	
-  	<!-- <delete id="delete" parameterType="java.util.List">
-		delete from basket
-		where b_no IN (
-		  <foreach collection="list" item="deletenolist" index="index" separator=",">
-            ${deletenolist}
-          </foreach>
-		) 
-	</delete> -->
-	
-	
-<!--   q_Img, #{q_Img}, -->
+
+
 </mapper>

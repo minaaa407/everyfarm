@@ -1,25 +1,15 @@
 package kr.co.everyfarm.admin;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +30,6 @@ import kr.co.everyfarm.farmer.FarmerBean;
 import kr.co.everyfarm.farmer.FarmerDAO;
 import kr.co.everyfarm.payment.PaymentDAO;
 import kr.co.everyfarm.product.ProductDao;
-import kr.co.everyfarm.user.MailAuth;
 import kr.co.everyfarm.user.MemberBean;
 import kr.co.everyfarm.user.MemberDAO;
 import kr.co.everyfarm.user.UserPw;
@@ -73,7 +61,211 @@ public class AdminController {
 			mMonth.add(mmonth);
 		}
 
-	      System.out.println("---- 씨앗 차트 시작 ----");
+		Calendar cal = Calendar.getInstance();
+			
+		for (int j = 0; j < 12; j++) {
+			fmonth = adDAO.fchart(j);
+			fMonth.add(fmonth);
+		}
+		
+		
+		model.addAttribute("mMonth", mMonth);
+		model.addAttribute("fMonth", fMonth);
+		
+		//상품 차트
+	    ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
+		int year2 = cal.get(Calendar.YEAR);	
+	    
+	    String[] months = {"January","february","march","april","may","june","july"
+	    		,"august","september","october","november","december"};
+		int[] payment = new int[12];
+		int[] payment1 = new int[12];
+		int[] payment2 = new int[12];
+	    for(int i =0; i < months.length; i++) {
+		    HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("Month", months[i]);
+			map.put("year", year2);
+			payment[i] = productdao.adminproductpaymentchart(map);
+	    }
+	    model.addAttribute("payment",payment);
+	    
+	    for(int i =0; i < months.length; i++) {
+		    HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("Month", months[i]);
+			map.put("year", year2-1);
+			payment1[i] = productdao.adminproductpaymentchart(map);
+	    }
+	    model.addAttribute("payment1pre",payment1);
+	    
+	    for(int i =0; i < months.length; i++) {
+		    HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("Month", months[i]);
+			map.put("year", year2-2);
+			payment2[i] = productdao.adminproductpaymentchart(map);
+	    }
+	    model.addAttribute("payment2pre",payment2);
+ 
+	    //상품차트
+	
+	      return "admin/admin";
+	   }
+	
+
+	@RequestMapping(value = "/adminLogin", method = RequestMethod.GET)
+	public String alogin() {
+		return "admin/sign-in";
+	}
+
+	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
+	public String alogin(AdminBean adminBean, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("login:: post");
+
+		HttpSession session = request.getSession();
+		AdminDAO adminDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
+
+		System.out.println("첫번째:" + adminBean.getA_Pw());
+		String encryPassword = UserPw.encrypt(adminBean.getA_Pw());
+		adminBean.setA_Pw(encryPassword);
+		System.out.println("두번째:" + adminBean.getA_Pw());
+
+		AdminBean admin = adminDAO.alogin(adminBean);
+
+		if (admin != null) {
+			session.setAttribute("admin", admin);
+			return "redirect:/admin";
+		} else {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('아이디 혹은 비밀번호가 일치하지 않습니다. 다시 확인해주세요.'); history.back();</script>");
+			out.flush();
+			return null;
+		}
+	}
+
+	@RequestMapping(value = "/userList")
+	public String mlist(Model model, Paging paging, MemberBean memberBean) {
+		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
+
+		int total = dao.mCount(paging);
+
+		PageMaker pageMake = new PageMaker(paging, total);
+		model.addAttribute("member", dao.mlist(paging));
+		model.addAttribute("pageMaker", pageMake);
+		return "admin/userList";
+	}
+
+	@RequestMapping(value = "/farmerList", method = RequestMethod.GET)
+	public String flist(Model model, Paging paging, FarmerBean farmerBean) {
+		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
+
+		int total = dao.fCount(paging);
+
+		PageMaker pageMake = new PageMaker(paging, total);
+		model.addAttribute("farmer", dao.flist(paging));
+		model.addAttribute("pageMaker", pageMake);
+		return "admin/farmerList";
+	}
+	
+	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+
+		session.invalidate();
+		return "redirect:/adminLogin";
+	}
+
+	@RequestMapping(value = "/farmerAdd", method = RequestMethod.GET)
+	public String farmerAdd(Model model) {
+		model.addAttribute("farmerBean", new FarmerBean());
+		return "admin/farmerTest";
+	}
+
+	@RequestMapping(value = "/farmerAdd", method = RequestMethod.POST)
+	public String farmerAdd(FarmerBean farmerBean, BindingResult bindingResult, HttpServletRequest request) {
+
+		System.out.println("첫번째:" + farmerBean.getF_Pw());
+		String encryPassword = UserPw.encrypt(farmerBean.getF_Pw());
+		farmerBean.setF_Pw(encryPassword);
+		System.out.println("두번째:" + farmerBean.getF_Pw());
+
+		FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
+		farmerDAO.farmerAdd(farmerBean);
+
+		if (bindingResult.hasErrors()) {
+			return "admin/farmerTest";
+		}
+		return "redirect:/farmerList";
+	}
+
+	@RequestMapping(value = "/userAdd", method = RequestMethod.GET)
+	public String userAdd(Model model) {
+		model.addAttribute("memberBean", new MemberBean());
+		return "admin/userTest";
+	}
+
+	@RequestMapping(value = "/userAdd", method = RequestMethod.POST)
+	public String userAdd(MemberBean memberBean, BindingResult bindingResult, HttpServletRequest request) {
+
+		System.out.println("첫번째:" + memberBean.getM_Pw());
+		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
+		memberBean.setM_Pw(encryPassword);
+		System.out.println("두번째:" + memberBean.getM_Pw());
+
+		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
+		memberDAO.userAdd(memberBean);
+
+		if (bindingResult.hasErrors()) {
+			return "admin/userTest";
+		}
+		return "redirect:/userList";
+	}
+
+	@RequestMapping(value = "/userDelete")
+	@ResponseBody
+	public Map<String, Object> userDelete(MemberBean memberbean, @RequestParam(value = "checkArr[]") String checkArr) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
+
+		List<String> delete = Arrays.asList(checkArr);
+		memDao.uDelete(delete);
+		map.put("error", true);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/farmerD")
+	@ResponseBody
+	public Map<String, Object> farmerDelete(FarmerBean farmerbean, @RequestParam(value = "checkArr[]") String checkArr) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		FarmerDAO farmDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
+
+		List<String> delete = Arrays.asList(checkArr);
+		farmDao.fDel(delete);
+		map.put("error", true);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/farmerY")
+	@ResponseBody
+	public Map<String, Object> farmerY(FarmerBean farmerBean, @RequestParam(value = "checkArr[]")String checkArr){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		AdminDAO farmDao = sqlSessionTemplate.getMapper(AdminDAO.class);
+		
+		List<String> yes = Arrays.asList(checkArr);
+		farmDao.farmerY(yes);
+		map.put("error", true);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/iTest", method = RequestMethod.GET)
+	public String iTest(Model model, FarmerBean farmerBean, MemberBean memberBean) {
+		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
+		
+		System.out.println("---- 씨앗 차트 시작 ----");
 	      
 	      DecimalFormat dfmonth = new DecimalFormat("00");
 			DecimalFormat dfyear = new DecimalFormat("0000"); 
@@ -168,82 +360,18 @@ public class AdminController {
 				model.addAttribute("array14", array[14]);
 				}
 			System.out.println("---- 씨앗 차트 끝 ----");
-			
-		for (int j = 0; j < 12; j++) {
-			fmonth = adDAO.fchart(j);
-			fMonth.add(fmonth);
-		}
-		
-		
-		model.addAttribute("mMonth", mMonth);
-		model.addAttribute("fMonth", fMonth);
-		
-		//상품 차트
-	    ProductDao productdao = sqlSessionTemplate.getMapper(ProductDao.class);
-		int year2 = cal.get(Calendar.YEAR);	
-	    
-	    String[] months = {"January","february","march","april","may","june","july"
-	    		,"august","september","october","november","december"};
-		int[] payment = new int[12];
-		int[] payment1 = new int[12];
-		int[] payment2 = new int[12];
-	    for(int i =0; i < months.length; i++) {
-		    HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("Month", months[i]);
-			map.put("year", year2);
-			payment[i] = productdao.adminproductpaymentchart(map);
-	    }
-	    model.addAttribute("payment",payment);
-	    
-	    for(int i =0; i < months.length; i++) {
-		    HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("Month", months[i]);
-			map.put("year", year2-1);
-			payment1[i] = productdao.adminproductpaymentchart(map);
-	    }
-	    model.addAttribute("payment1pre",payment1);
-	    
-	    for(int i =0; i < months.length; i++) {
-		    HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("Month", months[i]);
-			map.put("year", year2-2);
-			payment2[i] = productdao.adminproductpaymentchart(map);
-	    }
-	    model.addAttribute("payment2pre",payment2);
- 
-	    //상품차트
+		return "admin/iTest";
+	}
 	
-	      return "admin/admin";
-	   }
-	
-	@RequestMapping(value = "/admin", method = RequestMethod.POST)
+	@RequestMapping(value = "/iTest", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> changemonth(@RequestParam String selectmonth, Model model, HttpServletResponse response, FarmerBean farmerBean, MemberBean memberBean) {
+	public Map<String, Object> iTest(@RequestParam String selectmonth, Model model, HttpServletResponse response, FarmerBean farmerBean, MemberBean memberBean) {
 		
-		AdminDAO adDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
 		PaymentDAO dao = sqlSessionTemplate.getMapper(PaymentDAO.class);
-	      int mmonth = 0;
-	      int fmonth = 0;
-
-	      List<Integer> mMonth = new ArrayList<Integer>();
-	      List<Integer> fMonth = new ArrayList<Integer>();
-
-	      for (int i = 0; i < 12; i++) {
-	         mmonth = adDAO.mchart(i);
-	         mMonth.add(mmonth);
-	      }
-
-	      for (int j = 0; j < 12; j++) {
-	         fmonth = adDAO.fchart(j);
-	         fMonth.add(fmonth);
-	      }
-	      model.addAttribute("mMonth", mMonth);
-	      model.addAttribute("fMonth", fMonth);
 	      
 		System.out.println("---- changemonth 시작 ----");
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("선택한 달 = " + selectmonth + "월");
-		
 		
 		if (selectmonth == null) {
 			map.put("url", "admin");
@@ -310,150 +438,4 @@ public class AdminController {
 		return map;
 	}
 
-	@RequestMapping(value = "/adminLogin", method = RequestMethod.GET)
-	public String alogin() {
-		return "admin/sign-in";
-	}
-
-	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
-	public String alogin(AdminBean adminBean, HttpServletRequest request) {
-		System.out.println("login:: post");
-
-		HttpSession session = request.getSession();
-		AdminDAO adminDAO = sqlSessionTemplate.getMapper(AdminDAO.class);
-
-		System.out.println("첫번째:" + adminBean.getA_Pw());
-		String encryPassword = UserPw.encrypt(adminBean.getA_Pw());
-		adminBean.setA_Pw(encryPassword);
-		System.out.println("두번째:" + adminBean.getA_Pw());
-
-		AdminBean admin = adminDAO.alogin(adminBean);
-
-		if (admin != null) {
-			session.setAttribute("admin", admin);
-			return "redirect:/admin";
-		} else {
-			return "redirect:/adminLogin";
-		}
-	}
-
-	@RequestMapping(value = "/userList")
-	public String mlist(Model model, Paging paging, MemberBean memberBean) {
-		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
-
-		int total = dao.mCount(paging);
-
-		PageMaker pageMake = new PageMaker(paging, total);
-		model.addAttribute("member", dao.mlist(paging));
-		model.addAttribute("pageMaker", pageMake);
-		return "admin/userList";
-	}
-
-	@RequestMapping(value = "/farmerList", method = RequestMethod.GET)
-	public String flist(Model model, Paging paging, FarmerBean farmerBean) {
-		AdminDAO dao = sqlSessionTemplate.getMapper(AdminDAO.class);
-
-		int total = dao.fCount(paging);
-
-		PageMaker pageMake = new PageMaker(paging, total);
-		model.addAttribute("farmer", dao.flist(paging));
-		model.addAttribute("pageMaker", pageMake);
-		return "admin/farmerList";
-	}
-	
-	@RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
-
-		session.invalidate();
-		return "admin/sign-in";
-	}
-
-	@RequestMapping(value = "/farmerAdd", method = RequestMethod.GET)
-	public String farmerAdd(Model model) {
-		model.addAttribute("farmerBean", new FarmerBean());
-		return "admin/farmerTest";
-	}
-
-	@RequestMapping(value = "/farmerAdd", method = RequestMethod.POST)
-	public String farmerAdd(FarmerBean farmerBean, BindingResult bindingResult, HttpServletRequest request) {
-
-		System.out.println("첫번째:" + farmerBean.getF_Pw());
-		String encryPassword = UserPw.encrypt(farmerBean.getF_Pw());
-		farmerBean.setF_Pw(encryPassword);
-		System.out.println("두번째:" + farmerBean.getF_Pw());
-
-		FarmerDAO farmerDAO = sqlSessionTemplate.getMapper(FarmerDAO.class);
-		farmerDAO.farmerAdd(farmerBean);
-
-		if (bindingResult.hasErrors()) {
-			return "admin/farmerTest";
-		}
-		return "redirect:/farmerList";
-	}
-
-	@RequestMapping(value = "/userAdd", method = RequestMethod.GET)
-	public String userAdd(Model model) {
-		model.addAttribute("memberBean", new MemberBean());
-		return "admin/userTest";
-	}
-
-	@RequestMapping(value = "/userAdd", method = RequestMethod.POST)
-	public String userAdd(MemberBean memberBean, BindingResult bindingResult, HttpServletRequest request) {
-
-		System.out.println("첫번째:" + memberBean.getM_Pw());
-		String encryPassword = UserPw.encrypt(memberBean.getM_Pw());
-		memberBean.setM_Pw(encryPassword);
-		System.out.println("두번째:" + memberBean.getM_Pw());
-
-		MemberDAO memberDAO = sqlSessionTemplate.getMapper(MemberDAO.class);
-		memberDAO.userAdd(memberBean);
-
-		if (bindingResult.hasErrors()) {
-			return "admin/userTest";
-		}
-		return "redirect:/userList";
-	}
-
-	@RequestMapping(value = "/userDelete")
-	@ResponseBody
-	public Map<String, Object> userDelete(MemberBean memberbean, @RequestParam(value = "checkArr[]") String checkArr) {
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
-
-		List<String> delete = Arrays.asList(checkArr);
-		memDao.uDelete(delete);
-		map.put("error", true);
-		
-		return map;
-	}
-	
-	@RequestMapping(value = "/farmerD")
-	@ResponseBody
-	public Map<String, Object> farmerDelete(FarmerBean farmerbean, @RequestParam(value = "checkArr[]") String checkArr) {
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		FarmerDAO farmDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
-
-		List<String> delete = Arrays.asList(checkArr);
-		farmDao.fDel(delete);
-		map.put("error", true);
-		
-		return map;
-	}
-	
-	@RequestMapping(value = "/farmerY")
-	@ResponseBody
-	public Map<String, Object> farmerY(FarmerBean farmerBean, @RequestParam(value = "checkArr[]")String checkArr){
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		AdminDAO farmDao = sqlSessionTemplate.getMapper(AdminDAO.class);
-		
-		List<String> yes = Arrays.asList(checkArr);
-		farmDao.farmerY(yes);
-		map.put("error", true);
-		
-		return map;
-	}
-	
 }

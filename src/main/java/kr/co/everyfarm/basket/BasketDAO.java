@@ -19,10 +19,6 @@ public interface BasketDAO {
 		
 		public List <BasketBean> getSeed(int[] problemPno);
 		
-//		public int selectBasketLandTotal(int pno);
-//
-//		public int selectProductAble(int pno);
-		
 		public int insert(BasketBean basket);
 
 		public int update(BasketBean basket);

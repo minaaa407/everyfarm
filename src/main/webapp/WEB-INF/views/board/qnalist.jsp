@@ -123,18 +123,7 @@
                             </c:when>
                           </c:choose>
                             
-                     <!--   <form method="post" name="qnamodify" action="reservationUpdate.bo">      -->
-                       
-                       <%-- 
-                            <c:choose>   
-                  <c:when test = "${empty buylist}">   
-                     <td colspan="12">내역이 없습니다.</td>
-                  </c:when>
-                  <c:when test = "${buylist != null}">
-                   </c:when>
-                     </c:choose> --%>
                      
-           <%--  <c:when test = "${empty qnamylist}">   --%>            
                        <div class="row" style="box-shadow: 0px 2px 10px rgb(0 0 0 / 8%); background-color: white;">
                         <div class="col-lg-12 col-md-12" style="padding-top: 50px;">
                         <c:choose>   
@@ -152,20 +141,12 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="categories__post__item__pic set-bg" style="margin-bottom: 0px;">
-                                            <%-- data-setbg="${q.q_Img}" --%>
                                              <a href="https://www.flaticon.com/kr/authors/surang" title="surang">
                                              <img data-imgbigurl="resources/qna/img/lock.png"
                                              		src="resources/qna/img/lock.png"
                                              		style="padding-left: 100px; opacity:0.7"></a>
                                             
-                                            <%-- <img data-imgbigurl="resources/upload/qna/${q.q_No}/${q.q_Img}"
-												 src="resources/upload/qna/${q.q_No}/${q.q_Img}"
-												 alt=""
-											     name="resources/upload/qna/${q.q_No}/${q.q_Img}"
-												 style="cursor: pointer" > --%>
-                                            
                                             <div class="post__meta">
-                                                <%-- <h4>${q.q_No}</h4> --%>
                                                 	 <h4>${i}</h4>
                                                <input type="hidden" id="" name="" value="${q.q_No}" />
                                                 <span>QnA</span>
@@ -175,8 +156,6 @@
                                     <div class="col-lg-9 col-md-9 col-sm-9">
                                          <div class="categories__post__item__text">
                                        
-                                           <!--  <span class="post__label">비밀글</span> -->
-                                            
                                              <ul class="post__label--large" style="margin-bottom: -10px; padding-left: 10px;">
                                                 <li style="border-bottom: 0px;">비밀글</li>
                                                 <li>${q.q_Pno} : ${q.q_Ptitle}</li>
@@ -216,19 +195,6 @@
                                            </c:otherwise>
                                          </c:choose>
                                             
-                                            
-                                            
-                                            
-                                         
-                                            
-                                            <%-- 
-                                            <img data-imgbigurl="resources/upload/qna/${q.q_No}/${q.q_Img}" 
-												 src="resources/upload/qna/${q.q_No}/${q.q_Img}"
-												 alt="${q.q_No}" title="이미지를 클릭하면 커집니다."
-											     name="resources/upload/qna/${q.q_No}/${q.q_Img}"
-												 style="cursor: pointer" > --%>
-												<!--  onclick="window.open(this.src)" -->
-												
                                             <div class="post__meta">
                                                 <%-- <h4>${q.q_No}</h4> --%>
                                                <h4>${i}</h4>
@@ -322,7 +288,7 @@
                         			 </div>
                       			</div>
                   			</div>
-                  <!-- </div> -->  
+                 
                        </c:otherwise>
                     </c:choose>
                    

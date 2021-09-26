@@ -55,7 +55,6 @@ public class BoardConrtroller {
 		vo = new PagingBean(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		model.addAttribute("paging", vo);
 		List<QnABean> productQlist = dao.selectBoard(vo);
-		System.out.println("productQlist : " + productQlist);
 		model.addAttribute("productQlist", productQlist);
 		return "board/qnalist";
 	}
@@ -82,7 +81,6 @@ public class BoardConrtroller {
 		model.addAttribute("paging", vo);
 		dao.rownum();
 		List<QnABean> productMylist = dao.productMylist(vo);
-		System.out.println("productMylist" + productMylist);
 		model.addAttribute("productQlist", productMylist);
 	
 	
@@ -95,7 +93,6 @@ public class BoardConrtroller {
 		MemberBean member  = (MemberBean) request.getSession().getAttribute("member");
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
 		List<QnABean> pnoTitleList = dao.productPnoTitleList();
-		System.out.println("wirte pnoTitleList : " + pnoTitleList);
 		model.addAttribute("pnoTitleList", pnoTitleList);
 		model.addAttribute("qna", new QnABean());
 		return "board/qnawrite";
@@ -120,8 +117,7 @@ public class BoardConrtroller {
 			model.addAttribute("pnoTitleList", pnoTitleList);
 			return "board/qnawrite";
 		}
-		System.out.println("BoardConrtroller insert : "+qna.getQ_Title());
-		System.out.println("BoardConrtroller insert : "+qna.getQ_Id());
+		
 		String returnUrl = "";
 		
 		qna.setQ_Img(img.getOriginalFilename());
@@ -219,8 +215,7 @@ public class BoardConrtroller {
 		HttpSession session = request.getSession();
 	    String root_path = session.getServletContext().getRealPath("/");
 		
-		System.out.println("BoardConrtroller insert : "+qna.getQ_Title());
-		System.out.println("BoardConrtroller insert : "+qna.getQ_Id());
+		
 
 		
 		if(img.isEmpty() == false) {
@@ -395,7 +390,6 @@ public class BoardConrtroller {
 	public String getQnAfarmerSearch(PagingBean vo, @RequestParam String searchBox, @RequestParam String searchText, 
 			@RequestParam(required=false) String searchAnswer, @RequestParam(value="nowPage", required=false)String nowPage,
 			@RequestParam(value="cntPerPage", required=false)String cntPerPage, QnABean qna, Model model, HttpServletRequest request) {
-		System.out.println("1");
 		FarmerBean farmer  = (FarmerBean) request.getSession().getAttribute("farmer");
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
 		int total = 0;
@@ -577,7 +571,6 @@ public class BoardConrtroller {
 	@RequestMapping(value = "/farmerQnaWrite")
 	public String getQFarmerWrite(@ModelAttribute QnABean qna, Model model, HttpServletRequest request) {
 		QnADAO dao = sqlSessionTemplate.getMapper(QnADAO.class);
-		System.out.println("!!! : "+qna.getQ_Pid());
 		int farmerWrite = dao.farmerWrite(qna);
 		String referer = request.getHeader("Referer");
 		if(referer.contains("search")) {
@@ -631,18 +624,10 @@ public class BoardConrtroller {
 		request.setAttribute("qnamodifyrecord", qnamodifyrecord);
 		request.setAttribute("pnoTitleList", pnoTitleList);
 	
-		System.out.println("admin pnoTitleList : " + pnoTitleList);
-		System.out.println("admin qnamodifyrecord : " + qnamodifyrecord);
-	
 		return "board/qnaAdminWrite";
 	}
 	
 
-	
-	
-
-	
-	
 	
 	
 	@RequestMapping(value = "/adminMemQnaupdate")
@@ -657,18 +642,11 @@ public class BoardConrtroller {
 		if(img.isEmpty() == false) {
 			qna.setQ_Img(img.getOriginalFilename());
 			}
-		
-		int pno = qna.getQ_Pno();
-		String title = dao.productTitle(pno);
-		String pid = dao.productId(pno);
-		qna.setQ_Ptitle(title);
-		qna.setQ_Pid(pid);
-		int qnaupdate = dao.update(qna);
+		int qnaupdate = dao.updateAdmin(qna);
 		
 		if(img.isEmpty() == false) {
 			
 			int qno = qna.getQ_No();
-			System.out.println("qno: " + qno);
 			String path = "D:\\EveryFarm\\.metadata\\.plugins\\org.eclipse.wst.server.core\\"
 					+ "tmp0\\wtpwebapps\\everyfarm\\resources\\upload\\qna\\" + qno + "\\";
 			ServletContext servletContext = request.getSession().getServletContext();
@@ -688,12 +666,10 @@ public class BoardConrtroller {
 						
 					for (int j = 0; j < folder_list.length; j++) {
 						folder_list[j].delete(); //파일 삭제 
-						System.out.println("파일이 삭제되었습니다.");
 					}
 						
 					if(folder_list.length == 0 && folder.isDirectory()){ 
 						folder.delete(); //대상폴더 삭제
-						System.out.println("폴더가 삭제되었습니다.");
 					}
 		       }
 			} catch (Exception e) {
@@ -704,12 +680,10 @@ public class BoardConrtroller {
 			if (!Folder.exists()) {
 				try {
 					Folder.mkdir(); // 폴더 생성합니다.
-					System.out.println("폴더가 생성되었습니다.");
 				} catch (Exception e) {
 					e.getStackTrace();
 				}
 			} else {
-				System.out.println("이미 폴더가 생성되어 있습니다.");
 			}
 
 			String safeFile="";
@@ -721,7 +695,7 @@ public class BoardConrtroller {
 			fileSize = img.getSize(); // 파일 사이즈
 			safeFile = path + originFileName;
 			try {
-				if (fileSize > 10) { /* 100 */
+				if (fileSize > 10) { 
 					img.transferTo(new File(safeFile));
 				}
 

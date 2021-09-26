@@ -50,6 +50,7 @@ public class PaymentController {
 	private SqlSessionTemplate sqlSessionTemplate;
 	List<PaymentBean> payInformationSave  = new ArrayList<PaymentBean>();
 	
+	
 	@RequestMapping(value = "/PaymentInfo")
 	public String getPaymentInfo_Product(Model model, @ModelAttribute("basketbean") BasketBean basketbean) {
 		System.out.println("--페이먼트인포시작--"); //
@@ -163,18 +164,23 @@ public class PaymentController {
 			System.out.println(pay_Email);
 			String pay_Name = payInformationSave.get(0).getPay_Name();
 			System.out.println(pay_Name);
+			String pay_Seed = payInformationSave.get(0).getPay_Seed();
+			System.out.println(pay_Seed);
+			int pay_Land = payInformationSave.get(0).getPay_Land();
+			System.out.println(pay_Land);
 			
 			try {
 				System.out.println(7);
 				msg.setSentDate(new Date());
 
 				msg.setFrom(new InternetAddress("alsdk9458@gmail.com", "EVERYFARM"));
-				InternetAddress to = new InternetAddress("rjarorgudwns@naver.com");
+				InternetAddress to = new InternetAddress(pay_Email);
 				msg.setRecipient(Message.RecipientType.TO, to);
-				msg.setSubject(pay_Name + "고객님, EVERY FARM 결제가 완료 되었습니다.", "UTF-8");
-				msg.setContent("안녕하세요<br>"
-						+ pay_Name + " 님의 결제내역입니다.<br>" 
-						+ pay_Name + " 고객님의 결제금액은 " + totalprice + "원 입니다.<br>" 
+				msg.setSubject(pay_Name + "회원님, EVERY FARM 결제가 완료 되었습니다.", "UTF-8");
+				msg.setContent("안녕하세요. EVERY FARM 입니다. <br>"
+						+ pay_Name + " 회원님의 결제내역입니다.<br>" 
+						+ "회원님이 주문한 농작물은 " + pay_Seed + "이며 주문한 땅평수는 1평입니다.<br>" 
+						+ "회원님의 결제금액은 총" + totalprice + "원 입니다.<br>" 
 						+ "감사합니다."
 						+ "<!DOCTYPE html>" 
 						+ "<html>"

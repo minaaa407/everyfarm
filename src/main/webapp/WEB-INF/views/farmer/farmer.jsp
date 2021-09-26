@@ -28,7 +28,9 @@ height: 602px;
     margin-top: 50px;
     }
     .bodyH{
-    height: 1065px;
+    height: 968px;
+    display: flex;
+    align-items: center;
     }
 </style>
 </head>
@@ -52,14 +54,14 @@ height: 602px;
 			</div>
 		</div>
 	</nav>
-   <div class="main-content bodyH">
-      <div class="container-fluid mt--7" style="display: flex; justify-content: space-around;">
+   <div class="bodyH">
+      <div class="container-fluid" style="display: flex; justify-content: space-around;">
          <div class="row">
             <div class="col-xl-4 mb-5 mb-xl-0">
                <div class="card bg-gradient-default shadow height chartcenter" style="width: 400px; height: 550px;">
                   <!-- Chart -->
                   <div >
-                     <canvas id="myChart" style="width:400px;height:400px;max-width:400px; margin-top: 50px;"></canvas>
+                     <canvas id="myChart" style="width:400px; height:400px; max-width:400px; margin-top: 50px;"></canvas>
                   </div>
                </div>
             </div>
