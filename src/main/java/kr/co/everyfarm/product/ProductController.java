@@ -571,6 +571,8 @@ public class ProductController {
 	      /// List<ProductBean> list = dao.list();
 	      int limit = 10;
 	      pagebeen.setLimit(limit);
+	      pagebeen.setOrderby("p_no");
+	      pagebeen.setAscdesc("desc");
 	      List<ProductBean> list = dao.listserachpageingcount(pagebeen);
 	      int selecttotalindex = list.size();
 	      pagebeen.setTableindex(selecttotalindex);
@@ -592,6 +594,15 @@ public class ProductController {
 	   // 상품 수정
 	   @RequestMapping("/proRegDetailForm")
 	   public String getRegDetail(Model model, @RequestParam int p_No) {
+	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
+	      ProductBean productinfo = dao.info(p_No);
+	      model.addAttribute("productinfo", productinfo);
+	      return "product/proRegDetailForm";
+
+	   }
+	   
+	   @RequestMapping("/AdRegDetailForm")
+	   public String getAdRegDetail(Model model, @RequestParam int p_No) {
 	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 	      ProductBean productinfo = dao.info(p_No);
 	      model.addAttribute("productinfo", productinfo);
@@ -677,8 +688,6 @@ public class ProductController {
 	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);
 	      int limit = 10;
 	      pagebeen.setLimit(limit);
-	      System.out.println(pagebeen.getWhere() + "첫번째where");
-	      System.out.println(pagebeen.getWherecolumn() + "첫번째where");
 	      pagebeen.setWhere2("p_Accept");
 	      pagebeen.setWherecolumn2("N");
 	      pagebeen.setWhere3("p_Id");
@@ -688,7 +697,6 @@ public class ProductController {
 	      int selecttotalindex = dao.farmerlistacceptncount(pagebeen);
 	      pagebeen.setTableindex(selecttotalindex);
 	      List<ProductBean> productdesclist = dao.farmerproductlistN(pagebeen);
-	      System.out.println(productdesclist.size() + "크기 얼마? ㅕㅁㅊ개 나온거?");
 	      model.addAttribute("productp_Accept", "AcceptN");
 	      model.addAttribute("productlist", productdesclist);
 	      model.addAttribute("pagebeen", pagebeen);
@@ -711,86 +719,92 @@ public class ProductController {
 	      return "redirect:/proLandListForm";
 	   }
 
-	   @RequestMapping("/proUpdate")
-	   public String getFroUpdate(Model model, @ModelAttribute("product") ProductBean productbean,
-	         HttpServletRequest request, @RequestParam(value = "p_Img1", required = false) MultipartFile mRequest,
-	         @RequestParam(value = "p_Subimg12", required = false) MultipartFile mRequest2,
-	         @RequestParam(value = "p_Subimg22", required = false) MultipartFile mRequest3,
-	         @RequestParam(value = "p_Subimg32", required = false) MultipartFile mRequest4,
-	         @RequestParam(value = "p_Subimg42", required = false) MultipartFile mRequest5,
-	         @RequestParam(value = "p_Imgdetail12", required = false) MultipartFile mRequest6,
-	         @RequestParam(value = "p_Imgdetail22", required = false) MultipartFile mRequest7,
-	         @RequestParam(value = "p_Imgdetail32", required = false) MultipartFile mRequest8,
-	         @RequestParam(value = "p_Imgdetail42", required = false) MultipartFile mRequest9) {
-	      MultipartFile[] ab = { mRequest, mRequest2, mRequest3, mRequest4, mRequest5, mRequest6, mRequest7, mRequest8,
-	            mRequest9 };
-	      HttpSession session = request.getSession();
-	      String root_path = session.getServletContext().getRealPath("/");
-	      productbean.setP_Img(mRequest.getOriginalFilename());
-	      productbean.setP_Subimg1(mRequest2.getOriginalFilename());
-	      productbean.setP_Subimg2(mRequest3.getOriginalFilename());
-	      productbean.setP_Subimg3(mRequest4.getOriginalFilename());
-	      productbean.setP_Subimg4(mRequest5.getOriginalFilename());
-	      productbean.setP_Imgdetail1(mRequest6.getOriginalFilename());
-	      productbean.setP_Imgdetail2(mRequest7.getOriginalFilename());
-	      productbean.setP_Imgdetail3(mRequest8.getOriginalFilename());
-	      productbean.setP_Imgdetail4(mRequest9.getOriginalFilename());
-	      ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);// dao
-	      int pnomax = productbean.getP_No();
-	      String path = root_path + "resources/upload/product/" + pnomax + "/";
-	      ServletContext servletContext = request.getSession().getServletContext();
-	      String realPath = servletContext.getRealPath("/resources");
-	      String savePath = realPath + "/upload/product/" + pnomax + "/";
-	      path = savePath;
+		@RequestMapping("/proUpdate")
+		public String getFroUpdate(Model model, @ModelAttribute("product") ProductBean productbean,
+				HttpServletRequest request, @RequestParam(value = "p_Img1", required = false) MultipartFile mRequest,
+				@RequestParam(value = "p_Subimg12", required = false) MultipartFile mRequest2,
+				@RequestParam(value = "p_Subimg22", required = false) MultipartFile mRequest3,
+				@RequestParam(value = "p_Subimg32", required = false) MultipartFile mRequest4,
+				@RequestParam(value = "p_Subimg42", required = false) MultipartFile mRequest5,
+				@RequestParam(value = "p_Imgdetail12", required = false) MultipartFile mRequest6,
+				@RequestParam(value = "p_Imgdetail22", required = false) MultipartFile mRequest7,
+				@RequestParam(value = "p_Imgdetail32", required = false) MultipartFile mRequest8,
+				@RequestParam(value = "p_Imgdetail42", required = false) MultipartFile mRequest9) {
+			MultipartFile[] ab = { mRequest, mRequest2, mRequest3, mRequest4, mRequest5, mRequest6, mRequest7, mRequest8,
+					mRequest9 };
+			HttpSession session = request.getSession();
+			String root_path = session.getServletContext().getRealPath("/");
+			productbean.setP_Img(mRequest.getOriginalFilename());
+			productbean.setP_Subimg1(mRequest2.getOriginalFilename());
+			productbean.setP_Subimg2(mRequest3.getOriginalFilename());
+			productbean.setP_Subimg3(mRequest4.getOriginalFilename());
+			productbean.setP_Subimg4(mRequest5.getOriginalFilename());
+			productbean.setP_Imgdetail1(mRequest6.getOriginalFilename());
+			productbean.setP_Imgdetail2(mRequest7.getOriginalFilename());
+			productbean.setP_Imgdetail3(mRequest8.getOriginalFilename());
+			productbean.setP_Imgdetail4(mRequest9.getOriginalFilename());
+			ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);// dao
+			int pnomax = productbean.getP_No();
+			String path = root_path + "resources/upload/product/" + pnomax + "/";
+			ServletContext servletContext = request.getSession().getServletContext();
+			String realPath = servletContext.getRealPath("/resources");
+			String savePath = realPath + "/upload/product/" + pnomax + "/";
+			path = savePath;
 
-	      Cookie[] cookie = request.getCookies();
-	      for (int i = 0; i < cookie.length; i++) {
-	         cookie[i].setMaxAge(0);
-	      }
+			Cookie[] cookie = request.getCookies();
+			for (int i = 0; i < cookie.length; i++) {
+				cookie[i].setMaxAge(0);
+			}
 
-	      File Folder = new File(path);
-	      if (!Folder.exists()) {
-	         try {
-	            Folder.mkdir(); // 폴더 생성합니다.
-	         } catch (Exception e) {
-	            e.getStackTrace();
-	         }
-	      } else {
-	      }
+			File Folder = new File(path);
+			if (!Folder.exists()) {
+				try {
+					Folder.mkdir(); // 폴더 생성합니다.
+					System.out.println("폴더가 생성되었습니다.");
+				} catch (Exception e) {
+					e.getStackTrace();
+				}
+			} else {
+				System.out.println("이미 폴더가 생성되어 있습니다.");
+			}
 
-	      String safeFile;
-	      String originFileName;
-	      long fileSize;
+			String safeFile;
+			String originFileName;
+			long fileSize;
 
-	      for (int i = 0; i < ab.length; i++) {
-	         originFileName = ab[i].getOriginalFilename(); // 원본 파일 명
-	         fileSize = ab[i].getSize(); // 파일 사이즈
-	         safeFile = path + originFileName;
-	         File oldfile = new File(safeFile);
+			for (int i = 0; i < ab.length; i++) {
+				originFileName = ab[i].getOriginalFilename(); // 원본 파일 명
+				fileSize = ab[i].getSize(); // 파일 사이즈
+				safeFile = path + originFileName;
+				File oldfile = new File(safeFile);
 
-	         try {
-	            // ab[i].transferTo(new File(safeFile));
-	            if (fileSize > 100) {
-	               if (oldfile.exists()) {
-	                  oldfile.delete();
-	               }
-	               ab[i].transferTo(new File(safeFile));
-	               model.addAttribute("safeFile", safeFile);
-	            }
+				try {
+					// ab[i].transferTo(new File(safeFile));
+					if (fileSize > 100) {
+						if (oldfile.exists()) {
+							oldfile.delete();
+						}
+						ab[i].transferTo(new File(safeFile));
+						model.addAttribute("safeFile", safeFile);
+					}
 
-	         } catch (IllegalStateException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	         } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	         }
-	      }
-	      dao.update(productbean);
-	      model.addAttribute("P_No", productbean.getP_No());
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			dao.update(productbean);
+			System.out.println(productbean);
+			System.out.println("수정 확인");
+			model.addAttribute("P_No", productbean.getP_No());
 
-	      return "redirect:/proAdminListForm";
-	   }
+			return "redirect:/proLandListForm";
+		}
+
+	
 	   
 	   @RequestMapping(value="/productdetailadmin")
 	   public String gettest2(Model model, @RequestParam("productno") String productno
@@ -839,5 +853,90 @@ public class ProductController {
 	      return "/product/productdetailadmin";
 	      
 	   }
+	   
+	   @RequestMapping("/AdproUpdate")
+		public String getAdFroUpdate(Model model, @ModelAttribute("product") ProductBean productbean,
+				HttpServletRequest request, @RequestParam(value = "p_Img1", required = false) MultipartFile mRequest,
+				@RequestParam(value = "p_Subimg12", required = false) MultipartFile mRequest2,
+				@RequestParam(value = "p_Subimg22", required = false) MultipartFile mRequest3,
+				@RequestParam(value = "p_Subimg32", required = false) MultipartFile mRequest4,
+				@RequestParam(value = "p_Subimg42", required = false) MultipartFile mRequest5,
+				@RequestParam(value = "p_Imgdetail12", required = false) MultipartFile mRequest6,
+				@RequestParam(value = "p_Imgdetail22", required = false) MultipartFile mRequest7,
+				@RequestParam(value = "p_Imgdetail32", required = false) MultipartFile mRequest8,
+				@RequestParam(value = "p_Imgdetail42", required = false) MultipartFile mRequest9) {
+			MultipartFile[] ab = { mRequest, mRequest2, mRequest3, mRequest4, mRequest5, mRequest6, mRequest7, mRequest8,
+					mRequest9 };
+			HttpSession session = request.getSession();
+			String root_path = session.getServletContext().getRealPath("/");
+			productbean.setP_Img(mRequest.getOriginalFilename());
+			productbean.setP_Subimg1(mRequest2.getOriginalFilename());
+			productbean.setP_Subimg2(mRequest3.getOriginalFilename());
+			productbean.setP_Subimg3(mRequest4.getOriginalFilename());
+			productbean.setP_Subimg4(mRequest5.getOriginalFilename());
+			productbean.setP_Imgdetail1(mRequest6.getOriginalFilename());
+			productbean.setP_Imgdetail2(mRequest7.getOriginalFilename());
+			productbean.setP_Imgdetail3(mRequest8.getOriginalFilename());
+			productbean.setP_Imgdetail4(mRequest9.getOriginalFilename());
+			ProductDao dao = sqlSessionTemplate.getMapper(ProductDao.class);// dao
+			int pnomax = productbean.getP_No();
+			String path = root_path + "resources/upload/product/" + pnomax + "/";
+			ServletContext servletContext = request.getSession().getServletContext();
+			String realPath = servletContext.getRealPath("/resources");
+			String savePath = realPath + "/upload/product/" + pnomax + "/";
+			path = savePath;
+
+			Cookie[] cookie = request.getCookies();
+			for (int i = 0; i < cookie.length; i++) {
+				cookie[i].setMaxAge(0);
+			}
+
+			File Folder = new File(path);
+			if (!Folder.exists()) {
+				try {
+					Folder.mkdir(); // 폴더 생성합니다.
+					System.out.println("폴더가 생성되었습니다.");
+				} catch (Exception e) {
+					e.getStackTrace();
+				}
+			} else {
+				System.out.println("이미 폴더가 생성되어 있습니다.");
+			}
+
+			String safeFile;
+			String originFileName;
+			long fileSize;
+
+			for (int i = 0; i < ab.length; i++) {
+				originFileName = ab[i].getOriginalFilename(); // 원본 파일 명
+				fileSize = ab[i].getSize(); // 파일 사이즈
+				safeFile = path + originFileName;
+				File oldfile = new File(safeFile);
+
+				try {
+					// ab[i].transferTo(new File(safeFile));
+					if (fileSize > 100) {
+						if (oldfile.exists()) {
+							oldfile.delete();
+						}
+						ab[i].transferTo(new File(safeFile));
+						model.addAttribute("safeFile", safeFile);
+					}
+
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			dao.update(productbean);
+			System.out.println(productbean);
+			System.out.println("수정 확인");
+			model.addAttribute("P_No", productbean.getP_No());
+
+			return "redirect:/proAdminListForm";
+		}
 	   
 	}

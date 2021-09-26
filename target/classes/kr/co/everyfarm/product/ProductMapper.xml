@@ -135,15 +135,15 @@
 	</select>
 	
 	<update id="update" parameterType ="kr.co.everyfarm.product.ProductBean">
-	      update product set p_Id=#{p_Id}, p_Title=#{p_Title},
-	      p_Content= #{p_Content},p_Img= #{p_Img},
-	      p_Subimg1= #{p_Subimg1},p_Subimg2= #{p_Subimg2},p_Subimg3= #{p_Subimg3},
-	      p_Subimg4=#{p_Subimg4},p_Imgdetail1=#{p_Imgdetail1},
-	      p_Imgdetail2=#{p_Imgdetail2},p_Imgdetail3=#{p_Imgdetail3},
-	      p_Imgdetail4=#{p_Imgdetail4},p_Landprice=#{p_Landprice},
-	      p_Manpay=#{p_Manpay},
-	      where p_no = #{p_No}   
-   </update>
+		update product set p_Id=#{p_Id}, p_Title=#{p_Title},
+		p_Content= #{p_Content},p_Img= #{p_Img},
+		p_Subimg1= #{p_Subimg1},p_Subimg2= #{p_Subimg2},p_Subimg3= #{p_Subimg3},
+		p_Subimg4=#{p_Subimg4},p_Imgdetail1=#{p_Imgdetail1},
+		p_Imgdetail2=#{p_Imgdetail2},p_Imgdetail3=#{p_Imgdetail3},
+		p_Imgdetail4=#{p_Imgdetail4},p_Landprice=#{p_Landprice},
+		p_Manpay=#{p_Manpay}
+		where p_no = #{p_No}	
+	</update>
    
    <delete id="delete">
       	delete from product where p_No=#{p_No}   
