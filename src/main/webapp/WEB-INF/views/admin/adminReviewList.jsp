@@ -278,12 +278,6 @@ a:hover {
 	/* right: 27%; */
 	top: 20px;
 }
-
-.ttc {
-	position: relative;
-	top: 13.5%;
-	left: 80%;
-}
 /* 페이징 버튼 꾸미는중 0902~ */
 
 
