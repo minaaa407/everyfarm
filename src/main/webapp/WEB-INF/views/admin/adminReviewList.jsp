@@ -27,12 +27,10 @@ body {
 }
 
 .limiter {
-	width: 100%;
 	margin: 0 auto;
 }
 
 .container-table100 {
-	width: 100%;
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
@@ -51,9 +49,9 @@ table {
 	border-collapse: collapse;
 	border-radius: 10px;
 	overflow: hidden;
-	width: 100%;
 	margin: 0 auto;
 	position: relative;
+	width: 1170px;
 }
 
 table * {
@@ -512,5 +510,4 @@ a:hover {
 		document.getElementById('a3').className = 'nav-item active';
 		document.getElementById('a4').className = 'nav-item';
 	</script>
-	<jsp:include page="/WEB-INF/views/home/footer.jsp" />
 </html>

@@ -21,8 +21,6 @@
         -ms-user-select: none;
     }
     .chartD {
-    background-color: white;
-    box-shadow: 1px 1px 10px grey;
         display: flex;
     flex-direction: column;
     justify-content: center;
@@ -67,7 +65,7 @@
 	</nav>
 	
 	<div class="main-content" style="margin-left:0px;">
-		<div class="container-fluid mt--7">
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-8 mb-5 mb-xl-0">
 					<div>
@@ -89,7 +87,7 @@
 			</div>
 			<div class="row mt-5 ">
 			<div class="col-xl-6">
-					<div class="card shadow" style="height: 510px; ">
+					<div class="card shadow" style="height: 510px;  ">
 						<div class="card-header bg-transparent">
 							<div class="row align-items-center">
 								<div class="col">
@@ -115,16 +113,8 @@
 				</div>
 			
 				<!-- Chart -->
-							<div class="chartD col-xl-6" style="padding-left: 0px; padding-right: 0px;">
-								<div class="pad">
-								<div class="card-header bg-transparent">
-									<h6 class="text-uppercase text-muted ls-1 mb-1">Every Farm</h6>
-										<c:set var="today" value="<%=new java.util.Date()%>" />
-										<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
-									<h2 class="productyeartext" class="mb-0"><c:out value="${year}"/>&nbsp;월별 판매량</h2>
-								</div>
-								<iframe src="http://localhost:8090/iTest" width="800" height="400"></iframe>
-								</div>
+							<div class="chartD col-xl-6" style="padding-left: 0px; padding-right: 0px; width: 800px;">
+								<iframe src="http://localhost:8090/iTest" width="800" height="505"></iframe>
 							</div>
     		<!-- Chart -->
 			</div>
