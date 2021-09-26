@@ -22,9 +22,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet" type="text/css">
 
-<!-- Bootstrap Core Css -->
-<link href="resources/admin/sign/plugins/bootstrap/css/bootstrap.css"
-	rel="stylesheet">
+
 
 <!-- Waves Effect Css -->
 <link href="resources/admin/sign/plugins/node-waves/waves.css"
@@ -36,9 +34,45 @@
 
 <!-- Custom Css -->
 <link href="resources/admin/sign/css/style.css" rel="stylesheet">
+
+<style>
+@media (min-width: 768px){
+	#sidenav-collapse-main {
+	padding-left: 1rem;
+    padding-right: 1rem;
+    
+	}
+	
+	#sidenav-collapse-main a.navbar-brand{
+		text-align: left;
+    
+	}
+	
+	#sidenav-collapse-main a.nav-link{
+		padding : 0.65rem 1.5rem;
+    	margin-top: 0px;
+    	margin-left: 8px;
+	}
+	
+	
+	
+	.navbar-vertical.navbar-expand-md .navbar-brand{
+	text-align: left;
+	}
+}
+
+.ls-closed .navbar-brand {
+    margin-left: 27px;
+}
+
+
+</style>
+
+
 </head>
 
-<body class="signup-page">
+<body class="signup-page" style="
+    background: #b0cd56">
 <!-- Navigation -->
 	<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
