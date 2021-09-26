@@ -33,6 +33,13 @@
 </style>
 </head>
 <body>
+	<div class="col-6 collapse-close">
+		<button type="button" class="navbar-toggler" data-toggle="collapse"
+			data-target="#sidenav-collapse-main" aria-controls="sidenav-main"
+			aria-expanded="false" aria-label="Toggle sidenav">
+			<span></span> <span></span>
+		</button>
+	</div>
 	<!-- Brand -->
 	<a class="navbar-brand pt-0" href="/admin"> <img
 		src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
