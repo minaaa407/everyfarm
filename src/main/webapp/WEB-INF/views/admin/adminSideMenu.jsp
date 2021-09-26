@@ -28,7 +28,7 @@
 <body>
 <!-- Brand -->
 			<a class="navbar-brand pt-0" href="/admin"> <img
-				src="resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
+				src="/resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
 				alt="...">
 			</a>
 <ul class="navbar-nav">
