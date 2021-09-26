@@ -88,8 +88,6 @@ table td, table th {
 	text-align: center;
 }
 
-/* a 태그 CSS 하는중 */
-
 a:visited {
 	color: black;
 	text-decoration: none;
@@ -133,7 +131,6 @@ a:hover {
     flex-direction: column;
     align-items: center;
 }
-
 
 .txt {
 	font-size: 13px;

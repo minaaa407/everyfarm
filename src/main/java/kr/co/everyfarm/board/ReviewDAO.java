@@ -35,6 +35,7 @@ public interface ReviewDAO {
 	
 	int revCount(Paging paging); //페이징 관련
 	
+	int farmerReviewscount(String p_Id);
 	
 	List<PaymentBean> selectpaymentreview(String m_Id);//reveiw 선택된 아이디에 대한 payment
 	

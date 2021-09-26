@@ -195,6 +195,20 @@
 		=#{p_Id}))
 		))
 	</select>
+	
+	<select id="farmerReviewscount"
+		resultType="int" parameterType="String">
+		SELECT count(*) FROM
+		review WHERE (rev_ProNum IN (SELECT pay_no
+		FROM payment WHERE
+		(pay_no in ( SELECT p_no FROM product WHERE p_id
+		=#{p_Id}))
+		))
+	</select>
+	
+	
+	
+	
 
 
 </mapper>

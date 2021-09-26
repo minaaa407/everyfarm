@@ -264,14 +264,13 @@ public class ReviewController {
 //		HashMap<String, Object> map = new HashMap<String, Object>();
 //		map.put("re", flist);
 		
-		int total = dao.revCount(paging);
+		int total = dao.farmerReviewscount(p_Id);
 		PageMaker pageMake = new PageMaker(paging, total);
 		model.addAttribute("total", total);
 		model.addAttribute("revList", dao.farmerReviews(paging));
 		model.addAttribute("pageMaker", pageMake);
 		return "farmer/farmerMyReviewList";
 	}
-	
 	@RequestMapping(value = "/farmerReviewDetail")
 	public String getReviewDetail2(ReviewBean reviewBean, Model model,@RequestParam("rev_No") int rev_No) {
 		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);

@@ -567,6 +567,9 @@ public class UserController {
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		memDao.mAddrUpdate(memberbean);
 		System.out.println(memberbean);
+		MemberBean oldmember = (MemberBean)session.getAttribute("member");
+		oldmember.setM_Addr(memberbean.getM_Addr());
+		session.setAttribute("member",oldmember);
 
 		return "redirect:/home";
 	}
@@ -577,6 +580,9 @@ public class UserController {
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		memberbean.setM_Name(request.getParameter("m_Name"));
 		memDao.mNameUpdate(memberbean);
+		MemberBean oldmember = (MemberBean)session.getAttribute("member");
+		oldmember.setM_Name(memberbean.getM_Name());
+		session.setAttribute("member",oldmember);
 		System.out.println(memberbean);
 
 		return "redirect:/home";
@@ -585,9 +591,12 @@ public class UserController {
 	@RequestMapping(value = "/myInfoTelUpdate")
 	public String myInfoTel(MemberBean memberBean, HttpSession session, HttpServletRequest request) {
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
-		memberBean.setM_Name(request.getParameter("m_Tel"));
-		memDao.mTelUp(memberBean);
+		memberBean.setM_Tel(request.getParameter("m_Tel"));
+		MemberBean oldmember = (MemberBean)session.getAttribute("member");
+		oldmember.setM_Tel(memberBean.getM_Tel());
+		session.setAttribute("member",oldmember);
 		
+		memDao.mTelUp(memberBean);
 		return "redirect:/home";
 	}
 
