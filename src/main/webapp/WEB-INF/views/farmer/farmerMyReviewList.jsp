@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="keywords" content="Ogani, unica, creative, html">
-<title>EVERY FARM 관리자 | 리뷰내역</title>
+<title>EVERY FARM 농부 | 리뷰내역</title>
 
 <link rel="shortcut icon" type="image/x-icon"
 	href="/resources/editor/connn.ico" />
@@ -27,10 +27,12 @@ body {
 }
 
 .limiter {
+	width: 100%;
 	margin: 0 auto;
 }
 
 .container-table100 {
+	width: 100%;
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
@@ -49,9 +51,9 @@ table {
 	border-collapse: collapse;
 	border-radius: 10px;
 	overflow: hidden;
+	width: 100%;
 	margin: 0 auto;
 	position: relative;
-	width: 1170px;
 }
 
 table * {
@@ -85,8 +87,6 @@ table tbody tr:last-child {
 table td, table th {
 	text-align: center;
 }
-
-/* a 태그 CSS 하는중 */
 
 a:visited {
 	color: black;
@@ -131,7 +131,6 @@ a:hover {
     flex-direction: column;
     align-items: center;
 }
-
 
 .txt {
 	font-size: 13px;
@@ -216,7 +215,7 @@ a:hover {
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Navigation -->
-				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
 	</nav>
@@ -258,7 +257,7 @@ a:hover {
 										<tr class="bef-list">
 											<td class="list-end">${(total - status.index) -((pageMaker.cri.pageNum -1) * 10)}</td>
 											<td class="list title"><a 
-												href="/adminReviewDetail?rev_No=${re.rev_No}">${re.rev_Title}</a>
+												href="/farmerReviewDetail?rev_No=${re.rev_No}">${re.rev_Title}</a>
 											<td class="list tdname">${re.rev_Name}</td>
 											<td class="list-start txt"><fmt:formatDate
 													pattern="yyyy/MM/dd" value="${re.rev_Date}" /></td>
@@ -299,8 +298,8 @@ a:hover {
 							</c:choose>
 						</tbody>
 					</table>
-					<br>
-					<div class="cen">
+				<br>
+				<div class="cen">
 					<div class="search_wrap">
 						<div class="search_area">
 							<select name="type" class="type">
@@ -356,7 +355,7 @@ a:hover {
 							</ul>
 						</div>
 					</div>
-					</div>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -389,7 +388,7 @@ a:hover {
 		$(".pageInfo a").on("click", function(e) {
 			e.preventDefault();
 			moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-			moveForm.attr("action", "/adminReviewList");
+			moveForm.attr("action", "/farmerMyReviewList");
 			moveForm.submit();
 
 		});

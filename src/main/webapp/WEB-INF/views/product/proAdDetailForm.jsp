@@ -114,13 +114,13 @@ tbody td {
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Navigation -->
-				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
 	</nav>
 	<div class="bodyH">
 		<form:form enctype="multipart/form-data" commandName="product"
-			action="/proUpdate" method="post">
+			action="/AdproUpdate" method="post">
 			<table>
 				<thead>
 					<tr>
@@ -145,87 +145,82 @@ tbody td {
 					<tr>
 						<td style="width: 20%;"><label> 메인 이미지 </label></td>
 						<td style="text-align: left;"><input name="p_Img1"
-							class="btn btn-sm-outline-dark" type="file" accept="img/*" /> <input
-							type="hidden" name="p_Img" value="" required="required"></td>
-						<td></td>
+							type="file" accept="img/*" /> <input
+							class="btn btn-sm btn-neutral" type="hidden" name="p_Img"
+							value="" required="required"></td>
 					</tr>
 					<tr>
-						<td></td>
-						<td style="width: 20%;"><input
-							class="btn btn-sm-outline-dark" type='button' value='서브사진 등록'
-							onclick='showRowSub()' /></td>
+						<td style="width: 20%;"><input class="btn btn-sm btn-neutral"
+							type='button' value='서브사진 등록' onclick='showRowSub()' /></td>
 						<td></td>
 					</tr>
 				<tbody id="Subimg" style="display: none;">
 					<tr>
 						<td style="width: 20%;"><label> 서브 이미지1 </label></td>
 						<td style="text-align: left;"><input name="p_Subimg12"
-							type="file" accept="subimg1/image/*" /> <input type="hidden"
-							name="p_Subimg1" value="1111"></td>
-						<td></td>
+							type="file" accept="subimg1/image/*" /> <input
+							class="btn btn-sm btn-neutral" type="hidden" name="p_Subimg1"
+							value="1111"></td>
 					</tr>
 					<tr>
 						<td style="width: 20%;"><label> 서브 이미지2 </label></td>
 						<td style="text-align: left;"><input name="p_Subimg22"
-							type="file" accept="subimg2/image/*" /> <input type="hidden"
-							name="p_Subimg2" value="1111"></td>
-						<td></td>
+							type="file" accept="subimg2/image/*" /> <input
+							class="btn btn-sm btn-neutral" type="hidden" name="p_Subimg2"
+							value="1111"></td>
 					</tr>
 					<tr>
 						<td style="width: 20%;"><label> 서브 이미지3 </label></td>
 						<td style="text-align: left;"><input name="p_Subimg32"
-							type="file" accept="subimg3/image/*" /> <input type="hidden"
-							name="p_Subimg3" value="1111"></td>
-						<td></td>
+							type="file" accept="subimg3/image/*" /> <input
+							class="btn btn-sm btn-neutral" type="hidden" name="p_Subimg3"
+							value="1111"></td>
 					</tr>
 					<tr>
 						<td style="width: 20%;"><label> 서브 이미지4 </label></td>
 						<td style="text-align: left;"><input name="p_Subimg42"
 							type="file" accept="subimg4/image/*" /> <input type="hidden"
-							name="p_Subimg4" value="1111"></td>
-
-						<td><input type='button' class="btn btn-sm-outline-dark"
-							value='닫기' onclick='hideRowSub()' /></td>
+							name="p_Subimg4" value="1111"><input
+							class="btn btn-sm btn-neutral" type='button' value='닫기'
+							onclick='hideRowSub()' /></td>
 					</tr>
 				</tbody>
 
 
 				<tr>
-					<td></td>
-					<td style="width: 20%;"><input type='button' value='상세사진 등록'
-						class="btn btn-sm-outline-dark" onclick='showRowDetail()' /></td>
+					<td style="width: 20%;"><input class="btn btn-sm btn-neutral"
+						type='button' value='상세사진 등록' onclick='showRowDetail()' /></td>
 					<td></td>
 				</tr>
 				<tbody id="Imgdetail" style="display: none;">
 					<tr>
 						<td style="width: 20%;"><label> 디테일 이미지1 </label></td>
 						<td style="text-align: left;"><input name="p_Imgdetail12"
-							type="file" accept="imgdetail1/image/*" /> <input type="hidden"
-							name="p_Imgdetail" value="1111"></td>
-						<td></td>
+							type="file" accept="imgdetail1/image/*" /> <input
+							class="btn btn-sm btn-neutral" type="hidden" name="p_Imgdetail"
+							value="1111"></td>
 					</tr>
 					<tr>
 						<td style="width: 20%;"><label> 디테일 이미지2 </label></td>
 						<td style="text-align: left;"><input name="p_Imgdetail22"
-							type="file" accept="imgdetail2/image/*" /> <input type="hidden"
-							name="p_Imgdetail" value="1111"></td>
-						<td></td>
+							type="file" accept="imgdetail2/image/*" /> <input
+							class="btn btn-sm btn-neutral" type="hidden" name="p_Imgdetail"
+							value="1111"></td>
 					</tr>
 					<tr>
 						<td style="width: 20%;"><label> 디테일 이미지3 </label></td>
 						<td style="text-align: left;"><input name="p_Imgdetail32"
-							type="file" accept="imgdetail3/image/*" /> <input type="hidden"
-							name="p_Imgdetail" value="1111"></td>
-						<td></td>
+							type="file" accept="imgdetail3/image/*" /> <input
+							class="btn btn-sm btn-neutral" type="hidden" name="p_Imgdetail"
+							value="1111"></td>
 					</tr>
 					<tr>
 						<td style="width: 20%;"><label> 디테일 이미지4 </label></td>
 						<td style="text-align: left;"><input name="p_Imgdetail42"
-							type="file" accept="imgdetail4/image/*" /> <input type="hidden"
-							name="p_Imgdetail" value="1111"></td>
-
-						<td><input type='button' class="btn btn-sm-outline-dark"
-							value='닫기' onclick='hideRowDetail()' /></td>
+							type="file" accept="imgdetail4/image/*" /> <input
+							class="btn btn-sm btn-neutral" type="hidden" name="p_Imgdetail"
+							value="1111"><input type='button' value='닫기'
+							onclick='hideRowDetail()' /></td>
 					</tr>
 
 				</tbody>
@@ -236,15 +231,14 @@ tbody td {
 				</tr>
 				<tr>
 					<td colspan="1" style="width: 20%;"><label>토지 가격</label></td>
-					<td colspan="3"><input type="number" name="p_Landprice"
-						placeholder="원" value="${productinfo.p_Landprice}" maxlength="50"
-						required autofocus></td>
+					<td colspan="3"><input type="text" name="p_Landprice"
+						value="${productinfo.p_Landprice}" maxlength="50" required
+						autofocus></td>
 				</tr>
 				<tr>
-					<td colspan="1" style="width: 20%;"><label>평당 인건비</label></td>
-					<td colspan="3"><input type="number" name="p_Manpay"
-						placeholder="원" value="${productinfo.p_Manpay}" maxlength="50"
-						required autofocus></td>
+					<td colspan="1" style="width: 20%;"><label>유지 관리비</label></td>
+					<td colspan="3"><input type="text" name="p_Manpay"
+						value="${productinfo.p_Manpay}" maxlength="50" required autofocus></td>
 				</tr>
 
 				</tbody>

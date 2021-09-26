@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@page import="kr.co.everyfarm.user.MemberBean"%>
 <%@page import="kr.co.everyfarm.board.QnABean"%>
 <%@page import="java.util.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%
-	List<QnABean> qnamodifyrecord = (List) request.getAttribute("qnamodifyrecord");
-	List<QnABean> pnoTitleList = (List) request.getAttribute("pnoTitleList");
-	int count = pnoTitleList.size();
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<% 
+   List<QnABean> qnamodifyrecord = (List)request.getAttribute("qnamodifyrecord");
+   List<QnABean> pnoTitleList = (List)request.getAttribute("pnoTitleList");
+   int count = pnoTitleList.size();
 %>
 <!DOCTYPE html>
-<html>
+<html lang="zxx">
 
 <head>
     <meta charset="UTF-8">
@@ -21,10 +21,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>EVERY FARM 관리자 | Q&A 리스트</title>
 
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	 
 
-<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+	<link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900&display=swap"
         rel="stylesheet">
@@ -38,71 +38,70 @@
     <link rel="stylesheet" href="/resources/qna/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/resources/qna/css/style.css" type="text/css">
     
-  	<link rel="stylesheet" href="/resources/editor/css/summernote-lite.css">
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-  
+	<!-- 썸머노트  	<link rel="stylesheet" href="/resources/editor/css/summernote-lite.css">
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> -->
+
 <style type="text/css">
+
 .errorMsg {
 	color: red;
 	font-style: italic;
-}
+} 
 
 input::placeholder {
-	color: red;
-	font-style: italic;
+  color: red;
+  font-style: italic;
 }
 
 .my-control {
-	display: block;
-	outline: none;
-	width: 100%;
-	height: 34px;
-	padding: 6px 12px;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #555;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%);
-	box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%); */
-	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
-		ease-in-out .15s;
-	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
-		.15s;
-	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    display: block;
+    outline:none;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143; 
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); */
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
 }
 
 .c-control {
 	display: block;
-	outline: none;
-	width: 100%;
-	height: 34px;
-	padding: 6px 12px;
-	font-size: 16px;
-	line-height: 1.42857143;
-	color: #555;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%);
-	box-shadow: inset 0 1px 1px rgb(0 0 0/ 8%); */
-	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
-		ease-in-out .15s;
-	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
-		.15s;
-	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    outline:none;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 16px;
+    line-height: 1.42857143; 
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); */
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
+    
+    
 }
 </style>
 
 </head>
+
 <body style="overflow-x: hidden">
 
-<div class="row">
-<div class="col-lg-1 col-md-1">
-<!-- Navigation -->
+
+ <!-- Navigation -->
 	<nav
 		class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
 		id="sidenav-main">
@@ -120,15 +119,17 @@ input::placeholder {
 			</div>
 		</div>
 	</nav>
-   </div>
 
-<div class="col-lg-11 col-md-11" style="background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important; padding-left: 150px;">
-   <!-- Categories Section Begin -->
-    <section class="categories categories-grid spad" style="padding-top: 0; padding-bottom: 50px;">
+<div class="color" style="background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;">
+    <!-- Categories Section Begin -->
+    <section class="categories categories-grid spad">
         <div class="categories__post">
-           <div class="container" style="margin-left: 55px;margin-right: 0px;padding-right: 10px;background: #ffffff;margin-top: 200px;padding-top: 0px;padding-left: 10px;width: 1065px;">
-                <div class="categories__grid__post" style="border-top-width: 0px; margin-top: 100px;">
-           		<form action="/adminMemQnaupdate" id="qna" name="qna" method="post" enctype="multipart/form-data">
+         <div class="container">
+                <div class="categories__grid__post">
+                    <div class="row" style="background: #ffffff; margin-top: 52px;">
+					 <div class="col-lg-12 col-md-12" style="margin-top: 15px;">
+					 
+                      <form action="/adminMemQnaupdate" id="qna" name="qna" method="post" enctype="multipart/form-data">
     				<c:forEach items="${qnamodifyrecord}" var="q">    
 						<table class="table table-striped">
              				<tr>
@@ -188,39 +189,56 @@ input::placeholder {
 						</table>
          		 	</c:forEach>
         		</form>   
-           
-                        
-    
-            </div>
-          </div>
-         </div>
+  
+                   </div>
+                  </div>
+  				</div>
+              </div>
+			</div>
+</section>
+	
+ 	</div>
+	</div>
+	</div>
+   
+<script type="text/javascript">
 
-   </section>
-   
- 
-   </div>
- </div>  
-   
-   
-   
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+function select(e) {
+	// 선택된 데이터의 텍스트값 가져오기
+	const text = e.options[e.selectedIndex].text;
+	const delText = text + " 기재로 인하여 수정되었습니다.";
+	
+	// 선택한 텍스트 출력
+	document.getElementById('summernote').innerHTML = delText;
+}
+     
+        $('#summernote').summernote({
+         /*  placeholder: '욕설,음란성 리뷰는 관리자에의해 제재될 수 있습니다.', */
+          height: 600,
+          minHeight: null,
+          maxHeight: null,
+          focus: false,
+          toolbar: [
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+          
+	 });
+</script>
+                  
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
-<script type="text/javascript">
- 
-        function select(e) {
-			// 선택된 데이터의 텍스트값 가져오기
-			const text = e.options[e.selectedIndex].text;
-			const delText = text + " 기재로 인하여 삭제되었습니다.";
-			
-			// 선택한 텍스트 출력
-			document.getElementById('summernote').innerHTML = delText;
-		}
-    
-  </script>
 </body>
 
 </html>

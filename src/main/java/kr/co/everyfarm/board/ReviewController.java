@@ -52,11 +52,15 @@ public class ReviewController {
 	@RequestMapping("/reviewWrite")
 	public String getReviewWrite(HttpSession session, PaymentBean paymentbean, Model model, FarmerBean farmerBean) {
 		MemberBean member = (MemberBean) session.getAttribute("member");
-		String m_Id = member.getM_Id();//아이디 검색
+		String m_Id = member.getM_Id();
 
 		ReviewDAO rdao = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		List<PaymentBean> myPay = rdao.selectpaymentreview(m_Id);//뽑아 낸다.
 		List<ProductBean> myProductList = rdao.selectproductreview(m_Id);
+		
+		
+		
+		
 		
 		System.out.println(myPay + "값 확인");
 		//여기에서 for 문 서서 비교해서 날려버린다. 
@@ -253,21 +257,29 @@ public class ReviewController {
 	@RequestMapping(value = "/farmerReviewList")
 	public String getReviewListforFarmer(Model model, ReviewBean reviewBean, Paging paging, HttpSession session) {
 		FarmerBean proB = (FarmerBean) session.getAttribute("farmer");
-		String f_Id = proB.getF_Id();
-		
+		String p_Id = proB.getF_Id();
+		paging.setP_Id(p_Id);
 		ReviewDAO dao = sqlSessionTemplate.getMapper(ReviewDAO.class);
-		List<ProductBean> flist = dao.farmerReivew(f_Id);
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("re", flist);
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		map.put("re", flist);
 		
-		int total = dao.revCount(paging);
+		int total = dao.farmerReviewscount(p_Id);
 		PageMaker pageMake = new PageMaker(paging, total);
 		model.addAttribute("total", total);
 		model.addAttribute("revList", dao.farmerReviews(paging));
 		model.addAttribute("pageMaker", pageMake);
-		return "farmer/farmerReviewList";
+		return "farmer/farmerMyReviewList";
 	}
-	
-
+	@RequestMapping(value = "/farmerReviewDetail")
+	public String getReviewDetail2(ReviewBean reviewBean, Model model,@RequestParam("rev_No") int rev_No) {
+		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		ReviewBean revVO = revDAO.revDetail(reviewBean);
+		List<ReviewReplyBean> list = revDAO.reply(rev_No);
+		System.out.println(list);
+		model.addAttribute("repList",list);
+		model.addAttribute("revList", revVO);
+		
+		return "farmer/farmerReviewDetail";
+	}
 }

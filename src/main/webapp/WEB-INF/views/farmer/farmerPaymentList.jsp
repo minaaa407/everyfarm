@@ -14,6 +14,16 @@
 <title>EVERY FARM 농부 | 결제내역 </title>
 <style>
 
+
+@media screen and (min-width: 950px){
+	div#table100{
+		display : "" ;
+	}
+	.mobiletalbe{
+		display :none;
+	}
+}
+
 td, th {
 border-color:#9ea4ca;
 }
@@ -36,7 +46,7 @@ background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 }
 
 .wrap-table100 {
-  width: 1500px;
+  width: 100%;
   padding-bottom: 20px;
 }
 
@@ -85,6 +95,19 @@ table td, table th {
 background-color: silver;
 }
 </style>
+<script>
+window.onresize = function(event){
+	  var innerWidth = window.innerWidth;
+	  if(innerWidth <= "950"){
+		  document.getElementById('table100').style.display ="none"
+	  }else{
+		  document.getElementById('table100').style.display =""
+	  }
+
+}
+
+
+</script>
 </head>
 <body>
  <!-- Navigation -->
@@ -109,18 +132,18 @@ background-color: silver;
  			<div class="container-table100">
  				<div class="wrap-table100">
  					<div class="table100">
- 					
+ 						<div id ="table100" class="table100">
 						<table border="1">
 						<colgroup>
-							<col style="width:50px"/>
-							<col style="width:50px"/>
-							<col style="width:30px"/>
-							<col style="width:30px"/>
-							<col style="width:40px"/>
-							<col style="width:80px"/>
-							<col style="width:50px"/>
-							<col style="width:100px"/>
-							<col style="width:60px"/>
+							<col style="width:10%"/>
+							<col style="width:8%"/>
+							<col style="width:5%"/>
+							<col style="width:5%"/>
+							<col style="width:8%"/>
+							<col style="width:15%"/>
+							<col style="width:10%"/>
+							<col style="width:22%"/>
+							<col style="width:7%"/>
 						</colgroup>
 						<thead>
 							<tr>
@@ -164,8 +187,58 @@ background-color: silver;
 						</c:choose>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
+			<div>
+			<c:forEach var="farmerpay" items="${farmerpaymentlist}">
+					<div class="mobiletalbe" >
+							<table border="1" style="width:75%">
+									<tbody>
+										<tr>
+											<td style="width: 15%;background: white;">농장명</td>
+											<td style="width: 15%" class="content">${farmerpay.p_Title}</td>
+										</tr>
+										<tr>
+											<td style="background: white;">주문자명</td>
+											<td>${farmerpay.pay_Name }</td>
+										</tr>
+										<tr>
+											<td style="background: white;">땅평수</td>
+											<td>${farmerpay.pay_Land }평</td>
+										</tr>
+										<tr>
+											<td style="background: white;">씨앗</td>
+											<td>${farmerpay.pay_Seed }</td>
+										</tr>
+										<tr>
+											<td style="background: white;">금액</td>
+											<td>${farmerpay.pay_Totalprice }원</td>
+										</tr>
+										<tr>
+											<td style="background: white;">배송메시지</td>
+											<td>${farmerpay.pay_Deliverymemo }</td>
+										</tr>
+										<tr>
+											<td style="background: white;">전화번호</td>
+											<td>${farmerpay.pay_Tel }</td>
+										</tr>
+										<tr>
+											<td style="background: white;">배송지</td>
+											<td>${farmerpay.pay_Address }</td>
+										</tr>
+										<tr>
+											<td style="background: white;">주문날짜</td>
+											<td><c:out value="${pay_Date }"/></td>
+										</tr>
+									</tbody>
+								</table>
+								<br>
+								<br>
+						</div>	
+			</c:forEach>
+			</div>
+			
 			
 			<form id="sort" name="rentSearch" method="post"
                                  action="/farmerpaymentlist">
@@ -240,7 +313,13 @@ function modal() {
 		
 	});
 }
+var innerWidth2 = window.innerWidth;
 
+if(innerWidth2 <= "950"){
+	  document.getElementById('table100').style.display ="none"
+}else{
+	  document.getElementById('table100').style.display =""
+}
 
 </script>
 </body>

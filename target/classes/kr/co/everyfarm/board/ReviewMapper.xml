@@ -185,18 +185,30 @@
 		rev_No=#{rev_No}
 	</update>
 
-	<select id="farmerReivew"
-		resultType="kr.co.everyfarm.product.ProductBean">
-		SELECT p_No FROM product WHERE p_Id = #{f_Id}
-	</select>
 
-	<select id="farmerReviews">
-		SELECT * FROM review WHERE rev_Pronum IN
-		<foreach collection="re" item="item" open="(" close=")"
-			separator=",">
-			#{item.p_No}
-		</foreach>
+	<select id="farmerReviews"
+		resultType="kr.co.everyfarm.board.ReviewBean">
+		SELECT * FROM
+		review WHERE (rev_ProNum IN (SELECT pay_no
+		FROM payment WHERE
+		(pay_no in ( SELECT p_no FROM product WHERE p_id
+		=#{p_Id}))
+		))
 	</select>
+	
+	<select id="farmerReviewscount"
+		resultType="int" parameterType="String">
+		SELECT count(*) FROM
+		review WHERE (rev_ProNum IN (SELECT pay_no
+		FROM payment WHERE
+		(pay_no in ( SELECT p_no FROM product WHERE p_id
+		=#{p_Id}))
+		))
+	</select>
+	
+	
+	
+	
 
 
 </mapper>

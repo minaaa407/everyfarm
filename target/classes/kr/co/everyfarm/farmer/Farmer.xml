@@ -183,20 +183,20 @@
 
 	<update id="upPwFar">
 		UPDATE farmer SET
-		m_Pw = #{m_Pw}
-		where m_id=#{m_Id}
+		f_Pw = #{f_Pw}
+		where f_Id=#{f_Id}
 	</update>
 
 	<update id="upAddr">
 		UPDATE farmer SET
-		m_Addr = #{m_Addr}
-		where m_id=#{m_Id}
+		f_Addr = #{f_Addr}
+		where f_Id=#{f_Id}
 	</update>
 
 	<update id="upName">
 		UPDATE farmer SET
 		f_Name = #{f_Name}
-		where m_id=#{f_Id}
+		where f_id=#{f_Id}
 	</update>
 
 	<update id="upTel">UPDATE farmer SET f_Tel = #{f_Tel}where f_id= #{f_Id}

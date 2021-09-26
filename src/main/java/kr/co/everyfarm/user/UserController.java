@@ -1,9 +1,11 @@
 package kr.co.everyfarm.user;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +102,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String mlogin(MemberBean memberBean, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public String mlogin(MemberBean memberBean, HttpServletRequest request) {
 		System.out.println("login:: post");
 
 		HttpSession session = request.getSession();
@@ -117,11 +119,7 @@ public class UserController {
 			session.setAttribute("member", member);
 			return "redirect:/home";
 		} else {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('아이디 혹은 비밀번호가 일치하지 않습니다. 다시 확인해주세요.'); history.back();</script>");
-			out.flush();
-			return null;
+			return "redirect:/login";
 		}
 	}
 
@@ -506,13 +504,18 @@ public class UserController {
 		PaymentBean forDel = payDAO.mypaylist(paging);
 		SimpleDateFormat test = new SimpleDateFormat("yyyy-MM-dd");
 		Date now = new Date();
-//		String form = test.format("2019-03-17");
-//		if(forDel == null) {
-//			model.addAttribute("payDay",test.format(form));
-//		}else if (forDel != null) {
-//		}
 		
-		model.addAttribute("payDay",test.format(forDel.getPay_Date()));
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(now);
+		cal.add(Calendar.YEAR, -1);
+		System.out.println(cal.getTime());
+		if(forDel == null) {
+			model.addAttribute("payDay", test.format(cal.getTime()));
+			
+		}else if (forDel != null) {
+			model.addAttribute("payDay",test.format(forDel.getPay_Date()));
+		}
+		
 		model.addAttribute("now", test.format(now));
 		return "user/myPage";
 	}
@@ -564,6 +567,9 @@ public class UserController {
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		memDao.mAddrUpdate(memberbean);
 		System.out.println(memberbean);
+		MemberBean oldmember = (MemberBean)session.getAttribute("member");
+		oldmember.setM_Addr(memberbean.getM_Addr());
+		session.setAttribute("member",oldmember);
 
 		return "redirect:/home";
 	}
@@ -574,6 +580,9 @@ public class UserController {
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		memberbean.setM_Name(request.getParameter("m_Name"));
 		memDao.mNameUpdate(memberbean);
+		MemberBean oldmember = (MemberBean)session.getAttribute("member");
+		oldmember.setM_Name(memberbean.getM_Name());
+		session.setAttribute("member",oldmember);
 		System.out.println(memberbean);
 
 		return "redirect:/home";
@@ -582,9 +591,12 @@ public class UserController {
 	@RequestMapping(value = "/myInfoTelUpdate")
 	public String myInfoTel(MemberBean memberBean, HttpSession session, HttpServletRequest request) {
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
-		memberBean.setM_Name(request.getParameter("m_Tel"));
-		memDao.mTelUp(memberBean);
+		memberBean.setM_Tel(request.getParameter("m_Tel"));
+		MemberBean oldmember = (MemberBean)session.getAttribute("member");
+		oldmember.setM_Tel(memberBean.getM_Tel());
+		session.setAttribute("member",oldmember);
 		
+		memDao.mTelUp(memberBean);
 		return "redirect:/home";
 	}
 

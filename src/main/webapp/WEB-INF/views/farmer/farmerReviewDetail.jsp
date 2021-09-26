@@ -49,10 +49,11 @@
 </script>
 <title>EVERY FARM | 리뷰 상세</title>
 <style type="text/css">
-body{
+
+body {
 	background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
-	height: 969px;
-	}
+		height: 969px;
+}
 .center {
 	text-align: center;
 	color: #000;
@@ -196,7 +197,7 @@ span {
 			<!-- Collapse -->
 			<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 				<!-- Navigation -->
-				<jsp:include page="/WEB-INF/views/admin/adminSideMenu.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/views/farmer/farmerSideMenu.jsp"></jsp:include>
 			</div>
 		</div>
 	</nav>
@@ -317,12 +318,11 @@ span {
 	</form>
 	<div class="link">
 		<div>
-					<a href="/adminReviewUpdate?rev_No=${revList.rev_No}" class="btn3">삭제하기</a>
-					<a href="/adminReviewList" id="list" class="btn3">목록으로</a>
+					<a href="/farmerReviewList" id="list" class="btn3">목록으로</a>
 		</div>
 	</div>
 
-	<script type="text/javascript">
+<!-- 	<script type="text/javascript">
 			function yes() {
 				var rev_No = document.getElementById("rev_No").value;
 				if (confirm("정말 삭제하시겠습니까?") == true) { //yes 
@@ -331,7 +331,7 @@ span {
 					return false;
 				}
 			}
-	</script>
+	</script> -->
 	<script type="text/javascript">
 		function replyDel() {
 			var rep_No = document.getElementById("rep_No").value;

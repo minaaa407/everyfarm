@@ -15,6 +15,11 @@
 
 <title>EVERY FARM 관리자 | 결제내역</title>
 <style>
+
+
+
+
+
 td, th {
 border-color:#9ea4ca;
 }
@@ -35,7 +40,7 @@ background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 }
 
 .wrap-table100 {
-  width: 1170px;
+  width: 90%
   padding-bottom: 20px;
 }
 
@@ -80,6 +85,7 @@ table td, table th {
   float: left;
   padding: 8px 16px;
   border-radius:20%;
+  
 }
 .pagination a.active {
   background-color: #7971ea;
@@ -89,7 +95,24 @@ table td, table th {
 background-color: silver;
 }
 
+.site-btn {
+	border-radius: 5px;
+	position: relative;
+	font-size: 15px;
+	color: #000000;
+	font-weight: 800;
+	text-transform: uppercase;
+	display: inline-block;
+	padding: 13px 26px 12px;
+	border: none;
+	padding-left: 13px;
+	padding-right: 13px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	margin-right: 10px;
+}
 </style>
+
 </head>
 <body>
 		<!-- Navigation -->
@@ -115,7 +138,7 @@ background-color: silver;
  			<div class="container-table100">
  			<div class="wrap-table100">
 				<div><input class="btn btn-sm btn-neutral" type="button" id="submit" value="선택 삭제" onclick="checkremove()" /></div>
-					<div class="table100">
+					<div id="table100" class="table100">
 					<table border="1">
 				<colgroup>
 					<col style="width:5%" />
@@ -157,6 +180,7 @@ background-color: silver;
 						</table>
 					</div>
 						</div>
+<br>
 				
 				<form id="sort" name="rentSearch" method="post"
                                  action="/adminPaymentList">
@@ -179,7 +203,7 @@ background-color: silver;
 				<div class="row">
                     	<div class="col btn-group pagination">
                         	<c:if test="${pageMaker.prev }">
-                            	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageMaker.startPage-1)}"/>'>이전</a>
+                            	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageMaker.startPage-1)}"/>'>◀ 이전</a>
                             </c:if>
                             <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
                             	<c:if test="${pageNum eq pageMaker.cri.page}">
@@ -195,7 +219,7 @@ background-color: silver;
                             </c:forEach>
                             <c:if test="${pageMaker.next && pageMaker.endPage >0 }">
                             	<a href='<c:url value="/adminPaymentList${pageMaker.makeQuery(pageMaker.endPage+1)}"/>'>
-                                	<span style="font-weight: bold;">다음</span>
+                                	<span style="font-weight: bold;">다음 ▶</span>
                                 </a>
                             </c:if>
                         </div>
@@ -272,6 +296,7 @@ function modal() {
 		
 	});
 }
+
 
 
 </script>

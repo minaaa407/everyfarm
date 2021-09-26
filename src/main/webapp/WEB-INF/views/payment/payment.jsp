@@ -452,7 +452,7 @@ function submit() {
 	document.getElementById('pay_Name').value = payname;
 	console.log(payname + 1);
 	console.log(payname);
-	alert(payname);
+	//alert(payname);
 			console.log('----이름 끝----');
 
 			console.log('----전화번호 시작----');
@@ -470,7 +470,7 @@ function submit() {
 	const payemail2 = document.getElementById('mail2').value;
 	const payemail = payemail1 + '@' + payemail2;
 	document.getElementById('pay_Email').value = payemail;
-	alert(payemail);
+	// alert(payemail);
 	console.log(payemail + 3);
 	console.log(payemail);
 	console.log('----이메일 끝----');

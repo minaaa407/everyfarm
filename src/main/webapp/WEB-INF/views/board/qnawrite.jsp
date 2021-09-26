@@ -23,11 +23,6 @@
 
 
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
- 
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 <!-- 썸머노트 -->
 <link rel="stylesheet" href="/resources/editor/css/summernote-lite.css">
@@ -128,7 +123,7 @@ input::placeholder {
 	        							<%  for(int i=0 ;i<count;i++) {
               								if(qnamodifyrecord.get(0).getQ_Pno() != pnoTitleList.get(i).getQ_Pno()) {
              							%>
-                 						<option value="<%=pnoTitleList.get(i).getQ_Pno()%>"><%=pnoTitleList.get(i).getQ_Pno()%> : <%=pnoTitleList.get(0).getQ_Ptitle()%></option>
+                 						<option value="<%=pnoTitleList.get(i).getQ_Pno()%>"><%=pnoTitleList.get(i).getQ_Pno()%> : <%=pnoTitleList.get(i).getQ_Ptitle()%></option>
 						                <%  }
                      					 }  %>
 						             </select></td>
