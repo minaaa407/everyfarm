@@ -144,8 +144,8 @@
 		p_Manpay=#{p_Manpay}
 		where p_no = #{p_No}	
 	</update>
-   
-   <delete id="delete">
+
+  <delete id="delete">
       	delete from product where p_No=#{p_No}   
    </delete>
 

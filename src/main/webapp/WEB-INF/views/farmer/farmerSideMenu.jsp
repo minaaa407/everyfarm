@@ -41,10 +41,10 @@
 	rel="stylesheet" />
 	<style>
 	@media (min-width: 768px){
-      body{
-      padding-left:250px;
-      }
-   }
+		body{
+		padding-left:250px;
+		}
+	}
 	.sep{
 	    border-top: 1px solid lightgray;
     margin-top: 30px;

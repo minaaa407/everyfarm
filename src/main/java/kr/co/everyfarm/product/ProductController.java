@@ -804,7 +804,50 @@ public class ProductController {
 			return "redirect:/proLandListForm";
 		}
 
-	
+	      File Folder = new File(path);
+	      if (!Folder.exists()) {
+	         try {
+	            Folder.mkdir(); // 폴더 생성합니다.
+	         } catch (Exception e) {
+	            e.getStackTrace();
+	         }
+	      } else {
+	      }
+
+	      String safeFile;
+	      String originFileName;
+	      long fileSize;
+
+	      for (int i = 0; i < ab.length; i++) {
+	         originFileName = ab[i].getOriginalFilename(); // 원본 파일 명
+	         fileSize = ab[i].getSize(); // 파일 사이즈
+	         safeFile = path + originFileName;
+	         File oldfile = new File(safeFile);
+
+	         try {
+	            // ab[i].transferTo(new File(safeFile));
+	            if (fileSize > 100) {
+	               if (oldfile.exists()) {
+	                  oldfile.delete();
+	               }
+	               ab[i].transferTo(new File(safeFile));
+	               model.addAttribute("safeFile", safeFile);
+	            }
+
+	         } catch (IllegalStateException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	         }
+	      }
+	      System.out.println(productbean + "값 확인임.");
+	      dao.update(productbean);
+	      model.addAttribute("P_No", productbean.getP_No());
+
+	      return "redirect:/proAdminListForm";
+	   }
 	   
 	   @RequestMapping(value="/productdetailadmin")
 	   public String gettest2(Model model, @RequestParam("productno") String productno

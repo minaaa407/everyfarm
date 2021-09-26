@@ -15,6 +15,11 @@
 
 <title>EVERY FARM 관리자 | 결제내역</title>
 <style>
+
+
+
+
+
 td, th {
 border-color:#9ea4ca;
 }
@@ -35,7 +40,7 @@ background: linear-gradient(#a6cc55 0, #e6d45e 100%) !important;
 }
 
 .wrap-table100 {
-  width: 1170px;
+  width: 90%
   padding-bottom: 20px;
 }
 
@@ -91,6 +96,7 @@ background-color: silver;
 }
 
 </style>
+
 </head>
 <body>
 		<!-- Navigation -->
@@ -116,7 +122,7 @@ background-color: silver;
  			<div class="container-table100">
  			<div class="wrap-table100">
 				<div><input class="btn btn-sm btn-neutral" type="button" id="submit" value="선택 삭제" onclick="checkremove()" /></div>
-					<div class="table100">
+					<div id="table100" class="table100">
 					<table border="1">
 				<colgroup>
 					<col style="width:5%" />
@@ -158,6 +164,7 @@ background-color: silver;
 						</table>
 					</div>
 						</div>
+
 				
 				<form id="sort" name="rentSearch" method="post"
                                  action="/adminPaymentList">
@@ -273,6 +280,7 @@ function modal() {
 		
 	});
 }
+
 
 
 </script>

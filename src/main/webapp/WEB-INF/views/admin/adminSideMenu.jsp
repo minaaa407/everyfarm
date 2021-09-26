@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,25 +20,25 @@
    src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <!-- Modal -->
 <link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-	integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
-	crossorigin="anonymous">
+   href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+   integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+   crossorigin="anonymous">
 <!-- Favicon -->
 <link rel="shortcut icon" type="image/x-icon"
-	href="/resources/editor/connn.ico" />
+   href="/resources/editor/connn.ico" />
 <!-- Fonts -->
 <link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
-	rel="stylesheet">
+   href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+   rel="stylesheet">
 <!-- Icons -->
 <link href="/resources/admin/js/plugins/nucleo/css/nucleo.css"
-	rel="stylesheet" />
+   rel="stylesheet" />
 <link
-	href="/resources/admin/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"
-	rel="stylesheet" />
+   href="/resources/admin/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"
+   rel="stylesheet" />
 <!-- CSS Files -->
 <link href="/resources/admin/css/argon-dashboard.css?v=1.1.2"
-	rel="stylesheet" />
+   rel="stylesheet" />
 <style>
 @media (min-width: 768px){
       body{
@@ -46,9 +46,9 @@
       }
    }
 .sep {
-	border-top: 1px solid lightgray;
-	margin-top: 30px;
-	padding-top: 30px;
+   border-top: 1px solid lightgray;
+   margin-top: 30px;
+   padding-top: 30px;
 }
 </style>
 </head>
@@ -63,7 +63,7 @@
 	<!-- Brand -->
 	<a class="navbar-brand pt-0" href="/admin"> <img
 		src="/resources/admin/img/brand/brand.jpg" class="navbar-brand-img"
-		alt="에부리팜로고">
+		alt="everyfarm">
 	</a>
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="/admin"> <i
