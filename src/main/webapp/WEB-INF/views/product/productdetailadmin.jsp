@@ -1164,7 +1164,7 @@ td .mybtn{
 					</div>
 					<div align="right" class="col-lg-12" id="productupdate">
 						<a class="btn btn-sm btn-success"
-							href="/AdRegDetailForm?p_No=${oneproduct.p_No}">수정</a>
+							href="/proAdDetailForm?p_No=${oneproduct.p_No}">수정</a>
 					</div>
 				</c:if>
 

@@ -136,18 +136,18 @@ tbody td {
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan="1" style="width: 20%;"><label>작성자</label></td>
-						<td colspan="3"><input type="text" style="text-align: left;"
+						<td colspan="1" style="width: 20%;"><label>* 작성자</label></td>
+						<td colspan="3"><input type="text" 
 							name="p_Id" value="<%=farmer.getF_Id()%>" maxlength="50"
-							required="required"></td>
+							readonly></td>
 					</tr>
 					<tr>
-						<td colspan="1" style="width: 20%;"><label>제 목</label></td>
+						<td colspan="1" style="width: 20%;"><label>* 제 목 </label></td>
 						<td colspan="3"><input type="text" name="p_Title"
 							maxlength="50" required="required"></td>
 					</tr>
 					<tr>
-						<td style="width: 20%;"><label>메인 이미지</label></td>
+						<td style="width: 20%;"><label>* 메인 이미지</label></td>
 						<td style="text-align: left;"><input name="p_Img1"
 							class="btn btn-sm-outline" type="file" accept="img/*" /> <input
 							type="hidden" name="p_Img" value="" required="required"></td>
@@ -230,17 +230,17 @@ tbody td {
 
 				</tbody>
 				<tr>
-					<td colspan="1"><label>상세 내용</label></td>
+					<td colspan="1"><label>* 상세 내용</label></td>
 					<td colspan="3"><textarea class="form-control"
 							name="p_Content" rows="10" required>${productinfo.p_Content}</textarea></td>
 				</tr>
 				<tr>
-					<td colspan="1" style="width: 20%;"><label>평당 가격</label></td>
+					<td colspan="1" style="width: 20%;"><label>* 평당 가격</label></td>
 					<td colspan="3"><input type="number" name="p_Landprice"
 						placeholder="원" maxlength="50" required="required"></td>
 				</tr>
 				<tr>
-					<td colspan="1" style="width: 20%;"><label>평당 인건비</label></td>
+					<td colspan="1" style="width: 20%;"><label required="required">* 평당 인건비</label></td>
 					<td colspan="3"><input type="number" name="p_Manpay"
 						placeholder="원" maxlength="50" required="required"></td>
 				</tr>
