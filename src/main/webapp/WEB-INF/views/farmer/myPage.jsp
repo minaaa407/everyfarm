@@ -419,8 +419,8 @@ background-color: rgba(255, 255, 255, 0.4);
                   aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-               <p>결제 내역이 있는 회원님의 경우 ~~을 위해 &nbsp;&nbsp;&nbsp;수집된 개인정보를 6개월간 보관
-                  후 파기합니다.</p>
+              	<p>거래 내역이 있는 회원님의 경우  &nbsp;&nbsp;&nbsp; 최근 결제일로부터  6개월후
+						탈퇴할 수 있습니다.</p>
             </div>
             <div class="modal-footer justify-content-center">
                <button type="button" class="btn btn-secondary"
