@@ -105,6 +105,7 @@ public class ReviewController {
 	@RequestMapping(value = "/reviewUpdate1", method = RequestMethod.POST)
 	public String reviewUpdatePOST(ReviewBean reviewBean) {
 		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		
 		revDAO.revUpdate(reviewBean);
 
 		return "redirect:/reviewList";

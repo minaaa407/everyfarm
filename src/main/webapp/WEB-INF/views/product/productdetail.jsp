@@ -1137,27 +1137,7 @@ td .mybtn{
 			<div class="row">
 				<!--승인 여부 해당 파트 관리자만 보이게 만들어야됨. 차후 수정 예정.-->
 				
-					<c:if test="${not empty farmer || not empty admin}">
 
-
-						<div align="right" class="col-lg-12" id="productupdate">
-							<input type="button" value="수정" onclick="p" />
-						</div>
-						
-						<div align="right" class="col-lg-12" id="productaccept">
-							<c:choose>
-								<c:when test="${oneproduct.p_Accept eq 'Y'}">
-									승인처리상태 <input style="width: 60px;" class='mybtn' name='N' type="button" value="승인"
-										onclick="productaccept('N')" />
-								</c:when>
-								<c:otherwise>
-								미승인처리상태  <input style="width: 60px;" class='mybtn2' name='Y' type="button" value="미승인"
-										onclick="productaccept('Y')" />
-		
-								</c:otherwise>
-							</c:choose>
-						</div>
-					</c:if>
 				
 				<div class="col-lg-6 col-md-6" id="maindiv">
 					<div class="product__details__pic">
