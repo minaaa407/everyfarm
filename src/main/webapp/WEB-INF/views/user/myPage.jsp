@@ -229,7 +229,7 @@ body {
 											href="#" onclick="return false;"><i class="fa fa-clock-o">
 											</i> 내가 쓴 게시글 <span class="arrow"></span></a></li>
 										<ul class="sub-menu collapse" id="products">
-											<li><a onclick="location.href='/myQnA'" type="submit">QnA</a></li>
+											<li><a href="/qnamylist" type="submit">QnA</a></li>
 											<li><a href="/myReview">리뷰게시판</a></li>
 										</ul>
 										<li><a href="/myPayList"> <i
