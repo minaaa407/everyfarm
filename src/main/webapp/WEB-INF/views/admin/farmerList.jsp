@@ -246,6 +246,7 @@ table td, table th {
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		let moveForm = $("#moveForm");
 		$(".move").on("click", function(e) {
@@ -277,9 +278,14 @@ table td, table th {
 			moveForm.submit();
 		});
 	</script>
+	
 	<!-- 페이징 및 검색!!!!  -->
 
 	<script type="text/javascript">
+	$(document).ready(function () {   
+	     $('ul.navbar-nav li:nth-child(5)').children().css('background','#dae39b');
+	 }); 
+	
 		function allChk(obj) {
 			var chkObj = document.getElementsByName("RowCheck");
 			var rowCnt = chkObj.length - 1;

@@ -131,7 +131,7 @@
 			</div>
 		</div>
 	</div>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<!-- Jquery Core Js -->
 	<script src="resources/admin/sign/plugins/jquery/jquery.min.js"></script>
 
@@ -148,6 +148,11 @@
 	<!-- Custom Js -->
 	<script src="resources/admin/sign/js/admin.js"></script>
 	<script src="resources/admin/sign/js/pages/examples/farmerSign.js"></script>
+	<script type="text/javascript">
+	 $(document).ready(function () {   
+	     $('ul.navbar-nav li:nth-child(5)').children().css('background','#dae39b');
+	 }); 
+	</script>
 </body>
 
 </html>

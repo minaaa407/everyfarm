@@ -186,7 +186,7 @@
 												 src="resources/upload/qna/${q.q_No}/${q.q_Img}"
 												 alt="${q.q_No}" title="이미지를 클릭하면 커집니다."
 											     name="resources/upload/qna/${q.q_No}/${q.q_Img}"
-												 style="cursor: pointer" id="qnaimg"
+												 style="cursor: pointer;  max-height: 300px;" id="qnaimg"
 												 class="img-fluid rounded">
             								</a>
                                             </c:when>

@@ -231,8 +231,12 @@ background-color: silver;
 				
 				
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+$(document).ready(function () {   
+    $('ul.navbar-nav li:nth-child(3)').children().css('background','#dae39b');
+}); 
+
 var check = 0;
 var allcheck = $("input:checkbox[name='all']").length;
 var $checkok = 0;

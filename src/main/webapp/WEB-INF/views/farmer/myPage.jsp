@@ -657,7 +657,12 @@ background-color: rgba(255, 255, 255, 0.4);
 <!-- daum 도로명주소 찾기 api -->
 <script
    src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+$(document).ready(function () {   
+	$('ul.navbar-nav li:nth-child(7)').children().css('background','#dae39b');
+}); 
+
    function sample6_execDaumPostcode() {
       new daum.Postcode({
          oncomplete : function(data) {
