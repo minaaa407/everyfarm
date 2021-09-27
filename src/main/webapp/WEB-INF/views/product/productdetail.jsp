@@ -64,7 +64,6 @@ integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChi
 //script 전부 다 박살 에정. 방법 없다.
 //여기아래부분 정말로 잘 보존해서 어떻게든 우려먹기는 안되겠네
 //응용해서 처리해보자. 일단 그대로 가져가는건 현재 불가능하다. 코드 잘못짰네. 의존도 겁내 높다. ㅎㅎ
-
 var nowpage= "1";
 var lnb = $("#lnb").offset().top;
 function productaccept(accept) {
@@ -100,21 +99,16 @@ function productaccept(accept) {
 			}else{
 				alert("승인권한이 없습니다.")
 			}
-
 }
-
 function selectimg(name){
-
 	document.getElementById('selectimg').src=name;
 	
 }
-
 function basket(){
 	
 	document.getElementById('myHiddenForm').action="/productbasketchoice";
 	document.myHiddenForm.submit();
 }
-
 function payment(){
 	if($('table1').children()){
 		document.getElementById('myHiddenForm').action="/PaymentInfo";
@@ -124,12 +118,6 @@ function payment(){
 	}
 	
 }
-
-
-
-
-
-
 function count1(name)  {
 	   
 	  var total = "total"+name;
@@ -149,7 +137,6 @@ function count1(name)  {
 	  }
 	  
 }
-
 function count2(name)  {
 	  var b_Land = ("b_Land" + name);
 	  var b_Totalprice = ("b_Totalprice" + name);
@@ -165,12 +152,6 @@ function count2(name)  {
 		  document.getElementById(b_Totalprice).value = (number) * (${oneproduct.p_Landprice});
 	  }
 }
-
-
-
-
-
-
 function deleteRow(btndel,name){
 	var b_Land = ("b_Land" + name);
 	var b_Totalprice = ("b_Totalprice" + name);
@@ -222,22 +203,16 @@ function deleteRow(btndel,name){
     }
     
 }
-
 function check(){
 	document.getElementById("myhiddenform");
 	document.getElementById("myhiddenform").submit();
 	document.myhiddenform.submit();
 	
 }
-
-
 function listChange(){
 	$('#iniamout').val('1');
 }
-
-
 //아래 댓글임
-
 function qnainsert(page){
 	var uid = '<%=(MemberBean)session.getAttribute("member")%>';
 	var fid = '<%=(FarmerBean)session.getAttribute("farmer")%>';
@@ -257,7 +232,6 @@ function qnainsert(page){
 		ajax(urlpath,bean);
 	}
 }
-
 function pagebutton(pagenumber){
 	nowpage = pagenumber;
 	var bean = {
@@ -267,7 +241,6 @@ function pagebutton(pagenumber){
 	var urlpath = "/productdetailpaging";
 	ajax(urlpath,bean);
 }
-
 function qnaupdateexit(){
 	
 	var bean = {
@@ -279,7 +252,6 @@ function qnaupdateexit(){
 	
 	
 }
-
 function qnaupdate(c_seq){
 	
 	var content = document.getElementById("c_Contentupdate").value;
@@ -293,8 +265,6 @@ function qnaupdate(c_seq){
 	ajax(urlpath,bean);
 	
 }
-
-
 function qnadeletebutton(c_seq){
 	var content = "삭제된 댓글입니다.";
 	var c_Id = "삭제";
@@ -309,8 +279,6 @@ function qnadeletebutton(c_seq){
 	ajax(urlpath,bean);
 	
 }
-
-
 function subqnainsert(number){
 	var content = document.getElementById("c_Content2").value;
 	var bean = {
@@ -325,8 +293,6 @@ function subqnainsert(number){
 	
 	
 }
-
-
 function oneqna(qnaid){
 	var number = 1;
 	if(qnaid.length > 0 ){
@@ -374,7 +340,6 @@ function oneqna(qnaid){
 								a+="</td></tr>";
 							
 							table.html(a);
-
 				
 				},
 				error : function(a, b, c) {
@@ -386,7 +351,6 @@ function oneqna(qnaid){
 			});
 	
 }
-
 	
 function ajax(urlpath,bean){
 	
@@ -456,12 +420,8 @@ function ajax(urlpath,bean){
 	
 	
 	
-
-
-
 </script>
 <style>
-
 .product__pagination a, .blog__pagination a {
     display: inline-block;
     width: 30px;
@@ -482,15 +442,11 @@ function ajax(urlpath,bean){
 .product__pagination, .blog__pagination {
     padding-top: 10px;
 }
-
 .product__pagination a:hover, .blog__pagination a:hover {
     background: #7fad39;
     border-color: #7fad39;
     color: #ffffff;
 }
-
-
-
 .product__details__pic__item--large {
 	position: relative;
 	top: 0;
@@ -498,7 +454,6 @@ function ajax(urlpath,bean){
 	width: 100%;
 	height: 340px;
 }
-
 .product__details__tab__desc {
 	position: relative;
 	top: 0;
@@ -506,7 +461,6 @@ function ajax(urlpath,bean){
 	width: 100%;
 	height: auto;
 }
-
 .mybtn {
 	padding: 0;
 	display: inline;
@@ -522,7 +476,6 @@ function ajax(urlpath,bean){
 	color: #fff;
 	text-decoration: none;
 }
-
 .mybtn2 {
 	padding: 0;
 	display: inline;
@@ -538,7 +491,6 @@ function ajax(urlpath,bean){
 	color: #fff;
 	text-decoration: none;
 }
-
 .qnasubbutton, .updatebutton, .qnadeletebutton,#qnaupdate,#qnaupdateexit{
 	padding: 0;
 	display: inline;
@@ -556,7 +508,6 @@ function ajax(urlpath,bean){
 	text-decoration: none;
 	width: 60px
 }
-
 #qnaupdate,#qnaupdateexit{
 	padding: 0;
 	display: inline;
@@ -574,46 +525,31 @@ function ajax(urlpath,bean){
 	text-decoration: none;
 	width: 100px
 }
-
-
-
 .fa, .fab, .fad, .fal, .far, .fas {
 	cursor: pointer;
 	
 }
-
 i.fa-minus-circle:hover{
 	color : #119300;
 }
-
 i.fa-minus-circle:active{
 	color : #21AF23;
 }
-
 i.fa-minus-circle{
 	color : green;
 }
-
-
 i.fa-plus-circle:hover{
 	color : #119300;
 }
-
 i.fa-plus-circle:active{
 	color : #21AF23;
 }
-
 i.fa-plus-circle{
 	color : green;
 }
-
 .owl-item img{
-
 height:60px;
-
 }
-
-
 a.sidenav{
 	color: #FFFFFF;
 	font-size: 14px;
@@ -621,28 +557,18 @@ a.sidenav{
     padding-right: 20px;
     text-transform: uppercase;
 }
-
 a.sidenav:hover, focus {
     color: yellow;
 }
-
 .owl-carousel .owl-item img{
 	width:115%;
 }
-
-
-
 <!--메뉴바 -->
-
-
 #header{width: 100%; height:600px; line-height: 600px; font-size: 60px; background:red; transition: background 0.6s; text-align: center;}
 #lnb.fixed{position: fixed; left: 0; top: 0; width: 100%; z-index:99;}
 #lnb ul{font-size:0; line-height: 0; background: #4e9525;}
 #lnb li{display: inline-block; vertical-align: top; padding: 20px 0; font-size: 25px; text-align: center;}
 #container{width:100%; height:1500px; line-height: 1500px; font-size: 60px; background: blue; text-align: center;}
-
-
-
 </style>
 
 
@@ -656,16 +582,13 @@ a.sidenav:hover, focus {
 	border: 1px solid #ccc;
 	padding: 0 8px;
 }
-
 .select  a:after, .select  ul>li:first-child:after {
 	display: block;
 	float: right;
 }
-
 .select  a:after {
 	content: '▼';
 }
-
 .select  ul {
 	position: absolute;
 	width: 100%;
@@ -673,32 +596,26 @@ a.sidenav:hover, focus {
 	background: #fff;
 	display: none;
 }
-
 .select  ul>li {
 	cursor: pointer;
 	padding: 0 8px;
 	border: 1px solid #ccc;
 }
-
 .select  ul>li:first-child:after {
 	content: '▲';
 }
-
 ul {
 	list-style: none;
 	padding-left: 0px;
 }
-
 td .mybtn{
 	width: 100pt;
 }
-
 .onlyNumber{
   width: 40px;
   text-align : center;
 }
 }
-
 @media screen and (max-width: 768px) {
 	div.select{
 	width: 250px;
@@ -713,15 +630,10 @@ td .mybtn{
 	td .mybtn{
 	width: 80pt;
 	}
-
 }
-
-
-
 </style>
 
 <script>
-
 			$(document).ready(function () {	
 				lnb = $("#lnb").offset().top;
 				  $("div.select > a").click(function () {
@@ -1101,7 +1013,6 @@ td .mybtn{
 		          }
 		        })
 	});
-
 	</script>
 
 </head>
@@ -1552,7 +1463,6 @@ td .mybtn{
 			dataLayer.push(arguments);
 		}
 		gtag('js', new Date());
-
 		gtag('config', 'UA-23581568-13');
 	</script>
 
