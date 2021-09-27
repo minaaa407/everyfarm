@@ -185,10 +185,10 @@ table td, table th {
 											<td>${farmer.f_Rate}</td>
 											<td><fmt:formatDate pattern="yyyy-MM-dd"
 													value="${farmer.f_Date}" /></td>
-											<td><a href="/resources/upload/farmer/farmer file.png" data-toggle="lightbox" data-title="${farmer.f_Id}" data-footer="<fmt:formatDate pattern="yyyy-MM-dd"
+											<td><a href="/resources/upload/farmer/farmerfile.png" data-toggle="lightbox" data-title="${farmer.f_Id}" data-footer="<fmt:formatDate pattern="yyyy-MM-dd"
 													value="${farmer.f_Date}" />">
 												${farmer.f_Auth}</a></td>
-            								<td>${farmer.f_Sign}</td>
+											<td>${farmer.f_Sign}</td>
 										</tr>
 									</c:forEach>
 								</c:when>
@@ -250,8 +250,13 @@ table td, table th {
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
+	
+	
+
+	$(document).ready(function () {   
+	     $('ul.navbar-nav li:nth-child(5)').children().css('background','#dae39b');
+	 }); 
 		let moveForm = $("#moveForm");
 		$(".move").on("click", function(e) {
 			e.preventDefault();
@@ -282,14 +287,9 @@ table td, table th {
 			moveForm.submit();
 		});
 	</script>
-	
 	<!-- 페이징 및 검색!!!!  -->
 
 	<script type="text/javascript">
-	$(document).ready(function () {   
-	     $('ul.navbar-nav li:nth-child(5)').children().css('background','#dae39b');
-	 }); 
-	
 		function allChk(obj) {
 			var chkObj = document.getElementsByName("RowCheck");
 			var rowCnt = chkObj.length - 1;
@@ -384,9 +384,10 @@ table td, table th {
 		    $(this).ekkoLightbox();
 		});
 		
+		
 	</script>
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>

@@ -234,8 +234,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/farmerD")
 	@ResponseBody
-	public Map<String, Object> farmerDelete(FarmerBean farmerbean,
-			@RequestParam(value = "checkArr[]") String checkArr) {
+	public Map<String, Object> farmerDelete(FarmerBean farmerbean, @RequestParam(value = "checkArr[]") String checkArr) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		FarmerDAO farmDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
