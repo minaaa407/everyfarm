@@ -198,6 +198,36 @@ span {
 								</span> <span> <em>조회수 :</em> ${revList.rev_Readcount}
 								</span>
 							</div>
+							<div>
+								<c:if
+												test="${revList.rev_Rate eq 0.5}">
+												<img alt="0.5점"
+													src="resources/review/reviewList/img/harf.png" />
+											</c:if> <c:if test="${revList.rev_Rate eq 1}">
+												<img alt="1점" src="resources/review/reviewList/img/one.png" />
+											</c:if> <c:if test="${revList.rev_Rate eq 1.5}">
+												<img alt="1.5점"
+													src="resources/review/reviewList/img/one-half.png" />
+											</c:if> <c:if test="${revList.rev_Rate eq 2}">
+												<img alt="2점" src="resources/review/reviewList/img/two.png" />
+											</c:if> <c:if test="${revList.rev_Rate eq 2.5}">
+												<img alt="2.5점"
+													src="resources/review/reviewList/img/two-half.png" />
+											</c:if> <c:if test="${revList.rev_Rate eq 3}">
+												<img alt="3점"
+													src="resources/review/reviewList/img/three.png" />
+											</c:if> <c:if test="${revList.rev_Rate eq 3.5}">
+												<img alt="3.5점"
+													src="resources/review/reviewList/img/three-half.png" />
+											</c:if> <c:if test="${revList.rev_Rate eq 4}">
+												<img alt="4점" src="resources/review/reviewList/img/four.png" />
+											</c:if> <c:if test="${revList.rev_Rate eq 4.5}">
+												<img alt="4.5점"
+													src="resources/review/reviewList/img/four-half.png" />
+											</c:if> <c:if test="${revList.rev_Rate eq 5}">
+												<img alt="5점" src="resources/review/reviewList/img/five.png" />
+											</c:if>
+							</div>
 						</div>
 					</td>
 				</tr>
@@ -221,9 +251,6 @@ span {
 							class="date"><fmt:formatDate pattern="yy-MM-dd hh:mm"
 									value="${repList.rep_Date}" /></span>
 							<div class="cont2">${repList.rep_Cont}</div></td>
-						<td><button type="button" onclick="replyDel()">삭제</button>
-							<input type="hidden" value="${repList.rep_No}" id="rep_No"> </td>
-						
 					</tr>
 				</c:forEach>
 				</c:when>
@@ -248,8 +275,7 @@ span {
 									<div>
 										<label><i class="fas fa-caret-right"></i> 이름 : </label> <span>${member.m_Name}<input
 											type="hidden" name="rep_Id" value="${member.m_Name}"></span>
-										<input type="checkbox" name="rep_Secret" id="rep_Secret"
-											value="Y"> <input type="hidden" id="rev_No"
+										<input type="hidden" id="rev_No"
 											name="rev_No" value="${revList.rev_No}">
 									</div>
 									<div class="re_cont">

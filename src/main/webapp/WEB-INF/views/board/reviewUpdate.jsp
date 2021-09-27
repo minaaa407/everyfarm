@@ -120,7 +120,6 @@ input {
 
 
            <input type="hidden" class="form-control" value="${revList.rev_No}" name="rev_No"  readonly/>
-           <input type="hidden"class="form-control" value="${revList.rev_Rate}" name="rev_Rate">
           <table class="table table-striped">
             <tr>
                 <th><div>작성자</div></th>
@@ -130,7 +129,31 @@ input {
                 <th><div>제목</div></th>
                 <td><input type="text" id="title" name="rev_Title" value="${revList.rev_Title}"  class="form-control" ></td>
             </tr>
-             
+            <tr>
+							<th><div>별점</div></th>
+							<td>
+								<fieldset class="rating">
+									<input type="radio" id="star5" name="rev_Rate" value="5"
+										readonly="readonly" /><label class="full" for="star5"></label>
+									<input type="radio" id="star4half" name="rev_Rate" value="4.5" /><label
+										class="half" for="star4half"></label> <input type="radio"
+										id="star4" name="rev_Rate" value="4" /><label class="full"
+										for="star4"></label> <input type="radio" id="star3half"
+										name="rev_Rate" value="3.5" /><label class="half"
+										for="star3half"></label> <input type="radio" id="star3"
+										name="rev_Rate" value="3" /><label class="full" for="star3"></label>
+									<input type="radio" id="star2half" name="rev_Rate" value="2.5" /><label
+										class="half" for="star2half"></label> <input type="radio"
+										id="star2" name="rev_Rate" value="2" /><label class="full"
+										for="star2"></label> <input type="radio" id="star1half"
+										name="rev_Rate" value="1.5" /><label class="half"
+										for="star1half"></label> <input type="radio" id="star1"
+										name="rev_Rate" value="1" /><label class="full" for="star1"></label>
+									<input type="radio" id="starhalf" name="rev_Rate" value="0.5" /><label
+										class="half" for="starhalf"></label>
+								</fieldset>
+							</td>
+						</tr>
             <tr>
                 <th><div>글내용</div></th>
                 <td>
