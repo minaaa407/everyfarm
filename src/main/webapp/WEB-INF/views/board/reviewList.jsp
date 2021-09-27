@@ -365,7 +365,7 @@ a:hover {
 										<td class="list tdStar"><c:if
 												test="${re.rev_Rate eq 0.5}">
 												<img alt="0.5점"
-													src="resources/review/reviewList/img/half.png" />
+													src="resources/review/reviewList/img/harf.png" />
 											</c:if> <c:if test="${re.rev_Rate eq 1}">
 												<img alt="1점" src="resources/review/reviewList/img/one.png" />
 											</c:if> <c:if test="${re.rev_Rate eq 1.5}">
