@@ -547,6 +547,9 @@ public class FarmerController {
 
 		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		memDao.upAddr(farmerBean);
+		FarmerBean fBean = (FarmerBean) session.getAttribute("farmer");
+		fBean.setF_Addr(farmerBean.getF_Addr());
+		session.setAttribute("farmer", fBean);
 		
 		return "redirect:/farmerMypage";
 	}
@@ -556,7 +559,10 @@ public class FarmerController {
 
 		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		memDao.upName(farmerBean);
-
+		FarmerBean fBean = (FarmerBean) session.getAttribute("farmer");
+		fBean.setF_Name(farmerBean.getF_Name());
+		session.setAttribute("farmer", fBean);
+		
 		return "redirect:/farmerMypage";
 	}
 
@@ -565,6 +571,9 @@ public class FarmerController {
 
 		FarmerDAO memDao = sqlSessionTemplate.getMapper(FarmerDAO.class);
 		memDao.upTel(farmerBean);
+		FarmerBean fBean = (FarmerBean) session.getAttribute("farmer");
+		fBean.setF_Tel(farmerBean.getF_Tel());
+		session.setAttribute("farmer", fBean);
 		return "redirect:/farmerMypage";
 	}
 
