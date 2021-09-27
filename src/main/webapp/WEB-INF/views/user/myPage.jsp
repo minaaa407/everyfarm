@@ -435,16 +435,8 @@ body {
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">취 소</button>
 					<form action="/myInfoDelete" method="post" name="toDel">
-						<c:choose>
-							<c:when test="${!empty myCus}">
 								<button name="m_Id" value="${member.m_Id}" id="mDel"
 									type="submit" class="btn btn-danger">탈 퇴</button>
-							</c:when>
-							<c:otherwise>
-								<button name="m_Id" value="${member.m_Id}" onclick="mDel2()"
-									type="submit" class="btn btn-danger">탈 퇴</button>
-							</c:otherwise>
-						</c:choose>
 					</form>
 				</div>
 			</div>
@@ -455,14 +447,6 @@ body {
 
 
 <script type="text/javascript">
-	function mDel2() {
-		if(confirm("정말 탈퇴하시겠습니끼?") == true ){
-			document.toDel.submit();
-			alert("이용해 주셔서 감사합니다.");
-		}else{
-		return false;
-		}
-	}
 	
 	$(function() {
 		var pay = document.getElementById("myCus").value;
