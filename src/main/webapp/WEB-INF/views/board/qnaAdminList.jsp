@@ -123,7 +123,7 @@
                   
 				       <c:choose>   
                  		<c:when test = "${empty productQlist}">
-                 		<div class="row" style="box-shadow: 0px 2px 10px rgb(0 0 0 / 8%); background-color: white; margin-bottom: 140px;padding-bottom: 50px;">
+                 		<div class="row" style="box-shadow: 0px 2px 10px rgb(0 0 0 / 8%); background-color: white; height: 677px;">
                     <div class="col-lg-12 col-md-12" style="padding-top: 50px;">      
                  			<div>내역이 없습니다.</div>
                  		</c:when>
@@ -146,7 +146,7 @@
 												 src="resources/upload/qna/${q.q_No}/${q.q_Img}"
 												 alt="${q.q_No}" title="이미지를 클릭하면 커집니다."
 											     name="resources/upload/qna/${q.q_No}/${q.q_Img}"
-												 style="cursor: pointer" id="qnaimg"
+												 style="cursor: pointer; max-height: 300px;" id="qnaimg"
 												 class="img-fluid rounded">
             								</a>
             							  </c:when>
@@ -285,6 +285,9 @@
 	</div>
    
 <script type="text/javascript">
+$(document).ready(function () {   
+    $('ul.navbar-nav li:nth-child(7)').children().css('background','#dae39b');
+}); 
 
 function qnadelete() {
 	if (confirm('정말 삭제하시겠습니까?')) {  
@@ -308,6 +311,7 @@ $(document).on('click', '[data-toggle="lightbox"]', function(event) {
     <script src="/resources/qna/js/jquery.slicknav.js"></script>
     <script src="/resources/qna/js/owl.carousel.min.js"></script>
     <script src="/resources/qna/js/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
     <!-- 이미지 클릭시 확대 -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

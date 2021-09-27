@@ -219,7 +219,7 @@
 				<!--   Argon JS   -->
 				<script src="resources/farmer/js/argon-dashboard.min.js?v=1.1.2"></script>
 				<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>	
-
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 								<script>
 									OrdersChart=function(){var e,a,t=$("#chart-orders2");$('[name="ordersSelect"]');
 									t.length&&(e=t,a=new Chart(e,{type:"bar",options:{scales:{yAxes:[{gridLines:{lineWidth:1,color:"#dfe2e6",zeroLineColor:"#dfe2e6"},
@@ -229,6 +229,10 @@
 								
 								</script>
 								<script>
+								$(document).ready(function () {   
+									$('ul.navbar-nav li:nth-child(1)').children().css('background','#dae39b');
+								}); 
+								
 								function nowyear(){
 									var productchar = document.getElementById("productchart");
 									var text = "<canvas id='chart-orders2' class='chart-canvas'>";

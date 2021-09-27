@@ -178,8 +178,18 @@ new Chart("myChart", {
                      </script>
                      
                         
-                                                
+ <script
+   src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+                              
                <script>
+               
+               $(document).ready(function () {   
+					$('ul.navbar-nav li:nth-child(1)').children().css('background','#dae39b');
+				}); 
                         function nowyear(){
                            var productchar = document.getElementById("productchart");
                            var text = "<canvas id='chart-orders2' class='chart-canvas'>";

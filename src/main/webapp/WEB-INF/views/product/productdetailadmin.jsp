@@ -1561,7 +1561,13 @@ td .mybtn{
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async
 		src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script>
+
+	 $(document).ready(function () {   
+		$('ul.navbar-nav li:nth-child(2)').children().css('background','#dae39b');
+	 }); 
+	
 		window.dataLayer = window.dataLayer || [];
 		function gtag() {
 			dataLayer.push(arguments);

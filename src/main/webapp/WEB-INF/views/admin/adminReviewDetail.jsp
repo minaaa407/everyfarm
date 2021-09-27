@@ -321,8 +321,12 @@ span {
 					<a href="/adminReviewList" id="list" class="btn3">목록으로</a>
 		</div>
 	</div>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
+	 $(document).ready(function () {   
+	     $('ul.navbar-nav li:nth-child(6)').children().css('background','#dae39b');
+	 }); 
+	
 			function yes() {
 				var rev_No = document.getElementById("rev_No").value;
 				if (confirm("정말 삭제하시겠습니까?") == true) { //yes 

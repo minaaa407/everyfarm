@@ -372,7 +372,12 @@ a:hover {
 	<script src="https://code.jquery.com/jquery-3.4.1.js"
 		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 		crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
+	 $(document).ready(function () {   
+	     $('ul.navbar-nav li:nth-child(6)').children().css('background','#dae39b');
+	 }); 
+	
 		let moveForm = $("#moveForm");
 		$(".move")
 				.on(

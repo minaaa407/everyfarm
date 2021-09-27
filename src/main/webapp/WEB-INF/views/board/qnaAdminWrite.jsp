@@ -202,6 +202,9 @@ input::placeholder {
 	</div>
    
 <script type="text/javascript">
+$(document).ready(function () {   
+    $('ul.navbar-nav li:nth-child(7)').children().css('background','#dae39b');
+}); 
 
 function select(e) {
 	// 선택된 데이터의 텍스트값 가져오기
@@ -237,6 +240,7 @@ function select(e) {
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 </body>
