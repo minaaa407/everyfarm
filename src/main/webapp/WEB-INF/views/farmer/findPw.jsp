@@ -14,13 +14,13 @@
 	$(function() {
 		$("#findBtn").click(function() {
 			$.ajax({
-				url : "/findPw",
+				url : "/farmerFindPw",
 				type : "POST",
 				dataType : "json",
 				data : {
-					m_Name : $("#m_Name").val(),
-					m_Id : $("#m_Id").val(),
-					m_Tel : $("#m_Tel").val()
+					f_Name : $("#f_Name").val(),
+					f_Id : $("#f_Id").val(),
+					f_Tel : $("#f_Tel").val()
 				},
 				success : function(result) {
 					if (result.error == false) {
@@ -66,16 +66,16 @@
 			</div>
 			<div>
 				<p>
-					<label>이름</label> <input class="w3-input" type="text" id="m_Name"
-						name="m_Name" placeholder="이름" required>
+					<label>이름</label> <input class="w3-input" type="text" id="f_Name"
+						name="f_Name" placeholder="이름" required>
 				</p>
 				<p>
-					<label>아이디</label> <input class="w3-input" type="text" id="m_Id"
-						name="m_Id" placeholder="아이디" required>
+					<label>아이디</label> <input class="w3-input" type="text" id="f_Id"
+						name="f_Id" placeholder="아이디" required>
 				</p>
 				<p>
-					<label>전화번호</label> <input class="w3-input" type="text" id="m_Tel"
-						name="m_Tel" placeholder="전화번호" required>
+					<label>전화번호</label> <input class="w3-input" type="text" id="f_Tel"
+						name="f_Tel" placeholder="전화번호" required>
 				</p>
 				<p class="w3-center">
 					<button type="button" id="findBtn"

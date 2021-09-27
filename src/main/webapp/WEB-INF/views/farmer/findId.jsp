@@ -18,8 +18,8 @@
 				type : "POST",
 				dataType : "json",
 				data : {
-					m_Name : $("#f_Name").val(),
-					m_Tel : $("#f_Tel").val()
+					f_Name : $("#f_Name").val(),
+					f_Tel : $("#f_Tel").val()
 				},
 				success : function(result) {
 					if (result.error == false) {

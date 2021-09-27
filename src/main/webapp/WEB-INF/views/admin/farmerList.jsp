@@ -327,10 +327,10 @@ table td, table th {
 						},
 						success : function(result) {
 							if (result.error == true) {
-								alert("삭제 성공.");
+								alert("삭제 되었습니다.");
 								location.href = "/farmerList"
 							} else {
-								alert("삭제 실패.");
+								alert("삭제에 실패하셨습니다.");
 								location.href = "/farmerList"
 							}
 						}

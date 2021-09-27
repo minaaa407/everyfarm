@@ -40,9 +40,11 @@
 <link href="resources/farmer/css/argon-dashboard.css?v=1.1.2"
 	rel="stylesheet" />
 	<style>
-	body{
-	padding-left:250px;
-	}
+@media (min-width: 768px){
+      body{
+      padding-left:250px;
+      }
+   }
 	.sep{
 	    border-top: 1px solid lightgray;
     margin-top: 30px;
@@ -86,8 +88,6 @@
 				class="fas fa-users text-green"></span>&nbsp;&nbsp;&nbsp;&nbsp;EVERY FARM</a></li>
 		<li class="nav-item"><a href="/farmerLogin" class="nav-link"><span
 				class="fas fa-tractor text-green"></span>&nbsp;&nbsp;&nbsp;&nbsp;FARMER's FARM</a></li>
-		<li class="nav-item"><a href="/adminLogin" class="nav-link"><span
-				class="fas fa-users-cog text-green"></span>&nbsp;&nbsp;&nbsp;&nbsp;ADMIN's FARM</a></li>
 	</ul>
 </body>
 </html>

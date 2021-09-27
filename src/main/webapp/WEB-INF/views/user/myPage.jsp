@@ -308,7 +308,7 @@ body {
 										<tr>
 											<th class="table__th">이름</th>
 											<td class="table__td"><input type="text" name="m_Name"
-												max="5" id="m_Name" placeholder="변경할 이름"
+												 id="m_Name" placeholder="변경할 이름"
 												class="form-control" style="display: inline;" required>
 												<button class="btn btn-style-1" type="submit"
 													formaction="/myInfoNameUpdate">
@@ -616,10 +616,11 @@ body {
 												txtPasswordConfirm : {
 													required : true,
 													equalTo : '#m_Pw'
-												}
-											/*이름할곳임 : {
+												},
+											m_Name : {
 												required : true
-											},
+											}
+												/*
 											이메일할곳임 : {
 												required : true,
 												email : true
@@ -647,10 +648,11 @@ body {
 												txtPasswordConfirm : {
 													required : "암호확인를 입력하시오.",
 													equalTo : "암호를 다시 확인하세요"
-												}
-											/*이름할곳임 : {
-												required : "이름을 입력하시오."
-											},
+												},
+												m_Name : {
+												required : "이름을 입력해주세요."
+											}
+												/*
 											이메일할곳임 : {
 												required : "이메일을 입력하시오.",
 												email : "올바른 이메일을 입력하시오."

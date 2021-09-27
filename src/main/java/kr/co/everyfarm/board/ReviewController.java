@@ -247,7 +247,6 @@ public class ReviewController {
 		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
 		ReviewBean revVO = revDAO.revDetail(reviewBean);
 		List<ReviewReplyBean> list = revDAO.reply(rev_No);
-		System.out.println(list);
 		model.addAttribute("repList",list);
 		model.addAttribute("revList", revVO);
 		
@@ -271,6 +270,7 @@ public class ReviewController {
 		model.addAttribute("pageMaker", pageMake);
 		return "farmer/farmerMyReviewList";
 	}
+	
 	@RequestMapping(value = "/farmerReviewDetail")
 	public String getReviewDetail2(ReviewBean reviewBean, Model model,@RequestParam("rev_No") int rev_No) {
 		ReviewDAO revDAO = sqlSessionTemplate.getMapper(ReviewDAO.class);
@@ -281,5 +281,14 @@ public class ReviewController {
 		model.addAttribute("revList", revVO);
 		
 		return "farmer/farmerReviewDetail";
+	}
+	
+	
+	@RequestMapping(value = "/farmerReplyWrite", method = RequestMethod.POST)
+	public String Replyinsert1(ReviewReplyBean reviewReplyBean) {
+		ReviewDAO rdao = sqlSessionTemplate.getMapper(ReviewDAO.class);
+		rdao.replyInsert(reviewReplyBean);
+
+		return "redirect:/farmerReviewDetail?rev_No=" + reviewReplyBean.getRev_No();
 	}
 }
