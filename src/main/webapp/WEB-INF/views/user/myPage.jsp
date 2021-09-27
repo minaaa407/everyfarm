@@ -428,15 +428,15 @@ body {
 						aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
-					<p>거래 내역이 있는 회원님의 경우 거래증명을 위해 &nbsp;&nbsp;&nbsp;수집된 개인정보를 6개월간
-						보관 후 파기합니다.</p>
+					<p>거래 내역이 있는 회원님의 경우  &nbsp;&nbsp;&nbsp; 최근 결제일로부터  6개월후
+						탈퇴할 수 있습니다.</p>
 				</div>
 				<div class="modal-footer justify-content-center">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">취 소</button>
 					<form action="/myInfoDelete" method="post" name="toDel">
 						<c:choose>
-							<c:when test="${!empty myCus}">
+							<c:when test="${!empty payDay}">
 								<button name="m_Id" value="${member.m_Id}" id="mDel"
 									type="submit" class="btn btn-danger">탈 퇴</button>
 							</c:when>
@@ -456,12 +456,9 @@ body {
 
 <script type="text/javascript">
 	function mDel2() {
-		if(confirm("정말 탈퇴하시겠습니끼?") == true ){
 			document.toDel.submit();
 			alert("이용해 주셔서 감사합니다.");
-		}else{
-		return false;
-		}
+			return true;
 	}
 	
 	$(function() {

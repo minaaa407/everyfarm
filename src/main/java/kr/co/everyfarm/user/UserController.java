@@ -2,6 +2,7 @@ package kr.co.everyfarm.user;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.Authenticator.RequestorType;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -508,7 +509,6 @@ public class UserController {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(now);
 		cal.add(Calendar.YEAR, -1);
-		System.out.println(cal.getTime());
 		if(forDel == null) {
 			model.addAttribute("payDay", test.format(cal.getTime()));
 			
@@ -536,11 +536,12 @@ public class UserController {
 		return "redirect:/home";
 	}
 
-	@RequestMapping(value = "/myInfoDelete")
+	@RequestMapping(value = "/myInfoDelete", method = RequestMethod.POST)
 	public String myDelete(MemberBean memberbean, HttpSession session) {
 		MemberDAO memDao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		
 		memDao.mDelete(memberbean);
+		session.invalidate();
 		return "redirect:/home";
 	}
 
