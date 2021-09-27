@@ -73,6 +73,7 @@
 										<a><span style="font-weight:bold">${member.m_Name}님</span> 환영합니다.</a>
 									<div>
 										<a href="/mypage" class="signmargin">내 정보</a>
+										<a href="/basket" class="signmargin">장바구니</a>
 									<c:choose>
 										<c:when test="${member.m_Pw eq 'KAKAO'}">
 											<a href="/klogout">로그아웃</a>

@@ -8,6 +8,8 @@
 <title>EVERY FARM 관리자 | 농부 리스트</title>
 <meta charset="UTF-8">
 <link rel="shortcut icon" type="image/x-icon" href="/resources/editor/connn.ico" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
 <style>
 td, th {
 border-color:#9ea4ca;
@@ -183,8 +185,10 @@ table td, table th {
 											<td>${farmer.f_Rate}</td>
 											<td><fmt:formatDate pattern="yyyy-MM-dd"
 													value="${farmer.f_Date}" /></td>
-											<td>${farmer.f_Auth}</td>
-											<td>${farmer.f_Sign}</td>
+											<td><a href="/resources/upload/farmer/farmer file.png" data-toggle="lightbox" data-title="${farmer.f_Id}" data-footer="<fmt:formatDate pattern="yyyy-MM-dd"
+													value="${farmer.f_Date}" />">
+												${farmer.f_Auth}</a></td>
+            								<td>${farmer.f_Sign}</td>
 										</tr>
 									</c:forEach>
 								</c:when>
@@ -374,6 +378,16 @@ table td, table th {
 				}
 			}
 		}
+		
+		$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+		    event.preventDefault();
+		    $(this).ekkoLightbox();
+		});
+		
 	</script>
 </body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
 </html>
