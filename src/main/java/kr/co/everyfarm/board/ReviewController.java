@@ -263,7 +263,7 @@ public class ReviewController {
 //		HashMap<String, Object> map = new HashMap<String, Object>();
 //		map.put("re", flist);
 		
-		int total = dao.revCount(paging);
+		int total = dao.farmerReviewscount(p_Id);
 		PageMaker pageMake = new PageMaker(paging, total);
 		model.addAttribute("total", total);
 		model.addAttribute("revList", dao.farmerReviews(paging));
