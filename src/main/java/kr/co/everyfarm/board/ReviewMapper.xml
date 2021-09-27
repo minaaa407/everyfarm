@@ -151,7 +151,7 @@
 		parameterType="String">
 
 		select * from payment where (pay_id =#{m_Id}) and  <![CDATA[
-			(date(pay_date) >=date(subdate(now(), INTERVAL 180 DAY)) and date(pay_date) <= date(now()))
+			(date(pay_date) <=date(subdate(now(), INTERVAL 180 DAY)))
 		]]> and
 		(pay_orderno not in(select rev_Pronum from review where rev_id =
 		#{m_Id}));
@@ -164,7 +164,7 @@
 		select * from product where (p_no in( select pay_no from
 		payment where
 		(pay_id =#{m_Id}) and <![CDATA[
-			(date(pay_date) >=date(subdate(now(), INTERVAL 180 DAY)) and date(pay_date) <= date(now()))
+			(date(pay_date) <=date(subdate(now(), INTERVAL 180 DAY)))
 		]]>
 		and (pay_orderno not in(select
 		rev_Pronum from review where rev_id =
