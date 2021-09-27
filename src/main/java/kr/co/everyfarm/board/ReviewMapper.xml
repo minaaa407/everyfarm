@@ -146,7 +146,6 @@
 	</select>
 	<!-- index -->
 
-	<!-- 박정빈추가 -->
 	<select id="selectpaymentreview"
 		resultType="kr.co.everyfarm.payment.PaymentBean"
 		parameterType="String">
