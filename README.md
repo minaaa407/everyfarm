@@ -16,6 +16,11 @@ Every Farm은 농부들이 소유한 땅을 등록하고, 소비자가 농부에
 
 기존 주말 농장의 단순 토지 임대와는 달리 농부가 지속적으로 작물을 관리, 제공하는 것을 장점으로 합니다.
 
+![image](https://user-images.githubusercontent.com/79892930/135019945-3635b3da-7545-411d-b716-8215915a5433.png)
+![image](https://user-images.githubusercontent.com/79892930/135019969-ced09b3b-098b-44cb-94af-82a6747e3049.png)
+![image](https://user-images.githubusercontent.com/79892930/135019975-3253d338-2997-49b5-ae31-e0c38d370e02.png)
+
+
 ------------------------------------
 
 개발언어 : java jdk1.8, html5, css3, javascript, jquery, ajax
