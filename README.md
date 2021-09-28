@@ -1,5 +1,7 @@
 Final project - Every Farm
 
+웹 호스팅 주소 : http://www.everyfarm.shop
+
 KOSMO 84기 웹어플리케이션 개발 과정
 
 3차 프로젝트(spring project)_Every Farm
